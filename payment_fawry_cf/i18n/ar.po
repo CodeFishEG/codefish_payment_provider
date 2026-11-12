@@ -76,7 +76,7 @@ msgstr "<span class=\"opacity-75\">المبلغ المطلوب:</span>"
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "<span class=\"opacity-75\">Fawry reference:</span>"
-msgstr "<span class=\"opacity-75\">الرقم المرجعي لفوري:</span>"
+msgstr "<span class=\"opacity-75\">الرقم المرجعي لفورى:</span>"
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
@@ -90,7 +90,7 @@ msgid ""
 "wallets, myFawry, valU and more, through FawryPay Express Checkout or the "
 "server-to-server APIs"
 msgstr ""
-"استقبل مدفوعات فوري في مصر: البطاقات مع 3-D Secure، والأكواد المرجعية لفوري،"
+"استقبل مدفوعات فورى في مصر: البطاقات مع 3-D Secure، والأكواد المرجعية لفورى،"
 " والمحافظ الإلكترونية، وmyFawry، وvalU وغيرها، عبر FawryPay Express Checkout"
 " أو واجهات الربط المباشر بين الخوادم"
 
@@ -102,7 +102,7 @@ msgstr "وافق عليه باستخدام الرقم السري لمحفظتك.
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
 msgid "Cancel Fawry Payment"
-msgstr "إلغاء دفعة فوري"
+msgstr "إلغاء دفعة فورى"
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
@@ -110,7 +110,7 @@ msgid ""
 "Cancel the unpaid reference code, wallet request or myFawry payment at "
 "Fawry."
 msgstr ""
-"إلغاء الكود المرجعي أو طلب المحفظة أو دفعة myFawry غير المدفوعة لدى فوري."
+"إلغاء الكود المرجعي أو طلب المحفظة أو دفعة myFawry غير المدفوعة لدى فورى."
 
 #. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_card
@@ -124,19 +124,19 @@ msgid ""
 "                        Reference codes, wallets and myFawry are created by Odoo and shown on your\n"
 "                        website. valU, Forsa, Souhoola and FawryPay use the hosted checkout."
 msgstr ""
-"تُحفظ البطاقات في صفحة البطاقات الآمنة لدى فوري ويتم الخصم منها مع 3-D Secure.\n"
+"تُحفظ البطاقات في صفحة البطاقات الآمنة لدى فورى ويتم الخصم منها مع 3-D Secure.\n"
 "                        يُنشئ أودو الأكواد المرجعية وطلبات المحافظ وmyFawry ويعرضها على\n"
 "                        موقعك. أما valU وفرصة وسهولة وFawryPay فتستخدم صفحة الدفع المستضافة."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
 msgid "Check Fawry Status"
-msgstr "التحقق من الحالة لدى فوري"
+msgstr "التحقق من الحالة لدى فورى"
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
 msgid "Check the merchant code and the secure key with Fawry."
-msgstr "التحقق من كود التاجر والمفتاح الآمن لدى فوري."
+msgstr "التحقق من كود التاجر والمفتاح الآمن لدى فورى."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_display_mode
@@ -195,85 +195,85 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
 msgid "Fawry"
-msgstr "فوري"
+msgstr "فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_redirect_url
 msgid "Fawry 3-D Secure URL"
-msgstr "رابط 3-D Secure لدى فوري"
+msgstr "رابط 3-D Secure لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_card_data
 msgid "Fawry Card Details"
-msgstr "بيانات البطاقة لدى فوري"
+msgstr "بيانات البطاقة لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_card_token
 msgid "Fawry Card Token"
-msgstr "رمز البطاقة لدى فوري"
+msgstr "رمز البطاقة لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_customer_profile_id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_customer_profile_id
 msgid "Fawry Customer Profile"
-msgstr "ملف العميل لدى فوري"
+msgstr "ملف العميل لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_fees
 msgid "Fawry Fees"
-msgstr "رسوم فوري"
+msgstr "رسوم فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_integration
 msgid "Fawry Integration"
-msgstr "نوع الربط مع فوري"
+msgstr "نوع الربط مع فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_last_sync
 msgid "Fawry Last Status Check"
-msgstr "آخر تحقق من الحالة لدى فوري"
+msgstr "آخر تحقق من الحالة لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_merchant_code
 msgid "Fawry Merchant Code"
-msgstr "كود التاجر لدى فوري"
+msgstr "كود التاجر لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_payment_expiry
 msgid "Fawry Payment Deadline"
-msgstr "آخر موعد للدفع لدى فوري"
+msgstr "آخر موعد للدفع لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.module.module,shortdesc:base.module_payment_fawry_cf
 msgid "Fawry Payments"
-msgstr "مدفوعات فوري"
+msgstr "مدفوعات فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_qr_code
 msgid "Fawry QR Code"
-msgstr "رمز QR لفوري"
+msgstr "رمز QR لفورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_secure_key
 msgid "Fawry Secure Key"
-msgstr "المفتاح الآمن لفوري"
+msgstr "المفتاح الآمن لفورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_wallet_number
 msgid "Fawry Wallet Number"
-msgstr "رقم المحفظة لدى فوري"
+msgstr "رقم المحفظة لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_fawry_yellow_card
 msgid "Fawry Yellow Card"
-msgstr "كارت فوري الأصفر"
+msgstr "كارت فورى الأصفر"
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_provider.py:0
 msgid ""
 "Fawry accepted the merchant code and the secure key (%(env)s environment)."
-msgstr "قبلت فوري كود التاجر والمفتاح الآمن (بيئة %(env)s)."
+msgstr "قبلت فورى كود التاجر والمفتاح الآمن (بيئة %(env)s)."
 
 #. module: payment_fawry_cf
 #. odoo-python
@@ -282,24 +282,24 @@ msgid ""
 "Fawry asks the customer to authenticate every card payment with their bank, "
 "so saved cards can't be charged while the customer is away."
 msgstr ""
-"تطلب فوري من العميل تأكيد كل دفعة بالبطاقة مع البنك الخاص به، لذا لا يمكن "
+"تطلب فورى من العميل تأكيد كل دفعة بالبطاقة مع البنك الخاص به، لذا لا يمكن "
 "الخصم من البطاقات المحفوظة في غياب العميل."
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Fawry has no order for this payment yet."
-msgstr "لا يوجد لدى فوري طلب لهذه الدفعة بعد."
+msgstr "لا يوجد لدى فورى طلب لهذه الدفعة بعد."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "Fawry is confirming your payment. This page updates by itself."
-msgstr "فوري تؤكد دفعتك. تتحدث هذه الصفحة تلقائيًا."
+msgstr "فورى تؤكد دفعتك. تتحدث هذه الصفحة تلقائيًا."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "Fawry reference code"
-msgstr "الكود المرجعي لفوري"
+msgstr "الكود المرجعي لفورى"
 
 #. module: payment_fawry_cf
 #. odoo-python
@@ -308,37 +308,37 @@ msgid ""
 "Fawry rejected the credentials.\n"
 "%(error)s"
 msgstr ""
-"رفضت فوري بيانات الدخول.\n"
+"رفضت فورى بيانات الدخول.\n"
 "%(error)s"
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_provider.py:0
 msgid "Fawry rejected the request: %(message)s (code %(code)s)"
-msgstr "رفضت فوري الطلب: %(message)s (كود %(code)s)"
+msgstr "رفضت فورى الطلب: %(message)s (كود %(code)s)"
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Fawry returned an unexpected authentication address."
-msgstr "أرسلت فوري عنوان تحقق غير متوقع."
+msgstr "أرسلت فورى عنوان تحقق غير متوقع."
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Fawry returned an unexpected checkout address: %s"
-msgstr "أرسلت فوري عنوان صفحة دفع غير متوقع: %s"
+msgstr "أرسلت فورى عنوان صفحة دفع غير متوقع: %s"
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Fawry sent the latest status of the payment."
-msgstr "أرسلت فوري آخر حالة للدفعة."
+msgstr "أرسلت فورى آخر حالة للدفعة."
 
 #. module: payment_fawry_cf
 #: model:ir.actions.server,name:payment_fawry_cf.cron_sync_pending_payments_ir_actions_server
 msgid "Fawry: check pending payments"
-msgstr "فوري: التحقق من الدفعات المعلقة"
+msgstr "فورى: التحقق من الدفعات المعلقة"
 
 #. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_fawry
@@ -356,8 +356,8 @@ msgid ""
 "FawryPay Express Checkout: customers pay on Fawry's hosted checkout.\n"
 "Server-to-Server APIs: cards are saved on Fawry's secure card page and charged by Odoo with 3-D Secure, and Fawry reference codes, mobile wallets and myFawry are created by Odoo and shown on your website. Other methods always use the hosted checkout."
 msgstr ""
-"FawryPay Express Checkout: يدفع العملاء على صفحة الدفع المستضافة لدى فوري.\n"
-"الربط المباشر بين الخوادم: تُحفظ البطاقات في صفحة البطاقات الآمنة لدى فوري ويخصم منها أودو مع 3-D Secure، ويُنشئ أودو الأكواد المرجعية لفوري وطلبات المحافظ الإلكترونية وmyFawry ويعرضها على موقعك. أما باقي الوسائل فتستخدم دائمًا صفحة الدفع المستضافة."
+"FawryPay Express Checkout: يدفع العملاء على صفحة الدفع المستضافة لدى فورى.\n"
+"الربط المباشر بين الخوادم: تُحفظ البطاقات في صفحة البطاقات الآمنة لدى فورى ويخصم منها أودو مع 3-D Secure، ويُنشئ أودو الأكواد المرجعية لفورى وطلبات المحافظ الإلكترونية وmyFawry ويعرضها على موقعك. أما باقي الوسائل فتستخدم دائمًا صفحة الدفع المستضافة."
 
 #. module: payment_fawry_cf
 #. odoo-javascript
@@ -374,7 +374,7 @@ msgstr "ستُفتح صفحة الدفع الآمنة لدى FawryPay في هذ�
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
 msgid "Fetch the latest status of this payment from Fawry."
-msgstr "جلب آخر حالة لهذه الدفعة من فوري."
+msgstr "جلب آخر حالة لهذه الدفعة من فورى."
 
 #. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_forsa
@@ -397,13 +397,13 @@ msgid ""
 "Give this URL to Fawry so that they send the payment notifications to Odoo. "
 "Odoo also sends it with every payment."
 msgstr ""
-"أعطِ هذا الرابط لفوري لترسل إشعارات الدفع إلى أودو. يرسله أودو أيضًا مع كل "
+"أعطِ هذا الرابط لفورى لترسل إشعارات الدفع إلى أودو. يرسله أودو أيضًا مع كل "
 "دفعة."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "Go to any Fawry outlet, or open the myFawry app."
-msgstr "توجّه إلى أي منفذ فوري، أو افتح تطبيق myFawry."
+msgstr "توجّه إلى أي منفذ فورى، أو افتح تطبيق myFawry."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_provider__fawry_display_mode
@@ -411,15 +411,15 @@ msgid ""
 "How Fawry's hosted checkout is shown to the customer. Apple devices always "
 "open it in a full page, as Fawry requires."
 msgstr ""
-"طريقة عرض صفحة الدفع المستضافة لدى فوري للعميل. تفتحها أجهزة Apple دائمًا في"
-" صفحة كاملة كما تشترط فوري."
+"طريقة عرض صفحة الدفع المستضافة لدى فورى للعميل. تفتحها أجهزة Apple دائمًا في"
+" صفحة كاملة كما تشترط فورى."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_provider__fawry_payment_expiry_hours
 msgid ""
 "How long a Fawry reference code, wallet request or QR code stays payable."
 msgstr ""
-"المدة التي يظل خلالها الكود المرجعي لفوري أو طلب المحفظة أو رمز QR صالحًا "
+"المدة التي يظل خلالها الكود المرجعي لفورى أو طلب المحفظة أو رمز QR صالحًا "
 "للدفع."
 
 #. module: payment_fawry_cf
@@ -465,7 +465,7 @@ msgstr "رابط الإشعارات"
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Only unpaid Fawry payments can be canceled."
-msgstr "لا يمكن إلغاء إلا دفعات فوري غير المدفوعة."
+msgstr "لا يمكن إلغاء إلا دفعات فورى غير المدفوعة."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
@@ -480,7 +480,7 @@ msgstr "افتح تطبيق محفظتك الإلكترونية واختر ال�
 #. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_pay_at_fawry
 msgid "Pay at Fawry"
-msgstr "ادفع في فوري"
+msgstr "ادفع في فورى"
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
@@ -523,10 +523,10 @@ msgid ""
 "wallet QR codes and myFawry payments are shown on your website. Includes "
 "saved cards, refunds, payment notifications and Arabic."
 msgstr ""
-"مزود دفع لفوري (FawryPay). اختر FawryPay Express Checkout، حيث يدفع العملاء "
-"على صفحة الدفع المستضافة لدى فوري في صفحة كاملة أو نافذة منبثقة أو لوحة "
+"مزود دفع لفورى (FawryPay). اختر FawryPay Express Checkout، حيث يدفع العملاء "
+"على صفحة الدفع المستضافة لدى فورى في صفحة كاملة أو نافذة منبثقة أو لوحة "
 "جانبية، أو الربط المباشر بين الخوادم، حيث تُحفظ البطاقات في صفحة البطاقات "
-"الآمنة لدى فوري ويُخصم منها مع 3-D Secure، وتُعرض الأكواد المرجعية لفوري "
+"الآمنة لدى فورى ويُخصم منها مع 3-D Secure، وتُعرض الأكواد المرجعية لفورى "
 "ورموز QR للمحافظ ودفعات myFawry على موقعك. يشمل البطاقات المحفوظة والمبالغ "
 "المستردة وإشعارات الدفع واللغة العربية."
 
@@ -613,18 +613,18 @@ msgstr "تعذّر حفظ البطاقة."
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_customer_profile_id
 msgid ""
 "The customer identifier sent to Fawry, under which the cards are saved."
-msgstr "معرف العميل المرسل إلى فوري، والذي تُحفظ البطاقات باسمه."
+msgstr "معرف العميل المرسل إلى فورى، والذي تُحفظ البطاقات باسمه."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_customer_profile_id
 msgid "The customer identifier the card is saved under at Fawry."
-msgstr "معرف العميل الذي حُفظت البطاقة باسمه لدى فوري."
+msgstr "معرف العميل الذي حُفظت البطاقة باسمه لدى فورى."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
 msgid ""
 "The customer won't be able to pay this Fawry payment anymore. Continue?"
-msgstr "لن يتمكن العميل من دفع دفعة فوري هذه بعد الآن. هل تريد المتابعة؟"
+msgstr "لن يتمكن العميل من دفع دفعة فورى هذه بعد الآن. هل تريد المتابعة؟"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_payment_expiry
@@ -632,12 +632,12 @@ msgid ""
 "The date after which the Fawry reference code, wallet request or QR code "
 "expires."
 msgstr ""
-"التاريخ الذي تنتهي بعده صلاحية الكود المرجعي لفوري أو طلب المحفظة أو رمز QR."
+"التاريخ الذي تنتهي بعده صلاحية الكود المرجعي لفورى أو طلب المحفظة أو رمز QR."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_fees
 msgid "The fees Fawry added to the amount paid by the customer."
-msgstr "الرسوم التي أضافتها فوري إلى المبلغ الذي دفعه العميل."
+msgstr "الرسوم التي أضافتها فورى إلى المبلغ الذي دفعه العميل."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_deep_link
@@ -654,7 +654,7 @@ msgstr "بيانات البطاقة المُدخلة لهذه الدفعة بع�
 msgid ""
 "The merchant code (account number) that Fawry sent when your account was "
 "created."
-msgstr "كود التاجر (رقم الحساب) الذي أرسلته فوري عند إنشاء حسابك."
+msgstr "كود التاجر (رقم الحساب) الذي أرسلته فورى عند إنشاء حسابك."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_wallet_number
@@ -671,13 +671,13 @@ msgstr "انتهت صلاحية الدفعة قبل سدادها."
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "The payment to refund has no Fawry reference number."
-msgstr "الدفعة المراد استرداد مبلغها ليس لها رقم مرجعي لدى فوري."
+msgstr "الدفعة المراد استرداد مبلغها ليس لها رقم مرجعي لدى فورى."
 
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "The payment was canceled at Fawry."
-msgstr "تم إلغاء الدفعة لدى فوري."
+msgstr "تم إلغاء الدفعة لدى فورى."
 
 #. module: payment_fawry_cf
 #. odoo-python
@@ -694,7 +694,7 @@ msgstr "تم رفض الدفعة: %(reason)s (كود %(code)s)"
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_provider__fawry_secure_key
 msgid "The secure hash key used to sign every request sent to Fawry."
-msgstr "مفتاح التشفير الآمن المستخدم لتوقيع كل طلب يُرسل إلى فوري."
+msgstr "مفتاح التشفير الآمن المستخدم لتوقيع كل طلب يُرسل إلى فورى."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_provider__code
@@ -706,7 +706,7 @@ msgstr "الكود التقني لمزود الدفع هذا."
 msgid ""
 "The token of the card the customer entered on Fawry's secure page for this "
 "payment."
-msgstr "رمز البطاقة التي أدخلها العميل في صفحة فوري الآمنة لهذه الدفعة."
+msgstr "رمز البطاقة التي أدخلها العميل في صفحة فورى الآمنة لهذه الدفعة."
 
 #. module: payment_fawry_cf
 #. odoo-python
@@ -765,7 +765,7 @@ msgid ""
 "You will enter your card details on Fawry's secure page and confirm them\n"
 "                        with your bank. Odoo never sees your card number."
 msgstr ""
-"ستُدخل بيانات بطاقتك في صفحة فوري الآمنة وتؤكدها\n"
+"ستُدخل بيانات بطاقتك في صفحة فورى الآمنة وتؤكدها\n"
 "                        مع البنك الخاص بك. لا يطّلع أودو أبدًا على رقم بطاقتك."
 
 #. module: payment_fawry_cf
@@ -774,7 +774,7 @@ msgid ""
 "You will enter your card details on Fawry's secure page, then confirm the\n"
 "                        payment with your bank (3-D Secure). Odoo never sees your card number."
 msgstr ""
-"ستُدخل بيانات بطاقتك في صفحة فوري الآمنة، ثم تؤكد\n"
+"ستُدخل بيانات بطاقتك في صفحة فورى الآمنة، ثم تؤكد\n"
 "                        الدفع مع البنك الخاص بك (3-D Secure). لا يطّلع أودو أبدًا على رقم بطاقتك."
 
 #. module: payment_fawry_cf
@@ -783,7 +783,7 @@ msgid ""
 "You will get a Fawry reference code. Pay it in cash at any Fawry outlet, or\n"
 "                        with the myFawry app, within"
 msgstr ""
-"ستحصل على كود مرجعي لفوري. ادفعه نقدًا في أي منفذ فوري، أو\n"
+"ستحصل على كود مرجعي لفورى. ادفعه نقدًا في أي منفذ فورى، أو\n"
 "                        بتطبيق myFawry، خلال"
 
 #. module: payment_fawry_cf
@@ -794,7 +794,7 @@ msgstr "ستحصل على رمز QR لتمسحه بتطبيق محفظتك."
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "Your order is confirmed as soon as Fawry receives the payment."
-msgstr "يتم تأكيد طلبك فور استلام فوري للدفعة."
+msgstr "يتم تأكيد طلبك فور استلام فورى للدفعة."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
@@ -804,7 +804,7 @@ msgstr "يتم تأكيد طلبك فور الموافقة على الدفعة."
 #. module: payment_fawry_cf
 #: model_terms:payment.provider,pending_msg:payment_fawry_cf.payment_provider_fawry
 msgid "Your order is reserved until the payment is completed with Fawry."
-msgstr "طلبك محجوز حتى إتمام الدفع عبر فوري."
+msgstr "طلبك محجوز حتى إتمام الدفع عبر فورى."
 
 #. module: payment_fawry_cf
 #: model_terms:payment.provider,auth_msg:payment_fawry_cf.payment_provider_fawry
@@ -866,19 +866,19 @@ msgstr "تاريخ انتهاء البطاقة"
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_last_check
 msgid "Last Checked at Fawry"
-msgstr "آخر تحقق لدى فوري"
+msgstr "آخر تحقق لدى فورى"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_card_expiry
 msgid "The month and year the card expires (MM/YY), as saved at Fawry."
-msgstr "شهر وسنة انتهاء البطاقة (MM/YY)، كما هي محفوظة لدى فوري."
+msgstr "شهر وسنة انتهاء البطاقة (MM/YY)، كما هي محفوظة لدى فورى."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_last_check
 msgid ""
 "When Odoo last found the card among the cards the customer saved at Fawry."
 msgstr ""
-"آخر مرة وجد فيها أودو البطاقة ضمن البطاقات التي حفظها العميل لدى فوري."
+"آخر مرة وجد فيها أودو البطاقة ضمن البطاقات التي حفظها العميل لدى فورى."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.token_form
