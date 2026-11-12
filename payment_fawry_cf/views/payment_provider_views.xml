@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Fawry Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Test Connection"
+                    help="Check the merchant code and the secure key with Fawry."
+                    type="object"
+                    name="action_fawry_test_connection"
+                    invisible="code != 'fawry'"
+                    class="btn-secondary"
+                />
+            </header>
+            <group name="provider_credentials" position="inside">
+                <field
+                    string="Merchant Code"
+                    name="fawry_merchant_code"
+                    invisible="code != 'fawry'"
+                    required="is_live and code == 'fawry'"
+                />
+                <field
+                    string="Secure Key"
+                    name="fawry_secure_key"
+                    invisible="code != 'fawry'"
+                    required="is_live and code == 'fawry'"
+                    widget="password"
+                />
+            </group>
+            <group name="provider_credentials" position="after">
+                <group string="Fawry" name="fawry_options" invisible="code != 'fawry'">
+                    <field
+                        name="fawry_integration"
+                        widget="radio"
+                        required="code == 'fawry'"
+                    />
+                    <div colspan="2" class="text-muted small mb-2" invisible="fawry_integration != 'express'">
+                        Every method is paid on FawryPay's secure checkout. Cards can't be saved.
+                    </div>
+                    <div colspan="2" class="text-muted small mb-2" invisible="fawry_integration != 's2s'">
+                        Cards are saved on Fawry's secure card page and charged with 3-D Secure.
+                        Reference codes, wallets and myFawry are created by Odoo and shown on your
+                        website. valU, Forsa, Souhoola and FawryPay use the hosted checkout.
+                    </div>
+                    <field name="fawry_display_mode" required="code == 'fawry'"/>
+                    <label for="fawry_payment_expiry_hours"/>
+                    <div class="o_row">
+                        <field name="fawry_payment_expiry_hours" class="oe_inline"/>
+                        <span>hours</span>
+                    </div>
+                    <field name="fawry_webhook_url" widget="CopyClipboardChar"/>
+                </group>
+            </group>
+            <field name="available_currency_ids" position="attributes">
+                <attribute name="readonly" separator=" or " add="code == 'fawry'"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

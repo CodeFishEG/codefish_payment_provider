@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shown under a Fawry payment method once it is selected. The data attribute tells the
+         payment form how to process the method (`static/src/interactions/payment_form.js`). -->
+    <template id="inline_form">
+        <t t-set="is_validation" t-value="mode == 'validation'"/>
+        <t t-set="fawry_flow" t-value="provider_sudo._fawry_get_flow(pm_sudo.code, is_validation=is_validation)"/>
+        <div
+            name="o_fawry_inline_form"
+            class="o_fawry_inline_form d-flex flex-column gap-2"
+            t-att-data-fawry-inline-form-values="provider_sudo._fawry_get_inline_form_values(pm_sudo.code, is_validation=is_validation)"
+        >
+            <!-- Card entered on Fawry's secure card page, then 3-D Secure. -->
+            <t t-if="fawry_flow == 'card_token'">
+                <t t-call="payment_fawry_cf.inline_hint" icon_name.f="lock">
+                    <t t-if="is_validation">
+                        You will enter your card details on Fawry's secure page and confirm them
+                        with your bank. Odoo never sees your card number.
+                    </t>
+                    <t t-else="">
+                        You will enter your card details on Fawry's secure page, then confirm the
+                        payment with your bank (3-D Secure). Odoo never sees your card number.
+                    </t>
+                </t>
+            </t>
+
+            <!-- Payment instructions created by Odoo. -->
+            <t t-elif="fawry_flow == 's2s_charge'">
+                <t t-if="pm_sudo.code == 'pay_at_fawry'">
+                    <t t-call="payment_fawry_cf.inline_hint" icon_name.f="storefront">
+                        You will get a Fawry reference code. Pay it in cash at any Fawry outlet, or
+                        with the myFawry app, within
+                        <t t-out="provider_sudo.fawry_payment_expiry_hours"/> hours.
+                    </t>
+                </t>
+                <t t-elif="pm_sudo.code == 'myfawry'">
+                    <t t-call="payment_fawry_cf.inline_hint" icon_name.f="smartphone">
+                        Scan the QR code with the myFawry app, or open the app from your phone, and
+                        pay with any method saved in it.
+                    </t>
+                </t>
+                <t t-elif="pm_sudo.code == 'mobile_wallet_eg'">
+                    <t t-call="payment_fawry_cf.wallet_form"/>
+                </t>
+            </t>
+
+            <!-- Fawry's hosted checkout. -->
+            <t t-else="">
+                <t t-call="payment_fawry_cf.inline_hint" icon_name.f="lock">
+                    <t t-if="provider_sudo.fawry_display_mode == 'redirect'">
+                        You will complete the payment on FawryPay's secure checkout.
+                    </t>
+                    <t t-else="">
+                        FawryPay's secure checkout will open on this page to complete the payment.
+                    </t>
+                </t>
+            </t>
+        </div>
+    </template>
+
+    <template id="inline_hint">
+        <!-- Parameters: icon_name (Material Symbols name); the body is the text. -->
+        <div class="o_fawry_hint d-flex align-items-start gap-2 small text-muted">
+            <i class="oi flex-shrink-0 mt-1" t-att-data-icon="icon_name" aria-hidden="true"/>
+            <span><t t-out="0"/></span>
+        </div>
+    </template>
+
+    <!-- Mobile wallets: a payment request sent to the wallet, or a QR code to scan. -->
+    <template id="wallet_form">
+        <t t-set="prefill" t-value="provider_sudo._fawry_get_wallet_prefill(partner_id)"/>
+        <t t-set="input_id" t-value="'o_fawry_wallet_number_%s' % pm_sudo.id"/>
+        <div class="o_fawry_wallet d-flex flex-column gap-2" name="o_fawry_wallet">
+            <div class="btn-group w-100" role="group" aria-label="Wallet payment options">
+                <input
+                    type="radio"
+                    class="btn-check"
+                    name="o_fawry_wallet_mode"
+                    value="request"
+                    t-att-id="'%s_request' % input_id"
+                    t-att-checked="bool(prefill)"
+                />
+                <label class="btn btn-outline-primary btn-sm" t-att-for="'%s_request' % input_id">
+                    <i class="oi me-1" data-icon="send" aria-hidden="true"/>Request to my wallet
+                </label>
+                <input
+                    type="radio"
+                    class="btn-check"
+                    name="o_fawry_wallet_mode"
+                    value="qr"
+                    t-att-id="'%s_qr' % input_id"
+                    t-att-checked="not prefill"
+                />
+                <label class="btn btn-outline-primary btn-sm" t-att-for="'%s_qr' % input_id">
+                    <i class="oi me-1" data-icon="qr_code" aria-hidden="true"/>Scan a QR code
+                </label>
+            </div>
+            <div name="o_fawry_wallet_request" t-att-class="'' if prefill else 'd-none'">
+                <label class="form-label small mb-1" t-att-for="input_id">Wallet mobile number</label>
+                <input
+                    type="tel"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    dir="ltr"
+                    class="form-control"
+                    name="o_fawry_wallet_number"
+                    maxlength="14"
+                    placeholder="01XXXXXXXXX"
+                    t-att-id="input_id"
+                    t-att-value="prefill"
+                />
+                <div class="form-text">
+                    Vodafone Cash, Etisalat Cash, Orange Cash, WE Pay or any bank wallet. Approve the
+                    request on your phone to pay.
+                </div>
+            </div>
+            <div name="o_fawry_wallet_qr" t-att-class="'d-none' if prefill else ''">
+                <t t-call="payment_fawry_cf.inline_hint" icon_name.f="qr_code">
+                    You will get a QR code to scan with your wallet app.
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <!-- How to complete a pending payment: reference code, QR code or myFawry link. Rendered by
+         `payment.transaction._get_status_message`, wherever Odoo shows the payment status. -->
+    <template id="payment_instructions">
+        <t t-set="values" t-value="tx._fawry_get_instructions_values()"/>
+        <t t-set="qr_code" t-value="tx.fawry_qr_code if (tx.fawry_qr_code or '').startswith(('data:image/', 'https://')) else False"/>
+        <t t-set="deep_link" t-value="tx.fawry_deep_link if (tx.fawry_deep_link or '').startswith('https://') else False"/>
+        <div
+            class="o_fawry_instructions d-flex flex-column gap-3"
+            t-att-data-reference="tx.reference"
+            t-att-data-access-token="values['access_token']"
+        >
+            <div t-if="status_message" class="o_fawry_instructions_message" t-out="status_message"/>
+
+            <div
+                t-if="values['kind'] != 'confirming'"
+                class="o_fawry_instructions_body d-flex flex-column flex-md-row gap-3 align-items-md-center"
+            >
+                <div t-if="values['kind'] == 'reference'" class="o_fawry_reference_box flex-grow-1">
+                    <div class="small fw-semibold text-uppercase opacity-75">Fawry reference code</div>
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span
+                            class="o_fawry_reference font-monospace fw-bold user-select-all"
+                            dir="ltr"
+                            t-out="values['grouped_reference']"
+                        />
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-light o_fawry_copy"
+                            t-att-data-copy="values['reference']"
+                        >
+                            <i class="oi me-1" data-icon="content_copy" aria-hidden="true"/>
+                            <span class="o_fawry_copy_label">Copy</span>
+                            <span class="o_fawry_copied_label d-none">Copied</span>
+                        </button>
+                    </div>
+                </div>
+                <img
+                    t-if="qr_code"
+                    t-att-src="qr_code"
+                    class="o_fawry_qr flex-shrink-0 rounded bg-white p-2"
+                    width="168"
+                    height="168"
+                    alt="QR code to scan to pay"
+                />
+                <div class="d-flex flex-column gap-1 flex-grow-1">
+                    <div t-if="values['kind'] != 'reference' and tx.provider_reference" class="small">
+                        <span class="opacity-75">Fawry reference:</span>
+                        <span class="font-monospace fw-semibold" dir="ltr" t-out="values['grouped_reference']"/>
+                    </div>
+                    <div class="small">
+                        <span class="opacity-75">Amount to pay:</span>
+                        <span
+                            class="fw-semibold"
+                            t-out="values['amount']"
+                            t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"
+                        />
+                    </div>
+                    <div t-if="tx.fawry_payment_expiry" class="small">
+                        <i class="oi me-1" data-icon="schedule" aria-hidden="true"/>
+                        <span class="opacity-75">Pay before:</span>
+                        <span class="fw-semibold" t-field="tx.fawry_payment_expiry"/>
+                    </div>
+                    <a
+                        t-if="deep_link"
+                        class="btn btn-primary btn-sm align-self-start mt-1"
+                        t-att-href="deep_link"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <i class="oi me-1" data-icon="open_in_new" aria-hidden="true"/>Open the myFawry app
+                    </a>
+                </div>
+            </div>
+
+            <ol t-if="values['kind'] != 'confirming'" class="o_fawry_steps small mb-0 ps-3">
+                <t t-if="values['kind'] == 'reference'">
+                    <li>Go to any Fawry outlet, or open the myFawry app.</li>
+                    <li>Give the reference code above and pay the amount shown.</li>
+                    <li>Your order is confirmed as soon as Fawry receives the payment.</li>
+                </t>
+                <t t-elif="values['kind'] == 'myfawry'">
+                    <li>Scan the QR code with the myFawry app, or open the app from your phone.</li>
+                    <li>Pay with any method saved in the app.</li>
+                    <li>Your order is confirmed as soon as Fawry receives the payment.</li>
+                </t>
+                <t t-elif="tx.fawry_wallet_number">
+                    <li>
+                        Open the payment request sent to the wallet
+                        <span dir="ltr" class="font-monospace" t-out="tx.fawry_wallet_number"/>.
+                    </li>
+                    <li>Approve it with your wallet PIN.</li>
+                    <li>Your order is confirmed as soon as the payment is approved.</li>
+                </t>
+                <t t-else="">
+                    <li>Open your mobile wallet app and choose to pay by QR code.</li>
+                    <li>Scan the QR code above and approve the payment with your wallet PIN.</li>
+                    <li>Your order is confirmed as soon as the payment is approved.</li>
+                </t>
+            </ol>
+
+            <div class="o_fawry_waiting d-flex align-items-center gap-2 small opacity-75" role="status">
+                <span class="spinner-grow spinner-grow-sm" aria-hidden="true"/>
+                <t t-if="values['kind'] == 'confirming'">
+                    Fawry is confirming your payment. This page updates by itself.
+                </t>
+                <t t-else="">Waiting for your payment. This page updates by itself.</t>
+            </div>
+        </div>
+    </template>
+
+</odoo>

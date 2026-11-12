@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Fawry payment methods. The provider activates `card`, `pay_at_fawry` and `mobile_wallet_eg`
+         when it is installed; the others depend on what Fawry enabled on the merchant account. -->
+
+    <!-- === PRIMARY PAYMENT METHODS === -->
+
+    <record id="payment_method_card" model="payment.method">
+        <field name="name">Card</field>
+        <field name="code">card</field>
+        <field name="sequence">10</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/card.png"/>
+        <field name="support_tokenization">True</field>
+        <field name="support_refund">partial</field>
+    </record>
+
+    <record id="payment_method_pay_at_fawry" model="payment.method">
+        <field name="name">Pay at Fawry</field>
+        <field name="code">pay_at_fawry</field>
+        <field name="sequence">20</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment_fawry_cf/static/img/pay_at_fawry.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_mobile_wallet_eg" model="payment.method">
+        <field name="name">Mobile Wallet</field>
+        <field name="code">mobile_wallet_eg</field>
+        <field name="sequence">30</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/wallet.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_myfawry" model="payment.method">
+        <field name="name">myFawry</field>
+        <field name="code">myfawry</field>
+        <field name="sequence">40</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment_fawry_cf/static/img/myfawry.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_fawry_yellow_card" model="payment.method">
+        <field name="name">Fawry Yellow Card</field>
+        <field name="code">fawry_yellow_card</field>
+        <field name="sequence">50</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment_fawry_cf/static/img/fawry_yellow_card.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_valu" model="payment.method">
+        <field name="name">valU</field>
+        <field name="code">valu</field>
+        <field name="sequence">60</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/valu.png"/>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_forsa" model="payment.method">
+        <field name="name">Forsa</field>
+        <field name="code">forsa</field>
+        <field name="sequence">70</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/forsa.png"/>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_souhoola" model="payment.method">
+        <field name="name">Souhoola</field>
+        <field name="code">souhoola</field>
+        <field name="sequence">80</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/souhoola.png"/>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <!-- All the methods enabled on the Fawry account, chosen by the customer on Fawry's checkout. -->
+    <record id="payment_method_fawry" model="payment.method">
+        <field name="name">FawryPay</field>
+        <field name="code">fawry</field>
+        <field name="sequence">90</field>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment_fawry_cf/static/img/fawry.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <!-- === PAYMENT METHOD BRANDS === -->
+
+    <record id="payment_method_visa" model="payment.method">
+        <field name="name">VISA</field>
+        <field name="code">visa</field>
+        <field name="sequence">10</field>
+        <field name="primary_payment_method_id" ref="payment_fawry_cf.payment_method_card"/>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/visa.png"/>
+    </record>
+
+    <record id="payment_method_mastercard" model="payment.method">
+        <field name="name">MasterCard</field>
+        <field name="code">mastercard</field>
+        <field name="sequence">20</field>
+        <field name="primary_payment_method_id" ref="payment_fawry_cf.payment_method_card"/>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/mastercard.png"/>
+    </record>
+
+    <record id="payment_method_meeza" model="payment.method">
+        <field name="name">Meeza</field>
+        <field name="code">meeza</field>
+        <field name="sequence">30</field>
+        <field name="primary_payment_method_id" ref="payment_fawry_cf.payment_method_card"/>
+        <field name="provider_id" ref="payment_fawry_cf.payment_provider_fawry"/>
+        <field name="image" type="bytes" file="payment/static/img/meeza.png"/>
+    </record>
+
+</odoo>

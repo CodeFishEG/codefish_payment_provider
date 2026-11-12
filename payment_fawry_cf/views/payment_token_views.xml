@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_token_form" model="ir.ui.view">
+        <field name="name">Fawry Token Form</field>
+        <field name="model">payment.token</field>
+        <field name="inherit_id" ref="payment.payment_token_form"/>
+        <field name="arch" type="xml">
+            <field name="provider_ref" position="after">
+                <field name="fawry_customer_profile_id" invisible="provider_code != 'fawry'"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

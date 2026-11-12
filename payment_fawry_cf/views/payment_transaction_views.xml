@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_transaction_form" model="ir.ui.view">
+        <field name="name">Fawry Transaction Form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Check Fawry Status"
+                    help="Fetch the latest status of this payment from Fawry."
+                    type="object"
+                    name="action_fawry_sync"
+                    invisible="provider_code != 'fawry' or state not in ('draft', 'pending')"
+                />
+                <button
+                    string="Cancel Fawry Payment"
+                    help="Cancel the unpaid reference code, wallet request or myFawry payment at Fawry."
+                    type="object"
+                    name="action_fawry_cancel"
+                    confirm="The customer won't be able to pay this Fawry payment anymore. Continue?"
+                    invisible="provider_code != 'fawry' or state != 'pending' or not provider_reference"
+                />
+            </header>
+            <notebook position="inside">
+                <page string="Fawry" name="fawry" invisible="provider_code != 'fawry'">
+                    <group>
+                        <group>
+                            <field name="fawry_fees" invisible="not fawry_fees"/>
+                            <field name="fawry_payment_expiry" invisible="not fawry_payment_expiry"/>
+                            <field name="fawry_wallet_number" invisible="not fawry_wallet_number"/>
+                            <field name="fawry_customer_profile_id"/>
+                        </group>
+                        <group>
+                            <field name="fawry_deep_link" widget="url" invisible="not fawry_deep_link"/>
+                            <field name="fawry_last_sync"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

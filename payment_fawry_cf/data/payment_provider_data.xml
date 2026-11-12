@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_provider_fawry" model="payment.provider">
+        <field name="name">Fawry</field>
+        <field name="code">fawry</field>
+        <field name="sequence">5</field>
+        <field name="image_128" type="bytes" file="payment_fawry_cf/static/description/icon.png"/>
+        <field name="module_id" ref="base.module_payment_fawry_cf"/>
+        <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+        <field name="inline_form_view_id" ref="payment_fawry_cf.inline_form"/>
+        <field name="pending_msg" type="html">
+            <p>Your order is reserved until the payment is completed with Fawry.</p>
+        </field>
+    </record>
+
+</odoo>
