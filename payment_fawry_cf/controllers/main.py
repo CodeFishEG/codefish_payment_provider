@@ -15,7 +15,7 @@
 import pprint
 from datetime import timedelta
 
-from werkzeug.exceptions import Forbidden
+from werkzeug.exceptions import Forbidden, NotFound
 
 from odoo import fields, http
 from odoo.exceptions import ValidationError
@@ -40,6 +40,7 @@ class FawryController(http.Controller):
     _charge_url = "/payment/fawry/charge"
     _poll_url = "/payment/fawry/poll"
     _installments_url = "/payment/fawry/installments"
+    _pos_emulator_url = "/payment/fawry/pos_emulator"
 
     @http.route(
         f"{_return_url}/<int:tx_id>/<string:access_token>",
@@ -210,6 +211,41 @@ class FawryController(http.Controller):
         if redirect_url:
             return request.redirect(redirect_url, local=False)
         return request.redirect("/payment/status")
+
+    @http.route(
+        f"{_pos_emulator_url}/<int:tx_id>",
+        type="http",
+        auth="user",
+        methods=["GET"],
+        website=True,
+        sitemap=False,
+    )
+    def fawry_pos_emulator(self, tx_id, **_kwargs):
+        """Show administrators how to pay a test reference code at Fawry's POS Emulator.
+
+        The emulator can't be filled in from here: Fawry refuses the forms sent by other sites. The
+        page gives the code to copy, opens the emulator, and updates by itself once Fawry has
+        received the payment.
+
+        :param int tx_id: The id of the transaction.
+        :raise Forbidden: If the user isn't an administrator.
+        :raise NotFound: If the transaction isn't a reference code of a Fawry test payment.
+        """
+        if not request.env.user._is_system():
+            raise Forbidden
+        tx_sudo = self.env["payment.transaction"].sudo().browse(tx_id).exists()
+        if (
+            not tx_sudo
+            or tx_sudo.provider_code != "fawry"
+            or tx_sudo.provider_id.is_live
+            or not tx_sudo._fawry_is_reference_code()
+        ):
+            raise NotFound
+        return request.render("payment_fawry_cf.pos_emulator_page", {
+            "tx": tx_sudo,
+            "values": tx_sudo._fawry_get_instructions_values(),
+            "pos_emulator_url": const.POS_EMULATOR_URL,
+        })
 
     @http.route(_webhook_url, type="http", auth="public", methods=["POST"], csrf=False)
     def fawry_webhook(self):

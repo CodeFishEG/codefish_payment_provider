@@ -10,6 +10,7 @@ customers see. Setting the module up is in the [administrator guide](admin_guide
 - [Find a payment](#find-a-payment)
 - [Check a payment at Fawry](#check-a-payment-at-fawry)
 - [Cancel an unpaid reference code](#cancel-an-unpaid-reference-code)
+- [Test a reference code (administrators)](#test-a-reference-code-administrators)
 - [Refund a payment](#refund-a-payment)
 - [Send a payment link](#send-a-payment-link)
 - [Saved cards in the back office](#saved-cards-in-the-back-office)
@@ -137,6 +138,18 @@ Odoo also checks every pending payment every 15 minutes, so you rarely need the 
 If the customer cancels the order, or a reference code, wallet request or myFawry payment should no longer be
 paid, click **Cancel Fawry Payment** on the pending transaction and confirm. Fawry cancels it and the customer
 can no longer pay it. Unpaid codes also expire by themselves after the payment expiry time (48 hours by default).
+
+## Test a reference code (administrators)
+
+While the Fawry provider is in test mode, administrators can pay a reference code without going to a Fawry
+outlet, with Fawry's **POS Emulator**. On the pending transaction, click **Pay at POS Emulator**. A page opens
+with the code and a **Copy** button: open the emulator, paste the code, click **Continue**, check the bill and
+click **Confirm payment**. The page, and the customer's confirmation page, update by themselves once Fawry has
+received the payment. When you place a test order on the website signed in as an administrator, the confirmation
+page offers the same with **Pay at the POS Emulator**. Details in the
+[administrator guide](admin_guide.md#test-reference-codes-with-the-pos-emulator).
+
+![Paying a test reference code at Fawry's POS Emulator](../static/description/screenshot_pos_emulator.png)
 
 ## Refund a payment
 

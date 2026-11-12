@@ -13,6 +13,7 @@ your team and what customers see, read the [user guide](user_guide.md).
 - [5. Turn on your payment methods](#5-turn-on-your-payment-methods)
 - [6. Check the payment journal](#6-check-the-payment-journal)
 - [7. Test](#7-test)
+  - [Test reference codes with the POS Emulator](#test-reference-codes-with-the-pos-emulator)
 - [8. Go live](#8-go-live)
 - [Bank installments](#bank-installments)
 - [Payment split](#payment-split)
@@ -107,11 +108,37 @@ top of the provider. In test mode, Odoo shows a warning sign next to each method
 | Visa card | 4508 7500 1574 1019, expiry 01/39, CVV 100 |
 | Mastercard | 5123 4500 0000 0008, expiry 01/39, CVV 100 |
 | 3-D Secure | On Fawry's test bank page, keep "Authentication Successful" and click **Submit** |
-| Pay at Fawry | Pay the reference code on Fawry's test outlet page (Fawry's developer portal, "Pay order") |
+| Pay at Fawry | Fawry's POS Emulator, opened from Odoo: see [below](#test-reference-codes-with-the-pos-emulator) |
 
 These are Fawry's published test data and may change; Fawry's developer portal has the current list. Fawry's
 card page refuses `localhost` return addresses: test on a public address, or on `http://127.0.0.1:<port>` with
 `web.base.url` set to it.
+
+### Test reference codes with the POS Emulator
+
+Customers pay their reference codes at Fawry outlets. In test mode, Fawry's **Integration POS Emulator** plays
+the outlet: it pays the reference codes of your test account, and Fawry then confirms the payment to Odoo as it
+would in real life. You test the whole journey without leaving your desk. Only administrators get to it, and
+only while the provider is in test mode (**Live** unticked).
+
+Three ways in:
+
+- **From the provider**: the **POS Emulator** button at the top opens the emulator.
+- **From a pending transaction** paid with Pay at Fawry: **Pay at POS Emulator** opens a page with the reference
+  code and its **Copy** button, the amount, the deadline, the steps and an **Open the POS Emulator** button.
+- **From your website**, when you place a test order signed in as an administrator: the confirmation page of the
+  reference code shows a yellow "Test mode" box with **Pay at the POS Emulator**. Customers never see it.
+
+Then:
+
+1. Copy the reference code.
+2. In the emulator, paste the code and click **Continue**. The bill shows the amount, your company and the order.
+3. Click **Confirm payment**.
+4. Odoo's page updates by itself once Fawry has received the payment, and so does the customer's confirmation
+   page. The order is confirmed and the payment posted in Fawry Pay.
+
+Fawry doesn't let other websites fill in the emulator, which is why the code is copied and pasted. The emulator
+pays test reference codes only; it has no effect on your live account.
 
 ## 8. Go live
 
@@ -175,6 +202,7 @@ to an item's price. With Express Checkout, Fawry checks the sub-accounts when th
 | **Allow Saving Payment Methods** | Server-to-Server only: customers add, choose and remove their saved cards on the website (see the [user guide](user_guide.md#saved-cards-add-choose-remove)). |
 | **Bank Installments** | Server-to-Server only: card payments in monthly installments with the plans of the customer's bank. See [Bank installments](#bank-installments). |
 | **Payment Split** | Shares each payment with the sub-accounts of the Payment Split tab. See [Payment split](#payment-split). |
+| **POS Emulator** button | Test mode only: opens Fawry's POS Emulator, which pays the reference codes of test payments. See [Test reference codes with the POS Emulator](#test-reference-codes-with-the-pos-emulator). |
 | **Payment Journal** | Where paid orders are posted. Fawry Pay by default. |
 | **Currencies** | Egyptian pound (EGP) only. |
 | **Restrictions** tab | Odoo's usual limits: maximum amount, countries, websites. |
@@ -337,6 +365,7 @@ Fawry's platform are explained in Odoo:
 | The Fawry methods don't show at checkout | The provider is published and the methods are on; the website pricelist is in EGP; for methods other than cards, the customer's address is in Egypt; the provider belongs to the website's company and its Restrictions allow the order. |
 | "Fawry rejected the credentials" | The merchant code and secure key, without spaces. Test credentials work only with **Live** unticked, live ones only with **Live** ticked. |
 | Paid at Fawry, but the order still waits | Click **Check Fawry Status**. If it happens often: Fawry has your notification URL, the website is reachable over HTTPS, and the scheduled action **Fawry: check pending payments** is active (Settings › Technical › Scheduled Actions, developer mode). |
+| No POS Emulator button | The buttons show to administrators only, while **Live** is unticked; on a transaction, only while its Pay at Fawry reference code is unpaid. |
 | Customers can't save cards | Server-to-Server integration, **Allow Saving Payment Methods** ticked, customer signed in. |
 | A customer's saved card is no longer listed | Fawry no longer has it, or it expired: Odoo checks the cards with Fawry when it shows them (at most every 10 minutes) and stops offering those. The customer adds the card again. |
 | The pop-up opens as a full page | Expected on iPhone, iPad and Mac. |

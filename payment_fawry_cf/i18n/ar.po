@@ -299,6 +299,7 @@ msgstr "فورى تؤكد دفعتك. تتحدث هذه الصفحة تلقائ�
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
 msgid "Fawry reference code"
 msgstr "الكود المرجعي لفورى"
 
@@ -508,23 +509,6 @@ msgstr "معاملة الدفع"
 #: code:addons/payment_fawry_cf/static/src/interactions/payment_form.js:0
 msgid "Payment processing failed"
 msgstr "فشلت معالجة الدفع"
-
-#. module: payment_fawry_cf
-#: model:ir.module.module,description:base.module_payment_fawry_cf
-msgid ""
-"Payment provider for Fawry (FawryPay). Choose FawryPay Express Checkout, "
-"where customers pay on Fawry's hosted checkout in a full page, a pop-up or a"
-" side panel, or the Server-to-Server APIs, where cards are saved on Fawry's "
-"secure card page and charged with 3-D Secure, and Fawry reference codes, "
-"wallet QR codes and myFawry payments are shown on your website. Includes "
-"saved cards, refunds, payment notifications and Arabic."
-msgstr ""
-"مزود دفع لفورى (FawryPay). اختر FawryPay Express Checkout، حيث يدفع العملاء "
-"على صفحة الدفع المستضافة لدى فورى في صفحة كاملة أو نافذة منبثقة أو لوحة "
-"جانبية، أو الربط المباشر بين الخوادم، حيث تُحفظ البطاقات في صفحة البطاقات "
-"الآمنة لدى فورى ويُخصم منها مع 3-D Secure، وتُعرض الأكواد المرجعية لفورى "
-"ورموز QR للمحافظ ودفعات myFawry على موقعك. يشمل البطاقات المحفوظة والمبالغ "
-"المستردة وإشعارات الدفع واللغة العربية."
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields.selection,name:payment_fawry_cf.selection__payment_provider__fawry_display_mode__popup
@@ -1759,3 +1743,219 @@ msgid ""
 msgstr ""
 "المبالغ الموزعة على الحسابات لا يساوي مجموعها سعر أحد الأصناف (تقسيم "
 "المدفوعات)."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+".\n"
+"                                    The payment"
+msgstr ""
+".\n"
+"                                    الدفعة"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                                                <span class=\"o_fawry_copy_label\">Copy</span>\n"
+"                                                <span class=\"o_fawry_copied_label d-none\">Copied</span>"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                                                <span class=\"o_fawry_copy_label\">نسخ</span>\n"
+"                                                <span class=\"o_fawry_copied_label d-none\">تم النسخ</span>"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"open_in_new\" aria-hidden=\"true\"/>Open "
+"the POS Emulator"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"open_in_new\" aria-hidden=\"true\"/>افتح "
+"محاكي نقطة البيع"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "<span class=\"badge text-bg-warning mb-2\">Test mode</span>"
+msgstr "<span class=\"badge text-bg-warning mb-2\">وضع الاختبار</span>"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
+msgid ""
+"<span class=\"flex-grow-1\">\n"
+"                        Test mode, shown to administrators only: pay this reference code at Fawry's\n"
+"                        POS Emulator, as if at a Fawry outlet.\n"
+"                    </span>"
+msgstr ""
+"<span class=\"flex-grow-1\">\n"
+"                        وضع الاختبار، يظهر للمسؤولين فقط: ادفع هذا الكود المرجعي في محاكي نقطة البيع لدى فورى، كأنك في أحد منافذ فورى.\n"
+"                    </span>"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"<span class=\"spinner-grow spinner-grow-sm\" aria-hidden=\"true\"/>\n"
+"                                        Waiting for the payment. This page updates by itself once Fawry\n"
+"                                        has received it."
+msgstr ""
+"<span class=\"spinner-grow spinner-grow-sm\" aria-hidden=\"true\"/>\n"
+"                                        بانتظار الدفع. تتحدث هذه الصفحة تلقائيًا بمجرد أن تستلم فورى الدفعة."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Amount to pay"
+msgstr "المبلغ المطلوب"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Check the bill, then click <b>Confirm payment</b>."
+msgstr "راجع الفاتورة، ثم اضغط <b>Confirm payment</b>."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Copy the reference code."
+msgstr "انسخ الكود المرجعي."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Customer"
+msgstr "العميل"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Fawry received the payment of the reference code"
+msgstr "استلمت فورى دفعة الكود المرجعي"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid ""
+"Fawry's POS Emulator only pays the reference codes of test payments. Use it "
+"while the provider is in test mode."
+msgstr ""
+"لا يدفع محاكي نقطة البيع لدى فورى إلا الأكواد المرجعية للمدفوعات التجريبية. "
+"استخدمه أثناء وجود مزود الدفع في وضع الاختبار."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"Fawry's POS Emulator works like the Fawry outlets where customers pay\n"
+"                                their reference codes. Use it to test your reference-code payments\n"
+"                                from start to end: no money is paid."
+msgstr ""
+"يعمل محاكي نقطة البيع لدى فورى مثل منافذ فورى التي يدفع فيها العملاء أكوادهم المرجعية.\n"
+"                                استخدمه لاختبار مدفوعات الأكواد المرجعية من البداية إلى النهاية:\n"
+"                                لا تُدفع أي أموال."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_transaction.py:0
+msgid ""
+"Only the unpaid reference codes of test payments can be paid at Fawry's POS "
+"Emulator."
+msgstr ""
+"لا يمكن الدفع في محاكي نقطة البيع لدى فورى إلا للأكواد المرجعية غير المدفوعة"
+" للمدفوعات التجريبية."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Open the POS Emulator, paste the code and click <b>Continue</b>."
+msgstr "افتح محاكي نقطة البيع، والصق الكود واضغط <b>Continue</b>."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid "POS Emulator"
+msgstr "محاكي نقطة البيع"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Pay a test reference code"
+msgstr "ادفع كودًا مرجعيًا تجريبيًا"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
+msgid "Pay at POS Emulator"
+msgstr "الدفع في محاكي نقطة البيع"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
+msgid "Pay at the POS Emulator"
+msgstr "الدفع في محاكي نقطة البيع"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Pay before"
+msgstr "ادفع قبل"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_can_use_pos_emulator
+msgid "Payable at Fawry's POS Emulator"
+msgstr "قابل للدفع في محاكي نقطة البيع لدى فورى"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Payment"
+msgstr "الدفعة"
+
+#. module: payment_fawry_cf
+#: model:ir.module.module,description:base.module_payment_fawry_cf
+msgid ""
+"Payment provider for Fawry (FawryPay). Choose FawryPay Express Checkout, "
+"where customers pay on Fawry's hosted checkout in a full page, a pop-up or a"
+" side panel, or the Server-to-Server APIs, where cards are saved on Fawry's "
+"secure card page and charged with 3-D Secure, and Fawry reference codes, "
+"wallet QR codes and myFawry payments are shown on your website. Includes "
+"saved cards that customers manage on the website, bank installments, payment"
+" split with Fawry sub-accounts, refunds, payment notifications, every Fawry "
+"error code explained, Fawry's POS Emulator to test reference codes, and "
+"Arabic."
+msgstr ""
+"مزود دفع لفورى (FawryPay). اختر FawryPay Express Checkout، حيث يدفع العملاء "
+"على صفحة الدفع المستضافة لدى فورى في صفحة كاملة أو نافذة منبثقة أو لوحة "
+"جانبية، أو الربط المباشر بين الخوادم، حيث تُحفظ البطاقات في صفحة البطاقات "
+"الآمنة لدى فورى ويُخصم منها مع 3-D Secure، وتُعرض الأكواد المرجعية لفورى "
+"ورموز QR للمحافظ ودفعات myFawry على موقعك. يشمل البطاقات المحفوظة التي "
+"يديرها العملاء على الموقع، والتقسيط البنكي، وتقسيم المدفوعات مع الحسابات "
+"الفرعية لدى فورى، والمبالغ المستردة، وإشعارات الدفع، وشرح كل أكواد أخطاء "
+"فورى، ومحاكي نقطة البيع لدى فورى لاختبار الأكواد المرجعية، واللغة العربية."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid ""
+"Test mode: open Fawry's POS Emulator, which pays the reference codes of test"
+" payments as if at a Fawry outlet."
+msgstr ""
+"وضع الاختبار: افتح محاكي نقطة البيع لدى فورى، الذي يدفع الأكواد المرجعية "
+"للمدفوعات التجريبية كأنك في أحد منافذ فورى."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
+msgid ""
+"Test mode: pay this reference code at Fawry's POS Emulator, as if at a Fawry"
+" outlet."
+msgstr ""
+"وضع الاختبار: ادفع هذا الكود المرجعي في محاكي نقطة البيع لدى فورى، كأنك في "
+"أحد منافذ فورى."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "The reference code"
+msgstr "الكود المرجعي"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_can_use_pos_emulator
+msgid ""
+"Whether the reference code of this test payment can be paid at Fawry's POS "
+"Emulator."
+msgstr ""
+"ما إذا كان يمكن دفع الكود المرجعي لهذه الدفعة التجريبية في محاكي نقطة البيع "
+"لدى فورى."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "is confirmed."
+msgstr "مؤكدة."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "is no longer waiting for a payment. Status of the payment"
+msgstr "لم يعد بانتظار الدفع. حالة الدفعة"

@@ -20,8 +20,10 @@
                    "on Fawry's hosted checkout in a full page, a pop-up or a side panel, or the Server-to-Server "
                    "APIs, where cards are saved on Fawry's secure card page and charged with 3-D Secure, and "
                    "Fawry reference codes, wallet QR codes and myFawry payments are shown on your website. "
-                   "Includes saved cards, refunds, payment notifications and Arabic.",
-    'version': '20.0.1.2.0',
+                   "Includes saved cards that customers manage on the website, bank installments, payment "
+                   "split with Fawry sub-accounts, refunds, payment notifications, every Fawry error code "
+                   "explained, Fawry's POS Emulator to test reference codes, and Arabic.",
+    'version': '20.0.1.3.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'author': "mediafish",

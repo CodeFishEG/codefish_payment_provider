@@ -107,8 +107,23 @@ class PaymentTransaction(models.Model):
         help="What the error returned by Fawry means.",
         compute="_compute_fawry_error_explanation",
     )
+    fawry_can_use_pos_emulator = fields.Boolean(
+        string="Payable at Fawry's POS Emulator",
+        help="Whether the reference code of this test payment can be paid at Fawry's POS Emulator.",
+        compute="_compute_fawry_can_use_pos_emulator",
+    )
 
     # === COMPUTE METHODS === #
+
+    @api.depends("provider_id.is_live", "state", "provider_reference", "payment_method_id")
+    def _compute_fawry_can_use_pos_emulator(self):
+        for tx in self:
+            tx.fawry_can_use_pos_emulator = (
+                tx.provider_code == "fawry"
+                and not tx.provider_id.is_live
+                and tx.state == "pending"
+                and tx._fawry_is_reference_code()
+            )
 
     @api.depends("fawry_error_code", "fawry_error_details")
     def _compute_fawry_error_explanation(self):
@@ -960,12 +975,19 @@ class PaymentTransaction(models.Model):
             kind = "wallet"
         else:
             kind = "confirming"  # E.g. a card payment Fawry hasn't confirmed yet.
+        # Administrators testing their checkout can pay test reference codes at the POS Emulator.
+        pos_emulator_url = (
+            self.fawry_can_use_pos_emulator
+            and self.env.user._is_system()
+            and self._fawry_get_pos_emulator_page_url()
+        )
         return {
             "kind": kind,
             "reference": reference,
             "grouped_reference": grouped_reference,
             "amount": self.amount + (self.fawry_fees or 0.0),
             "access_token": self._fawry_get_access_token(),
+            "pos_emulator_url": pos_emulator_url,
         }
 
     # === CRON === #
@@ -1019,6 +1041,26 @@ class PaymentTransaction(models.Model):
         return self._fawry_get_notification_action(
             self.env._("The payment was canceled at Fawry."),
         )
+
+    def action_fawry_pay_at_pos_emulator(self):
+        """Open the page that pays the reference code of a test payment at Fawry's POS Emulator."""
+        self.ensure_one()
+        payment_utils.check_rights_on_recordset(self)
+        if not self.fawry_can_use_pos_emulator:
+            raise UserError(self.env._(
+                "Only the unpaid reference codes of test payments can be paid at Fawry's POS "
+                "Emulator.",
+            ))
+        return {
+            "type": "ir.actions.act_url",
+            "url": self._fawry_get_pos_emulator_page_url(),
+            "target": "new",
+        }
+
+    def _fawry_get_pos_emulator_page_url(self):
+        """Return the URL of the page that pays the reference code at Fawry's POS Emulator."""
+        self.ensure_one()
+        return f"{FawryController._pos_emulator_url}/{self.id}"
 
     def _fawry_get_notification_action(self, message):
         """Return a notification for a status recorded by an action.

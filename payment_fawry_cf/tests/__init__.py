@@ -21,5 +21,6 @@ from . import (
     test_payment_split,
     test_payment_token,
     test_payment_transaction,
+    test_pos_emulator,
     test_processing_flows,
 )

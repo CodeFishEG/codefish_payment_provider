@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 15:12+0000\n"
-"PO-Revision-Date: 2026-11-12 15:12+0000\n"
+"POT-Creation-Date: 2026-11-12 17:17+0000\n"
+"PO-Revision-Date: 2026-11-12 17:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,8 +45,23 @@ msgid ""
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+".\n"
+"                                    The payment"
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.wallet_form
 msgid "01XXXXXXXXX"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                                                <span class=\"o_fawry_copy_label\">Copy</span>\n"
+"                                                <span class=\"o_fawry_copied_label d-none\">Copied</span>"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -63,6 +78,13 @@ msgid ""
 "<i class=\"oi me-1\" data-icon=\"lock\" aria-hidden=\"true\"/>\n"
 "                                    Your bank confirms the payment and the final amount of the plan\n"
 "                                    (3-D Secure). The installments are collected by your bank."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"open_in_new\" aria-hidden=\"true\"/>Open "
+"the POS Emulator"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -90,12 +112,26 @@ msgid "<i class=\"oi me-1\" data-icon=\"send\" aria-hidden=\"true\"/>Request to 
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "<span class=\"badge text-bg-warning mb-2\">Test mode</span>"
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
 msgid ""
 "<span class=\"flex-grow-1\">\n"
 "                                            <span class=\"d-block fw-bold\">Pay in full</span>\n"
 "                                            <span class=\"small text-muted\">One payment, today.</span>\n"
 "                                        </span>"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
+msgid ""
+"<span class=\"flex-grow-1\">\n"
+"                        Test mode, shown to administrators only: pay this reference code at Fawry's\n"
+"                        POS Emulator, as if at a Fawry outlet.\n"
+"                    </span>"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -111,6 +147,14 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
 msgid "<span class=\"small text-muted\">per month</span>"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"<span class=\"spinner-grow spinner-grow-sm\" aria-hidden=\"true\"/>\n"
+"                                        Waiting for the payment. This page updates by itself once Fawry\n"
+"                                        has received it."
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -172,6 +216,11 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model:ir.model.fields.selection,name:payment_fawry_cf.selection__payment_fawry_split_account__apply_to__all
 msgid "All items"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Amount to pay"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -242,6 +291,11 @@ msgid "Check Fawry Status"
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Check the bill, then click <b>Confirm payment</b>."
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
 msgid "Check the merchant code and the secure key with Fawry."
 msgstr ""
@@ -279,6 +333,11 @@ msgid "Continue"
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Copy the reference code."
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
 msgid ""
 "Create the sub-accounts in Fawry's dashboard (My Accounts &gt; Payment\n"
@@ -296,6 +355,11 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Customer"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -528,7 +592,13 @@ msgid "Fawry is confirming your payment. This page updates by itself."
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Fawry received the payment of the reference code"
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
 msgid "Fawry reference code"
 msgstr ""
 
@@ -568,6 +638,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Fawry sent the latest status of the payment."
+msgstr ""
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid ""
+"Fawry's POS Emulator only pays the reference codes of test payments. Use it "
+"while the provider is in test mode."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid ""
+"Fawry's POS Emulator works like the Fawry outlets where customers pay\n"
+"                                their reference codes. Use it to test your reference-code payments\n"
+"                                from start to end: no money is paid."
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -736,7 +822,20 @@ msgstr ""
 #. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
+msgid ""
+"Only the unpaid reference codes of test payments can be paid at Fawry's POS "
+"Emulator."
+msgstr ""
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Only unpaid Fawry payments can be canceled."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Open the POS Emulator, paste the code and click <b>Continue</b>."
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -750,8 +849,33 @@ msgid "Open your mobile wallet app and choose to pay by QR code."
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid "POS Emulator"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Pay a test reference code"
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_pay_at_fawry
 msgid "Pay at Fawry"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
+msgid "Pay at POS Emulator"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
+msgid "Pay at the POS Emulator"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Pay before"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -762,6 +886,16 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "Pay with any method saved in the app."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_can_use_pos_emulator
+msgid "Payable at Fawry's POS Emulator"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "Payment"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -804,7 +938,10 @@ msgid ""
 " side panel, or the Server-to-Server APIs, where cards are saved on Fawry's "
 "secure card page and charged with 3-D Secure, and Fawry reference codes, "
 "wallet QR codes and myFawry payments are shown on your website. Includes "
-"saved cards, refunds, payment notifications and Arabic."
+"saved cards that customers manage on the website, bank installments, payment"
+" split with Fawry sub-accounts, refunds, payment notifications, every Fawry "
+"error code explained, Fawry's POS Emulator to test reference codes, and "
+"Arabic."
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -928,6 +1065,20 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
 msgid "Test Connection"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid ""
+"Test mode: open Fawry's POS Emulator, which pays the reference codes of test"
+" payments as if at a Fawry outlet."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_transaction_form
+msgid ""
+"Test mode: pay this reference code at Fawry's POS Emulator, as if at a Fawry"
+" outlet."
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -1371,6 +1522,11 @@ msgid "The products whose price is shared with this sub-account."
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "The reference code"
+msgstr ""
+
+#. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/const.py:0
 msgid "The refund is higher than the amount paid."
@@ -1502,6 +1658,13 @@ msgid ""
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_can_use_pos_emulator
+msgid ""
+"Whether the reference code of this test payment can be paid at Fawry's POS "
+"Emulator."
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model:ir.model.fields,help:payment_fawry_cf.field_payment_fawry_split_account__name
 msgid "Who receives this share, for example a seller or a partner."
 msgstr ""
@@ -1585,6 +1748,16 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
 msgid "in total"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "is confirmed."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.pos_emulator_page
+msgid "is no longer waiting for a payment. Status of the payment"
 msgstr ""
 
 #. module: payment_fawry_cf

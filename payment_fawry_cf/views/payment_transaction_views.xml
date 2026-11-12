@@ -22,6 +22,14 @@
                     confirm="The customer won't be able to pay this Fawry payment anymore. Continue?"
                     invisible="provider_code != 'fawry' or state != 'pending' or not provider_reference"
                 />
+                <button
+                    string="Pay at POS Emulator"
+                    help="Test mode: pay this reference code at Fawry's POS Emulator, as if at a Fawry outlet."
+                    type="object"
+                    name="action_fawry_pay_at_pos_emulator"
+                    invisible="not fawry_can_use_pos_emulator"
+                />
+                <field name="fawry_can_use_pos_emulator" invisible="1"/>
             </header>
             <notebook position="inside">
                 <page string="Fawry" name="fawry" invisible="provider_code != 'fawry'">

@@ -204,6 +204,16 @@ class PaymentProvider(models.Model):
             },
         }
 
+    def action_fawry_open_pos_emulator(self):
+        """Open Fawry's POS Emulator, which pays the reference codes of test payments."""
+        self.ensure_one()
+        if self.is_live:
+            raise UserError(self.env._(
+                "Fawry's POS Emulator only pays the reference codes of test payments. Use it while "
+                "the provider is in test mode.",
+            ))
+        return {"type": "ir.actions.act_url", "url": const.POS_EMULATOR_URL, "target": "new"}
+
     def action_fawry_show_installment_plans(self):
         """Show the installment plans that Fawry activated on the merchant account."""
         self.ensure_one()

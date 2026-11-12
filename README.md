@@ -194,9 +194,13 @@ merchant's account; staff see the explanation in the transaction's Fawry tab.
 ### Testing on Fawry's staging
 
 Use Fawry's staging test cards (CVV 100, expiry 01/39): Visa 4508 7500 1574 1019, Mastercard
-5123 4500 0000 0008. Pay staging reference codes at Fawry's POS emulator
-(https://developer.fawrystaging.com/public/pay-order/). Fawry's card page refuses `localhost` return URLs: run
-the server on `http://127.0.0.1:<port>` and set `web.base.url` to it.
+5123 4500 0000 0008. Pay staging reference codes at Fawry's Integration POS Emulator
+(https://developer.fawrystaging.com/public/pay-order/). In test mode, administrators open it from Odoo:
+**POS Emulator** on the provider, **Pay at POS Emulator** on a pending reference-code transaction, or the "Test
+mode" box of the confirmation page. These lead to `/payment/fawry/pos_emulator/<tx id>`, a page for
+administrators only that gives the code to copy and updates by itself once Fawry has the payment. Fawry's
+firewall refuses forms posted from other sites, so the code can't be filled in for you. Fawry's card page
+refuses `localhost` return URLs: run the server on `http://127.0.0.1:<port>` and set `web.base.url` to it.
 
 ## Development
 
@@ -212,7 +216,8 @@ codefish_payment_provider/
     ├── const.py                  endpoints, method and status mappings, error codes
     ├── exceptions.py             FawryError (an error returned by Fawry, with its code)
     ├── utils.py                  signatures, amounts, phone numbers, languages, card brands
-    ├── controllers/main.py       return, card page, installment plans, webhook, charge and poll routes
+    ├── controllers/main.py       return, card page, installment plans, webhook, charge and poll routes,
+    │                             POS Emulator page (test mode, administrators)
     ├── controllers/portal.py     checks the saved cards with Fawry before the payment forms show them
     ├── models/                   payment.provider, payment.transaction, payment.token,
     │                             payment.fawry.split.account (payment split sub-accounts)
@@ -244,7 +249,8 @@ python odoo-bin db -c odoo-server.conf drop odoo20_payment_fawry_cf_test
 ```
 
 The tests mock Fawry's API: they check every signature against an independent implementation, the state
-mapping, refunds, saved cards, the routes (signatures, access tokens) and the waiting page.
+mapping, refunds, saved cards, bank installments, payment split, error codes, the routes (signatures, access
+tokens), the waiting page and the POS Emulator page.
 
 ### Translations
 

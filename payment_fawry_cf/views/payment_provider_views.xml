@@ -15,6 +15,14 @@
                     invisible="code != 'fawry'"
                     class="btn-secondary"
                 />
+                <button
+                    string="POS Emulator"
+                    help="Test mode: open Fawry's POS Emulator, which pays the reference codes of test payments as if at a Fawry outlet."
+                    type="object"
+                    name="action_fawry_open_pos_emulator"
+                    invisible="code != 'fawry' or is_live"
+                    class="btn-secondary"
+                />
             </header>
             <group name="provider_credentials" position="inside">
                 <field

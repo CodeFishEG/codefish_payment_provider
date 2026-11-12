@@ -168,6 +168,33 @@
                 </p>
             </div>
         </div>
+        <div class="col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="border rounded h-100" style="padding: 22px; border-color: #FFD228 !important; border-width: 2px !important;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Installments and payment split</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    Card payments in monthly installments with the plans of the customer's bank, and each payment
+                    shared with your Fawry sub-accounts. Each one turns on with a tick.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="border rounded h-100" style="padding: 22px; border-color: #006D95 !important; border-width: 2px !important;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Every error explained</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    Every Fawry error code is explained: your team sees what it means and what to check, your
+                    customers see what to do, and never the details of your account.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="border rounded h-100" style="padding: 22px; border-color: #FF7900 !important; border-width: 2px !important;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Test without an outlet</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    In test mode, pay test reference codes at Fawry's POS Emulator, straight from Odoo, and watch the
+                    order get confirmed, as if the customer had paid at a Fawry outlet.
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -718,11 +745,44 @@
                         <tr><td>Visa card</td><td>4508 7500 1574 1019, expiry 01/39, CVV 100</td></tr>
                         <tr><td>Mastercard</td><td>5123 4500 0000 0008, expiry 01/39, CVV 100</td></tr>
                         <tr><td>3-D Secure</td><td>On Fawry's test bank page, keep "Authentication Successful" and click <b>Submit</b></td></tr>
-                        <tr><td>Pay at Fawry</td><td>Pay the reference code on Fawry's test outlet page (Fawry's developer portal, "Pay order")</td></tr>
+                        <tr><td>Pay at Fawry</td><td>Fawry's POS Emulator, opened from Odoo: see <a href="#pos-emulator" style="color: #006D95;">below</a></td></tr>
                     </tbody>
                 </table>
             </div>
             <p style="font-size: 14px; color: #5B6472;">Test card numbers are Fawry's published test data and may change; Fawry's developer portal has the current list.</p>
+
+            <h4 id="pos-emulator" style="font-size: 18px; font-weight: 700; color: #1F2937; margin-top: 24px;">Test reference codes with the POS Emulator</h4>
+            <p style="font-size: 15px; color: #374151;">
+                Customers pay their reference codes at Fawry outlets. In test mode, Fawry's <b>Integration POS
+                Emulator</b> plays the outlet: it pays the reference codes of your test account, and Fawry then confirms
+                the payment to Odoo as it would in real life. You test the whole journey without leaving your desk. Only
+                administrators get to it, and only while <b>Live</b> is unticked. Three ways in:
+            </p>
+            <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
+                <li style="margin-bottom: 4px;"><b>From the provider:</b> the <b>POS Emulator</b> button at the top opens the emulator.</li>
+                <li style="margin-bottom: 4px;"><b>From a pending transaction</b> paid with Pay at Fawry: <b>Pay at POS Emulator</b> opens a page with the reference code and its <b>Copy</b> button, the amount, the deadline, the steps and an <b>Open the POS Emulator</b> button.</li>
+                <li style="margin-bottom: 4px;"><b>From your website,</b> when you place a test order signed in as an administrator: the confirmation page shows a yellow "Test mode" box with <b>Pay at the POS Emulator</b>. Customers never see it.</li>
+            </ul>
+            <p style="font-size: 15px; color: #374151;">
+                In the emulator, paste the code, click <b>Continue</b>, check the bill and click <b>Confirm payment</b>.
+                Odoo's page and the customer's confirmation page update by themselves once Fawry has received the
+                payment: the order is confirmed and the payment posted in Fawry Pay. Fawry doesn't let other websites
+                fill in the emulator, which is why the code is copied and pasted.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_pos_emulator.png" alt="The page that pays a test reference code at Fawry's POS Emulator" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;"><b>Pay at POS Emulator</b>: the code to copy, then the emulator.</p>
+        </div>
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_pos_emulator_link.png" alt="The test mode box shown to administrators on the confirmation page of a reference code" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The "Test mode" box, for administrators only, on the confirmation page.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1">
 
             <h4 style="font-size: 20px; font-weight: 700; color: #1F2937; margin-top: 24px;"><span style="display: inline-block; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; background-color: #FFD228; color: #1F2937; margin-right: 8px;">8</span>Go live</h4>
             <ol style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 32px;">
@@ -756,6 +816,7 @@
                         <tr><td><b>Allow Saving Payment Methods</b></td><td>Server-to-Server only: customers can save cards.</td></tr>
                         <tr><td><b>Bank Installments</b></td><td>Server-to-Server only: customers can pay by card with the installment plans of their bank. <b>Show Installment Plans</b> lists the plans Fawry activated. See <a href="#installments" style="color: #006D95;">Bank installments</a>.</td></tr>
                         <tr><td><b>Payment Split</b></td><td>Shares each payment with the sub-accounts of the <b>Payment Split</b> tab (name, sub-account code, share, items it applies to). See <a href="#payment-split" style="color: #006D95;">Payment split</a>.</td></tr>
+                        <tr><td><b>POS Emulator</b> button</td><td>Test mode only, for administrators: opens Fawry's POS Emulator, which pays the reference codes of test payments. See <a href="#pos-emulator" style="color: #006D95;">Test reference codes with the POS Emulator</a>.</td></tr>
                         <tr><td><b>Payment Journal</b></td><td>Where paid orders are posted. Fawry Pay by default.</td></tr>
                         <tr><td><b>Currencies</b></td><td>Egyptian pound (EGP) only.</td></tr>
                         <tr><td><b>Restrictions</b> tab</td><td>Odoo's usual limits: maximum amount, countries, websites.</td></tr>
@@ -1054,6 +1115,7 @@
                 <li style="margin-bottom: 6px;"><b>3-D Secure</b> on every card payment, saved cards included: the customer confirms each payment with their bank.</li>
                 <li style="margin-bottom: 6px;"><b>Signed requests.</b> Every request to Fawry is signed with your secure key, and Fawry's answers, returns and notifications are checked against Fawry's signature.</li>
                 <li style="margin-bottom: 6px;"><b>Protected pages.</b> Payment pages and status checks are tied to the payment by a secret token; one customer cannot see another's payment.</li>
+                <li style="margin-bottom: 6px;"><b>Tests stay tests.</b> The POS Emulator buttons and page are for administrators only and work in test mode only; the emulator pays test reference codes, never real ones.</li>
                 <li style="margin-bottom: 6px;"><b>Restricted credentials.</b> Only administrators see the secure key. It never appears in the logs.</li>
                 <li style="margin-bottom: 6px;"><b>Safe copies.</b> When a database is duplicated for testing (neutralized), the Fawry credentials are removed, so a copy can never take real payments.</li>
             </ul>
@@ -1089,6 +1151,9 @@
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">The customer paid, but the order is still waiting.</h4>
             <p style="font-size: 15px; color: #374151;">Click <b>Check Fawry Status</b> on the transaction. If it happens often, check that Fawry has your notification URL, that your website is reachable over HTTPS, and that the scheduled action <b>Fawry: check pending payments</b> is active (Settings › Technical › Scheduled Actions, in developer mode).</p>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">How do I test a reference code without going to a Fawry outlet?</h4>
+            <p style="font-size: 15px; color: #374151;">With the provider in test mode, click <b>Pay at POS Emulator</b> on the pending transaction, or <b>Pay at the POS Emulator</b> on the confirmation page while signed in as an administrator. Copy the code into Fawry's POS Emulator and confirm the bill. See <a href="#pos-emulator" style="color: #006D95;">Test reference codes with the POS Emulator</a>.</p>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">A reference code expired.</h4>
             <p style="font-size: 15px; color: #374151;">The transaction is canceled. Send the customer a new payment link for the order or the invoice; paying it creates a new code. Raise the <b>Payment Expiry</b> if your customers need more time.</p>
@@ -1134,8 +1199,8 @@
                         <tr><td><b>Website</b></td><td>Reachable from the internet over HTTPS</td></tr>
                         <tr><td><b>Currency</b></td><td>Egyptian pound (EGP)</td></tr>
                         <tr><td><b>Languages</b></td><td>English and Arabic, for every Arabic language installed in Odoo</td></tr>
-                        <tr><td><b>Version</b></td><td>20.0.1.2.0</td></tr>
-                        <tr><td><b>What's new</b></td><td><b>20.0.1.2.0:</b> bank installments; payment split; every Fawry error code explained to staff and customers; customer-facing texts name your company.<br/><b>20.0.1.1.0:</b> customers add, choose and remove their saved cards on the website; expiry dates shown; saved cards kept in line with Fawry.<br/><b>20.0.1.0.0:</b> first release.</td></tr>
+                        <tr><td><b>Version</b></td><td>20.0.1.3.0</td></tr>
+                        <tr><td><b>What's new</b></td><td><b>20.0.1.3.0:</b> in test mode, administrators pay test reference codes at Fawry's POS Emulator, from the provider, the transaction or the confirmation page.<br/><b>20.0.1.2.0:</b> bank installments; payment split; every Fawry error code explained to staff and customers; customer-facing texts name your company.<br/><b>20.0.1.1.0:</b> customers add, choose and remove their saved cards on the website; expiry dates shown; saved cards kept in line with Fawry.<br/><b>20.0.1.0.0:</b> first release.</td></tr>
                     </tbody>
                 </table>
             </div>

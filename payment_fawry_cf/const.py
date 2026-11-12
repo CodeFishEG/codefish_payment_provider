@@ -28,6 +28,10 @@ API_URLS = {
     "live": "https://www.atfawry.com",
 }
 
+# Fawry's Integration POS Emulator: a web page that works like the Fawry outlets, to pay the
+# reference codes of the test environment. It has no API, and refuses forms sent from other sites.
+POS_EMULATOR_URL = "https://developer.fawrystaging.com/public/pay-order/"
+
 # API endpoints, relative to the base URL.
 ENDPOINT_INIT = "/fawrypay-api/api/payments/init"  # Express Checkout (hosted page)
 ENDPOINT_CHARGE = "/ECommerceWeb/Fawry/payments/charge"  # Server-to-server charge
