@@ -98,7 +98,8 @@ Odoo user. The provider's **Test Data** tab (test mode only) lists Paymob's publ
 | Mastercard | 5123 4567 8901 2346 or 5123 4500 0000 0008, expiry 01/39, CVV 123, name Test Account |
 | Visa | 4111 1111 1111 1111, expiry 01/39, CVV 123, name Test Account |
 | Mobile wallet | Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456 |
-| Kiosk, installments | Paymob has no simulator: test them with small live payments |
+| Kiosk | A reference number that stays pending: Paymob has no kiosk simulator |
+| Installments | Live integrations only: test them with a small live payment |
 
 You can test on a computer that the internet can't reach: Paymob's notifications won't arrive, but Odoo asks Paymob
 for the status when the customer comes back, while the customer waits, and every 15 minutes, and fetches the cards
@@ -125,6 +126,8 @@ it. Paymob offers Apple Pay in Egypt, Saudi Arabia, the United Arab Emirates and
 integrations only**: it can't be tested in test mode. Apple Pay payments can be refunded fully or partially.
 
 The provider's **Apple Pay** tab repeats these steps, with the file upload and the **Activate Apple Pay** button.
+
+![The Apple Pay tab](../static/description/screenshot_apple_pay.png)
 
 ### With Paymob Checkout
 

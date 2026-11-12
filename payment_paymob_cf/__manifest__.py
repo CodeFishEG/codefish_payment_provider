@@ -15,15 +15,16 @@
 {
     'name': "Paymob Payments",
     'summary': "Accept Paymob in Egypt, Saudi Arabia, the UAE, Oman and Pakistan: cards, wallets, "
-               "kiosk, valU and other installments, with Paymob's hosted checkout or an embedded card "
-               "form, saved cards, refunds and manual capture",
+               "kiosk, valU and other installments, Apple Pay, with Paymob's hosted checkout or an "
+               "embedded card form, saved cards, refunds and manual capture",
     'description': "Payment provider for Paymob. Choose Paymob Checkout, where customers pay on Paymob's "
                    "hosted page in a full page, a pop-up or a side panel, or the Embedded checkout, "
                    "where the card form opens on your website and saved cards, manual capture and "
                    "merchant-initiated charges use Paymob's server APIs. Includes every Paymob country, "
                    "saved cards, full and partial refunds, authorize and capture, payment split with "
-                   "connected merchants, bank installments, Paymob's response codes explained, test "
-                   "data for administrators, payment notifications and Arabic.",
+                   "connected merchants, bank installments, Apple Pay with a guided set-up, Paymob's "
+                   "response codes explained, test data for administrators, payment notifications and "
+                   "status checks, and Arabic.",
     'version': '20.0.1.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,

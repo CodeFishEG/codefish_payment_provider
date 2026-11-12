@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 19:41+0000\n"
-"PO-Revision-Date: 2026-11-12 19:41+0000\n"
+"POT-Creation-Date: 2026-11-12 19:56+0000\n"
+"PO-Revision-Date: 2026-11-12 19:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -97,6 +97,11 @@ msgid "A merchant can only be added once to a provider."
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "A reference number that stays pending: Paymob has no kiosk simulator."
+msgstr ""
+
+#. module: payment_paymob_cf
 #. odoo-python
 #: code:addons/payment_paymob_cf/const.py:0
 msgid ""
@@ -118,8 +123,8 @@ msgstr ""
 #: model:ir.module.module,summary:base.module_payment_paymob_cf
 msgid ""
 "Accept Paymob in Egypt, Saudi Arabia, the UAE, Oman and Pakistan: cards, "
-"wallets, kiosk, valU and other installments, with Paymob's hosted checkout "
-"or an embedded card form, saved cards, refunds and manual capture"
+"wallets, kiosk, valU and other installments, Apple Pay, with Paymob's hosted"
+" checkout or an embedded card form, saved cards, refunds and manual capture"
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -554,6 +559,11 @@ msgstr ""
 
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Installments"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "Integration ID"
 msgstr ""
 
@@ -577,6 +587,7 @@ msgstr ""
 
 #. module: payment_paymob_cf
 #: model:payment.method,name:payment_paymob_cf.payment_method_kiosk
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "Kiosk"
 msgstr ""
 
@@ -588,11 +599,6 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
 msgid "Kiosk reference number"
-msgstr ""
-
-#. module: payment_paymob_cf
-#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Kiosk, installments"
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -608,6 +614,11 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Live integrations only: test them with a small live payment."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -766,8 +777,9 @@ msgid ""
 "cards, manual capture and merchant-initiated charges use Paymob's server "
 "APIs. Includes every Paymob country, saved cards, full and partial refunds, "
 "authorize and capture, payment split with connected merchants, bank "
-"installments, Paymob's response codes explained, test data for "
-"administrators, payment notifications and Arabic."
+"installments, Apple Pay with a guided set-up, Paymob's response codes "
+"explained, test data for administrators, payment notifications and status "
+"checks, and Arabic."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -1003,11 +1015,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_paymob_cf/const.py:0
 msgid "Paymob has no payment for this reference yet."
-msgstr ""
-
-#. module: payment_paymob_cf
-#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Paymob has no simulator: test them with small live payments."
 msgstr ""
 
 #. module: payment_paymob_cf

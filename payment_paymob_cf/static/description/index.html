@@ -17,6 +17,8 @@
                 <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">English &amp; Arabic</span>
                 <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">No PCI-DSS scope</span>
                 <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">Saved cards, capture &amp; split</span>
+                <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">Apple Pay</span>
+                <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">Checked on Paymob's platform</span>
             </p>
         </div>
     </div>
@@ -138,7 +140,8 @@
                 <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Pay without leaving your site</h4>
                 <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
                     Paymob Checkout opens in a pop-up, a side panel or a full page. With the embedded integration, the
-                    card form opens right on your payment page.
+                    card form opens right on your payment page. The pop-up follows the payment and takes the customer to
+                    the confirmation page as soon as it is paid.
                 </p>
             </div>
         </div>
@@ -196,6 +199,33 @@
                 </p>
             </div>
         </div>
+        <div class="col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="border rounded h-100" style="padding: 22px; border-color: #004EFF !important; border-width: 2px !important;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Apple Pay in a few clicks</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    Apple Pay for customers on iPhone, iPad and Mac, hidden for the others. The Apple Pay tab guides you
+                    step by step, and Activate Apple Pay finds your Apple Pay integration and turns it on.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="border rounded h-100" style="padding: 22px; border-color: #0B1F4D !important; border-width: 2px !important;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Checked on Paymob's platform</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    Card payments with 3-D Secure, mobile wallets, kiosk references, saved cards, refunds and status checks
+                    were checked with a Paymob test account, in a full page, in a pop-up and in the embedded form.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="border rounded h-100" style="padding: 22px; border-color: #FFD228 !important; border-width: 2px !important;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Easy to test</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    A Test Data tab with Paymob's test cards and wallet, a Test Connection button, and status checks
+                    that work even on a computer Paymob's notifications can't reach.
+                </p>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-bottom: 24px;">
@@ -210,6 +240,7 @@
                     <li>the embedded card form, pop-up and side-panel displays;</li>
                     <li>saved cards, merchant-initiated charges (MOTO), authorize and capture, void, full and partial refunds;</li>
                     <li>refund, capture and void notifications, kiosk references, status checks, payment split, response codes explained;</li>
+                    <li>Apple Pay with a guided set-up, a pop-up that follows the payment, saved cards fetched from Paymob;</li>
                     <li>its own bank journal, test data for administrators, and Arabic.</li>
                 </ul>
                 <p style="font-size: 15px; color: #374151; margin-top: 8px; margin-bottom: 0;">
@@ -325,6 +356,11 @@
                 <li style="margin-bottom: 4px;">The customer confirms the payment with their bank (3-D Secure).</li>
                 <li style="margin-bottom: 4px;">Back on your website, the order is confirmed: "Your payment has been processed."</li>
             </ol>
+            <p style="font-size: 15px; color: #374151;">
+                The pop-up and the side panel follow the payment: once it is paid, the customer goes to the confirmation
+                page, even if their browser blocks Paymob's return or they close the window. A payment that still waits
+                for the customer, such as a wallet PIN or a kiosk reference, keeps the window open until they close it.
+            </p>
             <h4 style="font-size: 20px; font-weight: 700; color: #1F2937; margin-top: 20px;">Paying in cash at a kiosk</h4>
             <ol style="font-size: 15px; color: #374151; padding-left: 20px;">
                 <li style="margin-bottom: 4px;">The customer chooses <b>Kiosk</b>; Paymob Checkout gives a reference number.</li>
@@ -337,6 +373,16 @@
                 their phone. With valU, Souhoola, Tabby, Tamara or bank installments, the customer chooses the plan on Paymob
                 Checkout; the order is paid in Odoo as usual.
             </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-center" style="margin-bottom: 32px;">
+            <img src="screenshot_popup_checkout.png" alt="Paymob Checkout in a pop-up over the payment page" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">Paymob Checkout in a pop-up, over your payment page.</p>
+        </div>
+        <div class="col-lg-6 text-center" style="margin-bottom: 32px;">
+            <img src="screenshot_embedded_form.png" alt="Paymob's card form embedded in the payment page, saving the card" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The embedded card form; the card is saved for the next payments.</p>
         </div>
     </div>
     <div class="row">
@@ -368,7 +414,18 @@
                 <li style="margin-bottom: 6px;"><b>Charges while the customer is away</b> (for example subscriptions): Odoo charges the saved card through your MOTO integration.</li>
                 <li style="margin-bottom: 6px;"><b>Remove a card:</b> the customer clicks the bin in <b>My Payment Methods</b>. Paymob offers no API to delete saved cards: the card is removed from Odoo and can't be used any more. Expired cards are removed by themselves.</li>
             </ul>
+            <p style="font-size: 15px; color: #374151;">Paymob sends the saved card to Odoo in its own notification; when the payment is confirmed, Odoo also asks Paymob for the card, so it is saved even if that notification is late or can't reach your website.</p>
             <p style="font-size: 15px; color: #374151;">To turn it on: choose <b>Embedded checkout</b> on the provider and tick <b>Allow Saving Payment Methods</b>. Paymob Checkout can't save cards for Odoo.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_saved_card.png" alt="A saved card offered at checkout, with its expiry date" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">At checkout, the saved card comes first; other methods stay one click away.</p>
+        </div>
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_my_payment_methods.png" alt="The saved card in the customer's My Payment Methods page" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">My Account › Payment Methods: the customer's saved cards, with a bin to remove them.</p>
         </div>
     </div>
 </section>
@@ -414,6 +471,12 @@
                 you what is still missing: the country, the live mode, the Apple Pay integration of your Paymob
                 account or the domain file.
             </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_apple_pay.png" alt="The Apple Pay tab of the Paymob provider, with the set-up steps" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The Apple Pay tab: every step, the domain file and the Activate Apple Pay button.</p>
         </div>
     </div>
 </section>
@@ -529,6 +592,12 @@
                 test orders. The <b>Test Data</b> tab of the provider lists Paymob's published test cards and test wallet,
                 with links to Paymob's webhook tester and HMAC checker.
             </p>
+            <p style="font-size: 15px; color: #374151;">
+                You can test on a computer the internet can't reach: Paymob's notifications won't arrive, but Odoo asks
+                Paymob for the status when the customer comes back, while the customer waits and every 15 minutes, and
+                fetches the cards customers saved. In test mode, a kiosk payment gives a reference number that stays
+                pending, as Paymob has no kiosk simulator.
+            </p>
         </div>
     </div>
     <div class="row">
@@ -575,6 +644,8 @@
                         <tr><td><b>Integration ID</b> (on each payment method)</td><td>The Paymob integration of the method, filled by <b>Sync Integrations</b>.</td></tr>
                         <tr><td><b>Test Connection</b>, <b>Sync Integrations</b></td><td>Check the API key; fill the integration IDs from your Paymob account.</td></tr>
                         <tr><td><b>Test Data</b> tab</td><td>Test mode only: Paymob's published test cards and wallet, and its testing tools.</td></tr>
+                        <tr><td><b>Apple Pay Domain File</b> (Apple Pay tab)</td><td>Embedded only: Apple's domain file, served at <code>/.well-known/apple-developer-merchantid-domain-association</code>.</td></tr>
+                        <tr><td><b>Activate Apple Pay</b> (Apple Pay tab)</td><td>Checks what Apple Pay needs and turns the Apple Pay method on.</td></tr>
                         <tr><td><b>Payment Journal</b></td><td>Where paid orders are posted. Paymob by default.</td></tr>
                     </tbody>
                 </table>
@@ -601,7 +672,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-10 offset-lg-1 text-center" style="margin-bottom: 24px;">
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_transaction.png" alt="A pending kiosk payment, with the Check Paymob Status button and its Paymob tab" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">A kiosk payment waiting to be paid: its Paymob details and <b>Check Paymob Status</b>.</p>
+        </div>
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
             <img src="screenshot_error_code.png" alt="A declined Paymob payment, with the code explained in the transaction" class="img-fluid border rounded shadow-sm"/>
             <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">A declined payment: the code, what it means, and Paymob's message.</p>
         </div>
@@ -677,6 +752,7 @@
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
                 <li style="margin-bottom: 4px;">the customer's return to your website, after which Odoo asks Paymob for the status;</li>
                 <li style="margin-bottom: 4px;">Paymob's notification, checked against its HMAC signature;</li>
+                <li style="margin-bottom: 4px;">the pop-up or side panel of Paymob Checkout, which asks Odoo for the status while it is open;</li>
                 <li style="margin-bottom: 4px;">the waiting page, which asks Paymob every few seconds while the customer looks at it;</li>
                 <li style="margin-bottom: 4px;">the scheduled action, every 15 minutes, for pending payments of the last 10 days;</li>
                 <li style="margin-bottom: 4px;">the <b>Check Paymob Status</b> button.</li>
@@ -837,7 +913,13 @@
             <p style="font-size: 15px; color: #374151;">Yes, with the embedded checkout and a MOTO integration, which Paymob creates on request.</p>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">How do I test kiosk payments and installments?</h4>
-            <p style="font-size: 15px; color: #374151;">Paymob has no simulator for them, and bank installments, Apple Pay and Google Pay only work with live integrations: test them with small live payments, then refund them where possible.</p>
+            <p style="font-size: 15px; color: #374151;">In test mode, a kiosk payment gives a reference number that stays pending: Paymob has no kiosk simulator. Bank installments, Apple Pay and Google Pay only work with live integrations: test them with small live payments, then refund them where possible.</p>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Can I test on my computer, without a public website?</h4>
+            <p style="font-size: 15px; color: #374151;">Yes. Paymob's notifications won't reach it, but Odoo asks Paymob for the status of each payment and fetches saved cards, so orders are confirmed as usual. Live payments need your website on the internet, over HTTPS.</p>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Apple Pay doesn't show at checkout.</h4>
+            <p style="font-size: 15px; color: #374151;">It shows only in Safari on an iPhone, iPad or Mac, over HTTPS. Click <b>Activate Apple Pay</b> in the Apple Pay tab: it tells you what is missing. With the embedded checkout, your domain must be verified at Apple and Paymob must have your certificates.</p>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Can I keep Odoo's own Paymob connector?</h4>
             <p style="font-size: 15px; color: #374151;">Yes. The two providers are independent; publish the one you want your customers to use.</p>
@@ -859,11 +941,11 @@
                         <tr><td style="width: 30%;"><b>Odoo</b></td><td>20.0, Community and Enterprise, on-premise and Odoo.sh</td></tr>
                         <tr><td><b>Depends on</b></td><td>Payment and Invoicing (<code>payment</code>, <code>account_payment</code>); works with eCommerce, the customer portal, invoices and payment links</td></tr>
                         <tr><td><b>Paymob</b></td><td>A Paymob account in Egypt, Saudi Arabia, the UAE, Oman or Pakistan, with the integrations of the methods you offer</td></tr>
-                        <tr><td><b>Website</b></td><td>Reachable from the internet over HTTPS</td></tr>
+                        <tr><td><b>Website</b></td><td>Reachable from the internet over HTTPS, for live payments (tests also work on a local computer)</td></tr>
                         <tr><td><b>Currencies</b></td><td>EGP, SAR, AED, OMR or PKR, following the Paymob country</td></tr>
                         <tr><td><b>Languages</b></td><td>English and Arabic, for every Arabic language installed in Odoo</td></tr>
-                        <tr><td><b>Version</b></td><td>20.0.1.0.0</td></tr>
-                        <tr><td><b>What's new</b></td><td><b>20.0.1.0.0:</b> first release.</td></tr>
+                        <tr><td><b>Version</b></td><td>20.0.1.1.0</td></tr>
+                        <tr><td><b>What's new</b></td><td><b>20.0.1.1.0:</b> Apple Pay with a guided set-up (Apple Pay tab, Activate Apple Pay, Apple's domain file served by Odoo); the pop-up and side panel follow the payment; saved cards fetched from Paymob; checked with a Paymob test account.<br/><b>20.0.1.0.0:</b> first release.</td></tr>
                     </tbody>
                 </table>
             </div>

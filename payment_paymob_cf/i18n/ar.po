@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 19:41+0000\n"
-"PO-Revision-Date: 2026-11-12 19:41+0000\n"
+"POT-Creation-Date: 2026-11-12 19:56+0000\n"
+"PO-Revision-Date: 2026-11-12 19:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -107,6 +107,11 @@ msgid "A merchant can only be added once to a provider."
 msgstr "لا يمكن إضافة التاجر إلا مرة واحدة لمزود الدفع."
 
 #. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "A reference number that stays pending: Paymob has no kiosk simulator."
+msgstr "رقم مرجعي يظل معلقًا: لا يوجد لدى باي موب محاكي للأكشاك."
+
+#. module: payment_paymob_cf
 #. odoo-python
 #: code:addons/payment_paymob_cf/const.py:0
 msgid ""
@@ -128,13 +133,9 @@ msgstr "مفتاح API"
 #: model:ir.module.module,summary:base.module_payment_paymob_cf
 msgid ""
 "Accept Paymob in Egypt, Saudi Arabia, the UAE, Oman and Pakistan: cards, "
-"wallets, kiosk, valU and other installments, with Paymob's hosted checkout "
-"or an embedded card form, saved cards, refunds and manual capture"
-msgstr ""
-"استقبل مدفوعات باي موب في مصر والسعودية والإمارات وعُمان وباكستان: البطاقات "
-"والمحافظ والأكشاك وvalU وغيرها من خدمات التقسيط، عبر صفحة الدفع المستضافة "
-"لدى باي موب أو نموذج بطاقة مدمج، مع البطاقات المحفوظة والمبالغ المستردة "
-"والتحصيل اليدوي"
+"wallets, kiosk, valU and other installments, Apple Pay, with Paymob's hosted "
+"checkout or an embedded card form, saved cards, refunds and manual capture"
+msgstr "استقبل مدفوعات باي موب في مصر والسعودية والإمارات وعُمان وباكستان: البطاقات والمحافظ والأكشاك وvalU وغيرها من خدمات التقسيط وApple Pay، عبر صفحة الدفع المستضافة لدى باي موب أو نموذج بطاقة مدمج، مع البطاقات المحفوظة والمبالغ المستردة والتحصيل اليدوي"
 
 #. module: payment_paymob_cf
 #: model:ir.model,name:payment_paymob_cf.model_account_chart_template
@@ -591,6 +592,11 @@ msgstr "خطة التقسيط"
 
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Installments"
+msgstr "التقسيط"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "Integration ID"
 msgstr "معرف التكامل"
 
@@ -616,6 +622,7 @@ msgstr "جاز كاش"
 
 #. module: payment_paymob_cf
 #: model:payment.method,name:payment_paymob_cf.payment_method_kiosk
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "Kiosk"
 msgstr "كشك"
 
@@ -628,11 +635,6 @@ msgstr "الرقم المرجعي للكشك"
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
 msgid "Kiosk reference number"
 msgstr "الرقم المرجعي للكشك"
-
-#. module: payment_paymob_cf
-#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Kiosk, installments"
-msgstr "الأكشاك، التقسيط"
 
 #. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_last_sync
@@ -648,6 +650,11 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__write_date
 msgid "Last Updated on"
 msgstr "آخر تحديث في"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Live integrations only: test them with a small live payment."
+msgstr "بتكاملات مباشرة (Live) فقط: اختبرها بدفعة مباشرة صغيرة."
 
 #. module: payment_paymob_cf
 #. odoo-javascript
@@ -808,17 +815,10 @@ msgid ""
 "cards, manual capture and merchant-initiated charges use Paymob's server "
 "APIs. Includes every Paymob country, saved cards, full and partial refunds, "
 "authorize and capture, payment split with connected merchants, bank "
-"installments, Paymob's response codes explained, test data for "
-"administrators, payment notifications and Arabic."
-msgstr ""
-"مزود دفع لباي موب. اختر صفحة دفع باي موب، حيث يدفع العملاء على الصفحة "
-"المستضافة لدى باي موب في صفحة كاملة أو نافذة منبثقة أو لوحة جانبية، أو الدفع"
-" المدمج في الموقع، حيث يظهر نموذج البطاقة على موقعك وتستخدم البطاقات "
-"المحفوظة والتحصيل اليدوي والخصم بمبادرة التاجر واجهات الخوادم لدى باي موب. "
-"يشمل كل دول باي موب، والبطاقات المحفوظة، والمبالغ المستردة الكاملة والجزئية،"
-" والتفويض والتحصيل، وتقسيم المدفوعات مع التجار المرتبطين، والتقسيط البنكي، "
-"وشرح أكواد الاستجابة لدى باي موب، وبيانات الاختبار للمسؤولين، وإشعارات "
-"الدفع، واللغة العربية."
+"installments, Apple Pay with a guided set-up, Paymob's response codes "
+"explained, test data for administrators, payment notifications and status "
+"checks, and Arabic."
+msgstr "مزود دفع لباي موب. اختر صفحة دفع باي موب، حيث يدفع العملاء على الصفحة المستضافة لدى باي موب في صفحة كاملة أو نافذة منبثقة أو لوحة جانبية، أو الدفع المدمج في الموقع، حيث يظهر نموذج البطاقة على موقعك وتستخدم البطاقات المحفوظة والتحصيل اليدوي والخصم بمبادرة التاجر واجهات الخوادم لدى باي موب. يشمل كل دول باي موب، والبطاقات المحفوظة، والمبالغ المستردة الكاملة والجزئية، والتفويض والتحصيل، وتقسيم المدفوعات مع التجار المرتبطين، والتقسيط البنكي، وApple Pay مع إعداد موجَّه، وشرح أكواد الاستجابة لدى باي موب، وبيانات الاختبار للمسؤولين، وإشعارات الدفع والتحقق من الحالة، واللغة العربية."
 
 #. module: payment_paymob_cf
 #. odoo-python
@@ -1077,11 +1077,6 @@ msgstr "ليس لدى باي موب دفعة لهذا الطلب بعد."
 #: code:addons/payment_paymob_cf/const.py:0
 msgid "Paymob has no payment for this reference yet."
 msgstr "ليس لدى باي موب دفعة لهذا المرجع بعد."
-
-#. module: payment_paymob_cf
-#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Paymob has no simulator: test them with small live payments."
-msgstr "ليس لدى باي موب محاكي لها: اختبرها بمدفوعات مباشرة صغيرة."
 
 #. module: payment_paymob_cf
 #. odoo-python

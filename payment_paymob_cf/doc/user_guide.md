@@ -28,8 +28,15 @@ links, each with its logo. Methods are offered to customers of the countries and
    panel or a full page. The card is typed there, never on your website.
 3. The customer confirms the payment with their bank (3-D Secure), and comes back to the confirmation page.
 
+![Paymob Checkout in a pop-up](../static/description/screenshot_popup_checkout.png)
+
+In a pop-up or a side panel, the page follows the payment: once it is paid, the customer goes to the
+confirmation page even if they close the window.
+
 Signed-in customers can tick **Save my payment details** (embedded checkout) and pick the saved card next time; they
 confirm it with its security code and their bank. They remove cards from **My Account › Payment Methods**.
+
+![A saved card at checkout](../static/description/screenshot_saved_card.png)
 
 ### Apple Pay
 
@@ -67,6 +74,8 @@ The transaction's **Paymob** tab shows Paymob's order ID and reference, the inte
 with, the kiosk reference, the installment plan and the last status check. When Paymob refused the payment, it
 shows the code, what it means and what to check, with Paymob's message. Paymob's transaction ID is the
 transaction's **Provider Reference**.
+
+![A kiosk payment waiting to be paid, with Check Paymob Status](../static/description/screenshot_transaction.png)
 
 ![A declined payment explained](../static/description/screenshot_error_code.png)
 
