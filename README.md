@@ -56,6 +56,15 @@ python odoo-bin module install -c <config> -d <database> payment_fawry_cf
 
 ## Fawry Payments (`payment_fawry_cf`)
 
+Guides, with screenshots:
+
+- [Administrator guide](payment_fawry_cf/doc/admin_guide.md): set-up step by step, settings, accounting, payment
+  statuses, security, troubleshooting.
+- [User guide](payment_fawry_cf/doc/user_guide.md): what customers see, and the daily tasks of the team (checking,
+  canceling and refunding payments, payment links, saved cards).
+
+The Apps store page (`static/description/index.html`) holds the same guides.
+
 ### Integration types
 
 The provider has two integration types, chosen in its **Configuration** tab.
@@ -172,6 +181,8 @@ codefish_payment_provider/
     ├── data/                     provider, payment methods, cron, neutralize.sql
     ├── static/src/               payment form patch, status patch, instructions interaction, SCSS
     ├── static/img/               logos of the Fawry-specific payment methods
+    ├── static/description/       Apps store page (index.html), banner, icons, screenshots
+    ├── doc/                      administrator and user guides
     ├── i18n/                     payment_fawry_cf.pot, ar.po
     └── tests/
 ```
