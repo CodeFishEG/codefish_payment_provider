@@ -1,0 +1,1987 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 18:32+0000\n"
+"PO-Revision-Date: 2026-11-12 18:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "%(explanation)s (Paymob code %(code)s)"
+msgstr "%(explanation)s (كود باي موب %(code)s)"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "%(message)s Paymob's message: %(description)s"
+msgstr "%(message)s رسالة باي موب: %(description)s"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "%s months"
+msgstr "%s شهر"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+".\n"
+"                        Apple Pay, Google Pay and bank installments only work with live integrations."
+msgstr ""
+".\n"
+"                        Apple Pay وGoogle Pay والتقسيط البنكي لا تعمل إلا مع التكاملات المباشرة (live)."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "4111 1111 1111 1111, expiry 01/39, CVV 123, name Test Account"
+msgstr ""
+"4111 1111 1111 1111، تاريخ الانتهاء 01/39، CVV 123، الاسم Test Account"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "5123 4500 0000 0008, expiry 01/39, CVV 123, name Test Account"
+msgstr ""
+"5123 4500 0000 0008، تاريخ الانتهاء 01/39، CVV 123، الاسم Test Account"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "5123 4567 8901 2346, expiry 01/39, CVV 123, name Test Account"
+msgstr ""
+"5123 4567 8901 2346، تاريخ الانتهاء 01/39، CVV 123، الاسم Test Account"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                            <span class=\"o_paymob_cf_copy_label\">Copy</span>\n"
+"                            <span class=\"o_paymob_cf_copied_label d-none\">Copied</span>"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                            <span class=\"o_paymob_cf_copy_label\">نسخ</span>\n"
+"                            <span class=\"o_paymob_cf_copied_label d-none\">تم النسخ</span>"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "<span class=\"opacity-75\">Amount to pay:</span>"
+msgstr "<span class=\"opacity-75\">المبلغ المطلوب:</span>"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "<span>hours</span>"
+msgstr "<span>ساعة</span>"
+
+#. module: payment_paymob_cf
+#: model:ir.model.constraint,message:payment_paymob_cf.constraint_payment_paymob_split_merchant_provider_mid_uniq
+msgid "A merchant can only be added once to a provider."
+msgstr "لا يمكن إضافة التاجر إلا مرة واحدة لمزود الدفع."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"A technical error at the bank stopped the payment. Please try again later."
+msgstr "أوقف خطأ فني لدى البنك الدفعة. يُرجى المحاولة مرة أخرى لاحقًا."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "A technical error stopped the payment. Please try again later."
+msgstr "أوقف خطأ فني الدفعة. يُرجى المحاولة مرة أخرى لاحقًا."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_api_key
+msgid "API Key"
+msgstr "مفتاح API"
+
+#. module: payment_paymob_cf
+#: model:ir.module.module,summary:base.module_payment_paymob_cf
+msgid ""
+"Accept Paymob in Egypt, Saudi Arabia, the UAE, Oman and Pakistan: cards, "
+"wallets, kiosk, valU and other installments, with Paymob's hosted checkout "
+"or an embedded card form, saved cards, refunds and manual capture"
+msgstr ""
+"استقبل مدفوعات باي موب في مصر والسعودية والإمارات وعُمان وباكستان: البطاقات "
+"والمحافظ والأكشاك وvalU وغيرها من خدمات التقسيط، عبر صفحة الدفع المستضافة "
+"لدى باي موب أو نموذج بطاقة مدمج، مع البطاقات المحفوظة والمبالغ المستردة "
+"والتحصيل اليدوي"
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "قالب دليل الحسابات"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Add a new card"
+msgstr "إضافة بطاقة جديدة"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Add the merchants connected to your Paymob account, and their shares, in the\n"
+"                        Payment Split tab."
+msgstr ""
+"أضف التجار المرتبطين بحسابك لدى باي موب، وحصصهم، في علامة التبويب\n"
+"                        تقسيم المدفوعات."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_paymob_split_merchant__apply_to__all
+msgid "All items"
+msgstr "كل الأصناف"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_aman
+msgid "Aman Installments"
+msgstr "تقسيط أمان"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_amex
+msgid "American Express"
+msgstr "أمريكان إكسبريس"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "American Express?"
+msgstr "أمريكان إكسبريس؟"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_apple_pay
+msgid "Apple Pay"
+msgstr "Apple Pay"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__apply_to
+msgid "Applies To"
+msgstr "ينطبق على"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Ask Paymob to connect the merchants to your account and to enable split\n"
+"                        amounts, then add them here with their share. For each item paid, every\n"
+"                        merchant that applies to it receives its share of the item's price; the\n"
+"                        rest is yours. Paymob pays each merchant its share."
+msgstr ""
+"اطلب من باي موب ربط التجار بحسابك وتفعيل تقسيم المبالغ، ثم أضفهم هنا\n"
+"                        مع حصة كل منهم. لكل صنف مدفوع، يحصل كل تاجر ينطبق عليه على حصته من سعر\n"
+"                        الصنف، والباقي لك. ويدفع باي موب لكل تاجر حصته."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_auth_integration_id
+msgid "Auth Integration ID"
+msgstr "معرف تكامل Auth"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_installments_eg
+msgid "Bank Installments"
+msgstr "التقسيط البنكي"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_card
+msgid "Card"
+msgstr "بطاقة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__paymob_cf_card_expiry
+msgid "Card Expiry"
+msgstr "تاريخ انتهاء البطاقة"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Card details"
+msgstr "بيانات البطاقة"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Card number"
+msgstr "رقم البطاقة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__paymob_cf_cardholder
+msgid "Cardholder"
+msgstr "حامل البطاقة"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Cards are entered in Paymob's secure card form, embedded in your website.\n"
+"                        They can be saved, captured manually and charged again. Wallets, kiosk and\n"
+"                        installments use Paymob's checkout."
+msgstr ""
+"تُدخل البطاقات في نموذج البطاقات الآمن لدى باي موب، المدمج في موقعك.\n"
+"                        ويمكن حفظها وتحصيلها يدويًا والخصم منها مرة أخرى. أما المحافظ والأكشاك\n"
+"                        والتقسيط فتستخدم صفحة الدفع لدى باي موب."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Cards from this country aren't accepted for this order. Please use another "
+"card."
+msgstr ""
+"لا تُقبل البطاقات الصادرة من هذه الدولة لهذا الطلب. يُرجى استخدام بطاقة "
+"أخرى."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_transaction_form
+msgid "Check Paymob Status"
+msgstr "التحقق من الحالة لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Check the API key with Paymob and count the integrations of the account in "
+"this mode (test or live)."
+msgstr ""
+"التحقق من مفتاح API لدى باي موب وعدّ تكاملات الحساب في هذا الوضع (تجريبي أو "
+"مباشر)."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_display_mode
+msgid "Checkout Display"
+msgstr "طريقة عرض صفحة الدفع"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__code
+msgid "Code"
+msgstr "الكود"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_split_merchant_ids
+msgid "Connected Merchants"
+msgstr "التجار المرتبطون"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Connection successful"
+msgstr "تم الاتصال بنجاح"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_contact
+msgid "Contact"
+msgstr "كونتكت"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Disposable email addresses aren't accepted. Please use another email "
+"address."
+msgstr "لا تُقبل عناوين البريد الإلكتروني المؤقتة. يُرجى استخدام عنوان آخر."
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_easypaisa
+msgid "Easypaisa"
+msgstr "إيزي بيسا"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__eg
+msgid "Egypt"
+msgstr "مصر"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_integration__embedded
+msgid "Embedded checkout"
+msgstr "دفع مدمج في الموقع"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Ending in"
+msgstr "تنتهي بـ"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the card number"
+msgstr "أدخل رقم البطاقة"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the expiry date"
+msgstr "أدخل تاريخ الانتهاء"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the name on the card"
+msgstr "أدخل الاسم المكتوب على البطاقة"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Enter the secret key and the API key first."
+msgstr "أدخل المفتاح السري ومفتاح API أولًا."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the security code (CVV)"
+msgstr "أدخل رمز الأمان (CVV)"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Every method is paid on Paymob's secure checkout. Cards can't be saved."
+msgstr ""
+"تُدفع كل الوسائل على صفحة الدفع الآمنة لدى باي موب. ولا يمكن حفظ البطاقات."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.token_form
+msgid "Expires"
+msgstr "تنتهي في"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_transaction_form
+msgid "Fetch the latest status of this payment from Paymob."
+msgstr "جلب آخر حالة لهذه الدفعة من باي موب."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Fill the integration IDs of the payment methods from your Paymob account. "
+"Nothing is changed at Paymob."
+msgstr ""
+"ملء معرفات التكامل لوسائل الدفع من حسابك لدى باي موب. لا يتغير شيء لدى باي "
+"موب."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"For test payments, with the test keys and the test integration IDs of your\n"
+"                        Paymob account. Paymob's published test data:"
+msgstr ""
+"للمدفوعات التجريبية، مع المفاتيح التجريبية ومعرفات التكامل التجريبية لحسابك\n"
+"                        لدى باي موب. بيانات الاختبار التي نشرتها باي موب:"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_forsa
+msgid "Forsa"
+msgstr "فرصة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_display_mode__redirect
+msgid "Full page"
+msgstr "صفحة كاملة"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Give the reference number above and pay the amount shown in cash."
+msgstr "أعطِ الرقم المرجعي أعلاه وادفع المبلغ الظاهر نقدًا."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Go to a payment kiosk that accepts Paymob references."
+msgstr "توجّه إلى أحد أكشاك الدفع التي تقبل أرقام باي موب المرجعية."
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_google_pay
+msgid "Google Pay"
+msgstr "Google Pay"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_hmac_secret
+msgid "HMAC Secret"
+msgstr "مفتاح HMAC السري"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_halan
+msgid "Halan"
+msgstr "حالًا"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_display_mode
+msgid "How Paymob Checkout is shown to the customer."
+msgstr "طريقة عرض صفحة الدفع لدى باي موب للعميل."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_payment_expiry_hours
+msgid ""
+"How long a payment can be completed, e.g. a kiosk reference paid in cash. "
+"Paymob accepts up to 864 hours (36 days)."
+msgstr ""
+"المدة المتاحة لإتمام الدفعة، مثل رقم مرجعي يُدفع نقدًا في كشك. يقبل باي موب "
+"حتى 864 ساعة (36 يومًا)."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_account_chart_template__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_installment
+msgid "Installment Plan"
+msgstr "خطة التقسيط"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Integration ID"
+msgstr "معرف التكامل"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Integration IDs set:\n"
+"%s"
+msgstr ""
+"تم ضبط معرفات التكامل:\n"
+"%s"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_jaywan
+msgid "Jaywan"
+msgstr "جيوان"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_jazzcash
+msgid "JazzCash"
+msgstr "جاز كاش"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_kiosk
+msgid "Kiosk"
+msgstr "كشك"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_bill_reference
+msgid "Kiosk Reference"
+msgstr "الرقم المرجعي للكشك"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Kiosk reference number"
+msgstr "الرقم المرجعي للكشك"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Kiosk, installments"
+msgstr "الأكشاك، التقسيط"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_last_sync
+msgid "Last Paymob Status Check"
+msgstr "آخر تحقق من الحالة لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "MM / YY"
+msgstr "شهر / سنة"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mogo
+msgid "MOGO"
+msgstr "موجو"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_moto_integration_id
+msgid "MOTO Integration ID"
+msgstr "معرف تكامل MOTO"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mastercard
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Mastercard"
+msgstr "ماستركارد"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_meeza
+msgid "Meeza"
+msgstr "ميزة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__mid
+msgid "Merchant ID (MID)"
+msgstr "معرف التاجر (MID)"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mobile_wallet_eg
+msgid "Mobile Wallet"
+msgstr "محفظة إلكترونية"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Mobile wallet"
+msgstr "محفظة إلكترونية"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Name on the card"
+msgstr "الاسم المكتوب على البطاقة"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"No integration found for: %s. Enter their IDs on the payment methods, or ask"
+" Paymob to enable them."
+msgstr ""
+"لم يُعثر على تكامل لـ: %s. أدخل معرفاتها في وسائل الدفع، أو اطلب من باي موب "
+"تفعيلها."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_webhook_url
+msgid "Notification URL"
+msgstr "رابط الإشعارات"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Number 01010101010, MPIN 123456, OTP 123456"
+msgstr "الرقم 01010101010، الرقم السري 123456، رمز التحقق 123456"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_webhook_url
+msgid ""
+"Odoo sends it with every payment. You can also set it as the Transaction "
+"processed callback of each integration in Paymob's dashboard."
+msgstr ""
+"يرسله أودو مع كل دفعة. ويمكنك أيضًا ضبطه كعنوان إشعار معالجة المعاملات لكل "
+"تكامل في لوحة تحكم باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__om
+msgid "Oman"
+msgstr "عُمان"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_omannet
+msgid "OmanNet"
+msgstr "عُمان نت"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_payment_source
+msgid "Paid With"
+msgstr "طريقة الدفع المستخدمة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__pk
+msgid "Pakistan"
+msgstr "باكستان"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Pay"
+msgstr "ادفع"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_payment_expiry_hours
+msgid "Payment Expiry (Hours)"
+msgstr "مدة صلاحية الدفع (بالساعات)"
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_method
+msgid "Payment Method"
+msgstr "وسيلة الدفع"
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_provider
+msgid "Payment Provider"
+msgstr "مزود الدفع"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_payment_split
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Payment Split"
+msgstr "تقسيم المدفوعات"
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_token
+msgid "Payment Token"
+msgstr "رمز الدفع"
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "معاملة الدفع"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Payment processing failed"
+msgstr "فشلت معالجة الدفع"
+
+#. module: payment_paymob_cf
+#: model:ir.module.module,description:base.module_payment_paymob_cf
+msgid ""
+"Payment provider for Paymob. Choose Paymob Checkout, where customers pay on "
+"Paymob's hosted page in a full page, a pop-up or a side panel, or the "
+"Embedded checkout, where the card form opens on your website and saved "
+"cards, manual capture and merchant-initiated charges use Paymob's server "
+"APIs. Includes every Paymob country, saved cards, full and partial refunds, "
+"authorize and capture, payment split with connected merchants, bank "
+"installments, Paymob's response codes explained, test data for "
+"administrators, payment notifications and Arabic."
+msgstr ""
+"مزود دفع لباي موب. اختر صفحة دفع باي موب، حيث يدفع العملاء على الصفحة "
+"المستضافة لدى باي موب في صفحة كاملة أو نافذة منبثقة أو لوحة جانبية، أو الدفع"
+" المدمج في الموقع، حيث يظهر نموذج البطاقة على موقعك وتستخدم البطاقات "
+"المحفوظة والتحصيل اليدوي والخصم بمبادرة التاجر واجهات الخوادم لدى باي موب. "
+"يشمل كل دول باي موب، والبطاقات المحفوظة، والمبالغ المستردة الكاملة والجزئية،"
+" والتفويض والتحصيل، وتقسيم المدفوعات مع التجار المرتبطين، والتقسيط البنكي، "
+"وشرح أكواد الاستجابة لدى باي موب، وبيانات الاختبار للمسؤولين، وإشعارات "
+"الدفع، واللغة العربية."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Payments from your country aren't accepted for this order. Please choose "
+"another payment method."
+msgstr "لا تُقبل المدفوعات من دولتك لهذا الطلب. يُرجى اختيار وسيلة دفع أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Payments from your network aren't accepted for this order. Please try "
+"another connection or choose another payment method."
+msgstr ""
+"لا تُقبل المدفوعات من شبكتك لهذا الطلب. يُرجى تجربة اتصال آخر أو اختيار "
+"وسيلة دفع أخرى."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__code__paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_paymob
+#: model:payment.provider,name:payment_paymob_cf.payment_provider_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_transaction_form
+msgid "Paymob"
+msgstr "باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_card_data
+msgid "Paymob Cf Card Data"
+msgstr "بيانات البطاقة لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_card_token
+msgid "Paymob Cf Card Token"
+msgstr "رمز البطاقة لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_client_secret
+msgid "Paymob Cf Client Secret"
+msgstr "المفتاح السري للعميل لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_redirect_url
+msgid "Paymob Cf Redirect Url"
+msgstr "رابط التحويل لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_integration__hosted
+msgid "Paymob Checkout"
+msgstr "صفحة دفع باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_integration
+msgid ""
+"Paymob Checkout: customers pay every method on Paymob's hosted checkout.\n"
+"Embedded checkout: cards are entered in Paymob's card form, embedded in your website; cards can be saved, captured manually and charged again. Other methods use Paymob Checkout."
+msgstr ""
+"صفحة دفع باي موب: يدفع العملاء بكل الوسائل على الصفحة المستضافة لدى باي موب.\n"
+"الدفع المدمج في الموقع: تُدخل البطاقات في نموذج البطاقات لدى باي موب، المدمج في موقعك؛ ويمكن حفظ البطاقات وتحصيلها يدويًا والخصم منها مرة أخرى. أما الوسائل الأخرى فتستخدم صفحة دفع باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_paymob_split_merchant
+msgid "Paymob Connected Merchant"
+msgstr "تاجر مرتبط بباي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_country
+msgid "Paymob Country"
+msgstr "دولة باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_error_explanation
+msgid "Paymob Error"
+msgstr "خطأ باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_error_code
+msgid "Paymob Error Code"
+msgstr "كود خطأ باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_error_details
+msgid "Paymob Error Details"
+msgstr "تفاصيل خطأ باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_integration
+msgid "Paymob Integration"
+msgstr "تكامل باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__paymob_cf_integration_id
+msgid "Paymob Integration ID"
+msgstr "معرف التكامل لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_integration_ids
+msgid "Paymob Integrations"
+msgstr "تكاملات باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_intention_id
+msgid "Paymob Intention"
+msgstr "نية الدفع لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_order_id
+msgid "Paymob Order ID"
+msgstr "معرف الطلب لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.module.module,shortdesc:base.module_payment_paymob_cf
+msgid "Paymob Payments"
+msgstr "مدفوعات باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_special_reference
+msgid "Paymob Reference"
+msgstr "المرجع لدى باي موب"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob accepted the API key (%(country)s, %(env)s mode) and has %(count)s "
+"integrations in this mode."
+msgstr ""
+"قبل باي موب مفتاح API (%(country)s، الوضع %(env)s) ولديه %(count)s تكاملًا "
+"في هذا الوضع."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "Paymob already has a payment with this reference."
+msgstr "لدى باي موب دفعة بهذا المرجع بالفعل."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob can't refund kiosk payments."
+msgstr "لا يمكن لباي موب رد مدفوعات الأكشاك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob captures card payments manually with an Auth integration. Enter its "
+"ID in the Auth Integration ID field first."
+msgstr ""
+"يحصّل باي موب مدفوعات البطاقات يدويًا عبر تكامل من نوع Auth. أدخل معرفه في "
+"حقل معرف تكامل Auth أولًا."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid ""
+"Paymob charges saved cards while the customer is away with a MOTO "
+"integration. Enter its ID on the Paymob provider."
+msgstr ""
+"يخصم باي موب من البطاقات المحفوظة في غياب العميل عبر تكامل من نوع MOTO. أدخل"
+" معرفه في مزود الدفع باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_hmac_secret
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys (main user only). Odoo "
+"checks every notification and redirection of Paymob with it."
+msgstr ""
+"لوحة تحكم باي موب: الإعدادات > المطورون > مفاتيح API (المستخدم الرئيسي فقط)."
+" يتحقق أودو به من كل إشعار وتحويل من باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_public_key
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys. It opens Paymob's "
+"checkout and card form in the customer's browser."
+msgstr ""
+"لوحة تحكم باي موب: الإعدادات > المطورون > مفاتيح API. يفتح صفحة الدفع ونموذج"
+" البطاقة لدى باي موب في متصفح العميل."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_secret_key
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys. Test and live accounts "
+"have different secret keys."
+msgstr ""
+"لوحة تحكم باي موب: الإعدادات > المطورون > مفاتيح API. للحسابات التجريبية "
+"والمباشرة مفاتيح سرية مختلفة."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_api_key
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys. Used to check the status"
+" of payments and to list your integrations."
+msgstr ""
+"لوحة تحكم باي موب: الإعدادات > المطورون > مفاتيح API. يُستخدم للتحقق من حالة"
+" المدفوعات وعرض تكاملاتك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob didn't return a payment intention."
+msgstr "لم يُرجع باي موب نية دفع."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob didn't return a payment key."
+msgstr "لم يُرجع باي موب مفتاح دفع."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob doesn't know the integration ID, or it belongs to the other mode "
+"(test or live) or another currency. Check the integration IDs of the Paymob "
+"provider and of its payment methods, or click Sync Integrations."
+msgstr ""
+"لا يعرف باي موب معرف التكامل، أو أنه يتبع الوضع الآخر (تجريبي أو مباشر) أو "
+"عملة أخرى. راجع معرفات التكامل لمزود الدفع باي موب ولوسائل الدفع فيه، أو "
+"اضغط مزامنة التكاملات."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob doesn't know this transaction, or it can't be captured, voided or "
+"refunded (for example, it was declined or isn't an authorization)."
+msgstr ""
+"لا يعرف باي موب هذه المعاملة، أو لا يمكن تحصيلها أو إلغاؤها أو ردها (مثلًا "
+"لأنها رُفضت أو ليست تفويضًا)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob has no payment for this order yet."
+msgstr "ليس لدى باي موب دفعة لهذا الطلب بعد."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "Paymob has no payment for this reference yet."
+msgstr "ليس لدى باي موب دفعة لهذا المرجع بعد."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob has no simulator: test them with small live payments."
+msgstr "ليس لدى باي موب محاكي لها: اختبرها بمدفوعات مباشرة صغيرة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Paymob integrations"
+msgstr "تكاملات باي موب"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob refused the customer's details: a required value is missing or "
+"invalid (first name, last name, email or phone number)."
+msgstr ""
+"رفض باي موب بيانات العميل: قيمة مطلوبة ناقصة أو غير صحيحة (الاسم الأول أو "
+"اسم العائلة أو البريد الإلكتروني أو رقم الهاتف)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob refused the keys. Check the secret key, the public key and the API "
+"key of the Paymob provider, and that they belong to its country and mode "
+"(test or live)."
+msgstr ""
+"رفض باي موب المفاتيح. راجع المفتاح السري والمفتاح العام ومفتاح API لمزود "
+"الدفع باي موب، وأنها تتبع دولته ووضعه (تجريبي أو مباشر)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob refused the order lines: their amounts must add up to the amount "
+"paid."
+msgstr "رفض باي موب بنود الطلب: يجب أن يساوي مجموع مبالغها المبلغ المدفوع."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Paymob refused the request."
+msgstr "رفض باي موب الطلب."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Paymob refused the request: %(description)s (Paymob code %(code)s)"
+msgstr "رفض باي موب الطلب: %(description)s (كود باي موب %(code)s)"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob rejected the connection.\n"
+"%(error)s"
+msgstr ""
+"رفض باي موب الاتصال.\n"
+"%(error)s"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid ""
+"Paymob sent the latest status of the payment. The payment is updated within "
+"a few seconds; reload the page to see it."
+msgstr ""
+"أرسل باي موب آخر حالة للدفعة. تُحدَّث الدفعة خلال ثوانٍ قليلة؛ أعد تحميل "
+"الصفحة لرؤيتها."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob's integration wizard"
+msgstr "معالج التكامل لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "Paymob's secure card form opens on this page to complete the payment."
+msgstr "يظهر نموذج البطاقات الآمن لدى باي موب في هذه الصفحة لإتمام الدفع."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure card form opens on this page; your bank may ask you to\n"
+"                        confirm the card."
+msgstr ""
+"يظهر نموذج البطاقات الآمن لدى باي موب في هذه الصفحة؛ وقد يطلب منك البنك\n"
+"                        تأكيد البطاقة."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure checkout gives you a reference number to pay in cash at a\n"
+"                        payment kiosk, within"
+msgstr ""
+"تمنحك صفحة الدفع الآمنة لدى باي موب رقمًا مرجعيًا لتدفعه نقدًا في أحد\n"
+"                        أكشاك الدفع، خلال"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure checkout will open on this page to complete the payment."
+msgstr "ستُفتح صفحة الدفع الآمنة لدى باي موب في هذه الصفحة لإتمام الدفع."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob's servers had an error. Try again later; if it persists, contact "
+"Paymob's support."
+msgstr ""
+"حدث خطأ في خوادم باي موب. حاول مرة أخرى لاحقًا؛ وإن استمر، تواصل مع دعم باي "
+"موب."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob's webhook tester"
+msgstr "أداة اختبار الإشعارات لدى باي موب"
+
+#. module: payment_paymob_cf
+#: model:ir.actions.server,name:payment_paymob_cf.cron_sync_pending_payments_ir_actions_server
+msgid "Paymob: check pending payments"
+msgstr "باي موب: التحقق من المدفوعات المعلقة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_display_mode__popup
+msgid "Pop-up window"
+msgstr "نافذة منبثقة"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_premium_card
+msgid "Premium Card"
+msgstr "بريميوم كارد"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__product_tmpl_ids
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__provider_id
+msgid "Provider"
+msgstr "المزود"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__paymob_cf_provider_code
+msgid "Provider Code"
+msgstr "كود المزود"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_public_key
+msgid "Public Key"
+msgstr "المفتاح العام"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/controllers/main.py:0
+msgid "Received tampered payment request data."
+msgstr "تم استلام بيانات طلب دفع تم التلاعب بها."
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_stcpay
+msgid "STC Pay"
+msgstr "STC Pay"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__sa
+msgid "Saudi Arabia"
+msgstr "المملكة العربية السعودية"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Save the card"
+msgstr "حفظ البطاقة"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Saved cards"
+msgstr "البطاقات المحفوظة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_secret_key
+msgid "Secret Key"
+msgstr "المفتاح السري"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Secure payment"
+msgstr "دفع آمن"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Security code (CVV)"
+msgstr "رمز الأمان (CVV)"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.frame_exit
+msgid "See the status of your payment"
+msgstr "عرض حالة دفعتك"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_paymob_split_merchant__apply_to__products
+msgid "Selected products"
+msgstr "منتجات محددة"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__share
+msgid "Share (%)"
+msgstr "الحصة (%)"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_payment_split
+msgid ""
+"Share each payment with the merchants connected to your Paymob account. "
+"Paymob pays each one its share; the rest is yours."
+msgstr ""
+"تقسيم كل دفعة مع التجار المرتبطين بحسابك لدى باي موب. يدفع باي موب لكل منهم "
+"حصته؛ والباقي لك."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_display_mode__side_page
+msgid "Side panel"
+msgstr "لوحة جانبية"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_souhoola
+msgid "Souhoola"
+msgstr "سهولة"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_sympl
+msgid "Sympl"
+msgstr "سمبل"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Sync Integrations"
+msgstr "مزامنة التكاملات"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_tabby
+msgid "Tabby"
+msgstr "تابي"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_tamara
+msgid "Tamara"
+msgstr "تمارا"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Test Connection"
+msgstr "اختبار الاتصال"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Test Data"
+msgstr "بيانات الاختبار"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Test keys were used with a live integration ID. Check that the keys and the "
+"integration IDs of the Paymob provider are all test ones or all live ones."
+msgstr ""
+"استُخدمت مفاتيح تجريبية مع معرف تكامل مباشر. تأكد من أن مفاتيح مزود الدفع "
+"باي موب ومعرفات التكامل كلها تجريبية أو كلها مباشرة."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The 3 digits on the back of the card."
+msgstr "الأرقام الثلاثة على ظهر البطاقة."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The 4 digits on the front of the card, above the number."
+msgstr "الأرقام الأربعة على وجه البطاقة، فوق رقمها."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_method__paymob_cf_integration_id
+msgid ""
+"The ID of the Paymob integration that processes this method, in the mode of "
+"the provider (test or live). Paymob dashboard: Settings > Payment "
+"Integrations. Sync Integrations on the provider fills it."
+msgstr ""
+"معرف تكامل باي موب الذي يعالج هذه الوسيلة، في وضع مزود الدفع (تجريبي أو "
+"مباشر). لوحة تحكم باي موب: الإعدادات > تكاملات الدفع. تملؤه مزامنة التكاملات"
+" في مزود الدفع."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__mid
+msgid ""
+"The ID of the merchant connected to your Paymob account, as given by Paymob."
+msgstr "معرف التاجر المرتبط بحسابك لدى باي موب، كما أعطاه باي موب."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The PIN is incorrect. Please try again."
+msgstr "الرقم السري غير صحيح. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The PIN was entered wrongly too many times. Please contact your bank."
+msgstr "أُدخل الرقم السري خطأً مرات كثيرة. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_integration_ids
+msgid "The Paymob integrations the customer could pay with."
+msgstr "تكاملات باي موب التي كان يمكن للعميل الدفع بها."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The amount is above the limit allowed for charges without the customer "
+"(MOTO). Ask Paymob to raise the limit."
+msgstr ""
+"المبلغ أعلى من الحد المسموح به للخصم في غياب العميل (MOTO). اطلب من باي موب "
+"رفع الحد."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The amount is above the limit allowed for this payment method. Please choose"
+" another payment method."
+msgstr ""
+"المبلغ أعلى من الحد المسموح به لوسيلة الدفع هذه. يُرجى اختيار وسيلة دفع "
+"أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The authorization was voided."
+msgstr "تم إلغاء التفويض."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank approved only part of the amount. Please use another card."
+msgstr "وافق البنك على جزء من المبلغ فقط. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank asks for more identification for this payment. Please contact your "
+"bank."
+msgstr ""
+"يطلب البنك تحققًا إضافيًا من الهوية لهذه الدفعة. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank asks to make the payment again. Please try again."
+msgstr "يطلب البنك إعادة الدفع. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank couldn't find the original record of the payment. Contact Paymob's "
+"support with the transaction ID."
+msgstr ""
+"لم يجد البنك السجل الأصلي للدفعة. تواصل مع دعم باي موب مع معرف المعاملة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank couldn't process the payment. Please try again or use another card."
+msgstr ""
+"تعذر على البنك معالجة الدفعة. يُرجى المحاولة مرة أخرى أو استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank couldn't update its records for the payment. Contact Paymob's "
+"support with the transaction ID."
+msgstr ""
+"تعذر على البنك تحديث سجلاته للدفعة. تواصل مع دعم باي موب مع معرف المعاملة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank declined the payment. Please contact your bank or use another card."
+msgstr "رفض البنك الدفعة. يُرجى التواصل مع البنك أو استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank doesn't allow this kind of payment with this card. Please use "
+"another card."
+msgstr ""
+"لا يسمح البنك بهذا النوع من المدفوعات بهذه البطاقة. يُرجى استخدام بطاقة "
+"أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank flagged this payment as suspected fraud. Please contact your bank."
+msgstr "اعتبر البنك هذه الدفعة احتيالًا محتملًا. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank found a duplicate record of the payment. Contact Paymob's support "
+"with the transaction ID."
+msgstr "وجد البنك سجلًا مكررًا للدفعة. تواصل مع دعم باي موب مع معرف المعاملة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank found an error in a field of the payment. Contact Paymob's support "
+"with the transaction ID."
+msgstr ""
+"وجد البنك خطأً في أحد حقول الدفعة. تواصل مع دعم باي موب مع معرف المعاملة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank is still processing a previous request. Please try again in a few "
+"minutes."
+msgstr "ما زال البنك يعالج طلبًا سابقًا. يُرجى المحاولة مرة أخرى بعد دقائق."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank of the card can't be reached right now. Please try again later."
+msgstr "لا يمكن الوصول إلى بنك البطاقة الآن. يُرجى المحاولة مرة أخرى لاحقًا."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank of this card couldn't be found. Please check the card number and "
+"try again."
+msgstr ""
+"لم يُعثر على بنك هذه البطاقة. يُرجى مراجعة رقم البطاقة والمحاولة مرة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank refused the amount of the payment. Please try again or use another "
+"card."
+msgstr "رفض البنك مبلغ الدفعة. يُرجى المحاولة مرة أخرى أو استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank refused the card. Please contact your bank or use another card."
+msgstr "رفض البنك البطاقة. يُرجى التواصل مع البنك أو استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank refused the payment for a security reason. Please contact your "
+"bank."
+msgstr "رفض البنك الدفعة لسبب أمني. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank took no action on the payment. Please try again."
+msgstr "لم يتخذ البنك أي إجراء على الدفعة. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank's system is temporarily unavailable. Please try again later."
+msgstr "نظام البنك غير متاح مؤقتًا. يُرجى المحاولة مرة أخرى لاحقًا."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The capture is higher than the authorized amount."
+msgstr "مبلغ التحصيل أعلى من المبلغ المفوَّض."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_payment_source
+msgid "The card (brand and last digits) or the wallet the customer paid with."
+msgstr "البطاقة (العلامة وآخر الأرقام) أو المحفظة التي دفع بها العميل."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card doesn't have enough funds for this payment."
+msgstr "لا يوجد رصيد كافٍ في البطاقة لهذه الدفعة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card has expired. Please use another card."
+msgstr "انتهت صلاحية البطاقة. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card has made too many payments. Please contact your bank or use another"
+" card."
+msgstr ""
+"تجاوزت البطاقة عدد المدفوعات المسموح به. يُرجى التواصل مع البنك أو استخدام "
+"بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_auth_integration_id
+msgid ""
+"The card integration of type Auth, for payments captured manually. Ask "
+"Paymob to create it."
+msgstr ""
+"تكامل البطاقات من نوع Auth، للمدفوعات التي تُحصَّل يدويًا. اطلب من باي موب "
+"إنشاءه."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_moto_integration_id
+msgid ""
+"The card integration of type MOTO, to charge saved cards while the customer "
+"is away (e.g. subscriptions). Ask Paymob to create it."
+msgstr ""
+"تكامل البطاقات من نوع MOTO، للخصم من البطاقات المحفوظة في غياب العميل (مثل "
+"الاشتراكات). اطلب من باي موب إنشاءه."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_verification_integration_id
+msgid ""
+"The card integration of type Verification, for customers who save a card "
+"without paying (My Account > Payment Methods). Ask Paymob to create it."
+msgstr ""
+"تكامل البطاقات من نوع Verification، للعملاء الذين يحفظون بطاقة دون دفع "
+"(حسابي > وسائل الدفع). اطلب من باي موب إنشاءه."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card is restricted. Please contact your bank or use another card."
+msgstr "البطاقة مقيدة. يُرجى التواصل مع البنك أو استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card isn't allowed to make this kind of payment. Please contact your "
+"bank or use another card."
+msgstr ""
+"لا يُسمح للبطاقة بهذا النوع من المدفوعات. يُرجى التواصل مع البنك أو استخدام "
+"بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card network doesn't allow this payment on the merchant account. Ask "
+"Paymob to check the card payments of your account."
+msgstr ""
+"لا تسمح شبكة البطاقات بهذه الدفعة على حساب التاجر. اطلب من باي موب مراجعة "
+"مدفوعات البطاقات في حسابك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card network doesn't recognize the merchant account. Ask Paymob to check"
+" the card payments of your account."
+msgstr ""
+"لا تتعرف شبكة البطاقات على حساب التاجر. اطلب من باي موب مراجعة مدفوعات "
+"البطاقات في حسابك."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The card number isn't valid"
+msgstr "رقم البطاقة غير صحيح"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card number isn't valid. Please check it and try again."
+msgstr "رقم البطاقة غير صحيح. يُرجى مراجعته والمحاولة مرة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card was reported lost. Please contact your bank."
+msgstr "تم الإبلاغ عن فقدان البطاقة. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card was reported stolen. Please contact your bank."
+msgstr "تم الإبلاغ عن سرقة البطاقة. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The card will be saved for your next payments."
+msgstr "ستُحفظ البطاقة لمدفوعاتك القادمة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The cardholder disputes this payment. Please contact your bank."
+msgstr "يعترض حامل البطاقة على هذه الدفعة. يُرجى التواصل مع البنك."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_error_code
+msgid "The code of the last error Paymob returned for this payment."
+msgstr "كود آخر خطأ أرجعه باي موب لهذه الدفعة."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_country
+msgid ""
+"The country of your Paymob account. Each country has its own Paymob platform"
+" and currency: Egypt (EGP), Saudi Arabia (SAR), United Arab Emirates (AED), "
+"Oman (OMR) and Pakistan (PKR)."
+msgstr ""
+"دولة حسابك لدى باي موب. لكل دولة منصة وعملة لدى باي موب: مصر (EGP) والسعودية"
+" (SAR) والإمارات (AED) وعُمان (OMR) وباكستان (PKR)."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The expiry date isn't valid"
+msgstr "تاريخ الانتهاء غير صحيح"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The fraud checks refused this payment. Please choose another payment method."
+msgstr "رفضت فحوص الاحتيال هذه الدفعة. يُرجى اختيار وسيلة دفع أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "The integration IDs were already up to date."
+msgstr "معرفات التكامل محدَّثة بالفعل."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid "The merchant ID of %(merchant)s must be a number."
+msgstr "يجب أن يكون معرف التاجر %(merchant)s رقمًا."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid ""
+"The merchants share more than 100%% of the price of %(product)s "
+"(%(share)s%%)."
+msgstr "تتجاوز حصص التجار 100%% من سعر %(product)s (%(share)s%%)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid ""
+"The merchants that apply to all items share more than 100%% of their price "
+"(%(share)s%%)."
+msgstr ""
+"تتجاوز حصص التجار الذين ينطبقون على كل الأصناف 100%% من سعرها (%(share)s%%)."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_error_details
+msgid "The message of the error, as Paymob sent it."
+msgstr "رسالة الخطأ كما أرسلها باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_token__paymob_cf_card_expiry
+msgid "The month and year the card expires (MM/YY), as Paymob saved it."
+msgstr "شهر وسنة انتهاء البطاقة (MM/YY)، كما حفظها باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_token__paymob_cf_cardholder
+msgid "The name on the card, as Paymob saved it."
+msgstr "الاسم المكتوب على البطاقة، كما حفظه باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_installment
+msgid "The number of months, when the customer paid in installments."
+msgstr "عدد الأشهر، عندما يدفع العميل بالتقسيط."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_order_id
+msgid ""
+"The order Paymob created for the payment. Paymob signs it in its "
+"notifications."
+msgstr "الطلب الذي أنشأه باي موب للدفعة. يوقّعه باي موب في إشعاراته."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method (error %(code)s)."
+msgstr ""
+"تعذرت معالجة الدفعة. يُرجى المحاولة مرة أخرى لاحقًا أو اختيار وسيلة دفع أخرى"
+" (خطأ %(code)s)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method."
+msgstr ""
+"تعذرت معالجة الدفعة. يُرجى المحاولة مرة أخرى لاحقًا أو اختيار وسيلة دفع "
+"أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment exceeds the limit of the card. Please contact your bank or use "
+"another card."
+msgstr ""
+"تتجاوز الدفعة حد البطاقة. يُرجى التواصل مع البنك أو استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "The payment expiry must be between 1 and 864 hours (36 days)."
+msgstr "يجب أن تكون مدة صلاحية الدفع بين 1 و864 ساعة (36 يومًا)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment method has no Paymob integration ID. Enter it on the payment "
+"method, or click Sync Integrations on the Paymob provider."
+msgstr ""
+"ليس لوسيلة الدفع معرف تكامل لدى باي موب. أدخله في وسيلة الدفع، أو اضغط "
+"مزامنة التكاملات في مزود الدفع باي موب."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment request had a format error. Contact Paymob's support with the "
+"transaction ID."
+msgstr ""
+"كان في طلب الدفع خطأ في التنسيق. تواصل مع دعم باي موب مع معرف المعاملة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment to refund has no Paymob transaction ID."
+msgstr "ليس للدفعة المطلوب ردها معرف معاملة لدى باي موب."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The payment was canceled."
+msgstr "تم إلغاء الدفعة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment was declined."
+msgstr "رُفضت الدفعة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment was declined. Please try again or choose another payment method."
+msgstr "رُفضت الدفعة. يُرجى المحاولة مرة أخرى أو اختيار وسيلة دفع أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment was declined: %(reason)s (code %(code)s)"
+msgstr "رُفضت الدفعة: %(reason)s (كود %(code)s)"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment was voided at Paymob."
+msgstr "أُلغيت الدفعة لدى باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__share
+msgid ""
+"The percentage of the price of each item it applies to that Paymob pays to "
+"this merchant. The rest is yours."
+msgstr ""
+"نسبة سعر كل صنف ينطبق عليه هذا التاجر التي يدفعها باي موب له. والباقي لك."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__product_tmpl_ids
+msgid "The products whose price is shared with this merchant."
+msgstr "المنتجات التي يُقسَّم سعرها مع هذا التاجر."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_bill_reference
+msgid "The reference the customer pays in cash at a kiosk."
+msgstr "الرقم المرجعي الذي يدفعه العميل نقدًا في كشك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The refund is higher than the amount that can still be refunded."
+msgstr "مبلغ الاسترداد أعلى من المبلغ الذي ما زال يمكن رده."
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid ""
+"The secure card form couldn't be loaded. Please try again or choose another "
+"payment method."
+msgstr ""
+"تعذر تحميل نموذج البطاقات الآمن. يُرجى المحاولة مرة أخرى أو اختيار وسيلة دفع"
+" أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid "The share of %(merchant)s must be more than 0%% and at most 100%%."
+msgstr "يجب أن تكون حصة %(merchant)s أكبر من 0%% وألا تزيد على 100%%."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_method__paymob_cf_provider_code
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr "الكود التقني لمزود الدفع هذا."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The transaction is not linked to a token."
+msgstr "المعاملة غير مرتبطة برمز دفع."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_special_reference
+msgid "The unique reference of the payment at Paymob (special reference)."
+msgstr "المرجع الفريد للدفعة لدى باي موب (المرجع الخاص)."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "This card isn't accepted for this order. Please use another card."
+msgstr "لا تُقبل هذه البطاقة لهذا الطلب. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "To see what Paymob sends, set"
+msgstr "لمعرفة ما يرسله باي موب، اضبط"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "To test"
+msgstr "للاختبار"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__ae
+msgid "United Arab Emirates"
+msgstr "الإمارات العربية المتحدة"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Use"
+msgstr "استخدم"
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_verification_integration_id
+msgid "Verification Integration ID"
+msgstr "معرف تكامل Verification"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "View saved cards"
+msgstr "عرض البطاقات المحفوظة"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_visa
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Visa"
+msgstr "فيزا"
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Visa or Mastercard?"
+msgstr "فيزا أو ماستركارد؟"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Waiting for your payment. This page updates by itself."
+msgstr "بانتظار دفعتك. تتحدث هذه الصفحة تلقائيًا."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_error_explanation
+msgid "What the error returned by Paymob means."
+msgstr "معنى الخطأ الذي أرجعه باي موب."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_redirect_url
+msgid "Where the customer confirms a payment with a saved card."
+msgstr "حيث يؤكد العميل دفعة ببطاقة محفوظة."
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__name
+msgid "Who receives this share, for example a seller or a partner."
+msgstr "من يحصل على هذه الحصة، مثل بائع أو شريك."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "You will complete the payment on Paymob's secure checkout."
+msgstr "ستُكمل الدفع على صفحة الدفع الآمنة لدى باي موب."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"You will enter your wallet number on Paymob's secure checkout and approve the\n"
+"                        payment on your phone."
+msgstr ""
+"ستُدخل رقم محفظتك على صفحة الدفع الآمنة لدى باي موب وتوافق على\n"
+"                        الدفعة من هاتفك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Your bank asks you to contact them about this payment. Please contact your "
+"bank or use another card."
+msgstr ""
+"يطلب منك البنك التواصل معه بشأن هذه الدفعة. يُرجى التواصل مع البنك أو "
+"استخدام بطاقة أخرى."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Your email address couldn't be verified. Please check it and try again."
+msgstr "تعذر التحقق من بريدك الإلكتروني. يُرجى مراجعته والمحاولة مرة أخرى."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Your order is confirmed as soon as the payment is received."
+msgstr "يُؤكَّد طلبك بمجرد استلام الدفعة."
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,pending_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your order is reserved until the payment is completed."
+msgstr "طلبك محجوز حتى إتمام الدفع."
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,auth_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your payment has been authorized."
+msgstr "تم تفويض دفعتك."
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,cancel_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your payment has been cancelled."
+msgstr "تم إلغاء دفعتك."
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,done_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your payment has been processed."
+msgstr "تمت معالجة دفعتك."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Your payment is being confirmed. This page updates by itself."
+msgstr "جارٍ تأكيد دفعتك. تتحدث هذه الصفحة تلقائيًا."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "as the callback of a test integration. To check an HMAC by hand, use"
+msgstr ""
+"كعنوان إشعارات (callback) لتكامل تجريبي. وللتحقق من HMAC يدويًا، استخدم"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "hours."
+msgstr "ساعة."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "live"
+msgstr "مباشر"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mada
+msgid "mada"
+msgstr "مدى"
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"never sees your\n"
+"                        card number."
+msgstr ""
+"لا ترى أبدًا رقم\n"
+"                        بطاقتك."
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "never sees your card number."
+msgstr "لا ترى أبدًا رقم بطاقتك."
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "no details given"
+msgstr "بدون تفاصيل"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "test"
+msgstr "تجريبي"
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_valu
+msgid "valU"
+msgstr "valU"

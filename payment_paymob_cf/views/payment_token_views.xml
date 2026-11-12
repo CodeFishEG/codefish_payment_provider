@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_token_form" model="ir.ui.view">
+        <field name="name">Paymob Token Form</field>
+        <field name="model">payment.token</field>
+        <field name="inherit_id" ref="payment.payment_token_form"/>
+        <field name="arch" type="xml">
+            <field name="provider_ref" position="after">
+                <field name="paymob_cf_card_expiry" invisible="provider_code != 'paymob_cf' or not paymob_cf_card_expiry"/>
+                <field name="paymob_cf_cardholder" invisible="provider_code != 'paymob_cf' or not paymob_cf_cardholder"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

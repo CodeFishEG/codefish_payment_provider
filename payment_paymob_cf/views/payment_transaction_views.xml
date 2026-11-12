@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_transaction_form" model="ir.ui.view">
+        <field name="name">Paymob Transaction Form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Check Paymob Status"
+                    help="Fetch the latest status of this payment from Paymob."
+                    type="object"
+                    name="action_paymob_cf_sync"
+                    invisible="provider_code != 'paymob_cf' or state not in ('draft', 'pending') or not paymob_cf_order_id"
+                />
+            </header>
+            <notebook position="inside">
+                <page string="Paymob" name="paymob_cf" invisible="provider_code != 'paymob_cf'">
+                    <group>
+                        <group>
+                            <field name="paymob_cf_order_id"/>
+                            <field name="paymob_cf_special_reference"/>
+                            <field name="paymob_cf_intention_id"/>
+                            <field name="paymob_cf_integration_ids"/>
+                        </group>
+                        <group>
+                            <field name="paymob_cf_payment_source" invisible="not paymob_cf_payment_source"/>
+                            <field name="paymob_cf_bill_reference" invisible="not paymob_cf_bill_reference"/>
+                            <field name="paymob_cf_installment" invisible="not paymob_cf_installment"/>
+                            <field name="paymob_cf_last_sync"/>
+                        </group>
+                    </group>
+                    <group invisible="not paymob_cf_error_code and not paymob_cf_error_details">
+                        <group colspan="2">
+                            <field name="paymob_cf_error_code"/>
+                            <field name="paymob_cf_error_explanation"/>
+                            <field name="paymob_cf_error_details"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

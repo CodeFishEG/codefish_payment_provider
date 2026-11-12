@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_provider_paymob_cf" model="payment.provider">
+        <field name="name">Paymob</field>
+        <field name="code">paymob_cf</field>
+        <field name="sequence">6</field>
+        <field name="image_128" type="bytes" file="payment_paymob_cf/static/description/icon.png"/>
+        <field name="module_id" ref="base.module_payment_paymob_cf"/>
+        <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+        <field name="inline_form_view_id" ref="payment_paymob_cf.inline_form"/>
+        <field name="pending_msg" type="html">
+            <p>Your order is reserved until the payment is completed.</p>
+        </field>
+    </record>
+
+</odoo>

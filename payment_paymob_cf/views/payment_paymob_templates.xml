@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shown under a Paymob payment method once it is selected. The data attribute tells the
+         payment form how to process the method (`static/src/interactions/payment_form.js`). -->
+    <template id="inline_form">
+        <t t-set="is_validation" t-value="mode == 'validation'"/>
+        <t t-set="paymob_flow" t-value="provider_sudo._paymob_cf_get_flow(pm_sudo.code)"/>
+        <div
+            name="o_paymob_cf_inline_form"
+            class="o_paymob_cf_inline_form d-flex flex-column gap-2"
+            t-att-data-paymob-cf-inline-form-values="provider_sudo._paymob_cf_get_inline_form_values(pm_sudo.code)"
+        >
+            <!-- Paymob's card form, embedded in the page. -->
+            <t t-if="paymob_flow == 'pixel'">
+                <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
+                    <t t-if="is_validation">
+                        Paymob's secure card form opens on this page; your bank may ask you to
+                        confirm the card. <t t-out="provider_sudo.company_id.name"/> never sees your
+                        card number.
+                    </t>
+                    <t t-else="">
+                        Paymob's secure card form opens on this page to complete the payment.
+                        <t t-out="provider_sudo.company_id.name"/> never sees your card number.
+                    </t>
+                </t>
+            </t>
+
+            <!-- Paymob Checkout. -->
+            <t t-else="">
+                <t t-if="pm_sudo.code == 'kiosk'">
+                    <t t-call="payment_paymob_cf.inline_hint" icon_name.f="storefront">
+                        Paymob's secure checkout gives you a reference number to pay in cash at a
+                        payment kiosk, within <t t-out="provider_sudo.paymob_cf_payment_expiry_hours"/>
+                        hours.
+                    </t>
+                </t>
+                <t t-elif="pm_sudo.code == 'mobile_wallet_eg'">
+                    <t t-call="payment_paymob_cf.inline_hint" icon_name.f="smartphone">
+                        You will enter your wallet number on Paymob's secure checkout and approve the
+                        payment on your phone.
+                    </t>
+                </t>
+                <t t-elif="provider_sudo.paymob_cf_display_mode == 'redirect'">
+                    <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
+                        You will complete the payment on Paymob's secure checkout.
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
+                        Paymob's secure checkout will open on this page to complete the payment.
+                    </t>
+                </t>
+            </t>
+        </div>
+    </template>
+
+    <template id="inline_hint">
+        <!-- Parameters: icon_name (Material Symbols name); the body is the text. -->
+        <div class="o_paymob_cf_hint d-flex align-items-start gap-2 small text-muted">
+            <i class="oi flex-shrink-0 mt-1" t-att-data-icon="icon_name" aria-hidden="true"/>
+            <span><t t-out="0"/></span>
+        </div>
+    </template>
+
+    <!-- How to complete a pending payment: the kiosk reference to pay in cash, or a payment Paymob
+         is still confirming. Rendered by `payment.transaction._get_status_message`, wherever the
+         status of the payment is shown. The page updates by itself once Paymob confirms it. -->
+    <template id="payment_instructions">
+        <t t-set="reference" t-value="tx.paymob_cf_bill_reference or ''"/>
+        <div
+            class="o_paymob_cf_instructions d-flex flex-column gap-3"
+            t-att-data-reference="tx.reference"
+            t-att-data-access-token="tx._paymob_cf_get_access_token()"
+        >
+            <div t-if="status_message" class="o_paymob_cf_instructions_message" t-out="status_message"/>
+
+            <t t-if="reference">
+                <div class="o_paymob_cf_reference_box">
+                    <div class="small fw-semibold text-uppercase opacity-75">Kiosk reference number</div>
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span
+                            class="o_paymob_cf_reference font-monospace fw-bold user-select-all"
+                            dir="ltr"
+                            t-out="reference"
+                        />
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-light o_paymob_cf_copy"
+                            t-att-data-copy="reference"
+                        >
+                            <i class="oi me-1" data-icon="content_copy" aria-hidden="true"/>
+                            <span class="o_paymob_cf_copy_label">Copy</span>
+                            <span class="o_paymob_cf_copied_label d-none">Copied</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="small">
+                    <span class="opacity-75">Amount to pay:</span>
+                    <span
+                        class="fw-semibold"
+                        t-out="tx.amount"
+                        t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"
+                    />
+                </div>
+                <ol class="o_paymob_cf_steps small mb-0 ps-3">
+                    <li>Go to a payment kiosk that accepts Paymob references.</li>
+                    <li>Give the reference number above and pay the amount shown in cash.</li>
+                    <li>Your order is confirmed as soon as the payment is received.</li>
+                </ol>
+            </t>
+
+            <div class="o_paymob_cf_waiting d-flex align-items-center gap-2 small opacity-75" role="status">
+                <span class="spinner-grow spinner-grow-sm" aria-hidden="true"/>
+                <t t-if="reference">Waiting for your payment. This page updates by itself.</t>
+                <t t-else="">Your payment is being confirmed. This page updates by itself.</t>
+            </div>
+        </div>
+    </template>
+
+    <!-- Loaded in the frame of Paymob Checkout (pop-up or side panel) when the payment ends: it
+         takes the whole window to the payment status page. -->
+    <template id="frame_exit" name="Paymob: Leave the Checkout Frame">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <title>Payment</title>
+            </head>
+            <body t-att-data-redirect-url="redirect_url">
+                <p style="font-family: sans-serif; text-align: center; margin-top: 3rem;">
+                    <a t-att-href="redirect_url" target="_top">See the status of your payment</a>
+                </p>
+                <script>
+                    window.top.location.replace(document.body.dataset.redirectUrl);
+                </script>
+            </body>
+        </html>
+    </template>
+
+    <!-- The expiry date under the number of a saved Paymob card. -->
+    <template id="token_form" inherit_id="payment.token_form">
+        <xpath expr="//p[@t-out='token_sudo.display_name']" position="after">
+            <p t-if="token_sudo.provider_code == 'paymob_cf' and token_sudo.paymob_cf_card_expiry"
+               name="o_paymob_cf_card_expiry"
+               t-att-class="'mb-0 small text-600'
+                            + (' ms-4 ms-md-0' if allow_token_selection else '')"
+            >Expires <t t-out="token_sudo.paymob_cf_card_expiry"/></p>
+        </xpath>
+    </template>
+
+</odoo>

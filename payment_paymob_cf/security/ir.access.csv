@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+payment_paymob_split_merchant_system,payment.paymob.split.merchant.system,payment.paymob.split.merchant,base.group_system,crud,
+payment_paymob_split_merchant_rule,Access the connected merchants of accessible providers,payment.paymob.split.merchant,,crud,"[('provider_id', 'access', 'read')]"

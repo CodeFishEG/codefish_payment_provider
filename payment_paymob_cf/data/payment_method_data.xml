@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Paymob payment methods. The provider activates `card`, `mobile_wallet_eg` and `kiosk` when it
+         is installed; the others depend on what Paymob enabled on the merchant account. Each
+         method holds its Paymob integration ID (`paymob_cf_integration_id`). -->
+
+    <!-- === PRIMARY PAYMENT METHODS === -->
+
+    <record id="payment_method_card" model="payment.method">
+        <field name="name">Card</field>
+        <field name="code">card</field>
+        <field name="sequence">10</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/card.png"/>
+        <field name="support_tokenization">True</field>
+        <field name="support_manual_capture">partial</field>
+        <field name="support_refund">partial</field>
+    </record>
+
+    <record id="payment_method_mobile_wallet_eg" model="payment.method">
+        <field name="name">Mobile Wallet</field>
+        <field name="code">mobile_wallet_eg</field>
+        <field name="sequence">20</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/wallet.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_kiosk" model="payment.method">
+        <field name="name">Kiosk</field>
+        <field name="code">kiosk</field>
+        <field name="sequence">30</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/kiosk.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_installments_eg" model="payment.method">
+        <field name="name">Bank Installments</field>
+        <field name="code">installments_eg</field>
+        <field name="sequence">40</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/bank.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_valu" model="payment.method">
+        <field name="name">valU</field>
+        <field name="code">valu</field>
+        <field name="sequence">50</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/valu.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_souhoola" model="payment.method">
+        <field name="name">Souhoola</field>
+        <field name="code">souhoola</field>
+        <field name="sequence">51</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/souhoola.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_sympl" model="payment.method">
+        <field name="name">Sympl</field>
+        <field name="code">sympl</field>
+        <field name="sequence">52</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/sympl.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_forsa" model="payment.method">
+        <field name="name">Forsa</field>
+        <field name="code">forsa</field>
+        <field name="sequence">53</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/forsa.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_contact" model="payment.method">
+        <field name="name">Contact</field>
+        <field name="code">contact</field>
+        <field name="sequence">54</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/contact.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_halan" model="payment.method">
+        <field name="name">Halan</field>
+        <field name="code">halan</field>
+        <field name="sequence">55</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/halan.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_aman" model="payment.method">
+        <field name="name">Aman Installments</field>
+        <field name="code">aman</field>
+        <field name="sequence">56</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/aman.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_premium_card" model="payment.method">
+        <field name="name">Premium Card</field>
+        <field name="code">premium_card</field>
+        <field name="sequence">57</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/premiumcard.png"/>
+        <field name="support_refund">full_only</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_mogo" model="payment.method">
+        <field name="name">MOGO</field>
+        <field name="code">mogo</field>
+        <field name="sequence">58</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment_paymob_cf/static/img/mogo.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+    </record>
+
+    <record id="payment_method_tabby" model="payment.method">
+        <field name="name">Tabby</field>
+        <field name="code">tabby</field>
+        <field name="sequence">60</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/tabby.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.sa'), ref('base.ae')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.SAR'), ref('base.AED')])]"/>
+    </record>
+
+    <record id="payment_method_tamara" model="payment.method">
+        <field name="name">Tamara</field>
+        <field name="code">tamara</field>
+        <field name="sequence">61</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/tamara.png"/>
+        <field name="support_refund">full_only</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.sa'), ref('base.ae')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.SAR'), ref('base.AED')])]"/>
+    </record>
+
+    <record id="payment_method_stcpay" model="payment.method">
+        <field name="name">STC Pay</field>
+        <field name="code">stcpay</field>
+        <field name="sequence">62</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/stcpay.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.sa')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.SAR')])]"/>
+    </record>
+
+    <record id="payment_method_omannet" model="payment.method">
+        <field name="name">OmanNet</field>
+        <field name="code">omannet</field>
+        <field name="sequence">63</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/omannet.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.om')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.OMR')])]"/>
+    </record>
+
+    <record id="payment_method_jazzcash" model="payment.method">
+        <field name="name">JazzCash</field>
+        <field name="code">jazzcash</field>
+        <field name="sequence">70</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment_paymob_cf/static/img/jazzcash.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.pk')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.PKR')])]"/>
+    </record>
+
+    <record id="payment_method_easypaisa" model="payment.method">
+        <field name="name">Easypaisa</field>
+        <field name="code">easypaisa</field>
+        <field name="sequence">71</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment_paymob_cf/static/img/easypaisa.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.pk')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.PKR')])]"/>
+    </record>
+
+    <record id="payment_method_apple_pay" model="payment.method">
+        <field name="name">Apple Pay</field>
+        <field name="code">apple_pay</field>
+        <field name="sequence">80</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/apple_pay.png"/>
+        <field name="support_refund">partial</field>
+    </record>
+
+    <record id="payment_method_google_pay" model="payment.method">
+        <field name="name">Google Pay</field>
+        <field name="code">google_pay</field>
+        <field name="sequence">81</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/google_pay.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.sa'), ref('base.ae')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.SAR'), ref('base.AED')])]"/>
+    </record>
+
+    <record id="payment_method_paymob" model="payment.method">
+        <field name="name">Paymob</field>
+        <field name="code">paymob</field>
+        <field name="sequence">90</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="image" type="bytes" file="payment_paymob_cf/static/img/paymob.png"/>
+        <field name="support_refund">partial</field>
+    </record>
+
+    <!-- === CARD BRANDS === -->
+
+    <record id="payment_method_visa" model="payment.method">
+        <field name="name">Visa</field>
+        <field name="code">visa</field>
+        <field name="sequence">10</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="primary_payment_method_id" ref="payment_paymob_cf.payment_method_card"/>
+        <field name="image" type="bytes" file="payment/static/img/visa.png"/>
+    </record>
+
+    <record id="payment_method_mastercard" model="payment.method">
+        <field name="name">Mastercard</field>
+        <field name="code">mastercard</field>
+        <field name="sequence">20</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="primary_payment_method_id" ref="payment_paymob_cf.payment_method_card"/>
+        <field name="image" type="bytes" file="payment/static/img/mastercard.png"/>
+    </record>
+
+    <record id="payment_method_amex" model="payment.method">
+        <field name="name">American Express</field>
+        <field name="code">amex</field>
+        <field name="sequence">30</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="primary_payment_method_id" ref="payment_paymob_cf.payment_method_card"/>
+        <field name="image" type="bytes" file="payment/static/img/amex.png"/>
+    </record>
+
+    <record id="payment_method_meeza" model="payment.method">
+        <field name="name">Meeza</field>
+        <field name="code">meeza</field>
+        <field name="sequence">40</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="primary_payment_method_id" ref="payment_paymob_cf.payment_method_card"/>
+        <field name="image" type="bytes" file="payment/static/img/meeza.png"/>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+    </record>
+
+    <record id="payment_method_mada" model="payment.method">
+        <field name="name">mada</field>
+        <field name="code">mada</field>
+        <field name="sequence">50</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="primary_payment_method_id" ref="payment_paymob_cf.payment_method_card"/>
+        <field name="image" type="bytes" file="payment/static/img/mada.png"/>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.sa')])]"/>
+    </record>
+
+    <record id="payment_method_jaywan" model="payment.method">
+        <field name="name">Jaywan</field>
+        <field name="code">jaywan</field>
+        <field name="sequence">60</field>
+        <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
+        <field name="primary_payment_method_id" ref="payment_paymob_cf.payment_method_card"/>
+        <field name="image" type="bytes" file="payment_paymob_cf/static/img/jaywan.png"/>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.ae')])]"/>
+    </record>
+
+</odoo>

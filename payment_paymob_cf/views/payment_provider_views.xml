@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Paymob Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Test Connection"
+                    help="Check the API key with Paymob and count the integrations of the account in this mode (test or live)."
+                    type="object"
+                    name="action_paymob_cf_test_connection"
+                    invisible="code != 'paymob_cf'"
+                    class="btn-secondary"
+                />
+                <button
+                    string="Sync Integrations"
+                    help="Fill the integration IDs of the payment methods from your Paymob account. Nothing is changed at Paymob."
+                    type="object"
+                    name="action_paymob_cf_sync_integrations"
+                    invisible="code != 'paymob_cf'"
+                    class="btn-secondary"
+                />
+            </header>
+            <group name="provider_credentials" position="inside">
+                <field
+                    name="paymob_cf_country"
+                    invisible="code != 'paymob_cf'"
+                    required="code == 'paymob_cf'"
+                />
+                <field
+                    name="paymob_cf_secret_key"
+                    invisible="code != 'paymob_cf'"
+                    required="is_live and code == 'paymob_cf'"
+                    widget="password"
+                />
+                <field
+                    name="paymob_cf_public_key"
+                    invisible="code != 'paymob_cf'"
+                    required="is_live and code == 'paymob_cf'"
+                />
+                <field
+                    name="paymob_cf_api_key"
+                    invisible="code != 'paymob_cf'"
+                    required="is_live and code == 'paymob_cf'"
+                    widget="password"
+                />
+                <field
+                    name="paymob_cf_hmac_secret"
+                    invisible="code != 'paymob_cf'"
+                    required="is_live and code == 'paymob_cf'"
+                    widget="password"
+                />
+            </group>
+            <group name="provider_credentials" position="after">
+                <group string="Paymob" name="paymob_cf_options" invisible="code != 'paymob_cf'">
+                    <field
+                        name="paymob_cf_integration"
+                        widget="radio"
+                        required="code == 'paymob_cf'"
+                    />
+                    <div colspan="2" class="text-muted small mb-2" invisible="paymob_cf_integration != 'hosted'">
+                        Every method is paid on Paymob's secure checkout. Cards can't be saved.
+                    </div>
+                    <div colspan="2" class="text-muted small mb-2" invisible="paymob_cf_integration != 'embedded'">
+                        Cards are entered in Paymob's secure card form, embedded in your website.
+                        They can be saved, captured manually and charged again. Wallets, kiosk and
+                        installments use Paymob's checkout.
+                    </div>
+                    <field name="paymob_cf_display_mode" required="code == 'paymob_cf'"/>
+                    <label for="paymob_cf_payment_expiry_hours"/>
+                    <div class="o_row">
+                        <field name="paymob_cf_payment_expiry_hours" class="oe_inline"/>
+                        <span>hours</span>
+                    </div>
+                    <field name="paymob_cf_webhook_url" widget="CopyClipboardChar"/>
+                    <field name="paymob_cf_auth_integration_id" options="{'enable_formatting': false}" invisible="not capture_manually and not paymob_cf_auth_integration_id"/>
+                    <field name="paymob_cf_moto_integration_id" options="{'enable_formatting': false}" invisible="paymob_cf_integration != 'embedded'"/>
+                    <field name="paymob_cf_verification_integration_id" options="{'enable_formatting': false}" invisible="paymob_cf_integration != 'embedded'"/>
+                    <field name="paymob_cf_payment_split"/>
+                    <div colspan="2" class="text-muted small mb-2" invisible="not paymob_cf_payment_split">
+                        Add the merchants connected to your Paymob account, and their shares, in the
+                        Payment Split tab.
+                    </div>
+                </group>
+            </group>
+            <xpath expr="//field[@name='primary_payment_method_ids']/list/field[@name='active']" position="after">
+                <field
+                    name="paymob_cf_integration_id"
+                    string="Integration ID"
+                    options="{'enable_formatting': false}"
+                    column_invisible="parent.code != 'paymob_cf'"
+                    width="120"
+                />
+            </xpath>
+            <notebook position="inside">
+                <page string="Payment Split" name="paymob_cf_payment_split" invisible="code != 'paymob_cf' or not paymob_cf_payment_split">
+                    <div class="text-muted mb-3">
+                        Ask Paymob to connect the merchants to your account and to enable split
+                        amounts, then add them here with their share. For each item paid, every
+                        merchant that applies to it receives its share of the item's price; the
+                        rest is yours. Paymob pays each merchant its share.
+                    </div>
+                    <field name="paymob_cf_split_merchant_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="mid"/>
+                            <field name="share"/>
+                            <field name="apply_to"/>
+                            <field
+                                name="product_tmpl_ids"
+                                widget="many2many_tags"
+                                invisible="apply_to != 'products'"
+                                required="apply_to == 'products'"
+                            />
+                            <field name="active" widget="boolean_toggle"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Test Data" name="paymob_cf_test_data" invisible="code != 'paymob_cf' or is_live">
+                    <div class="text-muted mb-3">
+                        For test payments, with the test keys and the test integration IDs of your
+                        Paymob account. Paymob's published test data:
+                    </div>
+                    <table class="table table-sm o_paymob_cf_test_data">
+                        <thead>
+                            <tr><th>To test</th><th>Use</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Mastercard</td><td>5123 4567 8901 2346, expiry 01/39, CVV 123, name Test Account</td></tr>
+                            <tr><td>Mastercard</td><td>5123 4500 0000 0008, expiry 01/39, CVV 123, name Test Account</td></tr>
+                            <tr><td>Visa</td><td>4111 1111 1111 1111, expiry 01/39, CVV 123, name Test Account</td></tr>
+                            <tr><td>Mobile wallet</td><td>Number 01010101010, MPIN 123456, OTP 123456</td></tr>
+                            <tr><td>Kiosk, installments</td><td>Paymob has no simulator: test them with small live payments.</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="text-muted">
+                        To see what Paymob sends, set
+                        <a href="https://hooks.paymob.com" target="_blank" rel="noopener">Paymob's webhook tester</a>
+                        as the callback of a test integration. To check an HMAC by hand, use
+                        <a href="https://wizard.paymob.com" target="_blank" rel="noopener">Paymob's integration wizard</a>.
+                        Apple Pay, Google Pay and bank installments only work with live integrations.
+                    </div>
+                </page>
+            </notebook>
+            <field name="available_currency_ids" position="attributes">
+                <attribute name="readonly" separator=" or " add="code == 'paymob_cf'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="payment_method_form" model="ir.ui.view">
+        <field name="name">Paymob Payment Method Form</field>
+        <field name="model">payment.method</field>
+        <field name="inherit_id" ref="payment.payment_method_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="paymob_cf_provider_code" invisible="1"/>
+                <field
+                    name="paymob_cf_integration_id"
+                    options="{'enable_formatting': false}"
+                    invisible="paymob_cf_provider_code != 'paymob_cf' or not is_primary or code == 'paymob'"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

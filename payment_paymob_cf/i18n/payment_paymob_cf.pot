@@ -1,0 +1,1853 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_paymob_cf
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 18:32+0000\n"
+"PO-Revision-Date: 2026-11-12 18:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "%(explanation)s (Paymob code %(code)s)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "%(message)s Paymob's message: %(description)s"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "%s months"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+".\n"
+"                        Apple Pay, Google Pay and bank installments only work with live integrations."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "4111 1111 1111 1111, expiry 01/39, CVV 123, name Test Account"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "5123 4500 0000 0008, expiry 01/39, CVV 123, name Test Account"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "5123 4567 8901 2346, expiry 01/39, CVV 123, name Test Account"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                            <span class=\"o_paymob_cf_copy_label\">Copy</span>\n"
+"                            <span class=\"o_paymob_cf_copied_label d-none\">Copied</span>"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "<span class=\"opacity-75\">Amount to pay:</span>"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "<span>hours</span>"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.constraint,message:payment_paymob_cf.constraint_payment_paymob_split_merchant_provider_mid_uniq
+msgid "A merchant can only be added once to a provider."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"A technical error at the bank stopped the payment. Please try again later."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "A technical error stopped the payment. Please try again later."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_api_key
+msgid "API Key"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.module.module,summary:base.module_payment_paymob_cf
+msgid ""
+"Accept Paymob in Egypt, Saudi Arabia, the UAE, Oman and Pakistan: cards, "
+"wallets, kiosk, valU and other installments, with Paymob's hosted checkout "
+"or an embedded card form, saved cards, refunds and manual capture"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__active
+msgid "Active"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Add a new card"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Add the merchants connected to your Paymob account, and their shares, in the\n"
+"                        Payment Split tab."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_paymob_split_merchant__apply_to__all
+msgid "All items"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_aman
+msgid "Aman Installments"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_amex
+msgid "American Express"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "American Express?"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_apple_pay
+msgid "Apple Pay"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__apply_to
+msgid "Applies To"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Ask Paymob to connect the merchants to your account and to enable split\n"
+"                        amounts, then add them here with their share. For each item paid, every\n"
+"                        merchant that applies to it receives its share of the item's price; the\n"
+"                        rest is yours. Paymob pays each merchant its share."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_auth_integration_id
+msgid "Auth Integration ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_installments_eg
+msgid "Bank Installments"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_card
+msgid "Card"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__paymob_cf_card_expiry
+msgid "Card Expiry"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Card details"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Card number"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__paymob_cf_cardholder
+msgid "Cardholder"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Cards are entered in Paymob's secure card form, embedded in your website.\n"
+"                        They can be saved, captured manually and charged again. Wallets, kiosk and\n"
+"                        installments use Paymob's checkout."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Cards from this country aren't accepted for this order. Please use another "
+"card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_transaction_form
+msgid "Check Paymob Status"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Check the API key with Paymob and count the integrations of the account in "
+"this mode (test or live)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_display_mode
+msgid "Checkout Display"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Close"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__code
+msgid "Code"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__company_id
+msgid "Company"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_split_merchant_ids
+msgid "Connected Merchants"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Connection successful"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_contact
+msgid "Contact"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__display_name
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Disposable email addresses aren't accepted. Please use another email "
+"address."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_easypaisa
+msgid "Easypaisa"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__eg
+msgid "Egypt"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_integration__embedded
+msgid "Embedded checkout"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Ending in"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the card number"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the expiry date"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the name on the card"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Enter the secret key and the API key first."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Enter the security code (CVV)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Every method is paid on Paymob's secure checkout. Cards can't be saved."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.token_form
+msgid "Expires"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_transaction_form
+msgid "Fetch the latest status of this payment from Paymob."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Fill the integration IDs of the payment methods from your Paymob account. "
+"Nothing is changed at Paymob."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"For test payments, with the test keys and the test integration IDs of your\n"
+"                        Paymob account. Paymob's published test data:"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_forsa
+msgid "Forsa"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_display_mode__redirect
+msgid "Full page"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Give the reference number above and pay the amount shown in cash."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Go to a payment kiosk that accepts Paymob references."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_google_pay
+msgid "Google Pay"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_hmac_secret
+msgid "HMAC Secret"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_halan
+msgid "Halan"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_display_mode
+msgid "How Paymob Checkout is shown to the customer."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_payment_expiry_hours
+msgid ""
+"How long a payment can be completed, e.g. a kiosk reference paid in cash. "
+"Paymob accepts up to 864 hours (36 days)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_account_chart_template__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_token__id
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__id
+msgid "ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_installment
+msgid "Installment Plan"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Integration ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Integration IDs set:\n"
+"%s"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_jaywan
+msgid "Jaywan"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_jazzcash
+msgid "JazzCash"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_kiosk
+msgid "Kiosk"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_bill_reference
+msgid "Kiosk Reference"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Kiosk reference number"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Kiosk, installments"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_last_sync
+msgid "Last Paymob Status Check"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "MM / YY"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mogo
+msgid "MOGO"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_moto_integration_id
+msgid "MOTO Integration ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mastercard
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Mastercard"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_meeza
+msgid "Meeza"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__mid
+msgid "Merchant ID (MID)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mobile_wallet_eg
+msgid "Mobile Wallet"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Mobile wallet"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__name
+msgid "Name"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Name on the card"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"No integration found for: %s. Enter their IDs on the payment methods, or ask"
+" Paymob to enable them."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_webhook_url
+msgid "Notification URL"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Number 01010101010, MPIN 123456, OTP 123456"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_webhook_url
+msgid ""
+"Odoo sends it with every payment. You can also set it as the Transaction "
+"processed callback of each integration in Paymob's dashboard."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__om
+msgid "Oman"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_omannet
+msgid "OmanNet"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_payment_source
+msgid "Paid With"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__pk
+msgid "Pakistan"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Pay"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_payment_expiry_hours
+msgid "Payment Expiry (Hours)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_method
+msgid "Payment Method"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_provider
+msgid "Payment Provider"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_payment_split
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Payment Split"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_token
+msgid "Payment Token"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_transaction
+msgid "Payment Transaction"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Payment processing failed"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.module.module,description:base.module_payment_paymob_cf
+msgid ""
+"Payment provider for Paymob. Choose Paymob Checkout, where customers pay on "
+"Paymob's hosted page in a full page, a pop-up or a side panel, or the "
+"Embedded checkout, where the card form opens on your website and saved "
+"cards, manual capture and merchant-initiated charges use Paymob's server "
+"APIs. Includes every Paymob country, saved cards, full and partial refunds, "
+"authorize and capture, payment split with connected merchants, bank "
+"installments, Paymob's response codes explained, test data for "
+"administrators, payment notifications and Arabic."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Payments from your country aren't accepted for this order. Please choose "
+"another payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Payments from your network aren't accepted for this order. Please try "
+"another connection or choose another payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__code__paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_paymob
+#: model:payment.provider,name:payment_paymob_cf.payment_provider_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_transaction_form
+msgid "Paymob"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_card_data
+msgid "Paymob Cf Card Data"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_card_token
+msgid "Paymob Cf Card Token"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_client_secret
+msgid "Paymob Cf Client Secret"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_redirect_url
+msgid "Paymob Cf Redirect Url"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_integration__hosted
+msgid "Paymob Checkout"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_integration
+msgid ""
+"Paymob Checkout: customers pay every method on Paymob's hosted checkout.\n"
+"Embedded checkout: cards are entered in Paymob's card form, embedded in your website; cards can be saved, captured manually and charged again. Other methods use Paymob Checkout."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model,name:payment_paymob_cf.model_payment_paymob_split_merchant
+msgid "Paymob Connected Merchant"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_country
+msgid "Paymob Country"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_error_explanation
+msgid "Paymob Error"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_error_code
+msgid "Paymob Error Code"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_error_details
+msgid "Paymob Error Details"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_integration
+msgid "Paymob Integration"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__paymob_cf_integration_id
+msgid "Paymob Integration ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_integration_ids
+msgid "Paymob Integrations"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_intention_id
+msgid "Paymob Intention"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_order_id
+msgid "Paymob Order ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.module.module,shortdesc:base.module_payment_paymob_cf
+msgid "Paymob Payments"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_transaction__paymob_cf_special_reference
+msgid "Paymob Reference"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob accepted the API key (%(country)s, %(env)s mode) and has %(count)s "
+"integrations in this mode."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "Paymob already has a payment with this reference."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob can't refund kiosk payments."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob captures card payments manually with an Auth integration. Enter its "
+"ID in the Auth Integration ID field first."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid ""
+"Paymob charges saved cards while the customer is away with a MOTO "
+"integration. Enter its ID on the Paymob provider."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_hmac_secret
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys (main user only). Odoo "
+"checks every notification and redirection of Paymob with it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_public_key
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys. It opens Paymob's "
+"checkout and card form in the customer's browser."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_secret_key
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys. Test and live accounts "
+"have different secret keys."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_api_key
+msgid ""
+"Paymob dashboard: Settings > Developers > API Keys. Used to check the status"
+" of payments and to list your integrations."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob didn't return a payment intention."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob didn't return a payment key."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob doesn't know the integration ID, or it belongs to the other mode "
+"(test or live) or another currency. Check the integration IDs of the Paymob "
+"provider and of its payment methods, or click Sync Integrations."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob doesn't know this transaction, or it can't be captured, voided or "
+"refunded (for example, it was declined or isn't an authorization)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "Paymob has no payment for this order yet."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "Paymob has no payment for this reference yet."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob has no simulator: test them with small live payments."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Paymob integrations"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob refused the customer's details: a required value is missing or "
+"invalid (first name, last name, email or phone number)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob refused the keys. Check the secret key, the public key and the API "
+"key of the Paymob provider, and that they belong to its country and mode "
+"(test or live)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob refused the order lines: their amounts must add up to the amount "
+"paid."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Paymob refused the request."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "Paymob refused the request: %(description)s (Paymob code %(code)s)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob rejected the connection.\n"
+"%(error)s"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid ""
+"Paymob sent the latest status of the payment. The payment is updated within "
+"a few seconds; reload the page to see it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob's integration wizard"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "Paymob's secure card form opens on this page to complete the payment."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure card form opens on this page; your bank may ask you to\n"
+"                        confirm the card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure checkout gives you a reference number to pay in cash at a\n"
+"                        payment kiosk, within"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure checkout will open on this page to complete the payment."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Paymob's servers had an error. Try again later; if it persists, contact "
+"Paymob's support."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob's webhook tester"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.actions.server,name:payment_paymob_cf.cron_sync_pending_payments_ir_actions_server
+msgid "Paymob: check pending payments"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_display_mode__popup
+msgid "Pop-up window"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_premium_card
+msgid "Premium Card"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__product_tmpl_ids
+msgid "Products"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__provider_id
+msgid "Provider"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_method__paymob_cf_provider_code
+msgid "Provider Code"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_public_key
+msgid "Public Key"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/controllers/main.py:0
+msgid "Received tampered payment request data."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_stcpay
+msgid "STC Pay"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__sa
+msgid "Saudi Arabia"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Save the card"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Saved cards"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_secret_key
+msgid "Secret Key"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Secure payment"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Security code (CVV)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.frame_exit
+msgid "See the status of your payment"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_paymob_split_merchant__apply_to__products
+msgid "Selected products"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__share
+msgid "Share (%)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_payment_split
+msgid ""
+"Share each payment with the merchants connected to your Paymob account. "
+"Paymob pays each one its share; the rest is yours."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_display_mode__side_page
+msgid "Side panel"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_souhoola
+msgid "Souhoola"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_sympl
+msgid "Sympl"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Sync Integrations"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_tabby
+msgid "Tabby"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_tamara
+msgid "Tamara"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Test Connection"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Test Data"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Test keys were used with a live integration ID. Check that the keys and the "
+"integration IDs of the Paymob provider are all test ones or all live ones."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The 3 digits on the back of the card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The 4 digits on the front of the card, above the number."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_method__paymob_cf_integration_id
+msgid ""
+"The ID of the Paymob integration that processes this method, in the mode of "
+"the provider (test or live). Paymob dashboard: Settings > Payment "
+"Integrations. Sync Integrations on the provider fills it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__mid
+msgid ""
+"The ID of the merchant connected to your Paymob account, as given by Paymob."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The PIN is incorrect. Please try again."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The PIN was entered wrongly too many times. Please contact your bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_integration_ids
+msgid "The Paymob integrations the customer could pay with."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The amount is above the limit allowed for charges without the customer "
+"(MOTO). Ask Paymob to raise the limit."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The amount is above the limit allowed for this payment method. Please choose"
+" another payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The authorization was voided."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank approved only part of the amount. Please use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank asks for more identification for this payment. Please contact your "
+"bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank asks to make the payment again. Please try again."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank couldn't find the original record of the payment. Contact Paymob's "
+"support with the transaction ID."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank couldn't process the payment. Please try again or use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank couldn't update its records for the payment. Contact Paymob's "
+"support with the transaction ID."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank declined the payment. Please contact your bank or use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank doesn't allow this kind of payment with this card. Please use "
+"another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank flagged this payment as suspected fraud. Please contact your bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank found a duplicate record of the payment. Contact Paymob's support "
+"with the transaction ID."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank found an error in a field of the payment. Contact Paymob's support "
+"with the transaction ID."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank is still processing a previous request. Please try again in a few "
+"minutes."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank of the card can't be reached right now. Please try again later."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank of this card couldn't be found. Please check the card number and "
+"try again."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank refused the amount of the payment. Please try again or use another "
+"card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank refused the card. Please contact your bank or use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The bank refused the payment for a security reason. Please contact your "
+"bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank took no action on the payment. Please try again."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The bank's system is temporarily unavailable. Please try again later."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The capture is higher than the authorized amount."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_payment_source
+msgid "The card (brand and last digits) or the wallet the customer paid with."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card doesn't have enough funds for this payment."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card has expired. Please use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card has made too many payments. Please contact your bank or use another"
+" card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_auth_integration_id
+msgid ""
+"The card integration of type Auth, for payments captured manually. Ask "
+"Paymob to create it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_moto_integration_id
+msgid ""
+"The card integration of type MOTO, to charge saved cards while the customer "
+"is away (e.g. subscriptions). Ask Paymob to create it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_verification_integration_id
+msgid ""
+"The card integration of type Verification, for customers who save a card "
+"without paying (My Account > Payment Methods). Ask Paymob to create it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card is restricted. Please contact your bank or use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card isn't allowed to make this kind of payment. Please contact your "
+"bank or use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card network doesn't allow this payment on the merchant account. Ask "
+"Paymob to check the card payments of your account."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The card network doesn't recognize the merchant account. Ask Paymob to check"
+" the card payments of your account."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The card number isn't valid"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card number isn't valid. Please check it and try again."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card was reported lost. Please contact your bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The card was reported stolen. Please contact your bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The card will be saved for your next payments."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The cardholder disputes this payment. Please contact your bank."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_error_code
+msgid "The code of the last error Paymob returned for this payment."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_country
+msgid ""
+"The country of your Paymob account. Each country has its own Paymob platform"
+" and currency: Egypt (EGP), Saudi Arabia (SAR), United Arab Emirates (AED), "
+"Oman (OMR) and Pakistan (PKR)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "The expiry date isn't valid"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The fraud checks refused this payment. Please choose another payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "The integration IDs were already up to date."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid "The merchant ID of %(merchant)s must be a number."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid ""
+"The merchants share more than 100%% of the price of %(product)s "
+"(%(share)s%%)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid ""
+"The merchants that apply to all items share more than 100%% of their price "
+"(%(share)s%%)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_error_details
+msgid "The message of the error, as Paymob sent it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_token__paymob_cf_card_expiry
+msgid "The month and year the card expires (MM/YY), as Paymob saved it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_token__paymob_cf_cardholder
+msgid "The name on the card, as Paymob saved it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_installment
+msgid "The number of months, when the customer paid in installments."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_order_id
+msgid ""
+"The order Paymob created for the payment. Paymob signs it in its "
+"notifications."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method (error %(code)s)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment exceeds the limit of the card. Please contact your bank or use "
+"another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "The payment expiry must be between 1 and 864 hours (36 days)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment method has no Paymob integration ID. Enter it on the payment "
+"method, or click Sync Integrations on the Paymob provider."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment request had a format error. Contact Paymob's support with the "
+"transaction ID."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment to refund has no Paymob transaction ID."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The payment was canceled."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment was declined."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"The payment was declined. Please try again or choose another payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment was declined: %(reason)s (code %(code)s)"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The payment was voided at Paymob."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__share
+msgid ""
+"The percentage of the price of each item it applies to that Paymob pays to "
+"this merchant. The rest is yours."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__product_tmpl_ids
+msgid "The products whose price is shared with this merchant."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_bill_reference
+msgid "The reference the customer pays in cash at a kiosk."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "The refund is higher than the amount that can still be refunded."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid ""
+"The secure card form couldn't be loaded. Please try again or choose another "
+"payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_paymob_split_merchant.py:0
+msgid "The share of %(merchant)s must be more than 0%% and at most 100%%."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_method__paymob_cf_provider_code
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_transaction.py:0
+msgid "The transaction is not linked to a token."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_special_reference
+msgid "The unique reference of the payment at Paymob (special reference)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid "This card isn't accepted for this order. Please use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "To see what Paymob sends, set"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "To test"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields.selection,name:payment_paymob_cf.selection__payment_provider__paymob_cf_country__ae
+msgid "United Arab Emirates"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Use"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_verification_integration_id
+msgid "Verification Integration ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "View saved cards"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_visa
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Visa"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-javascript
+#: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
+msgid "Visa or Mastercard?"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Waiting for your payment. This page updates by itself."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_error_explanation
+msgid "What the error returned by Paymob means."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_redirect_url
+msgid "Where the customer confirms a payment with a saved card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_paymob_split_merchant__name
+msgid "Who receives this share, for example a seller or a partner."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "You will complete the payment on Paymob's secure checkout."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"You will enter your wallet number on Paymob's secure checkout and approve the\n"
+"                        payment on your phone."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Your bank asks you to contact them about this payment. Please contact your "
+"bank or use another card."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/const.py:0
+msgid ""
+"Your email address couldn't be verified. Please check it and try again."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Your order is confirmed as soon as the payment is received."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,pending_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your order is reserved until the payment is completed."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,auth_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your payment has been authorized."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,cancel_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your payment has been cancelled."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:payment.provider,done_msg:payment_paymob_cf.payment_provider_paymob_cf
+msgid "Your payment has been processed."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_instructions
+msgid "Your payment is being confirmed. This page updates by itself."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "as the callback of a test integration. To check an HMAC by hand, use"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "hours."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "live"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_mada
+msgid "mada"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"never sees your\n"
+"                        card number."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid "never sees your card number."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "no details given"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid "test"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:payment.method,name:payment_paymob_cf.payment_method_valu
+msgid "valU"
+msgstr ""
