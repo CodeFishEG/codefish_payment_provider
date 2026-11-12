@@ -664,6 +664,36 @@ class PaymentProvider(models.Model):
             return response
         return None
 
+    def _paymob_cf_get_order_card_tokens(self, order_id):
+        """Return the cards Paymob saved with the payment of an order.
+
+        Paymob answers with a list of card token callbacks (`{"type": "TOKEN", "obj": {...}}`).
+
+        :param str order_id: The order Paymob created for the payment.
+        :return: The card tokens, as in the `obj` of the card token callback.
+        :rtype: list[dict]
+        :raise ValidationError: If the request fails.
+        """
+        self.ensure_one()
+        response = self._send_api_request(
+            "POST",
+            const.ENDPOINT_ORDER_CARD_TOKENS,
+            json={
+                "auth_token": self._paymob_cf_get_auth_token(),
+                "order_id": int(order_id) if str(order_id).isdigit() else order_id,
+            },
+            paymob_auth=const.AUTH_BEARER,
+        )
+        if isinstance(response, dict):
+            response = response.get("results") or response.get("card_tokens") or [response]
+        tokens = []
+        for item in response or []:
+            if isinstance(item, dict) and isinstance(item.get("obj"), dict):
+                item = item["obj"]
+            if isinstance(item, dict) and item.get("token"):
+                tokens.append(item)
+        return tokens
+
     def _paymob_cf_match_integrations(self, integrations):
         """Match the integrations of the account with the payment methods.
 
@@ -683,12 +713,14 @@ class PaymentProvider(models.Model):
                 continue
             if "is_live" in integration and bool(integration["is_live"]) != self.is_live:
                 continue
+            if integration.get("is_deprecated"):
+                continue
             integration_id = integration.get("id")
             name = (integration.get("integration_name") or "").lower()
-            if "apple" in name:
+            if integration.get("is_apple_pay") or "apple" in name:
                 matches.setdefault("apple_pay", integration_id)
                 continue
-            if "google" in name:
+            if integration.get("is_google_pay") or "google" in name:
                 matches.setdefault("google_pay", integration_id)
                 continue
             code = const.GATEWAY_TYPE_MAPPING.get(str(integration.get("gateway_type") or "").upper())
@@ -705,7 +737,7 @@ class PaymentProvider(models.Model):
                 if integration.get("is_auth"):
                     special.setdefault("paymob_cf_auth_integration_id", integration_id)
                     continue
-                if integration.get("installments"):
+                if integration.get("is_installments") or integration.get("installments"):
                     matches.setdefault("installments_eg", integration_id)
                     continue
             matches.setdefault(code, integration_id)

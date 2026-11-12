@@ -40,6 +40,7 @@ ENDPOINT_AUTH = "/api/auth/tokens"  # API key -> Bearer token (60 minutes)
 ENDPOINT_INTENTION = "/v1/intention/"  # Secret key
 ENDPOINT_CHECKOUT = "/unifiedcheckout/"  # Hosted checkout, redirects to the country's checkout host
 ENDPOINT_INQUIRY = "/api/ecommerce/orders/transaction_inquiry"  # Bearer
+ENDPOINT_ORDER_CARD_TOKENS = "/api/acceptance/order_card_tokens"  # Bearer
 ENDPOINT_REFUND = "/api/acceptance/void_refund/refund"  # Secret key
 ENDPOINT_VOID = "/api/acceptance/void_refund/void"  # Secret key
 ENDPOINT_CAPTURE = "/api/acceptance/capture"  # Secret key

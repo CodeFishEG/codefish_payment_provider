@@ -599,8 +599,8 @@ msgstr "رابط الإشعارات"
 
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Number 01010101010, MPIN 123456, OTP 123456"
-msgstr "الرقم 01010101010، الرقم السري 123456، رمز التحقق 123456"
+msgid "Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456"
+msgstr "الرقم 01010101010 (اكتب 1010101010 بعد ‎+20)، الرقم السري 123456، رمز التحقق 123456"
 
 #. module: payment_paymob_cf
 #: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_webhook_url

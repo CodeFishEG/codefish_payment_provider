@@ -133,7 +133,7 @@
                             <tr><td>Mastercard</td><td>5123 4567 8901 2346, expiry 01/39, CVV 123, name Test Account</td></tr>
                             <tr><td>Mastercard</td><td>5123 4500 0000 0008, expiry 01/39, CVV 123, name Test Account</td></tr>
                             <tr><td>Visa</td><td>4111 1111 1111 1111, expiry 01/39, CVV 123, name Test Account</td></tr>
-                            <tr><td>Mobile wallet</td><td>Number 01010101010, MPIN 123456, OTP 123456</td></tr>
+                            <tr><td>Mobile wallet</td><td>Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456</td></tr>
                             <tr><td>Kiosk, installments</td><td>Paymob has no simulator: test them with small live payments.</td></tr>
                         </tbody>
                     </table>

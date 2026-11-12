@@ -260,18 +260,32 @@ Refunds (`void_refund/refund`, full or partial), captures (`capture`, partial) a
 sent by Odoo and recorded on their own transactions. `const.ERROR_CODES` explains the bank response codes, Paymob's
 risk declines and API errors, with a customer message and a staff message.
 
+### Verified against Paymob
+
+Built from Paymob's documentation and tested with mocked API calls (the HMAC strings against Paymob's documented
+examples), then checked on 2026-11-12 with an Egyptian test account (card, wallet and kiosk integrations), on a
+local server:
+
+- **Test Connection** and **Sync Integrations** (the integrations list and its fields);
+- Paymob Checkout in a full page and in a pop-up: card with 3-D Secure, mobile wallet (PIN and OTP) and kiosk
+  (reference in `data.bill_reference`), the order confirmed, a partial refund;
+- the HMAC of the redirection, signed over `order` (not `order_id`), with Paymob's real values;
+- the status inquiry by merchant order, and **Check Paymob Status**;
+- the embedded card form with 3-D Secure and **Save my payment details**: the card is saved (fetched with
+  `order_card_tokens` when the card token callback can't reach Odoo), then paid again on Paymob Checkout with its
+  CVV and 3-D Secure.
+
+Found and fixed while checking: a browser may refuse to take the checkout frame back to the website (Chrome blocks a
+public page from opening a private address), so the pop-up and the side panel also ask Odoo for the payment's state;
+`order_card_tokens` answers with card token callbacks (`{"type": "TOKEN", "obj": {...}}`).
+
 ### Not yet verified against Paymob
 
-The module is built from Paymob's documentation and tested with mocked API calls (the HMAC strings against Paymob's
-documented examples). Only the intention endpoint and its error format were seen live (with a placeholder key).
-Check with a Paymob test account:
-
-- a full card payment on Unified Checkout and in Pixel, including 3-D Secure, and the pop-up / side-panel frames;
-- the HMAC of the redirection (`order` vs `order_id`) and whether null values are signed as empty strings;
-- where the card token callback is sent (`notification_url` or the integration's callback);
-- the authentication of `payments/pay` (MOTO) and whether it asks for a CVV;
-- the field of the kiosk reference in the callbacks (`data.bill_reference` is assumed);
-- the amount format of OMR (3 decimals), the `split_amounts` rules, and the fields of the integrations list.
+- the callbacks themselves (transaction and card token) reaching a public website, with their HMAC;
+- capture and void (an Auth integration), charges with `payments/pay` (a MOTO integration) and saving a card without
+  paying (a Verification integration): the test account has none of them;
+- the side panel (the same frame as the pop-up), the other countries and the amount format of OMR (3 decimals), the
+  `split_amounts` rules, installments, Apple Pay and Google Pay (live only).
 
 ## Development
 

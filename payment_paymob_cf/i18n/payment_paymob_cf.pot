@@ -566,7 +566,7 @@ msgstr ""
 
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Number 01010101010, MPIN 123456, OTP 123456"
+msgid "Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456"
 msgstr ""
 
 #. module: payment_paymob_cf

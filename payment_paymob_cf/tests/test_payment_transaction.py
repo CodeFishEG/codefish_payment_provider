@@ -17,6 +17,7 @@ from unittest.mock import patch
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 
+from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment_paymob_cf import const
 from odoo.addons.payment_paymob_cf.exceptions import PaymobError
 from odoo.addons.payment_paymob_cf.tests.common import PaymobCommon
@@ -26,6 +27,10 @@ SEND_API_REQUEST = (
 )
 INQUIRE = (
     "odoo.addons.payment_paymob_cf.models.payment_provider.PaymentProvider._paymob_cf_inquire"
+)
+ORDER_CARD_TOKENS = (
+    "odoo.addons.payment_paymob_cf.models.payment_provider.PaymentProvider."
+    "_paymob_cf_get_order_card_tokens"
 )
 
 
@@ -94,6 +99,10 @@ class TestPaymentTransaction(PaymobCommon):
         self.assertIn(
             "/payment/paymob_cf/return_frame/", request_mock.call_args.kwargs["json"]["redirection_url"],
         )
+        # The page asks for the state of the payment while the checkout is open.
+        self.assertEqual(checkout["access_token"], payment_utils.generate_access_token(
+            tx.reference, tx.partner_id.id, env=self.env,
+        ))
 
     def test_embedded_card_form(self):
         self._set_embedded()
@@ -254,6 +263,66 @@ class TestPaymentTransaction(PaymobCommon):
         self.assertEqual(
             self.env["payment.token"].search_count([("provider_ref", "=", self.card_token)]), 1,
         )
+
+    def test_saved_card_is_fetched_when_its_callback_is_missing(self):
+        self._disable_process_patcher()
+        self._set_embedded()
+        tx = self._create_paymob_transaction("direct", tokenize=True)
+        own_token = {**self.token_obj, "order_id": self.order_id}
+        with (
+            patch(INQUIRE, return_value=self.paid_transaction),
+            patch(ORDER_CARD_TOKENS, return_value=[own_token]) as tokens_mock,
+        ):
+            self.assertTrue(tx._paymob_cf_sync_from_provider())
+        self._run_processing()
+        tokens_mock.assert_called_once_with(self.order_id)
+        self.assertEqual(tx.state, "done")
+        self.assertEqual(tx.token_id.provider_ref, self.card_token)
+        self.assertEqual(tx.token_id.payment_details, "2346")
+        self.assertFalse(tx.sudo().paymob_cf_card_token)
+
+    def test_saved_card_of_another_order_is_ignored(self):
+        self._disable_process_patcher()
+        self._set_embedded()
+        tx = self._create_paymob_transaction("direct", tokenize=True)
+        with (
+            patch(INQUIRE, return_value=self.paid_transaction),
+            patch(ORDER_CARD_TOKENS, return_value=[self.token_obj]),  # Order 593881581.
+        ):
+            tx._paymob_cf_sync_from_provider()
+        self._run_processing()
+        self.assertEqual(tx.state, "done")
+        self.assertFalse(tx.token_id)
+
+    def test_saved_card_is_only_fetched_when_needed(self):
+        self._set_embedded()
+        declined = self._transaction(success=False, pending=False)
+        for reference, tokenize, transaction in (
+            ("S00042-2", False, self.paid_transaction),  # The customer didn't save the card.
+            ("S00042-3", True, declined),
+        ):
+            tx = self._create_paymob_transaction(
+                "direct", reference=reference, tokenize=tokenize,
+            )
+            with (
+                patch(INQUIRE, return_value=transaction),
+                patch(ORDER_CARD_TOKENS) as tokens_mock,
+            ):
+                tx._paymob_cf_sync_from_provider()
+            tokens_mock.assert_not_called()
+
+    def test_saved_card_failure_leaves_the_payment_alone(self):
+        self._disable_process_patcher()
+        self._set_embedded()
+        tx = self._create_paymob_transaction("direct", tokenize=True)
+        with (
+            patch(INQUIRE, return_value=self.paid_transaction),
+            patch(ORDER_CARD_TOKENS, side_effect=PaymobError("Paymob is down", code="server")),
+        ):
+            self.assertTrue(tx._paymob_cf_sync_from_provider())
+        self._run_processing()
+        self.assertEqual(tx.state, "done")
+        self.assertFalse(tx.token_id)
 
     def test_expired_cards_are_left_out(self):
         self._set_embedded()

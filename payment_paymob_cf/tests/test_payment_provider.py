@@ -116,6 +116,34 @@ class TestPaymentProvider(PaymobCommon):
         )
         self.assertEqual(request_mock.call_args.kwargs["paymob_auth"], const.AUTH_BEARER)
 
+    def test_cards_saved_with_an_order(self):
+        # As Paymob answers: a list of card token callbacks.
+        response = [
+            {"type": "TOKEN", "obj": self.token_obj},
+            {"type": "TOKEN", "obj": {"id": 1}},  # No token: left out.
+        ]
+        with (
+            patch.object(type(self.paymob), "_paymob_cf_get_auth_token", return_value="t"),
+            patch(SEND_API_REQUEST, return_value=response) as request_mock,
+        ):
+            self.assertEqual(
+                self.paymob._paymob_cf_get_order_card_tokens("593881581"), [self.token_obj],
+            )
+        self.assertEqual(request_mock.call_args.args[1], const.ENDPOINT_ORDER_CARD_TOKENS)
+        self.assertEqual(
+            request_mock.call_args.kwargs["json"], {"auth_token": "t", "order_id": 593881581},
+        )
+        self.assertEqual(request_mock.call_args.kwargs["paymob_auth"], const.AUTH_BEARER)
+        for response in ([self.token_obj], {"results": [self.token_obj]}, []):
+            with (
+                patch.object(type(self.paymob), "_paymob_cf_get_auth_token", return_value="t"),
+                patch(SEND_API_REQUEST, return_value=response),
+            ):
+                self.assertEqual(
+                    self.paymob._paymob_cf_get_order_card_tokens("593881581"),
+                    [self.token_obj] if response else [],
+                )
+
     # === INTEGRATIONS === #
 
     def test_integrations_are_matched_with_the_methods(self):
@@ -132,6 +160,9 @@ class TestPaymentProvider(PaymobCommon):
             {"id": 8, "gateway_type": "VALU", "currency": "EGP", "is_live": True},  # Live.
             {"id": 9, "gateway_type": "MIGS", "integration_name": "Apple Pay", "currency": "EGP"},
             {"id": 10, "gateway_type": "MIGS", "installments": True, "currency": "EGP"},
+            {"id": 12, "gateway_type": "MIGS", "is_google_pay": True, "currency": "EGP"},
+            {"id": 13, "gateway_type": "PAYPAL", "currency": "EGP"},  # Not a Paymob method of the module.
+            {"id": 14, "gateway_type": "UIG", "currency": "EGP", "is_deprecated": True},
         ]
         matches, special = self.paymob._paymob_cf_match_integrations(integrations)
         self.assertEqual(matches["card"], 2)  # The newest.
@@ -139,6 +170,8 @@ class TestPaymentProvider(PaymobCommon):
         self.assertEqual(matches["kiosk"], 6)
         self.assertEqual(matches["apple_pay"], 9)
         self.assertEqual(matches["installments_eg"], 10)
+        self.assertEqual(matches["google_pay"], 12)
+        self.assertNotIn(13, matches.values())
         self.assertNotIn("valu", matches)
         self.assertEqual(special["paymob_cf_moto_integration_id"], 3)
         self.assertEqual(special["paymob_cf_auth_integration_id"], 4)

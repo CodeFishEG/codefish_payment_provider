@@ -1,8 +1,12 @@
 import { loadJS } from '@web/core/assets';
 import { _t } from '@web/core/l10n/translation';
+import { rpc } from '@web/core/network/rpc';
 import { patch } from '@web/core/utils/patch';
 
 import { PaymentForm } from '@payment/interactions/payment_form';
+
+// How often the state of the payment is checked while Paymob Checkout is open.
+const CHECKOUT_POLL_DELAY = 5000;
 
 patch(PaymentForm.prototype, {
 
@@ -63,7 +67,7 @@ patch(PaymentForm.prototype, {
         if (processingValues.paymob_cf_pixel) {
             await this._paymobCfOpenPixel(processingValues.paymob_cf_pixel);
         } else if (processingValues.paymob_cf_checkout) {
-            this._paymobCfOpenCheckout(processingValues.paymob_cf_checkout);
+            this._paymobCfOpenCheckout(processingValues.reference, processingValues.paymob_cf_checkout);
         }
     },
 
@@ -143,20 +147,50 @@ patch(PaymentForm.prototype, {
      * Show Paymob Checkout in a pop-up or a side panel.
      *
      * When the payment ends, Paymob sends the frame to Odoo's return route, which takes the whole
-     * window to the payment status page.
+     * window to the payment status page. As the browser may block that navigation, the state of
+     * the payment is also checked while the checkout is open, and once more when it is closed.
+     *
+     * While the checkout is open, only a final state ends it: a pending payment may still wait for
+     * the customer in the checkout (wallet PIN and OTP). Once the customer closes the checkout, a
+     * pending payment (such as a kiosk reference to pay) is shown on the payment status page.
      *
      * @private
-     * @param {object} values - The checkout URL and the display mode.
+     * @param {string} reference - The reference of the transaction.
+     * @param {object} values - The checkout URL, the display mode and the access token.
      * @return {void}
      */
-    _paymobCfOpenCheckout(values) {
-        const { body } = this._paymobCfCreatePanel(values.display_mode);
+    _paymobCfOpenCheckout(reference, values) {
+        let isOpen = true;
+        const checkState = async () => {
+            let state = 'draft';
+            try {
+                ({ state } = await this.waitFor(rpc('/payment/paymob_cf/poll', {
+                    reference: reference,
+                    access_token: values.access_token,
+                }, { silent: true })));
+            } catch {
+                // Network hiccup: try again later.
+            }
+            const waitingStates = isOpen ? ['draft', 'pending'] : ['draft'];
+            if (!waitingStates.includes(state)) {
+                window.location = '/payment/status';
+                return;
+            }
+            if (isOpen) {
+                this.waitForTimeout(checkState, CHECKOUT_POLL_DELAY);
+            }
+        };
+        const { body } = this._paymobCfCreatePanel(values.display_mode, () => {
+            isOpen = false;
+            checkState();  // The customer may close the checkout after paying.
+        });
         const frame = document.createElement('iframe');
         frame.className = 'o_paymob_cf_checkout_frame';
         frame.title = _t("Secure payment");
         frame.src = values.checkout_url;
         frame.allow = 'payment';
         body.append(frame);
+        this.waitForTimeout(checkState, CHECKOUT_POLL_DELAY);
         // Let customers choose another method if they close the checkout without paying.
         this._enableButton();
     },

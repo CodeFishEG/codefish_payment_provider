@@ -180,9 +180,11 @@ class PaymentTransaction(models.Model):
         Checkout in a pop-up or a side panel.
 
         Paymob sends the customer back to a route made for the frame, which takes the whole window
-        back to the payment status page.
+        back to the payment status page. The browser may refuse that navigation (for example a
+        public checkout page can't open a website on a private network), so the payment form also
+        asks Odoo for the state of the payment while the checkout is open.
 
-        :return: The checkout URL and the display mode.
+        :return: The checkout URL, the display mode and the access token of the payment.
         :rtype: dict
         :raise ValidationError: If Paymob refuses the intention.
         """
@@ -194,6 +196,7 @@ class PaymentTransaction(models.Model):
         return {
             "checkout_url": provider._paymob_cf_get_checkout_url(response["client_secret"]),
             "display_mode": provider.paymob_cf_display_mode,
+            "access_token": self._paymob_cf_get_access_token(),
         }
 
     def _paymob_cf_prepare_pixel_values(self):
@@ -449,7 +452,36 @@ class PaymentTransaction(models.Model):
             _logger.warning("Paymob returned another order for %s.", self.reference)
             return False
         self._record(transaction)
+        self._paymob_cf_fetch_saved_card(transaction)
         return True
+
+    def _paymob_cf_fetch_saved_card(self, transaction):
+        """Fetch the card Paymob saved with the payment, in case its callback hasn't come.
+
+        Paymob sends the saved card in its own callback; the card is also fetched when the status
+        of a paid payment is fetched, so that it is saved even if that callback is late or can't
+        reach Odoo.
+
+        :param dict transaction: The Paymob transaction of the payment.
+        :rtype: None
+        """
+        if not (
+            self.tokenize
+            and paymob_utils.is_true(transaction.get("success"))
+            and not self.sudo().paymob_cf_card_token
+        ):
+            return
+        try:
+            tokens = self.provider_id._paymob_cf_get_order_card_tokens(self.paymob_cf_order_id)
+        except ValidationError as error:
+            _logger.warning("Unable to fetch the Paymob card of %s: %s", self.reference, error)
+            return
+        own_tokens = [
+            token for token in tokens
+            if str(token.get("order_id") or self.paymob_cf_order_id) == self.paymob_cf_order_id
+        ]
+        if own_tokens:
+            self._record({"type": const.CALLBACK_TOKEN, "obj": own_tokens[0]})
 
     def _paymob_cf_is_own_order(self, transaction):
         """Return whether a Paymob transaction belongs to the order of this payment."""

@@ -96,8 +96,12 @@ Odoo user. The provider's **Test Data** tab (test mode only) lists Paymob's publ
 |---|---|
 | Mastercard | 5123 4567 8901 2346 or 5123 4500 0000 0008, expiry 01/39, CVV 123, name Test Account |
 | Visa | 4111 1111 1111 1111, expiry 01/39, CVV 123, name Test Account |
-| Mobile wallet | Number 01010101010, MPIN 123456, OTP 123456 |
+| Mobile wallet | Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456 |
 | Kiosk, installments | Paymob has no simulator: test them with small live payments |
+
+You can test on a computer that the internet can't reach: Paymob's notifications won't arrive, but Odoo asks Paymob
+for the status when the customer comes back, while the customer waits, and every 15 minutes, and fetches the cards
+customers saved.
 
 To see what Paymob sends, set [Paymob's webhook tester](https://hooks.paymob.com) as the callback of a test
 integration; to check an HMAC by hand, use [Paymob's integration wizard](https://wizard.paymob.com). Apple Pay,
