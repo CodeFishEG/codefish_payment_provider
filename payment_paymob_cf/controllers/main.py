@@ -15,11 +15,12 @@
 import pprint
 from datetime import timedelta
 
-from werkzeug.exceptions import Forbidden
+from werkzeug.exceptions import Forbidden, NotFound
 
 from odoo import fields, http
 from odoo.exceptions import ValidationError
 from odoo.http import request
+from odoo.tools import file_open
 
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment.logging import get_payment_logger
@@ -139,6 +140,36 @@ class PaymobController(http.Controller):
                 raise Forbidden
             tx_sudo._record(obj)
         return ""  # Acknowledge the callback.
+
+    @http.route(
+        const.APPLE_PAY_DOMAIN_FILE_URL,
+        type="http",
+        auth="public",
+        methods=["GET"],
+        csrf=False,
+        save_session=False,
+    )
+    def paymob_cf_apple_pay_domain_file(self):
+        """Return Apple's domain file, with which Apple verifies the website for Apple Pay.
+
+        Odoo's Stripe connector serves its own file at the same address; this route comes first
+        (modules are routed in alphabetical order), so it serves Stripe's file when no Paymob
+        provider has one.
+
+        :return: The content of the file, as plain text.
+        :raise NotFound: If neither Paymob nor Stripe has a file.
+        """
+        content = request.env["payment.provider"]._paymob_cf_get_apple_pay_domain_file(
+            request.httprequest.host.split(":")[0],
+        )
+        if content is None:
+            if request.env["ir.module.module"]._get("payment_stripe").state != "installed":
+                raise NotFound
+            with file_open(
+                "payment_stripe/static/files/apple-developer-merchantid-domain-association", "rb",
+            ) as f:
+                content = f.read()
+        return request.make_response(content, headers=[("Content-Type", "text/plain")])
 
     @http.route(_poll_url, type="jsonrpc", auth="public")
     def paymob_cf_poll(self, reference, access_token):

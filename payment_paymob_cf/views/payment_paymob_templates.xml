@@ -12,7 +12,13 @@
             t-att-data-paymob-cf-inline-form-values="provider_sudo._paymob_cf_get_inline_form_values(pm_sudo.code)"
         >
             <!-- Paymob's card form, embedded in the page. -->
-            <t t-if="paymob_flow == 'pixel'">
+            <t t-if="paymob_flow == 'pixel' and pm_sudo.code == 'apple_pay'">
+                <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
+                    Paymob's secure form opens on this page with the Apple Pay button. Confirm the
+                    payment with Face ID, Touch ID or your passcode.
+                </t>
+            </t>
+            <t t-elif="paymob_flow == 'pixel'">
                 <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
                     <t t-if="is_validation">
                         Paymob's secure card form opens on this page; your bank may ask you to
@@ -41,7 +47,12 @@
                         payment on your phone.
                     </t>
                 </t>
-                <t t-elif="provider_sudo.paymob_cf_display_mode == 'redirect'">
+                <t t-elif="pm_sudo.code == 'apple_pay'">
+                    <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
+                        You will confirm the payment with Apple Pay on Paymob's secure checkout.
+                    </t>
+                </t>
+                <t t-elif="provider_sudo._paymob_cf_get_display_mode(pm_sudo.code) == 'redirect'">
                     <t t-call="payment_paymob_cf.inline_hint" icon_name.f="lock">
                         You will complete the payment on Paymob's secure checkout.
                     </t>

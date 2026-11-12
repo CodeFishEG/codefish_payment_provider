@@ -77,14 +77,15 @@
                             <li style="margin-bottom: 4px;"><a href="#integrations" style="color: #004EFF;">Two integrations</a></li>
                             <li style="margin-bottom: 4px;"><a href="#customers" style="color: #004EFF;">What your customers see</a></li>
                             <li style="margin-bottom: 4px;"><a href="#saved-cards" style="color: #004EFF;">Saved cards</a></li>
+                            <li style="margin-bottom: 4px;"><a href="#apple-pay" style="color: #004EFF;">Apple Pay</a></li>
                             <li style="margin-bottom: 4px;"><a href="#capture" style="color: #004EFF;">Authorize, capture and void</a></li>
                             <li style="margin-bottom: 4px;"><a href="#payment-split" style="color: #004EFF;">Payment split</a></li>
                             <li style="margin-bottom: 4px;"><a href="#admin" style="color: #004EFF;">Set-up guide for administrators</a></li>
-                            <li style="margin-bottom: 4px;"><a href="#settings" style="color: #004EFF;">Settings reference</a></li>
                         </ol>
                     </div>
                     <div class="col-md-6">
                         <ol start="10" style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 0;">
+                            <li style="margin-bottom: 4px;"><a href="#settings" style="color: #004EFF;">Settings reference</a></li>
                             <li style="margin-bottom: 4px;"><a href="#staff" style="color: #004EFF;">Daily use for your team</a></li>
                             <li style="margin-bottom: 4px;"><a href="#accounting" style="color: #004EFF;">Accounting</a></li>
                             <li style="margin-bottom: 4px;"><a href="#statuses" style="color: #004EFF;">Payment statuses</a></li>
@@ -372,11 +373,56 @@
     </div>
 </section>
 
-<!-- ============================================================== 6. CAPTURE -->
+<!-- ============================================================== 6. APPLE PAY -->
+<section class="container" id="apple-pay">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">6. Apple Pay</h3>
+            <p style="font-size: 16px; color: #374151;">
+                Customers using Safari on an iPhone, iPad or Mac pay with Apple Pay and confirm with Face ID, Touch ID
+                or their passcode. The payment form leaves Apple Pay out for the other customers, so nobody picks a
+                method their device can't use. Paymob offers Apple Pay in Egypt, Saudi Arabia, the United Arab Emirates
+                and Oman, with live integrations; Apple Pay payments are refunded fully or partially from Odoo.
+            </p>
+            <div class="row">
+                <div class="col-md-6" style="margin-bottom: 16px;">
+                    <div class="border rounded h-100" style="padding: 20px; background-color: #F9FAFB;">
+                        <h4 style="font-size: 18px; font-weight: 700; color: #1F2937;">With Paymob Checkout</h4>
+                        <ol style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 8px;">
+                            <li style="margin-bottom: 4px;">Ask Paymob to enable Apple Pay on your live account.</li>
+                            <li style="margin-bottom: 4px;">Tick <b>Live</b> and enter your live keys.</li>
+                            <li style="margin-bottom: 4px;">Click <b>Activate Apple Pay</b>: Odoo finds your Apple Pay integration and turns the method on.</li>
+                        </ol>
+                        <p style="font-size: 14px; color: #5B6472; margin-bottom: 0;">Nothing to set up with Apple: Paymob shows Apple Pay on its own secure checkout, in a full page.</p>
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-bottom: 16px;">
+                    <div class="border rounded h-100" style="padding: 20px; background-color: #F9FAFB;">
+                        <h4 style="font-size: 18px; font-weight: 700; color: #1F2937;">With the embedded checkout</h4>
+                        <ol style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 8px;">
+                            <li style="margin-bottom: 4px;">Ask Paymob to enable Apple Pay, tick <b>Live</b> and enter your live keys.</li>
+                            <li style="margin-bottom: 4px;">Add your website's domain to your Apple Merchant ID and upload Apple's domain file in Odoo: Odoo serves it at <code>/.well-known/apple-developer-merchantid-domain-association</code>, no server access needed. Click <b>Verify</b> at Apple.</li>
+                            <li style="margin-bottom: 4px;">Create your two Apple Pay certificates and send them to Paymob.</li>
+                            <li style="margin-bottom: 4px;">Click <b>Activate Apple Pay</b>.</li>
+                        </ol>
+                        <p style="font-size: 14px; color: #5B6472; margin-bottom: 0;">The Apple Pay button then shows in Paymob's form on your payment page. Needs a membership of the Apple Developer Program.</p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                The provider's <b>Apple Pay</b> tab lists every step with links, and <b>Activate Apple Pay</b> tells
+                you what is still missing: the country, the live mode, the Apple Pay integration of your Paymob
+                account or the domain file.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================== 7. CAPTURE -->
 <section class="container" id="capture">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">6. Authorize, capture and void</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">7. Authorize, capture and void</h3>
             <p style="font-size: 16px; color: #374151;">
                 Reserve the amount on the customer's card when the order is placed, and take it when you ship. Ask Paymob
                 for an <b>Auth</b> card integration, enter its ID on the provider and tick <b>Capture Amount Manually</b>.
@@ -392,11 +438,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 7. SPLIT -->
+<!-- ============================================================== 8. SPLIT -->
 <section class="container" id="payment-split">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">7. Payment split</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">8. Payment split</h3>
             <p style="font-size: 16px; color: #374151;">
                 Share each payment with merchants connected to your Paymob account, for example the sellers of a
                 marketplace or a delivery partner. Paymob pays each merchant its share; the rest is yours. Nothing changes
@@ -418,11 +464,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 8. ADMIN -->
+<!-- ============================================================== 9. ADMIN -->
 <section class="container" id="admin">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">8. Set-up guide for administrators</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">9. Set-up guide for administrators</h3>
             <p style="font-size: 15px; color: #374151;">Plan about 15 minutes. You need the Administration / Settings access right.</p>
             <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-top: 16px;">Before you start</h4>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
@@ -504,11 +550,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 9. SETTINGS -->
+<!-- ============================================================== 10. SETTINGS -->
 <section class="container" id="settings">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">9. Settings reference</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">10. Settings reference</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <thead>
@@ -538,11 +584,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 10. STAFF -->
+<!-- ============================================================== 11. STAFF -->
 <section class="container" id="staff">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">10. Daily use for your team</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">11. Daily use for your team</h3>
             <p style="font-size: 16px; color: #374151;">Your sales and accounting team works with Paymob payments like with any other Odoo payment. Here are the Paymob-specific tasks.</p>
             <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-top: 16px;">Find a payment</h4>
             <p style="font-size: 15px; color: #374151;">
@@ -581,11 +627,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 11. ACCOUNTING -->
+<!-- ============================================================== 12. ACCOUNTING -->
 <section class="container" id="accounting">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">11. Accounting</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">12. Accounting</h3>
             <p style="font-size: 16px; color: #374151;">The module creates, in each company, a bank journal for Paymob:</p>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
@@ -607,11 +653,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 12. STATUSES -->
+<!-- ============================================================== 13. STATUSES -->
 <section class="container" id="statuses">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">12. Payment statuses</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">13. Payment statuses</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <thead>
@@ -639,11 +685,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 13. CODES -->
+<!-- ============================================================== 14. CODES -->
 <section class="container" id="error-codes">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">13. Paymob response codes</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">14. Paymob response codes</h3>
             <p style="font-size: 16px; color: #374151;">
                 Card declines carry the response code of the bank; Paymob adds its own fraud checks and API errors. Every
                 code below is explained in Odoo:
@@ -741,11 +787,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 14. SECURITY -->
+<!-- ============================================================== 15. SECURITY -->
 <section class="container" id="security">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">14. Security</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">15. Security</h3>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
                 <li style="margin-bottom: 6px;"><b>No card numbers in Odoo.</b> Cards are typed in Paymob's checkout or Paymob's card form only. Odoo keeps Paymob's card token, the brand, the last four digits and the expiry date.</li>
                 <li style="margin-bottom: 6px;"><b>Signed notifications.</b> Every notification and return from Paymob is checked against its HMAC-SHA512 signature, and matched with its payment by the order Paymob signs. Odoo asks Paymob for the status of a payment before trusting a return.</li>
@@ -758,11 +804,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 15. FAQ -->
+<!-- ============================================================== 16. FAQ -->
 <section class="container" id="faq">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">15. Questions and troubleshooting</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">16. Questions and troubleshooting</h3>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">The Paymob methods don't show at checkout.</h4>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
@@ -802,11 +848,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 16. REQUIREMENTS -->
+<!-- ============================================================== 17. REQUIREMENTS -->
 <section class="container" id="requirements">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">16. Requirements and support</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">17. Requirements and support</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <tbody>

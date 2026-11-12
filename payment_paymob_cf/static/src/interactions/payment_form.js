@@ -8,7 +8,42 @@ import { PaymentForm } from '@payment/interactions/payment_form';
 // How often the state of the payment is checked while Paymob Checkout is open.
 const CHECKOUT_POLL_DELAY = 5000;
 
+/**
+ * Return whether the browser can pay with Apple Pay: Safari, or another browser on iOS 16 or later,
+ * on a secure page of a device that supports Apple Pay.
+ *
+ * @return {boolean}
+ */
+function canUseApplePay() {
+    try {
+        return Boolean(window.ApplePaySession?.canMakePayments());
+    } catch {
+        return false;  // E.g. the page isn't served over HTTPS.
+    }
+}
+
 patch(PaymentForm.prototype, {
+
+    // #=== INTERACTION LIFECYCLE ===#
+
+    /**
+     * Leave Paymob's Apple Pay out on browsers that can't use it.
+     *
+     * @override method from @payment/interactions/payment_form
+     */
+    async willStart() {
+        if (!canUseApplePay()) {
+            const radios = this.el.querySelectorAll(
+                'input[name="o_payment_radio"][data-provider-code="paymob_cf"]'
+                + '[data-payment-method-code="apple_pay"]'
+            );
+            for (const radio of radios) {
+                radio.checked = false;
+                radio.closest('[name="o_payment_option"]')?.classList.add('d-none');
+            }
+        }
+        await super.willStart(...arguments);
+    },
 
     // #=== DOM MANIPULATION ===#
 
@@ -232,6 +267,10 @@ patch(PaymentForm.prototype, {
             forceSaveCard: values.force_save_card,
             afterPaymentComplete: () => {
                 window.location = values.complete_url;
+            },
+            onPaymentCancel: () => {
+                // The customer closed the Apple Pay sheet: let them try again or pay otherwise.
+                this._enableButton();
             },
             customStyle: {
                 Width_of_Container: '100%',

@@ -24,7 +24,7 @@
                    "saved cards, full and partial refunds, authorize and capture, payment split with "
                    "connected merchants, bank installments, Paymob's response codes explained, test "
                    "data for administrators, payment notifications and Arabic.",
-    'version': '20.0.1.0.0',
+    'version': '20.0.1.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'author': "mediafish",

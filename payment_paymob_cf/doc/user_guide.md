@@ -31,6 +31,12 @@ links, each with its logo. Methods are offered to customers of the countries and
 Signed-in customers can tick **Save my payment details** (embedded checkout) and pick the saved card next time; they
 confirm it with its security code and their bank. They remove cards from **My Account › Payment Methods**.
 
+### Apple Pay
+
+Customers using Safari on an iPhone, iPad or Mac see **Apple Pay** (when your administrator has activated it), choose
+it and confirm the payment with Face ID, Touch ID or their passcode, on Paymob's checkout or in Paymob's form on your
+payment page. Other customers don't see it. Apple Pay payments are refunded like card payments, fully or partially.
+
 ### Kiosk (cash)
 
 1. The customer chooses **Kiosk**; Paymob Checkout gives a reference number.

@@ -12,10 +12,12 @@
 # You should have received a copy of the License along with this program.
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
+import json
 from unittest.mock import MagicMock, patch
 
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
+from odoo.tools import BinaryBytes
 
 from odoo.addons.payment_paymob_cf import const
 from odoo.addons.payment_paymob_cf.exceptions import PaymobError
@@ -271,6 +273,93 @@ class TestPaymentProvider(PaymobCommon):
             self.company.id, self.partner.id, 0.0, is_validation=True,
         )
         self.assertIn(self.paymob, providers)
+
+    # === APPLE PAY === #
+
+    def _apple_pay_method(self):
+        return self.env.ref("payment_paymob_cf.payment_method_apple_pay")
+
+    def test_apple_pay_is_offered_where_paymob_offers_it(self):
+        method = self._apple_pay_method()
+        self.assertEqual(
+            set(method.supported_country_ids.mapped("code")), {"EG", "SA", "AE", "OM"},
+        )
+        self.assertEqual(
+            set(method.supported_currency_ids.mapped("name")), {"EGP", "SAR", "AED", "OMR"},
+        )
+        self.assertEqual(method.support_refund, "partial")
+
+    def test_apple_pay_opens_paymob_checkout_in_a_full_page(self):
+        self.paymob.paymob_cf_display_mode = "popup"
+        apple_pay_values = json.loads(self.paymob._paymob_cf_get_inline_form_values("apple_pay"))
+        self.assertEqual(apple_pay_values, {"flow": "hosted", "display_mode": "redirect"})
+        card_values = json.loads(self.paymob._paymob_cf_get_inline_form_values("card"))
+        self.assertEqual(card_values["display_mode"], "popup")
+        self._set_embedded()
+        apple_pay_values = json.loads(self.paymob._paymob_cf_get_inline_form_values("apple_pay"))
+        self.assertEqual(apple_pay_values, {"flow": "pixel", "display_mode": "inline"})
+
+    def test_apple_pay_needs_its_country_and_live_mode(self):
+        method = self._apple_pay_method()
+        method.paymob_cf_integration_id = 77
+        with self.assertRaises(UserError) as error:
+            self.paymob.action_paymob_cf_activate_apple_pay()  # Test mode.
+        self.assertIn("live integrations only", str(error.exception))
+        self.paymob.write({"paymob_cf_country": "PK", "is_live": True})
+        with self.assertRaises(UserError) as error:
+            self.paymob.action_paymob_cf_activate_apple_pay()
+        self.assertIn("Pakistan", str(error.exception))
+        self.assertFalse(method.active)
+
+    def test_apple_pay_is_activated_with_its_live_integration(self):
+        method = self._apple_pay_method()
+        method.write({"active": False, "paymob_cf_integration_id": 0})
+        self.paymob.is_live = True
+        integrations = [
+            {"id": 76, "gateway_type": "MIGS", "is_apple_pay": True, "currency": "EGP",
+             "is_live": False},  # A test integration.
+            {"id": 77, "gateway_type": "MIGS", "is_apple_pay": True, "currency": "EGP",
+             "is_live": True},
+        ]
+        with patch(GET_INTEGRATIONS, return_value=integrations):
+            action = self.paymob.action_paymob_cf_activate_apple_pay()
+        self.assertTrue(method.active)
+        self.assertEqual(method.paymob_cf_integration_id, 77)
+        self.assertEqual(action["params"]["type"], "success")
+        self.assertIn("77", action["params"]["message"])
+
+    def test_apple_pay_needs_paymob_to_enable_it(self):
+        method = self._apple_pay_method()
+        method.write({"active": False, "paymob_cf_integration_id": 0})
+        self.paymob.is_live = True
+        with patch(GET_INTEGRATIONS, return_value=[]), self.assertRaises(UserError) as error:
+            self.paymob.action_paymob_cf_activate_apple_pay()
+        self.assertIn("Ask Paymob to enable Apple Pay", str(error.exception))
+        self.assertFalse(method.active)
+
+    def test_embedded_apple_pay_needs_the_domain_file(self):
+        self._set_embedded()
+        method = self._apple_pay_method()
+        method.write({"active": False, "paymob_cf_integration_id": 77})
+        self.paymob.is_live = True
+        with self.assertRaises(UserError) as error:
+            self.paymob.action_paymob_cf_activate_apple_pay()
+        self.assertIn("domain file", str(error.exception))
+        self.assertFalse(method.active)
+        self.paymob.paymob_cf_apple_pay_domain_file = BinaryBytes(b"7B2270737049642")
+        action = self.paymob.action_paymob_cf_activate_apple_pay()
+        self.assertTrue(method.active)
+        self.assertIn("certificates", action["params"]["message"])
+
+    def test_apple_pay_domain_file(self):
+        Provider = self.env["payment.provider"]
+        self.assertIsNone(Provider._paymob_cf_get_apple_pay_domain_file("shop.example.com"))
+        self.paymob.paymob_cf_apple_pay_domain_file = BinaryBytes(b"7B2270737049642")
+        self.assertEqual(
+            Provider._paymob_cf_get_apple_pay_domain_file("shop.example.com"), b"7B2270737049642",
+        )
+        with self.assertRaises(ValidationError):
+            self.paymob.paymob_cf_apple_pay_domain_file = BinaryBytes(b"\x89PNG\0\0")
 
     def test_neutralized_credentials(self):
         reset_values = self.paymob._get_reset_values()

@@ -244,6 +244,20 @@ and integration IDs decide the mode. The provider's country sets the currency (E
 primary methods (with country and currency limits) and 6 card brands; each method holds its Paymob integration ID,
 filled by **Sync Integrations** (`GET /api/ecommerce/integrations`, by gateway type).
 
+### Apple Pay
+
+Paymob's "Apple Pay [All regions]": Egypt, Saudi Arabia, the UAE and Oman, live integrations only, full and
+partial refunds. The provider's **Apple Pay** tab holds the steps for the administrator and **Activate Apple Pay**
+(`action_paymob_cf_activate_apple_pay`), which checks the country, the live mode and the Apple Pay integration
+(fetched from Paymob when missing) and, for the embedded checkout, the domain file, then turns the method on.
+
+- Paymob Checkout: no Apple set-up; Apple Pay always opens Paymob Checkout in a full page (no frame).
+- Embedded checkout (Pixel `apple-pay`): the merchant verifies the website's domain with their Apple Merchant ID and
+  sends Paymob their two certificates. The domain file uploaded on the provider is served at
+  `/.well-known/apple-developer-merchantid-domain-association`. That route shadows the one of Odoo's
+  `payment_stripe` (modules are routed alphabetically) and serves Stripe's file when no Paymob file is set.
+- The payment form hides Apple Pay when `ApplePaySession.canMakePayments()` is false (other browsers, no HTTPS).
+
 ### How payments stay in sync
 
 - Webhook `/payment/paymob_cf/webhook`: TRANSACTION and TOKEN callbacks, checked with HMAC-SHA512 (the documented

@@ -16,7 +16,7 @@ import json
 from unittest.mock import patch
 
 from odoo.tests import tagged
-from odoo.tools import mute_logger
+from odoo.tools import BinaryBytes, mute_logger
 
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 from odoo.addons.payment_paymob_cf import const
@@ -219,3 +219,17 @@ class TestProcessingFlows(PaymobCommon, PaymentHttpCommon):
             })
         self.assertEqual(result["state"], "pending")
         self.assertTrue(sync_mock.called)
+
+    # === APPLE PAY === #
+
+    def test_apple_pay_domain_file_is_served(self):
+        url = self._build_url(const.APPLE_PAY_DOMAIN_FILE_URL)
+        stripe_installed = self.env["ir.module.module"]._get("payment_stripe").state == "installed"
+        response = self.url_open(url)
+        # Without a Paymob file, the route serves the file of Odoo's Stripe connector, if any.
+        self.assertEqual(response.status_code, 200 if stripe_installed else 404)
+        self.paymob.paymob_cf_apple_pay_domain_file = BinaryBytes(b"7B2270737049642")
+        response = self.url_open(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"7B2270737049642")
+        self.assertTrue(response.headers["Content-Type"].startswith("text/plain"))

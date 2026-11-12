@@ -120,6 +120,77 @@
                         </list>
                     </field>
                 </page>
+                <page string="Apple Pay" name="paymob_cf_apple_pay" invisible="code != 'paymob_cf' or paymob_cf_country == 'PK'">
+                    <div class="text-muted mb-3">
+                        Customers using Safari on an iPhone, iPad or Mac pay with Apple Pay and
+                        confirm with Face ID, Touch ID or their passcode; other customers don't see
+                        it. Paymob offers Apple Pay in Egypt, Saudi Arabia, the United Arab Emirates
+                        and Oman, with live integrations only: it can't be tested in test mode.
+                    </div>
+                    <div invisible="paymob_cf_integration != 'hosted'">
+                        <h5>With Paymob Checkout</h5>
+                        <ol class="o_paymob_cf_steps">
+                            <li>Ask Paymob (your account manager, or support@paymob.com) to enable
+                                Apple Pay on your live account.</li>
+                            <li>Tick <b>Live</b>, enter your live keys and save.</li>
+                            <li>Click <b>Activate Apple Pay</b>. Odoo finds the Apple Pay integration
+                                of your account, enters its ID on the Apple Pay payment method and
+                                turns the method on.</li>
+                        </ol>
+                        <p class="text-muted">
+                            Paymob shows Apple Pay on its own secure checkout, in a full page:
+                            nothing to set up with Apple.
+                        </p>
+                    </div>
+                    <div invisible="paymob_cf_integration != 'embedded'">
+                        <h5>With the embedded checkout</h5>
+                        <p class="text-muted">
+                            The Apple Pay button is shown on your website, so Apple must know that
+                            your website is yours, and Paymob needs your Apple Pay certificates.
+                            You need a membership of the Apple Developer Program.
+                        </p>
+                        <ol class="o_paymob_cf_steps">
+                            <li>Ask Paymob (your account manager, or support@paymob.com) to enable
+                                Apple Pay on your live account.</li>
+                            <li>Tick <b>Live</b>, enter your live keys and save.</li>
+                            <li>On
+                                <a href="https://developer.apple.com/account/resources/identifiers/list/merchant" target="_blank" rel="noopener">Apple's developer website</a>,
+                                open <b>Certificates, Identifiers &amp; Profiles › Identifiers ›
+                                Merchant IDs</b>, and create a Merchant ID (for example
+                                merchant.com.yourshop) or open yours.</li>
+                            <li>Under <b>Merchant Domains</b>, click <b>Add Domain</b> and enter your
+                                website's domain without https:// or www (for example
+                                shop.example.com). Download the file Apple gives,
+                                apple-developer-merchantid-domain-association, without renaming it,
+                                upload it below and save. Open the link below: it must show a long
+                                line of text.</li>
+                            <li>Back on Apple's page, click <b>Verify</b>. Your domain appears under
+                                <b>Registered Domains</b>.</li>
+                            <li>Create the two Apple Pay certificates of your Merchant ID (Merchant
+                                Identity and Payment Processing) as
+                                <a href="https://developers.paymob.com/paymob-docs/need-help/setup-guides/apple-pay-setup/apple-pay-certificates-creation" target="_blank" rel="noopener">Paymob explains</a>.
+                                Put the six files in a password-protected zip, email it to
+                                support@paymob.com and send the password another way (SMS or
+                                WhatsApp).</li>
+                            <li>Click <b>Activate Apple Pay</b>.</li>
+                        </ol>
+                        <group>
+                            <field
+                                name="paymob_cf_apple_pay_domain_file"
+                                filename="paymob_cf_apple_pay_domain_filename"
+                            />
+                            <field name="paymob_cf_apple_pay_domain_filename" invisible="1"/>
+                            <field name="paymob_cf_apple_pay_domain_url" widget="url"/>
+                        </group>
+                    </div>
+                    <button
+                        string="Activate Apple Pay"
+                        help="Check what Apple Pay needs, then turn on the Apple Pay payment method."
+                        type="object"
+                        name="action_paymob_cf_activate_apple_pay"
+                        class="btn-primary"
+                    />
+                </page>
                 <page string="Test Data" name="paymob_cf_test_data" invisible="code != 'paymob_cf' or is_live">
                     <div class="text-muted mb-3">
                         For test payments, with the test keys and the test integration IDs of your

@@ -150,6 +150,20 @@ class PaymentProvider(models.Model):
         inverse_name="provider_id",
         context={"active_test": False},
     )
+    paymob_cf_apple_pay_domain_file = fields.Binary(
+        string="Apple Pay Domain File",
+        help="The file apple-developer-merchantid-domain-association that Apple gives when you add "
+        "your website's domain to your Apple Merchant ID. Needed for Apple Pay in the embedded "
+        "checkout only.",
+        attachment=True,
+        copy=False,
+    )
+    paymob_cf_apple_pay_domain_filename = fields.Char(string="Apple Pay Domain File Name", copy=False)
+    paymob_cf_apple_pay_domain_url = fields.Char(
+        string="Apple Pay Domain File URL",
+        help="Where Apple reads the domain file. Open it to check it shows a long line of text.",
+        compute="_compute_paymob_cf_apple_pay_domain_url",
+    )
 
     # === COMPUTE METHODS === #
 
@@ -174,6 +188,12 @@ class PaymentProvider(models.Model):
                 provider.get_base_url(), PaymobController._webhook_url,
             )
 
+    def _compute_paymob_cf_apple_pay_domain_url(self):
+        for provider in self:
+            provider.paymob_cf_apple_pay_domain_url = urls.urljoin(
+                provider.get_base_url(), const.APPLE_PAY_DOMAIN_FILE_URL,
+            )
+
     # === CONSTRAINT METHODS === #
 
     @api.constrains("capture_manually", "paymob_cf_auth_integration_id", "code")
@@ -183,6 +203,20 @@ class PaymentProvider(models.Model):
                 raise ValidationError(self.env._(
                     "Paymob captures card payments manually with an Auth integration. Enter its "
                     "ID in the Auth Integration ID field first.",
+                ))
+
+    @api.constrains("paymob_cf_apple_pay_domain_file")
+    def _check_paymob_cf_apple_pay_domain_file(self):
+        for provider in self.filtered("paymob_cf_apple_pay_domain_file"):
+            domain_file = provider.paymob_cf_apple_pay_domain_file
+            if (
+                domain_file.size > const.APPLE_PAY_DOMAIN_FILE_MAX_SIZE
+                or b"\0" in domain_file.content
+            ):
+                raise ValidationError(self.env._(
+                    "This isn't Apple's domain file. Upload the file "
+                    "apple-developer-merchantid-domain-association as Apple gave it, without "
+                    "renaming or opening it.",
                 ))
 
     @api.constrains("paymob_cf_payment_expiry_hours")
@@ -369,6 +403,76 @@ class PaymentProvider(models.Model):
             notification_type="warning" if missing else "success", sticky=bool(missing),
         )
 
+    def action_paymob_cf_activate_apple_pay(self):
+        """Check what Apple Pay needs, then turn on the Apple Pay payment method.
+
+        Apple Pay needs a live Paymob integration (Paymob has none in test mode) in a country where
+        Paymob offers it. Paymob Checkout shows it on Paymob's own domain; the embedded checkout
+        shows it on the website, whose domain Apple must have verified with the merchant's Apple
+        Merchant ID (the domain file, served by Odoo) and whose certificates Paymob must have.
+
+        :return: A notification of what was done.
+        :rtype: dict
+        :raise UserError: If a step is missing, with what to do.
+        """
+        self.ensure_one()
+        countries = dict(self._fields["paymob_cf_country"]._description_selection(self.env))
+        if self.paymob_cf_country not in const.APPLE_PAY_COUNTRIES:
+            raise UserError(self.env._(
+                "Paymob doesn't offer Apple Pay in %(country)s. It offers it in Egypt, Saudi "
+                "Arabia, the United Arab Emirates and Oman.",
+                country=countries.get(self.paymob_cf_country, self.paymob_cf_country),
+            ))
+        method = self.with_context(active_test=False).payment_method_ids.filtered(
+            lambda m: m.code == const.APPLE_PAY_CODE,
+        )[:1]
+        if not method:
+            raise UserError(self.env._(
+                "The Apple Pay payment method is missing. Update the Paymob Payments module.",
+            ))
+        if not self.is_live:
+            raise UserError(self.env._(
+                "Paymob offers Apple Pay with live integrations only. Tick Live, enter your live "
+                "keys and save, then click Activate Apple Pay again.",
+            ))
+        if not method.paymob_cf_integration_id:
+            try:
+                integrations = self._paymob_cf_get_integrations()
+            except ValidationError as error:
+                raise UserError(str(error)) from None
+            integration_id = self._paymob_cf_match_integrations(integrations)[0].get(
+                const.APPLE_PAY_CODE,
+            )
+            if not integration_id:
+                raise UserError(self.env._(
+                    "Your Paymob account has no live Apple Pay integration yet. Ask Paymob to "
+                    "enable Apple Pay on your account, then click Activate Apple Pay again.",
+                ))
+            method.paymob_cf_integration_id = integration_id
+        is_embedded = self.paymob_cf_integration == const.INTEGRATION_EMBEDDED
+        if is_embedded and not self.paymob_cf_apple_pay_domain_file:
+            raise UserError(self.env._(
+                "With the embedded checkout, the Apple Pay button is shown on your website. "
+                "Upload the domain file Apple gave for your website in the Apple Pay tab first.",
+            ))
+        method.active = True
+        if is_embedded:
+            message = self.env._(
+                "Apple Pay is on (integration %(integration)s). It works once Apple has verified "
+                "your domain and Paymob has your two Apple Pay certificates (steps 5 and 6 of the "
+                "Apple Pay tab).",
+                integration=method.paymob_cf_integration_id,
+            )
+        else:
+            message = self.env._(
+                "Apple Pay is on (integration %(integration)s). Customers using Safari on an "
+                "iPhone, iPad or Mac see it at checkout and confirm on Paymob's secure checkout.",
+                integration=method.paymob_cf_integration_id,
+            )
+        return self._paymob_cf_notification(
+            self.env._("Apple Pay"), message, sticky=is_embedded,
+        )
+
     def _paymob_cf_notification(self, title, message, notification_type="success", sticky=False):
         return {
             "type": "ir.actions.client",
@@ -490,8 +594,51 @@ class PaymentProvider(models.Model):
         flow = self._paymob_cf_get_flow(payment_method_code)
         return json.dumps({
             "flow": flow,
-            "display_mode": self.paymob_cf_display_mode if flow == const.FLOW_HOSTED else "inline",
+            "display_mode": self._paymob_cf_get_display_mode(payment_method_code)
+            if flow == const.FLOW_HOSTED else "inline",
         })
+
+    def _paymob_cf_get_display_mode(self, payment_method_code):
+        """Return how Paymob Checkout is shown for the given method.
+
+        Apple Pay always opens Paymob Checkout in a full page: browsers limit Apple Pay in frames.
+
+        :param str payment_method_code: The code of the payment method.
+        :return: A value of `paymob_cf_display_mode`.
+        :rtype: str
+        """
+        self.ensure_one()
+        if payment_method_code == const.APPLE_PAY_CODE:
+            return "redirect"
+        return self.paymob_cf_display_mode
+
+    @api.model
+    def _paymob_cf_get_apple_pay_domain_file(self, host):
+        """Return Apple's domain file for the website on the given host.
+
+        With several Paymob providers having a file, the one of the website on that host is used.
+
+        :param str host: The host of the request, e.g. `shop.example.com`.
+        :return: The content of the file, or None if no Paymob provider has one.
+        :rtype: bytes | None
+        """
+        providers = self.sudo().search(
+            [("code", "=", "paymob_cf")],
+        ).filtered("paymob_cf_apple_pay_domain_file")
+        if not providers:
+            return None
+        if len(providers) > 1 and "website_id" in providers._fields:
+            host = (host or "").lower()
+
+            def rank(provider):
+                website = provider.website_id
+                if not website:
+                    return 1
+                domain = (website.domain or "").lower().split("://")[-1].split("/")[0]
+                return 0 if domain == host else 2
+
+            providers = providers.sorted(rank)
+        return providers[0].paymob_cf_apple_pay_domain_file.content
 
     def _paymob_cf_get_integration_ids(self, payment_method, capture_manually=False,
                                        is_validation=False, is_moto=False):

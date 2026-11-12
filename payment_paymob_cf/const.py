@@ -66,6 +66,14 @@ FLOW_PIXEL = "pixel"  # Paymob's card form embedded in the payment form
 # The methods Paymob's embedded form (Pixel) handles, with their Pixel names.
 PIXEL_METHODS = {"card": "card", "apple_pay": "apple-pay", "google_pay": "google-pay"}
 
+# Apple Pay ("Apple Pay [All regions]" in Paymob's docs): live integrations only, in these countries.
+APPLE_PAY_CODE = "apple_pay"
+APPLE_PAY_COUNTRIES = ("EG", "SA", "AE", "OM")
+# Where Apple fetches the file proving that the website belongs to the Apple Pay merchant (embedded
+# checkout only: Paymob Checkout shows Apple Pay on Paymob's own domain).
+APPLE_PAY_DOMAIN_FILE_URL = "/.well-known/apple-developer-merchantid-domain-association"
+APPLE_PAY_DOMAIN_FILE_MAX_SIZE = 100 * 1024  # Apple's file is about 10 KB of text.
+
 # Paymob's embedded form, pinned to a tested version. It sets `window.Pixel` and brings its CSS.
 PIXEL_SCRIPT_URL = "https://cdn.jsdelivr.net/npm/paymob-pixel@1.2.10/main.js"
 

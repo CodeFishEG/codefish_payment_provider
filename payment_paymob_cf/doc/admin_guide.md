@@ -13,6 +13,7 @@ your team and what customers see, read the [user guide](user_guide.md).
 - [5. Notifications](#5-notifications)
 - [6. Test](#6-test)
 - [7. Go live](#7-go-live)
+- [Apple Pay](#apple-pay)
 - [Saved cards](#saved-cards)
 - [Authorize, capture and void](#authorize-capture-and-void)
 - [Payment split](#payment-split)
@@ -116,6 +117,54 @@ Google Pay and bank installments only work with live integrations.
 3. Click **Test Connection**.
 4. Place one small real order and refund it from Odoo.
 
+## Apple Pay
+
+Customers using Safari on an iPhone, iPad or Mac pay with Apple Pay and confirm with Face ID, Touch ID or their
+passcode. Other customers don't see it: the payment form leaves Apple Pay out on browsers and devices that can't use
+it. Paymob offers Apple Pay in Egypt, Saudi Arabia, the United Arab Emirates and Oman (not in Pakistan), with **live
+integrations only**: it can't be tested in test mode. Apple Pay payments can be refunded fully or partially.
+
+The provider's **Apple Pay** tab repeats these steps, with the file upload and the **Activate Apple Pay** button.
+
+### With Paymob Checkout
+
+1. Ask Paymob (your account manager, or support@paymob.com) to enable Apple Pay on your live account.
+2. Tick **Live**, enter your live keys and save.
+3. In the **Apple Pay** tab, click **Activate Apple Pay**. Odoo finds the Apple Pay integration of your account,
+   enters its ID on the Apple Pay payment method and turns the method on.
+
+Paymob shows Apple Pay on its own secure checkout, so there is nothing to set up with Apple. Apple Pay always opens
+Paymob Checkout in a full page, even when the **Checkout Display** is a pop-up or a side panel: browsers limit Apple
+Pay inside frames.
+
+### With the embedded checkout
+
+The Apple Pay button is shown on your website, in Paymob's form. Apple must know that your website is yours, and
+Paymob needs your Apple Pay certificates. You need a membership of the
+[Apple Developer Program](https://developer.apple.com/programs/).
+
+1. Ask Paymob to enable Apple Pay on your live account.
+2. Tick **Live**, enter your live keys and save.
+3. On [Apple's developer website](https://developer.apple.com/account/resources/identifiers/list/merchant), open
+   **Certificates, Identifiers & Profiles › Identifiers › Merchant IDs**, and create a Merchant ID (for example
+   `merchant.com.yourshop`) or open yours.
+4. Under **Merchant Domains**, click **Add Domain** and enter your website's domain without `https://` or `www`
+   (for example `shop.example.com`). Download the file Apple gives, `apple-developer-merchantid-domain-association`,
+   without renaming it. In the **Apple Pay** tab, upload it in **Apple Pay Domain File** and save. Open the
+   **Apple Pay Domain File URL** (`https://<your website>/.well-known/apple-developer-merchantid-domain-association`):
+   it must show a long line of text. Odoo serves the file there, so you don't need access to the server.
+5. Back on Apple's page, click **Verify**. Your domain appears under **Registered Domains**.
+6. Create the two Apple Pay certificates of your Merchant ID, the **Merchant Identity** and the **Payment
+   Processing** certificates, as
+   [Paymob explains](https://developers.paymob.com/paymob-docs/need-help/setup-guides/apple-pay-setup/apple-pay-certificates-creation).
+   Put the six files in a password-protected zip, email it to support@paymob.com and send the password another way
+   (SMS or WhatsApp).
+7. In the **Apple Pay** tab, click **Activate Apple Pay**.
+
+**Activate Apple Pay** checks, in this order, the country of the provider, the live mode, the Apple Pay integration of
+your account and, for the embedded checkout, the domain file, and tells you what is missing. It can't check Apple's
+verification or the certificates: test with a small live payment from an iPhone, then refund it.
+
 ## Saved cards
 
 With the **Embedded checkout** and **Allow Saving Payment Methods**:
@@ -167,6 +216,8 @@ With the **Embedded checkout** and **Allow Saving Payment Methods**:
 | **Integration ID** (payment method) | The Paymob integration of the method. |
 | **Test Connection**, **Sync Integrations** | Check the API key; fill the integration IDs. |
 | **Test Data** tab | Test mode only: Paymob's published test data and tools. |
+| **Apple Pay Domain File** (Apple Pay tab) | Embedded checkout: Apple's domain file, served at `/.well-known/apple-developer-merchantid-domain-association`. |
+| **Activate Apple Pay** (Apple Pay tab) | Checks what Apple Pay needs and turns the Apple Pay method on. |
 | **Payment Journal** | Where paid orders are posted. Paymob by default. |
 
 **Several countries.** One provider serves one Paymob country. For accounts in several countries, duplicate the
@@ -226,6 +277,8 @@ The full list is on the module's store page and in `const.py` (`ERROR_CODES`).
 | "error integration" or "error missing_integration" | The method has no integration ID, or one of the other mode: click **Sync Integrations** or type the ID. |
 | Test Connection fails | The keys, without spaces, and their country and mode. |
 | Paid at Paymob, but the order still waits | **Check Paymob Status**. If it happens often: HTTPS, the HMAC secret, and the scheduled action. |
+| Apple Pay doesn't show at checkout | The customer uses Safari on an Apple device, over HTTPS; the Apple Pay method is on, with a live integration ID; the website's country and currency are among Paymob's Apple Pay countries. With the embedded checkout: the domain is verified at Apple and Paymob has your certificates. |
+| Apple Pay: Apple can't verify the domain | Open the Apple Pay Domain File URL: it must show the file's text, not an error. Upload the file again without renaming it. If Odoo's Stripe connector is installed too, the Paymob file is served once it is uploaded. |
 | Customers can't save cards | Embedded checkout, **Allow Saving Payment Methods**, customer signed in; a Verification integration to save without paying. |
 | **Capture Amount Manually** is refused | The Auth Integration ID, and only methods that support manual capture on this provider. |
 | A refund is refused | Odoo shows Paymob's reason and records nothing; kiosk payments can't be refunded through Paymob. |

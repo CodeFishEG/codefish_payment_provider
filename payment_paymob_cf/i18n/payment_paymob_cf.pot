@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 18:32+0000\n"
-"PO-Revision-Date: 2026-11-12 18:32+0000\n"
+"POT-Creation-Date: 2026-11-12 19:41+0000\n"
+"PO-Revision-Date: 2026-11-12 19:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_paymob_cf/models/payment_transaction.py:0
 msgid "%s months"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+",\n"
+"                                open <b>Certificates, Identifiers &amp; Profiles › Identifiers ›\n"
+"                                Merchant IDs</b>, and create a Merchant ID (for example\n"
+"                                merchant.com.yourshop) or open yours."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+".\n"
+"                                Put the six files in a password-protected zip, email it to\n"
+"                                support@paymob.com and send the password another way (SMS or\n"
+"                                WhatsApp)."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -110,6 +128,11 @@ msgid "Account Chart Template"
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Activate Apple Pay"
+msgstr ""
+
+#. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__active
 msgid "Active"
 msgstr ""
@@ -149,13 +172,61 @@ msgid "American Express?"
 msgstr ""
 
 #. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
 #: model:payment.method,name:payment_paymob_cf.payment_method_apple_pay
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "Apple Pay"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_apple_pay_domain_file
+msgid "Apple Pay Domain File"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_apple_pay_domain_filename
+msgid "Apple Pay Domain File Name"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_apple_pay_domain_url
+msgid "Apple Pay Domain File URL"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Apple Pay is on (integration %(integration)s). Customers using Safari on an "
+"iPhone, iPad or Mac see it at checkout and confirm on Paymob's secure "
+"checkout."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Apple Pay is on (integration %(integration)s). It works once Apple has "
+"verified your domain and Paymob has your two Apple Pay certificates (steps 5"
+" and 6 of the Apple Pay tab)."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Apple's developer website"
 msgstr ""
 
 #. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__apply_to
 msgid "Applies To"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Ask Paymob (your account manager, or support@paymob.com) to enable\n"
+"                                Apple Pay on your live account."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -170,6 +241,13 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_auth_integration_id
 msgid "Auth Integration ID"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Back on Apple's page, click <b>Verify</b>. Your domain appears under\n"
+"                                <b>Registered Domains</b>."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -233,8 +311,26 @@ msgid ""
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Check what Apple Pay needs, then turn on the Apple Pay payment method."
+msgstr ""
+
+#. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_provider__paymob_cf_display_mode
 msgid "Checkout Display"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Click <b>Activate Apple Pay</b>."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Click <b>Activate Apple Pay</b>. Odoo finds the Apple Pay integration\n"
+"                                of your account, enters its ID on the Apple Pay payment method and\n"
+"                                turns the method on."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -270,6 +366,13 @@ msgid "Contact"
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Create the two Apple Pay certificates of your Merchant ID (Merchant\n"
+"                                Identity and Payment Processing) as"
+msgstr ""
+
+#. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__create_uid
 msgid "Created by"
 msgstr ""
@@ -277,6 +380,15 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model:ir.model.fields,field_description:payment_paymob_cf.field_payment_paymob_split_merchant__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Customers using Safari on an iPhone, iPad or Mac pay with Apple Pay and\n"
+"                        confirm with Face ID, Touch ID or their passcode; other customers don't see\n"
+"                        it. Paymob offers Apple Pay in Egypt, Saudi Arabia, the United Arab Emirates\n"
+"                        and Oman, with live integrations only: it can't be tested in test mode."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -566,7 +678,8 @@ msgstr ""
 
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
-msgid "Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456"
+msgid ""
+"Number 01010101010 (type 1010101010 after +20), MPIN 123456, OTP 123456"
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -584,6 +697,11 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model:payment.method,name:payment_paymob_cf.payment_method_omannet
 msgid "OmanNet"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "On"
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -864,6 +982,19 @@ msgstr ""
 
 #. module: payment_paymob_cf
 #. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob doesn't offer Apple Pay in %(country)s. It offers it in Egypt, Saudi "
+"Arabia, the United Arab Emirates and Oman."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Paymob explains"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
 #: code:addons/payment_paymob_cf/models/payment_transaction.py:0
 msgid "Paymob has no payment for this order yet."
 msgstr ""
@@ -883,6 +1014,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_paymob_cf/models/payment_provider.py:0
 msgid "Paymob integrations"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Paymob offers Apple Pay with live integrations only. Tick Live, enter your "
+"live keys and save, then click Activate Apple Pay again."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -940,6 +1079,13 @@ msgstr ""
 
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Paymob shows Apple Pay on its own secure checkout, in a full page:\n"
+"                            nothing to set up with Apple."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "Paymob's integration wizard"
 msgstr ""
 
@@ -966,6 +1112,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
 msgid ""
 "Paymob's secure checkout will open on this page to complete the payment."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
+"Paymob's secure form opens on this page with the Apple Pay button. Confirm the\n"
+"                    payment with Face ID, Touch ID or your passcode."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -1146,6 +1299,21 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/payment_paymob_cf/static/src/interactions/payment_form.js:0
 msgid "The 4 digits on the front of the card, above the number."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"The Apple Pay button is shown on your website, so Apple must know that\n"
+"                            your website is yours, and Paymob needs your Apple Pay certificates.\n"
+"                            You need a membership of the Apple Developer Program."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"The Apple Pay payment method is missing. Update the Paymob Payments module."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -1478,6 +1646,14 @@ msgid "The expiry date isn't valid"
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_apple_pay_domain_file
+msgid ""
+"The file apple-developer-merchantid-domain-association that Apple gives when"
+" you add your website's domain to your Apple Merchant ID. Needed for Apple "
+"Pay in the embedded checkout only."
+msgstr ""
+
+#. module: payment_paymob_cf
 #. odoo-python
 #: code:addons/payment_paymob_cf/const.py:0
 msgid ""
@@ -1683,6 +1859,19 @@ msgid "This card isn't accepted for this order. Please use another card."
 msgstr ""
 
 #. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"This isn't Apple's domain file. Upload the file apple-developer-merchantid-"
+"domain-association as Apple gave it, without renaming or opening it."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "Tick <b>Live</b>, enter your live keys and save."
+msgstr ""
+
+#. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "To see what Paymob sends, set"
 msgstr ""
@@ -1690,6 +1879,17 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
 msgid "To test"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid ""
+"Under <b>Merchant Domains</b>, click <b>Add Domain</b> and enter your\n"
+"                                website's domain without https:// or www (for example\n"
+"                                shop.example.com). Download the file Apple gives,\n"
+"                                apple-developer-merchantid-domain-association, without renaming it,\n"
+"                                upload it below and save. Open the link below: it must show a long\n"
+"                                line of text."
 msgstr ""
 
 #. module: payment_paymob_cf
@@ -1736,6 +1936,13 @@ msgid "What the error returned by Paymob means."
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model:ir.model.fields,help:payment_paymob_cf.field_payment_provider__paymob_cf_apple_pay_domain_url
+msgid ""
+"Where Apple reads the domain file. Open it to check it shows a long line of "
+"text."
+msgstr ""
+
+#. module: payment_paymob_cf
 #: model:ir.model.fields,help:payment_paymob_cf.field_payment_transaction__paymob_cf_redirect_url
 msgid "Where the customer confirms a payment with a saved card."
 msgstr ""
@@ -1746,6 +1953,25 @@ msgid "Who receives this share, for example a seller or a partner."
 msgstr ""
 
 #. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "With Paymob Checkout"
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.payment_provider_form
+msgid "With the embedded checkout"
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"With the embedded checkout, the Apple Pay button is shown on your website. "
+"Upload the domain file Apple gave for your website in the Apple Pay tab "
+"first."
+msgstr ""
+
+#. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
 msgid "You will complete the payment on Paymob's secure checkout."
 msgstr ""
@@ -1753,8 +1979,22 @@ msgstr ""
 #. module: payment_paymob_cf
 #: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
 msgid ""
+"You will confirm the payment with Apple Pay on Paymob's secure checkout."
+msgstr ""
+
+#. module: payment_paymob_cf
+#: model_terms:ir.ui.view,arch_db:payment_paymob_cf.inline_form
+msgid ""
 "You will enter your wallet number on Paymob's secure checkout and approve the\n"
 "                        payment on your phone."
+msgstr ""
+
+#. module: payment_paymob_cf
+#. odoo-python
+#: code:addons/payment_paymob_cf/models/payment_provider.py:0
+msgid ""
+"Your Paymob account has no live Apple Pay integration yet. Ask Paymob to "
+"enable Apple Pay on your account, then click Activate Apple Pay again."
 msgstr ""
 
 #. module: payment_paymob_cf

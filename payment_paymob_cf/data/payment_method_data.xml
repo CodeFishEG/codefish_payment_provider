@@ -223,6 +223,11 @@
         <field name="provider_id" ref="payment_paymob_cf.payment_provider_paymob_cf"/>
         <field name="image" type="bytes" file="payment/static/img/apple_pay.png"/>
         <field name="support_refund">partial</field>
+        <!-- "Apple Pay [All regions]": every Paymob country but Pakistan. -->
+        <field name="supported_country_ids"
+               eval="[Command.set([ref('base.eg'), ref('base.sa'), ref('base.ae'), ref('base.om')])]"/>
+        <field name="supported_currency_ids"
+               eval="[Command.set([ref('base.EGP'), ref('base.SAR'), ref('base.AED'), ref('base.OMR')])]"/>
     </record>
 
     <record id="payment_method_google_pay" model="payment.method">
