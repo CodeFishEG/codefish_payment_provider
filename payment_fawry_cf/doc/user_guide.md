@@ -92,6 +92,12 @@ removed from Odoo and deleted at Fawry.
 
 ![Removing a card](../static/description/screenshot_delete_card.png)
 
+**Installments.** When the shop offers bank installments and the card's bank has plans for the amount, the
+customer chooses between **Pay in full** and each plan (months, the bank's rate, the monthly amount) before the
+bank confirms the payment.
+
+![Installment plans](../static/description/screenshot_installments.png)
+
 **In line with Fawry.** Each time cards are shown to the customer, Odoo retrieves the customer's cards from Fawry
 (at most every 10 minutes). A card that Fawry no longer has, or that has expired, disappears; the expiry date shown
 is Fawry's. If Fawry can't be reached, the cards stay. Cards entered for a single payment are never added.
@@ -109,8 +115,13 @@ Everything works on phones and in Arabic, right to left.
 On the transaction:
 
 - the **Provider Reference** is the Fawry reference number, the one the customer sees;
-- the **Fawry** tab shows the payment deadline, the wallet number, the fees Fawry added (if any), the customer's
-  Fawry profile and the last status check.
+- the **Fawry** tab shows the payment deadline, the wallet number, the fees Fawry added (if any), the installment
+  plan chosen, the customer's Fawry profile and the last status check;
+- when Fawry refused the payment, the **Fawry** tab shows the **error code**, what it means and what to check,
+  and Fawry's own text. The full list is in the
+  [administrator guide](admin_guide.md#fawry-error-codes).
+
+![A Fawry error explained](../static/description/screenshot_error_code.png)
 
 ## Check a payment at Fawry
 
@@ -159,7 +170,9 @@ customer.
 | "I lost my reference code." | It is on the order in their portal, and on the transaction (**Provider Reference**). |
 | "My code expired." | Send a new payment link. |
 | "I want to cancel my order." | Cancel the order and, if the code is still unpaid, click **Cancel Fawry Payment**. If it was paid, refund it. |
-| "My card was declined." | The transaction shows Fawry's reason. The customer can try another card or another method. |
+| "My card was declined." | The transaction's Fawry tab explains the error code. The customer can try another card or another method. |
+| "The payment failed with an error code." | Look the code up in the transaction's Fawry tab. If it is about your Fawry account (merchant code, sub-accounts...), tell your administrator. |
+| "Can I pay in installments?" | Yes by card, when the shop offers bank installments and the card's bank has a plan for the amount: the choice appears after the card is entered. |
 | "My saved card is gone." | Fawry no longer has it, or it expired. The customer adds it again from **My Account › Payment Methods**. |
 | "How do I remove my card?" | **My Account › Payment Methods**, the bin next to the card. It is deleted at Fawry too. |
 | "Can you take my card number by phone?" | No. Card numbers are only typed on Fawry's secure page; send a payment link instead. |

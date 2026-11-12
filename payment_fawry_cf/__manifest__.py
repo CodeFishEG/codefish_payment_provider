@@ -21,7 +21,7 @@
                    "APIs, where cards are saved on Fawry's secure card page and charged with 3-D Secure, and "
                    "Fawry reference codes, wallet QR codes and myFawry payments are shown on your website. "
                    "Includes saved cards, refunds, payment notifications and Arabic.",
-    'version': '20.0.1.1.0',
+    'version': '20.0.1.2.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'author': "mediafish",
@@ -33,7 +33,8 @@
     # account_payment: the provider gets its own "Fawry Pay" bank journal (website_sale needs it too).
     'depends': ['payment', 'account_payment'],
     'data': [
-        # Templates first: the provider record refers to them.
+        'security/ir.access.csv',
+        # Templates before the data: the provider record refers to them.
         'views/payment_fawry_templates.xml',
         'views/payment_provider_views.xml',
         'views/payment_transaction_views.xml',

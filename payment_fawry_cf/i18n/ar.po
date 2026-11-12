@@ -162,6 +162,7 @@ msgstr "تم الاتصال بنجاح"
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__display_name
@@ -313,12 +314,6 @@ msgstr ""
 
 #. module: payment_fawry_cf
 #. odoo-python
-#: code:addons/payment_fawry_cf/models/payment_provider.py:0
-msgid "Fawry rejected the request: %(message)s (code %(code)s)"
-msgstr "رفضت فورى الطلب: %(message)s (كود %(code)s)"
-
-#. module: payment_fawry_cf
-#. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "Fawry returned an unexpected authentication address."
 msgstr "أرسلت فورى عنوان تحقق غير متوقع."
@@ -424,6 +419,7 @@ msgstr ""
 
 #. module: payment_fawry_cf
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_account_chart_template__id
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__id
@@ -750,32 +746,9 @@ msgid "Wallet payment options"
 msgstr "خيارات الدفع بالمحفظة"
 
 #. module: payment_fawry_cf
-#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_redirect_url
-msgid "Where the customer authenticates the payment with their bank."
-msgstr "المكان الذي يؤكد فيه العميل الدفعة مع البنك الخاص به."
-
-#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
 msgid "You will complete the payment on FawryPay's secure checkout."
 msgstr "ستُكمل الدفع على صفحة الدفع الآمنة لدى FawryPay."
-
-#. module: payment_fawry_cf
-#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
-msgid ""
-"You will enter your card details on Fawry's secure page and confirm them\n"
-"                        with your bank. Odoo never sees your card number."
-msgstr ""
-"ستُدخل بيانات بطاقتك في صفحة فورى الآمنة وتؤكدها\n"
-"                        مع البنك الخاص بك. لا يطّلع أودو أبدًا على رقم بطاقتك."
-
-#. module: payment_fawry_cf
-#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
-msgid ""
-"You will enter your card details on Fawry's secure page, then confirm the\n"
-"                        payment with your bank (3-D Secure). Odoo never sees your card number."
-msgstr ""
-"ستُدخل بيانات بطاقتك في صفحة فورى الآمنة، ثم تؤكد\n"
-"                        الدفع مع البنك الخاص بك (3-D Secure). لا يطّلع أودو أبدًا على رقم بطاقتك."
 
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
@@ -884,3 +857,905 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.token_form
 msgid "Expires"
 msgstr "تنتهي في"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid "%(explanation)s (Fawry code %(code)s)"
+msgstr "%(explanation)s (كود فورى %(code)s)"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid ""
+"%(name)s: %(months)s months, rate %(rate)s%%, from %(min)s to %(max)s, plan "
+"%(id)s"
+msgstr ""
+"%(name)s: %(months)s شهر، نسبة %(rate)s%%، من %(min)s إلى %(max)s، الخطة "
+"%(id)s"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid ""
+"%,\n"
+"                                                about"
+msgstr ""
+"%،\n"
+"                                                أي حوالي"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"lock\" aria-hidden=\"true\"/>\n"
+"                                    Your bank confirms the payment and the final amount of the plan\n"
+"                                    (3-D Secure). The installments are collected by your bank."
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"lock\" aria-hidden=\"true\"/>\n"
+"                                    يؤكد بنكك الدفعة والمبلغ النهائي للخطة\n"
+"                                    (3-D Secure). ويحصّل بنكك الأقساط."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid ""
+"<span class=\"flex-grow-1\">\n"
+"                                            <span class=\"d-block fw-bold\">Pay in full</span>\n"
+"                                            <span class=\"small text-muted\">One payment, today.</span>\n"
+"                                        </span>"
+msgstr ""
+"<span class=\"flex-grow-1\">\n"
+"                                            <span class=\"d-block fw-bold\">ادفع المبلغ كاملًا</span>\n"
+"                                            <span class=\"small text-muted\">دفعة واحدة، اليوم.</span>\n"
+"                                        </span>"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "<span class=\"small text-muted\">per month</span>"
+msgstr "<span class=\"small text-muted\">شهريًا</span>"
+
+#. module: payment_fawry_cf
+#: model:ir.model.constraint,message:payment_fawry_cf.constraint_payment_fawry_split_account_provider_code_uniq
+msgid "A sub-account can only be added once to a provider."
+msgstr "لا يمكن إضافة الحساب الفرعي إلا مرة واحدة لمزود الدفع."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"A technical error at the bank stopped the payment. Please try again later."
+msgstr "أوقف خطأ فني لدى البنك الدفعة. يُرجى المحاولة مرة أخرى لاحقًا."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "A technical error stopped the payment. Please try again later."
+msgstr "أوقف خطأ فني الدفعة. يُرجى المحاولة مرة أخرى لاحقًا."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid ""
+"After entering their card, customers choose to pay in full or with an\n"
+"                        installment plan of their bank. Fawry activates the plans on your account."
+msgstr ""
+"بعد إدخال بطاقتهم، يختار العملاء الدفع كاملًا أو بخطة تقسيط\n"
+"                        من بنكهم. تفعّل فورى الخطط على حسابك."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields.selection,name:payment_fawry_cf.selection__payment_fawry_split_account__apply_to__all
+msgid "All items"
+msgstr "كل الأصناف"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__apply_to
+msgid "Applies To"
+msgstr "ينطبق على"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_bank_installments
+msgid "Bank Installments"
+msgstr "التقسيط البنكي"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "Bank rate:"
+msgstr "نسبة البنك:"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_card_bin
+msgid "Card First Digits"
+msgstr "الأرقام الأولى من البطاقة"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"Card payments without 3-D Secure aren't enabled on the merchant account."
+msgstr "مدفوعات البطاقات بدون 3-D Secure غير مفعّلة على حساب التاجر."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "Continue"
+msgstr "متابعة"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid ""
+"Create the sub-accounts in Fawry's dashboard (My Accounts &gt; Payment\n"
+"                        Splitting), then add them here with their share. For each item paid, every\n"
+"                        sub-account that applies to it receives its share of the item's price;\n"
+"                        Fawry pays the rest to your own account. Fawry pays each sub-account to its\n"
+"                        own bank account."
+msgstr ""
+"أنشئ الحسابات الفرعية في لوحة تحكم فورى (My Accounts &gt; Payment\n"
+"                        Splitting)، ثم أضفها هنا مع حصة كل منها. لكل صنف مدفوع، يحصل كل\n"
+"                        حساب فرعي ينطبق عليه على حصته من سعر الصنف، وتدفع فورى الباقي\n"
+"                        إلى حسابك. وتدفع فورى لكل حساب فرعي في حسابه البنكي."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_error_explanation
+msgid "Fawry Error"
+msgstr "خطأ فورى"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_error_code
+msgid "Fawry Error Code"
+msgstr "كود خطأ فورى"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_error_details
+msgid "Fawry Error Details"
+msgstr "تفاصيل خطأ فورى"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_installment_plan_id
+msgid "Fawry Installment Plan ID"
+msgstr "معرف خطة التقسيط لدى فورى"
+
+#. module: payment_fawry_cf
+#: model:ir.model,name:payment_fawry_cf.model_payment_fawry_split_account
+msgid "Fawry Split Sub-Account"
+msgstr "حساب فرعي لتقسيم مدفوعات فورى"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"Fawry couldn't process the card because the card payments of the merchant "
+"account aren't set up correctly. Ask Fawry to check them."
+msgstr ""
+"تعذر على فورى معالجة البطاقة لأن مدفوعات البطاقات في حساب التاجر غير مضبوطة "
+"بشكل صحيح. اطلب من فورى مراجعتها."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"Fawry couldn't reach the bank to approve the payment. Please try again."
+msgstr ""
+"تعذر على فورى الوصول إلى البنك للموافقة على الدفعة. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "Fawry couldn't validate the amount of the payment."
+msgstr "تعذر على فورى التحقق من مبلغ الدفعة."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "Fawry doesn't know this saved card: it may have been deleted already."
+msgstr "لا تعرف فورى هذه البطاقة المحفوظة: ربما حُذفت بالفعل."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid ""
+"Fawry has no active installment plan on this account. Ask Fawry to activate "
+"the plans of the banks you work with."
+msgstr ""
+"لا توجد لدى فورى خطة تقسيط نشطة على هذا الحساب. اطلب من فورى تفعيل خطط "
+"البنوك التي تتعامل معها."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "Fawry has no order with this reference."
+msgstr "لا يوجد لدى فورى طلب بهذا المرجع."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid "Fawry installment plans"
+msgstr "خطط التقسيط لدى فورى"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid "Fawry refused the request."
+msgstr "رفضت فورى الطلب."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid "Fawry refused the request: %(description)s (Fawry code %(code)s)"
+msgstr "رفضت فورى الطلب: %(description)s (كود فورى %(code)s)"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "How would you like to pay?"
+msgstr "كيف تريد أن تدفع؟"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__fawry_installment_plan
+msgid "Installment Plan"
+msgstr "خطة التقسيط"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_provider__fawry_bank_installments
+msgid ""
+"Let customers pay by card in monthly installments, with the plans that Fawry"
+" activated on your account for their bank. After entering the card, the "
+"customer chooses to pay in full or with one of the plans available for the "
+"card and the amount. Server-to-Server APIs only."
+msgstr ""
+"اسمح للعملاء بالدفع بالبطاقة على أقساط شهرية، بالخطط التي فعّلتها فورى على "
+"حسابك لبنكهم. بعد إدخال البطاقة، يختار العميل الدفع كاملًا أو بإحدى الخطط "
+"المتاحة للبطاقة والمبلغ. لواجهات الربط المباشر بين الخوادم فقط."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "No interest"
+msgstr "بدون فوائد"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "Pay in installments"
+msgstr "الدفع بالتقسيط"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_payment_split
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid "Payment Split"
+msgstr "تقسيم المدفوعات"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__product_tmpl_ids
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__provider_id
+msgid "Provider"
+msgstr "مزود الدفع"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields.selection,name:payment_fawry_cf.selection__payment_fawry_split_account__apply_to__products
+msgid "Selected products"
+msgstr "منتجات محددة"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid "Set the sub-accounts and their shares in the Payment Split tab."
+msgstr "اضبط الحسابات الفرعية وحصصها في علامة تبويب تقسيم المدفوعات."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__share
+msgid "Share (%)"
+msgstr "الحصة (%)"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_provider__fawry_payment_split
+msgid ""
+"Share each payment between your Fawry account and sub-accounts created in "
+"Fawry's dashboard. Fawry pays the share of each sub-account to its own bank "
+"account."
+msgstr ""
+"قسّم كل دفعة بين حسابك لدى فورى وحسابات فرعية أُنشئت في لوحة تحكم فورى. تدفع"
+" فورى حصة كل حساب فرعي في حسابه البنكي."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid "Show Installment Plans"
+msgstr "عرض خطط التقسيط"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
+msgid "Show the installment plans that Fawry activated on your account."
+msgstr "عرض خطط التقسيط التي فعّلتها فورى على حسابك."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__fawry_split_account_ids
+msgid "Split Sub-Accounts"
+msgstr "الحسابات الفرعية للتقسيم"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_fawry_split_account__code
+msgid "Sub-Account Code"
+msgstr "كود الحساب الفرعي"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_installment_plan_id
+msgid "The Fawry installment plan the customer chose to pay with."
+msgstr "خطة التقسيط لدى فورى التي اختار العميل الدفع بها."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The PIN was entered wrongly too many times. Please contact your bank."
+msgstr "أُدخل الرقم السري بشكل خاطئ مرات كثيرة. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The amount is above the limit allowed for this payment method. Please choose"
+" another payment method."
+msgstr ""
+"المبلغ أعلى من الحد المسموح به لوسيلة الدفع هذه. يُرجى اختيار وسيلة دفع "
+"أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The amount of the payment was refused as invalid."
+msgstr "رُفض مبلغ الدفعة لأنه غير صالح."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank declined the payment because it failed a security check. Please "
+"contact your bank."
+msgstr "رفض البنك الدفعة لأنها لم تجتز فحصًا أمنيًا. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank declined the payment because it looks fraudulent. Please contact "
+"your bank."
+msgstr "رفض البنك الدفعة لأنها تبدو احتيالية. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank declined the payment because it suspects fraud on this card. Please"
+" contact your bank."
+msgstr ""
+"رفض البنك الدفعة لاشتباهه في احتيال على هذه البطاقة. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank declined the payment because the card is suspected to be "
+"counterfeit. Please contact your bank."
+msgstr ""
+"رفض البنك الدفعة لاشتباهه في أن البطاقة مزوّرة. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The bank declined the payment. Please contact your bank."
+msgstr "رفض البنك الدفعة. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The bank didn't respond. Please try again."
+msgstr "لم يستجب البنك. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank doesn't allow this card for online payments. Please contact your "
+"bank or use another card."
+msgstr ""
+"لا يسمح البنك باستخدام هذه البطاقة في المدفوعات الإلكترونية. يُرجى التواصل "
+"مع البنك أو استخدام بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank doesn't allow this card for this kind of payment. Please use "
+"another card."
+msgstr ""
+"لا يسمح البنك باستخدام هذه البطاقة في هذا النوع من المدفوعات. يُرجى استخدام "
+"بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The bank flagged the card as fraudulent. Please contact your bank."
+msgstr "صنّف البنك البطاقة على أنها احتيالية. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank of this card doesn't exist. Please check the card number and try "
+"again."
+msgstr ""
+"بنك هذه البطاقة غير موجود. يُرجى مراجعة رقم البطاقة والمحاولة مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank refused the payment because the card PIN was never changed. Please "
+"contact your bank."
+msgstr ""
+"رفض البنك الدفعة لأن الرقم السري للبطاقة لم يُغيَّر قط. يُرجى التواصل مع "
+"البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank refused the payment because the card is reported lost or stolen. "
+"Please contact your bank."
+msgstr ""
+"رفض البنك الدفعة لأن البطاقة مُبلَّغ عن فقدها أو سرقتها. يُرجى التواصل مع "
+"البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The bank refused the payment. Please contact your bank."
+msgstr "رفض البنك الدفعة. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The bank says this card number doesn't exist. Please use another card."
+msgstr "يفيد البنك بأن رقم هذه البطاقة غير موجود. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank that issued the card refused the payment. Please contact your bank "
+"or use another card."
+msgstr ""
+"رفض البنك المُصدر للبطاقة الدفعة. يُرجى التواصل مع البنك أو استخدام بطاقة "
+"أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The bank won't accept this payment. Please use another card or contact your "
+"bank."
+msgstr ""
+"لن يقبل البنك هذه الدفعة. يُرجى استخدام بطاقة أخرى أو التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card PIN is incorrect. Please try again."
+msgstr "الرقم السري للبطاقة غير صحيح. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card can't be used in this region or country."
+msgstr "لا يمكن استخدام البطاقة في هذه المنطقة أو الدولة."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card doesn't have enough funds for this payment."
+msgstr "رصيد البطاقة لا يكفي لهذه الدفعة."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card has expired. Please use another card."
+msgstr "انتهت صلاحية البطاقة. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card is reported lost. Please contact your bank."
+msgstr "البطاقة مُبلَّغ عن فقدها. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card is reported stolen. Please contact your bank."
+msgstr "البطاقة مُبلَّغ عن سرقتها. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The card isn't valid or its expiry date is wrong. Please use another card."
+msgstr "البطاقة غير صالحة أو تاريخ انتهائها خاطئ. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The card number isn't valid. Please check it and try again."
+msgstr "رقم البطاقة غير صالح. يُرجى مراجعته والمحاولة مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The card processing account of the merchant isn't set up correctly. Ask "
+"Fawry to check it."
+msgstr ""
+"حساب معالجة البطاقات الخاص بالتاجر غير مضبوط بشكل صحيح. اطلب من فورى "
+"مراجعته."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_error_code
+msgid "The code of the last error Fawry returned for this payment."
+msgstr "كود آخر خطأ أرسلته فورى لهذه الدفعة."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_fawry_split_account__code
+msgid ""
+"The code of the sub-account in Fawry's dashboard (My Accounts > Payment "
+"Splitting)."
+msgstr ""
+"كود الحساب الفرعي في لوحة تحكم فورى (My Accounts > Payment Splitting)."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_error_details
+msgid "The description of the error, as Fawry sent it."
+msgstr "وصف الخطأ كما أرسلته فورى."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_card_bin
+msgid ""
+"The first six digits of the card, which tell its bank and the installment "
+"plans it can pay with."
+msgstr ""
+"أول ستة أرقام من البطاقة، وهي تحدد بنكها وخطط التقسيط التي يمكن الدفع بها."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_installment_plan
+msgid "The installment plan the customer chose to pay with."
+msgstr "خطة التقسيط التي اختار العميل الدفع بها."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The merchant account isn't set up for this payment. Ask Fawry to check your "
+"account."
+msgstr "حساب التاجر غير مضبوط لهذه الدفعة. اطلب من فورى مراجعة حسابك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The merchant code is missing or invalid. Check the Merchant Code of the "
+"Fawry provider."
+msgstr "كود التاجر غير موجود أو غير صالح. راجع كود التاجر في مزود الدفع فورى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The mobile number is missing or invalid. Please check your phone number and "
+"try again."
+msgstr ""
+"رقم الهاتف المحمول غير موجود أو غير صالح. يُرجى مراجعة رقم هاتفك والمحاولة "
+"مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The order is already canceled."
+msgstr "الطلب ملغى بالفعل."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The order isn't paid."
+msgstr "الطلب غير مدفوع."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method (error %(code)s)."
+msgstr ""
+"تعذرت معالجة الدفعة. يُرجى المحاولة مرة أخرى لاحقًا أو اختيار وسيلة دفع أخرى"
+" (الخطأ %(code)s)."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method."
+msgstr ""
+"تعذرت معالجة الدفعة. يُرجى المحاولة مرة أخرى لاحقًا أو اختيار وسيلة دفع "
+"أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The payment couldn't be sent to the bank. Please try again."
+msgstr "تعذر إرسال الدفعة إلى البنك. يُرجى المحاولة مرة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The payment details were refused, or the card terminal of the merchant "
+"account is inactive. Ask Fawry to check the card payments of your account."
+msgstr ""
+"رُفضت بيانات الدفعة، أو أن جهاز البطاقات في حساب التاجر غير نشط. اطلب من "
+"فورى مراجعة مدفوعات البطاقات في حسابك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The payment failed because of its amount. Please try again with another "
+"amount or another card."
+msgstr ""
+"فشلت الدفعة بسبب مبلغها. يُرجى المحاولة مرة أخرى بمبلغ آخر أو بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The payment failed on the side of the bank. Please contact your bank."
+msgstr "فشلت الدفعة من جهة البنك. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The payment would exceed the limit of the card."
+msgstr "ستتجاوز الدفعة حد البطاقة."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The payment would exceed the usual spending limit of the card. Please "
+"contact your bank."
+msgstr "ستتجاوز الدفعة حد الإنفاق المعتاد للبطاقة. يُرجى التواصل مع البنك."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_fawry_split_account__share
+msgid ""
+"The percentage of the price of each item it applies to that Fawry pays to "
+"this sub-account. The rest goes to your own Fawry account."
+msgstr ""
+"نسبة سعر كل صنف ينطبق عليه هذا الحساب الفرعي التي تدفعها فورى له. ويذهب "
+"الباقي إلى حسابك لدى فورى."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_fawry_split_account__product_tmpl_ids
+msgid "The products whose price is shared with this sub-account."
+msgstr "المنتجات التي يُقسَّم سعرها مع هذا الحساب الفرعي."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "The refund is higher than the amount paid."
+msgstr "مبلغ الاسترداد أعلى من المبلغ المدفوع."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_fawry_split_account.py:0
+msgid "The share of %(account)s must be more than 0%% and at most 100%%."
+msgstr "يجب أن تكون حصة %(account)s أكبر من 0%% وألا تزيد على 100%%."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The signature is wrong. Check the Secure Key of the Fawry provider, and that"
+" Live matches the environment of your credentials."
+msgstr ""
+"التوقيع خاطئ. راجع المفتاح الآمن في مزود الدفع فورى، وتأكد من أن وضع التشغيل"
+" (تجريبي أو مباشر) يطابق بيانات الاعتماد."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_fawry_split_account.py:0
+msgid ""
+"The sub-accounts share more than 100%% of the price of %(product)s "
+"(%(share)s%%)."
+msgstr "تتجاوز حصص الحسابات الفرعية 100%% من سعر %(product)s (%(share)s%%)."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_fawry_split_account.py:0
+msgid ""
+"The sub-accounts that apply to all items share more than 100%% of their "
+"price (%(share)s%%)."
+msgstr ""
+"تتجاوز حصص الحسابات الفرعية التي تنطبق على كل الأصناف 100%% من سعرها "
+"(%(share)s%%)."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"This card can't be used for this kind of payment. Please use another card."
+msgstr ""
+"لا يمكن استخدام هذه البطاقة في هذا النوع من المدفوعات. يُرجى استخدام بطاقة "
+"أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid "This card isn't allowed for this payment. Please use another card."
+msgstr "هذه البطاقة غير مسموح بها لهذه الدفعة. يُرجى استخدام بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"This payment can't be made right now. Please try again later or use another "
+"card."
+msgstr ""
+"لا يمكن إتمام هذه الدفعة الآن. يُرجى المحاولة مرة أخرى لاحقًا أو استخدام "
+"بطاقة أخرى."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_error_explanation
+msgid "What the error returned by Fawry means."
+msgstr "معنى الخطأ الذي أرسلته فورى."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_transaction__fawry_redirect_url
+msgid ""
+"Where the customer authenticates the payment with their bank, or chooses an "
+"installment plan."
+msgstr "المكان الذي يؤكد فيه العميل الدفعة مع البنك، أو يختار فيه خطة تقسيط."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_fawry_split_account__name
+msgid "Who receives this share, for example a seller or a partner."
+msgstr "من يحصل على هذه الحصة، مثل بائع أو شريك."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
+msgid ""
+"You will enter your card details on Fawry's secure page and confirm them\n"
+"                        with your bank."
+msgstr ""
+"ستُدخل بيانات بطاقتك في صفحة فورى الآمنة وتؤكدها\n"
+"                        مع البنك الخاص بك."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
+msgid ""
+"You will enter your card details on Fawry's secure page, then confirm the\n"
+"                        payment with your bank (3-D Secure)."
+msgstr ""
+"ستُدخل بيانات بطاقتك في صفحة فورى الآمنة، ثم تؤكد\n"
+"                        الدفعة مع البنك الخاص بك (3-D Secure)."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "Your bank offers installment plans for this card. Choose to pay"
+msgstr "يتيح بنكك خطط تقسيط لهذه البطاقة. اختر أن تدفع إلى"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "in full, or in monthly installments."
+msgstr "المبلغ كاملًا، أو على أقساط شهرية."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "in total"
+msgstr "إجمالًا"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.installment_plans
+msgid "monthly installments"
+msgstr "أقساط شهرية"
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
+msgid ""
+"never sees your\n"
+"                        card number."
+msgstr ""
+"لا ترى رقم\n"
+"                        بطاقتك أبدًا."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.inline_form
+msgid "never sees your card number."
+msgstr "لا ترى رقم بطاقتك أبدًا."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/models/payment_provider.py:0
+msgid "no details given"
+msgstr "بدون تفاصيل"
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"A sub-account of the Payment Split doesn't exist at Fawry. Check the sub-"
+"account codes in the Payment Split tab of the Fawry provider."
+msgstr ""
+"أحد الحسابات الفرعية لتقسيم المدفوعات غير موجود لدى فورى. راجع أكواد "
+"الحسابات الفرعية في علامة تبويب تقسيم المدفوعات في مزود الدفع فورى."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"Fawry couldn't process the request. Check the Merchant Code of the Fawry "
+"provider; if it is right, the payment uses an option Fawry hasn't enabled on"
+" the account."
+msgstr ""
+"تعذر على فورى معالجة الطلب. راجع كود التاجر في مزود الدفع فورى؛ وإن كان "
+"صحيحًا، فالدفعة تستخدم خيارًا لم تفعّله فورى على الحساب."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"Fawry found the request invalid: a required value is missing, such as the "
+"customer profile or the card token, or a value isn't accepted, such as an "
+"installment plan."
+msgstr ""
+"وجدت فورى الطلب غير صالح: قيمة مطلوبة غير موجودة، مثل ملف العميل أو رمز "
+"البطاقة، أو قيمة غير مقبولة، مثل خطة تقسيط."
+
+#. module: payment_fawry_cf
+#. odoo-python
+#: code:addons/payment_fawry_cf/const.py:0
+msgid ""
+"The amounts shared between the accounts don't add up to the price of an item"
+" (Payment Split)."
+msgstr ""
+"المبالغ الموزعة على الحسابات لا يساوي مجموعها سعر أحد الأصناف (تقسيم "
+"المدفوعات)."

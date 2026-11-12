@@ -13,6 +13,7 @@
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
 import json
+import time
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -22,6 +23,7 @@ from odoo.addons.payment.logging import get_payment_logger
 from odoo.addons.payment_fawry_cf import const
 from odoo.addons.payment_fawry_cf import utils as fawry_utils
 from odoo.addons.payment_fawry_cf.controllers.main import FawryController
+from odoo.addons.payment_fawry_cf.exceptions import FawryError
 
 _logger = get_payment_logger(__name__, const.SENSITIVE_KEYS)
 
@@ -78,6 +80,24 @@ class PaymentProvider(models.Model):
         help="Give this URL to Fawry so that they send the payment notifications to Odoo. Odoo "
         "also sends it with every payment.",
         compute="_compute_fawry_webhook_url",
+    )
+    fawry_bank_installments = fields.Boolean(
+        string="Bank Installments",
+        help="Let customers pay by card in monthly installments, with the plans that Fawry "
+        "activated on your account for their bank. After entering the card, the customer chooses "
+        "to pay in full or with one of the plans available for the card and the amount. "
+        "Server-to-Server APIs only.",
+    )
+    fawry_payment_split = fields.Boolean(
+        string="Payment Split",
+        help="Share each payment between your Fawry account and sub-accounts created in Fawry's "
+        "dashboard. Fawry pays the share of each sub-account to its own bank account.",
+    )
+    fawry_split_account_ids = fields.One2many(
+        string="Split Sub-Accounts",
+        comodel_name="payment.fawry.split.account",
+        inverse_name="provider_id",
+        context={"active_test": False},
     )
 
     # === COMPUTE METHODS === #
@@ -181,6 +201,35 @@ class PaymentProvider(models.Model):
                     env=self.env._("live") if self.is_live else self.env._("test"),
                 ),
                 "sticky": False,
+            },
+        }
+
+    def action_fawry_show_installment_plans(self):
+        """Show the installment plans that Fawry activated on the merchant account."""
+        self.ensure_one()
+        if not (self.fawry_merchant_code and self.fawry_secure_key):
+            raise UserError(self.env._("Enter the merchant code and the secure key first."))
+        try:
+            plans = self._fawry_get_installment_plans()
+        except ValidationError as error:
+            raise UserError(str(error)) from None
+        if plans:
+            notification_type = "info"
+            message = "\n".join(self._fawry_describe_installment_plan(plan) for plan in plans)
+        else:
+            notification_type = "warning"
+            message = self.env._(
+                "Fawry has no active installment plan on this account. Ask Fawry to activate the "
+                "plans of the banks you work with.",
+            )
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": notification_type,
+                "title": self.env._("Fawry installment plans"),
+                "message": message,
+                "sticky": True,
             },
         }
 
@@ -343,12 +392,11 @@ class PaymentProvider(models.Model):
             return content
         status_code = str(content.get("statusCode", 200))
         if status_code != "200":
-            raise ValidationError(
-                self.env._(
-                    "Fawry rejected the request: %(message)s (code %(code)s)",
-                    message=content.get("statusDescription") or "",
-                    code=status_code,
-                ),
+            description = content.get("statusDescription") or ""
+            raise FawryError(
+                self._fawry_get_error_message(status_code, description),
+                code=status_code,
+                description=description,
             )
         return content
 
@@ -361,9 +409,64 @@ class PaymentProvider(models.Model):
         if self.code != "fawry":
             return super()._parse_response_error(response)
         content = response.json()
-        message = content.get("description") or content.get("statusDescription") or response.text
+        description = (
+            content.get("description") or content.get("statusDescription") or response.text
+        )
         code = content.get("code") or content.get("statusCode")
-        return f"{message} (code {code})" if code else message
+        # Raised here, so that the code of the error reaches the caller.
+        raise FawryError(
+            self._fawry_get_error_message(code, description), code=code, description=description,
+        )
+
+    def _fawry_get_error_message(self, code, description=None):
+        """Explain an error returned by Fawry, for the staff.
+
+        :param str code: The error code sent by Fawry.
+        :param str description: The description sent by Fawry.
+        :return: What the error means, with its code.
+        :rtype: str
+        """
+        code = str(code or "")
+        if entry := const.ERROR_CODES.get(code):
+            return self.env._(
+                "%(explanation)s (Fawry code %(code)s)",
+                explanation=self.env._(entry[1]),
+                code=code,
+            )
+        if code:
+            return self.env._(
+                "Fawry refused the request: %(description)s (Fawry code %(code)s)",
+                description=description or self.env._("no details given"),
+                code=code,
+            )
+        return description or self.env._("Fawry refused the request.")
+
+    def _fawry_get_customer_error_message(self, code, description=None):  # noqa: ARG002
+        """Explain an error returned by Fawry, for the customer.
+
+        Errors about the customer's card or bank are explained as they are. The others are about
+        the merchant's account: the customer only learns that the payment failed, with the code to
+        give to the merchant.
+
+        :param str code: The error code sent by Fawry.
+        :param str description: The description sent by Fawry.
+        :return: The message shown to the customer.
+        :rtype: str
+        """
+        code = str(code or "")
+        kind, explanation = const.ERROR_CODES.get(code, (None, None))
+        if kind == const.ERROR_CUSTOMER:
+            return self.env._(explanation)
+        if code:
+            return self.env._(
+                "The payment couldn't be processed. Please try again later or choose another "
+                "payment method (error %(code)s).",
+                code=code,
+            )
+        return self.env._(
+            "The payment couldn't be processed. Please try again later or choose another payment "
+            "method.",
+        )
 
     def _fawry_get_payment_status(self, merchant_reference):
         """Fetch the status of an order from Fawry (Get Payment Status V2).
@@ -383,8 +486,8 @@ class PaymentProvider(models.Model):
             return self._send_api_request(
                 "GET", const.ENDPOINT_STATUS, params=params, reference=merchant_reference,
             )
-        except ValidationError as error:
-            if f"(code {const.ORDER_NOT_FOUND_CODE})" in str(error):
+        except FawryError as error:
+            if error.code == const.ORDER_NOT_FOUND_CODE:
                 return None
             raise
 
@@ -442,6 +545,128 @@ class PaymentProvider(models.Model):
             "locale": fawry_utils.get_fawry_locale(lang_code),
         }
         return url, params
+
+    # === BUSINESS METHODS - BANK INSTALLMENTS === #
+
+    def _fawry_get_installment_plans(self):
+        """Fetch the installment plans that Fawry activated on the merchant account.
+
+        Fawry only returns the active plans; the request isn't signed.
+
+        :return: The plans, each as a dict with the keys `id`, `name_en`, `name_ar`, `months`,
+                 `rate`, `min_amount`, `max_amount`, `start` and `end` (in ms), `online`,
+                 `status`, `bins` (the card prefixes the plan accepts), `bank_en`, `bank_ar`,
+                 `apply_to` and `product_codes`.
+        :rtype: list[dict]
+        :raise ValidationError: If the request fails.
+        """
+        self.ensure_one()
+        content = self._send_api_request(
+            "GET",
+            const.ENDPOINT_INSTALLMENT_PLANS,
+            params={"accountNumber": self.fawry_merchant_code},
+        )
+        if isinstance(content, dict):  # Fawry's documentation shows a single plan.
+            content = [content] if content.get("installmentPlan") else []
+        plans = []
+        for entry in content if isinstance(content, list) else []:
+            plan = isinstance(entry, dict) and entry.get("installmentPlan")
+            if not isinstance(plan, dict) or plan.get("id") is None:
+                continue
+            account_type = plan.get("accountType") or {}
+            bank = account_type.get("bank") or {}
+            product_codes = (entry.get("products") or []) + (entry.get("productsCodes") or [])
+            plans.append({
+                "id": plan["id"],
+                "name_en": plan.get("nameEn") or "",
+                "name_ar": plan.get("nameAr") or plan.get("nameEn") or "",
+                "months": plan.get("noOfMonths") or 0,
+                "rate": plan.get("rate") or 0.0,
+                "min_amount": plan.get("minAmount"),
+                "max_amount": plan.get("maxAmount"),
+                "start": plan.get("startDate"),
+                "end": plan.get("endDate"),
+                "online": plan.get("online", True),
+                "status": str((plan.get("status") or {}).get("code") or "ACTIVE").upper(),
+                "bins": [str(pan) for pan in account_type.get("pans") or [] if pan],
+                "bank_en": account_type.get("nameEn") or bank.get("nameEn") or "",
+                "bank_ar": account_type.get("nameAr") or bank.get("nameAr") or "",
+                "apply_to": str(entry.get("applyTo") or "ANY_PRODUCT").upper(),
+                "product_codes": [
+                    str(code.get("code") or code.get("sku") or "") if isinstance(code, dict)
+                    else str(code)
+                    for code in product_codes
+                ],
+            })
+        return plans
+
+    def _fawry_get_eligible_installment_plans(self, amount, card_bin, product_codes=None):
+        """Return the installment plans with which a card can pay an amount.
+
+        A plan is eligible when it is active and online, in its validity period, when the amount
+        is within its limits, when the card starts with one of its prefixes, and, for the plans
+        limited to some products, when every product paid is one of them.
+
+        :param float amount: The amount to pay.
+        :param str card_bin: The first six digits of the card.
+        :param list product_codes: The internal references of the products paid.
+        :return: The eligible plans, by number of months.
+        :rtype: list[dict]
+        """
+        self.ensure_one()
+        if not (
+            self.code == "fawry"
+            and self.fawry_bank_installments
+            and self.fawry_integration == const.INTEGRATION_S2S
+            and card_bin
+        ):
+            return []
+        try:
+            plans = self._fawry_get_installment_plans()
+        except ValidationError as error:
+            _logger.warning("Unable to fetch the Fawry installment plans: %s", error)
+            return []
+        card_bin = str(card_bin)
+        now = int(time.time() * 1000)
+        eligible = []
+        for plan in plans:
+            if plan["status"] != "ACTIVE" or not plan["online"] or plan["months"] < 1:
+                continue
+            if (plan["start"] and now < plan["start"]) or (plan["end"] and now > plan["end"]):
+                continue
+            if plan["min_amount"] is not None and amount < plan["min_amount"]:
+                continue
+            if plan["max_amount"] is not None and amount > plan["max_amount"]:
+                continue
+            if plan["bins"] and not any(
+                card_bin.startswith(pan) or pan.startswith(card_bin) for pan in plan["bins"]
+            ):
+                continue
+            if plan["apply_to"] != "ANY_PRODUCT" and not (
+                product_codes and set(product_codes) <= set(plan["product_codes"])
+            ):
+                continue
+            eligible.append(plan)
+        return sorted(eligible, key=lambda plan: (plan["months"], plan["rate"]))
+
+    def _fawry_get_installment_plan_label(self, plan):
+        """Return the name of an installment plan in the current language."""
+        is_arabic = (self.env.lang or "").startswith("ar")
+        name = (plan["name_ar"] if is_arabic else plan["name_en"]) or plan["name_en"]
+        bank = (plan["bank_ar"] if is_arabic else plan["bank_en"]) or plan["bank_en"]
+        return f"{name} ({bank})" if bank and bank not in name else name
+
+    def _fawry_describe_installment_plan(self, plan):
+        """Describe an installment plan for the staff."""
+        return self.env._(
+            "%(name)s: %(months)s months, rate %(rate)s%%, from %(min)s to %(max)s, plan %(id)s",
+            name=self._fawry_get_installment_plan_label(plan),
+            months=plan["months"],
+            rate=plan["rate"],
+            min=plan["min_amount"] if plan["min_amount"] is not None else "-",
+            max=plan["max_amount"] if plan["max_amount"] is not None else "-",
+            id=plan["id"],
+        )
 
     def _fawry_is_own_url(self, url):
         """Return whether a URL points to the Fawry environment of the provider.

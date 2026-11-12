@@ -19,6 +19,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 
 from odoo.addons.payment_fawry_cf import const
+from odoo.addons.payment_fawry_cf.exceptions import FawryError
 from odoo.addons.payment_fawry_cf.tests.common import MERCHANT_CODE, FawryCommon, sha256
 
 SEND_API_REQUEST = (
@@ -105,14 +106,23 @@ class TestPaymentProvider(FawryCommon):
         self.assertEqual(self.fawry._parse_response_content(_response(url, "text/plain")), url)
         self.assertEqual(self.fawry._parse_response_content(_response("", "text/plain")), {})
 
-    def test_error_messages_are_extracted(self):
+    def test_error_codes_are_extracted(self):
+        """HTTP errors keep Fawry's code and are explained with the error code table."""
         response = _response(
             {"errorId": "x", "code": "9901", "reason": "VALIDATION", "description": "Wrong"},
             status=400,
         )
-        self.assertEqual(self.fawry._parse_response_error(response), "Wrong (code 9901)")
-        response = _response({"statusCode": 9935, "statusDescription": "Too much"}, status=400)
-        self.assertEqual(self.fawry._parse_response_error(response), "Too much (code 9935)")
+        with self.assertRaises(FawryError) as error:
+            self.fawry._parse_response_error(response)
+        self.assertEqual(error.exception.code, "9901")
+        self.assertEqual(error.exception.description, "Wrong")
+        self.assertIn("merchant code is missing or invalid", str(error.exception))
+        self.assertIn("Fawry code 9901", str(error.exception))
+        response = _response({"statusCode": 12345, "statusDescription": "Odd"}, status=400)
+        with self.assertRaises(FawryError) as error:
+            self.fawry._parse_response_error(response)
+        self.assertEqual(error.exception.code, "12345")
+        self.assertIn("Odd", str(error.exception), "Unknown codes keep Fawry's description.")
 
     def test_payment_status_is_signed(self):
         with patch(SEND_API_REQUEST, return_value={"orderStatus": "PAID"}) as request_mock:
@@ -122,9 +132,12 @@ class TestPaymentProvider(FawryCommon):
         self.assertEqual(params["signature"], sha256(MERCHANT_CODE, "S00042-1"))
 
     def test_unknown_orders_have_no_status(self):
-        error = ValidationError("The payment provider rejected the request.\nNOT FOUND (code 9938)")
+        error = FawryError("NOT FOUND", code="9938", description="NOT FOUND")
         with patch(SEND_API_REQUEST, side_effect=error):
             self.assertIsNone(self.fawry._fawry_get_payment_status("S00042-1"))
+        error = FawryError("Wrong signature", code="9946")
+        with patch(SEND_API_REQUEST, side_effect=error), self.assertRaises(FawryError):
+            self.fawry._fawry_get_payment_status("S00042-1")
 
     def test_connection_test_accepts_unknown_order(self):
         with patch.object(type(self.fawry), "_fawry_get_payment_status", return_value=None):

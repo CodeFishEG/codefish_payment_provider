@@ -37,6 +37,12 @@ class PaymentToken(models.Model):
         help="The month and year the card expires (MM/YY), as saved at Fawry.",
         readonly=True,
     )
+    fawry_card_bin = fields.Char(
+        string="Card First Digits",
+        help="The first six digits of the card, which tell its bank and the installment plans it "
+        "can pay with.",
+        readonly=True,
+    )
     fawry_last_check = fields.Datetime(
         string="Last Checked at Fawry",
         help="When Odoo last found the card among the cards the customer saved at Fawry.",
@@ -125,6 +131,8 @@ class PaymentToken(models.Model):
                 values = {"fawry_last_check": now}
                 if card.get("expiryDate") and card["expiryDate"] != token.fawry_card_expiry:
                     values["fawry_card_expiry"] = card["expiryDate"]
+                if card.get("firstSixDigits") and card["firstSixDigits"] != token.fawry_card_bin:
+                    values["fawry_card_bin"] = str(card["firstSixDigits"])
                 token.write(values)
 
         today = fields.Date.context_today(self)

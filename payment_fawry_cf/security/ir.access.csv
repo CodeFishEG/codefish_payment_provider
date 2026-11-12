@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+payment_fawry_split_account_system,payment.fawry.split.account.system,payment.fawry.split.account,base.group_system,crud,
+payment_fawry_split_account_rule,Access the sub-accounts of accessible providers,payment.fawry.split.account,,crud,"[('provider_id', 'access', 'read')]"

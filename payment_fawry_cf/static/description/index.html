@@ -16,6 +16,7 @@
                 <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #006D95; border-color: #006D95 !important;">Egypt · EGP</span>
                 <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">English &amp; Arabic</span>
                 <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">No PCI-DSS scope</span>
+                <span class="border rounded" style="display: inline-block; font-size: 14px; padding: 6px 14px; margin: 4px; color: #1F2937;">Installments &amp; payment split</span>
             </p>
         </div>
     </div>
@@ -76,15 +77,18 @@
                             <li style="margin-bottom: 4px;"><a href="#integrations" style="color: #006D95;">Two integrations</a></li>
                             <li style="margin-bottom: 4px;"><a href="#customers" style="color: #006D95;">What your customers see</a></li>
                             <li style="margin-bottom: 4px;"><a href="#saved-cards" style="color: #006D95;">Saved cards: add, choose, remove</a></li>
+                            <li style="margin-bottom: 4px;"><a href="#installments" style="color: #006D95;">Bank installments</a></li>
+                            <li style="margin-bottom: 4px;"><a href="#payment-split" style="color: #006D95;">Payment split</a></li>
                             <li style="margin-bottom: 4px;"><a href="#admin" style="color: #006D95;">Set-up guide for administrators</a></li>
-                            <li style="margin-bottom: 4px;"><a href="#settings" style="color: #006D95;">Settings reference</a></li>
                         </ol>
                     </div>
                     <div class="col-md-6">
-                        <ol start="8" style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 0;">
+                        <ol start="9" style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 0;">
+                            <li style="margin-bottom: 4px;"><a href="#settings" style="color: #006D95;">Settings reference</a></li>
                             <li style="margin-bottom: 4px;"><a href="#staff" style="color: #006D95;">Daily use for your team</a></li>
                             <li style="margin-bottom: 4px;"><a href="#accounting" style="color: #006D95;">Accounting</a></li>
                             <li style="margin-bottom: 4px;"><a href="#statuses" style="color: #006D95;">Payment statuses</a></li>
+                            <li style="margin-bottom: 4px;"><a href="#error-codes" style="color: #006D95;">Fawry error codes</a></li>
                             <li style="margin-bottom: 4px;"><a href="#security" style="color: #006D95;">Security</a></li>
                             <li style="margin-bottom: 4px;"><a href="#faq" style="color: #006D95;">Questions and troubleshooting</a></li>
                             <li style="margin-bottom: 4px;"><a href="#requirements" style="color: #006D95;">Requirements and support</a></li>
@@ -536,11 +540,91 @@
     </div>
 </section>
 
-<!-- ============================================================== 6. ADMIN GUIDE -->
+<!-- ============================================================== 6. BANK INSTALLMENTS -->
+<section class="container" id="installments">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">6. Bank installments</h3>
+            <p style="font-size: 16px; color: #374151;">
+                Customers can pay by card in monthly installments, with the installment plans of their bank that Fawry
+                activated on your account. Nothing to set up in Odoo beyond one tick: the plans, their banks, rates and
+                limits come from Fawry.
+            </p>
+            <ol style="font-size: 15px; color: #374151; padding-left: 20px;">
+                <li style="margin-bottom: 6px;">The customer pays by card: a new card typed on Fawry's secure page, or a saved card.</li>
+                <li style="margin-bottom: 6px;">If the card's bank has plans for the amount, the customer chooses on your website between <b>Pay in full</b> and each plan, with its number of months, the bank's rate and the monthly amount.</li>
+                <li style="margin-bottom: 6px;">The bank confirms the payment with 3-D Secure, and collects the installments from the customer. The order is paid in Odoo as usual.</li>
+            </ol>
+            <p style="font-size: 15px; color: #374151;">
+                A plan is offered only when it is active and online at Fawry, in its validity dates, when the amount is
+                within its limits, when the card belongs to the plan's bank, and, for the plans limited to some products,
+                when every product of the order is one of them. When no plan fits, the card is charged in full as usual.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_installments.png" alt="The customer chooses between paying in full and the installment plans of their bank" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The choice offered to the customer (example plans on Fawry's test environment).</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="margin-bottom: 32px;">
+            <div class="rounded" style="padding: 16px 20px; background-color: #FFF8DC;">
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    <b>To turn it on:</b> on the Fawry provider (Server-to-Server APIs), tick <b>Bank Installments</b>.
+                    Click <b>Show Installment Plans</b> to see the plans Fawry activated on your account; ask Fawry to
+                    activate the plans of the banks you work with. Bank installments need the Server-to-Server APIs
+                    integration.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================== 7. PAYMENT SPLIT -->
+<section class="container" id="payment-split">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">7. Payment split</h3>
+            <p style="font-size: 16px; color: #374151;">
+                Share each payment between your Fawry account and the sub-accounts you created in Fawry's dashboard, for
+                example the sellers of a marketplace, a partner's commission or another company of your group. Fawry pays
+                each share to the bank account of its sub-account; nothing changes for the customer.
+            </p>
+            <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
+                <li style="margin-bottom: 6px;"><b>Share (%)</b> of each item: a sub-account receives this part of the price of every item it applies to; the rest goes to your own account.</li>
+                <li style="margin-bottom: 6px;"><b>Applies to</b> all items, or only to selected products (for example, the products of one seller).</li>
+                <li style="margin-bottom: 6px;">Odoo sends the shares with every payment: Express Checkout, reference codes, wallets, myFawry and cards. The shares of an item always add up to its price.</li>
+                <li style="margin-bottom: 6px;">Odoo refuses settings that would share out more than 100% of an item.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_payment_split.png" alt="The sub-accounts of the payment split on the Fawry provider" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The Payment Split tab of the provider.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="margin-bottom: 32px;">
+            <div class="rounded" style="padding: 16px 20px; background-color: #FFF8DC;">
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    <b>To turn it on:</b> ask Fawry to enable Payment Splitting on your account and create the
+                    sub-accounts in Fawry's dashboard (<i>My Accounts &gt; Payment Splitting</i>). Then tick
+                    <b>Payment Split</b> on the Fawry provider and add each sub-account with its code and share in the
+                    <b>Payment Split</b> tab. Turn off the tick, or archive a sub-account, to stop sharing.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================== 8. ADMIN GUIDE -->
 <section class="container" id="admin">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">6. Set-up guide for administrators</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">8. Set-up guide for administrators</h3>
             <p style="font-size: 16px; color: #374151;">Plan about 15 minutes. You need the <b>Administration / Settings</b> access right.</p>
 
             <div class="rounded" style="padding: 16px 20px; background-color: #FFF8DC; margin-bottom: 24px;">
@@ -651,11 +735,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 7. SETTINGS -->
+<!-- ============================================================== 9. SETTINGS -->
 <section class="container" id="settings">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">7. Settings reference</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">9. Settings reference</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <thead>
@@ -670,12 +754,18 @@
                         <tr><td><b>Payment Expiry (Hours)</b></td><td>How long reference codes, wallet requests and QR codes stay payable. Default 48.</td></tr>
                         <tr><td><b>Notification URL</b></td><td>Read-only. The address Fawry calls when a payment changes; give it to Fawry.</td></tr>
                         <tr><td><b>Allow Saving Payment Methods</b></td><td>Server-to-Server only: customers can save cards.</td></tr>
+                        <tr><td><b>Bank Installments</b></td><td>Server-to-Server only: customers can pay by card with the installment plans of their bank. <b>Show Installment Plans</b> lists the plans Fawry activated. See <a href="#installments" style="color: #006D95;">Bank installments</a>.</td></tr>
+                        <tr><td><b>Payment Split</b></td><td>Shares each payment with the sub-accounts of the <b>Payment Split</b> tab (name, sub-account code, share, items it applies to). See <a href="#payment-split" style="color: #006D95;">Payment split</a>.</td></tr>
                         <tr><td><b>Payment Journal</b></td><td>Where paid orders are posted. Fawry Pay by default.</td></tr>
                         <tr><td><b>Currencies</b></td><td>Egyptian pound (EGP) only.</td></tr>
                         <tr><td><b>Restrictions</b> tab</td><td>Odoo's usual limits: maximum amount, countries, websites.</td></tr>
                         <tr><td><b>Messages</b> tab</td><td>The texts shown to customers, for example the message of a pending payment.</td></tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="text-center" style="margin: 8px 0 24px;">
+                <img src="screenshot_configuration_features.png" alt="The Fawry options with Bank Installments and Payment Split turned on" class="img-fluid border rounded shadow-sm"/>
+                <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">Bank Installments and Payment Split, turned on from the provider.</p>
             </div>
             <p style="font-size: 15px; color: #374151;">
                 <b>Several companies.</b> Each company has its own Fawry provider, with its own credentials, and its own
@@ -685,11 +775,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 8. STAFF -->
+<!-- ============================================================== 10. STAFF -->
 <section class="container" id="staff">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">8. Daily use for your team</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">10. Daily use for your team</h3>
             <p style="font-size: 16px; color: #374151;">
                 Your sales and accounting team works with Fawry payments like with any other Odoo payment. Here are the
                 Fawry-specific tasks.
@@ -703,7 +793,9 @@
             </ul>
             <p style="font-size: 15px; color: #374151;">
                 The transaction's <b>Fawry</b> tab shows the payment deadline, the wallet number, the fees Fawry added (if
-                any), the customer's Fawry profile and the last status check. The <b>Fawry reference</b> is the
+                any), the installment plan chosen, the customer's Fawry profile and the last status check. When Fawry
+                refused the payment, it also shows the <b>error code</b>, what it means and what to check (see
+                <a href="#error-codes" style="color: #006D95;">Fawry error codes</a>). The <b>Fawry reference</b> is the
                 transaction's <b>Provider Reference</b>.
             </p>
         </div>
@@ -766,11 +858,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 9. ACCOUNTING -->
+<!-- ============================================================== 11. ACCOUNTING -->
 <section class="container" id="accounting">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">9. Accounting</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">11. Accounting</h3>
             <p style="font-size: 16px; color: #374151;">
                 The module creates, in each company, a <b>bank journal</b> for Fawry:
             </p>
@@ -806,11 +898,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 10. STATUSES -->
+<!-- ============================================================== 12. STATUSES -->
 <section class="container" id="statuses">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">10. Payment statuses</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">12. Payment statuses</h3>
             <p style="font-size: 16px; color: #374151;">How each Fawry status shows in Odoo:</p>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
@@ -841,11 +933,122 @@
     </div>
 </section>
 
-<!-- ============================================================== 11. SECURITY -->
+<!-- ============================================================== 13. ERROR CODES -->
+<section class="container" id="error-codes">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">13. Fawry error codes</h3>
+            <p style="font-size: 16px; color: #374151;">
+                Every error code of Fawry's documentation, plus the ones met on Fawry's platform, is explained in Odoo.
+                When Fawry refuses a payment or a request:
+            </p>
+            <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
+                <li style="margin-bottom: 6px;"><b>Your customer</b> sees what to do when the error is about their card or bank (for example "The card doesn't have enough funds for this payment"). When it is about your Fawry account, they see a neutral message with the code, never your account's details.</li>
+                <li style="margin-bottom: 6px;"><b>Your team</b> sees, in the transaction's Fawry tab, the code, what it means and what to check, and Fawry's own text.</li>
+                <li style="margin-bottom: 6px;"><b>Administrators</b> get the same explanation in Test Connection, refunds, cancellations and status checks.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_error_code.png" alt="A Fawry error explained in the transaction" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">What your team sees.</p>
+        </div>
+        <div class="col-lg-6 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_customer_error.png" alt="The message the customer sees for the same error" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">What the customer sees for the same error.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="padding-bottom: 24px;">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm" style="font-size: 14px; color: #374151;">
+                    <thead>
+                        <tr style="background-color: #F3F4F6;"><th style="width: 90px;">Code</th><th>Meaning</th><th style="width: 180px;">Shown to the customer</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>99901</code></td><td>The bank that issued the card refused the payment. Please contact your bank or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99903</code></td><td>The payment details were refused, or the card terminal of the merchant account is inactive. Ask Fawry to check the card payments of your account.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>99904</code></td><td>The bank refused the payment because the card is reported lost or stolen. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99905</code></td><td>The bank won&#x27;t accept this payment. Please use another card or contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99906</code></td><td>The bank flagged the card as fraudulent. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99907</code></td><td>The bank declined the payment. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99908</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99910</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99912</code></td><td>Fawry couldn&#x27;t process the card because the card payments of the merchant account aren&#x27;t set up correctly. Ask Fawry to check them.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>99913</code></td><td>The amount of the payment was refused as invalid.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>99914</code></td><td>The card number isn&#x27;t valid. Please check it and try again.</td><td>As it is</td></tr>
+                        <tr><td><code>99915</code></td><td>The bank of this card doesn&#x27;t exist. Please check the card number and try again.</td><td>As it is</td></tr>
+                        <tr><td><code>99922</code></td><td>The bank didn&#x27;t respond. Please try again.</td><td>As it is</td></tr>
+                        <tr><td><code>99930</code></td><td>The merchant account isn&#x27;t set up for this payment. Ask Fawry to check your account.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>99931</code></td><td>The bank doesn&#x27;t allow this card for this kind of payment. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99934</code></td><td>The bank declined the payment because it suspects fraud on this card. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99937</code></td><td>The bank refused the payment. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99939</code></td><td>The bank refused the payment. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99941</code></td><td>The card is reported lost. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99942</code></td><td>This card can&#x27;t be used for this kind of payment. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99943</code></td><td>The card is reported stolen. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99949</code></td><td>The bank doesn&#x27;t allow this card for online payments. Please contact your bank or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99951</code></td><td>The card doesn&#x27;t have enough funds for this payment.</td><td>As it is</td></tr>
+                        <tr><td><code>99954</code></td><td>The card has expired. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99955</code></td><td>The card PIN is incorrect. Please try again.</td><td>As it is</td></tr>
+                        <tr><td><code>99956</code></td><td>The bank says this card number doesn&#x27;t exist. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99957</code></td><td>The bank doesn&#x27;t allow this card for this kind of payment. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99958</code></td><td>The card processing account of the merchant isn&#x27;t set up correctly. Ask Fawry to check it.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>99959</code></td><td>The bank declined the payment because it looks fraudulent. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99961</code></td><td>The payment would exceed the limit of the card.</td><td>As it is</td></tr>
+                        <tr><td><code>99962</code></td><td>The card can&#x27;t be used in this region or country.</td><td>As it is</td></tr>
+                        <tr><td><code>99963</code></td><td>The bank declined the payment because it failed a security check. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99965</code></td><td>The payment would exceed the usual spending limit of the card. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99967</code></td><td>The bank declined the payment because the card is suspected to be counterfeit. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99970</code></td><td>The bank refused the payment. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99971</code></td><td>The bank refused the payment because the card PIN was never changed. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99975</code></td><td>The PIN was entered wrongly too many times. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99976</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99977</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99978</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99979</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99980</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99981</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99984</code></td><td>The payment failed on the side of the bank. Please contact your bank.</td><td>As it is</td></tr>
+                        <tr><td><code>99985</code></td><td>The payment failed because of its amount. Please try again with another amount or another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99986</code></td><td>A technical error at the bank stopped the payment. Please try again later.</td><td>As it is</td></tr>
+                        <tr><td><code>99987</code></td><td>This payment can&#x27;t be made right now. Please try again later or use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>99988</code></td><td>A technical error at the bank stopped the payment. Please try again later.</td><td>As it is</td></tr>
+                        <tr><td><code>99989</code></td><td>A technical error at the bank stopped the payment. Please try again later.</td><td>As it is</td></tr>
+                        <tr><td><code>99991</code></td><td>Fawry couldn&#x27;t reach the bank to approve the payment. Please try again.</td><td>As it is</td></tr>
+                        <tr><td><code>99992</code></td><td>The payment couldn&#x27;t be sent to the bank. Please try again.</td><td>As it is</td></tr>
+                        <tr><td><code>99994</code></td><td>A technical error stopped the payment. Please try again later.</td><td>As it is</td></tr>
+                        <tr><td><code>99996</code></td><td>A technical error stopped the payment. Please try again later.</td><td>As it is</td></tr>
+                        <tr><td><code>21004</code></td><td>Fawry couldn&#x27;t validate the amount of the payment.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>21010</code></td><td>The amount is above the limit allowed for this payment method. Please choose another payment method.</td><td>As it is</td></tr>
+                        <tr><td><code>55006</code></td><td>This card isn&#x27;t allowed for this payment. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>9901</code></td><td>The merchant code is missing or invalid. Check the Merchant Code of the Fawry provider.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9903</code></td><td>Fawry couldn&#x27;t process the request. Check the Merchant Code of the Fawry provider; if it is right, the payment uses an option Fawry hasn&#x27;t enabled on the account.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9910</code></td><td>The mobile number is missing or invalid. Please check your phone number and try again.</td><td>As it is</td></tr>
+                        <tr><td><code>9919</code></td><td>The card isn&#x27;t valid or its expiry date is wrong. Please use another card.</td><td>As it is</td></tr>
+                        <tr><td><code>9935</code></td><td>The refund is higher than the amount paid.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9938</code></td><td>Fawry has no order with this reference.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9944</code></td><td>Fawry found the request invalid: a required value is missing, such as the customer profile or the card token, or a value isn&#x27;t accepted, such as an installment plan.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9946</code></td><td>The signature is wrong. Check the Secure Key of the Fawry provider, and that Live matches the environment of your credentials.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9954</code></td><td>The order isn&#x27;t paid.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9984</code></td><td>The order is already canceled.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>9985</code></td><td>The amounts shared between the accounts don&#x27;t add up to the price of an item (Payment Split).</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>8000453</code></td><td>A sub-account of the Payment Split doesn&#x27;t exist at Fawry. Check the sub-account codes in the Payment Split tab of the Fawry provider.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>10027</code></td><td>Fawry doesn&#x27;t know this saved card: it may have been deleted already.</td><td>Neutral message with the code</td></tr>
+                        <tr><td><code>10044</code></td><td>Card payments without 3-D Secure aren&#x27;t enabled on the merchant account.</td><td>Neutral message with the code</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================== 14. SECURITY -->
 <section class="container" id="security">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">11. Security</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">14. Security</h3>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
                 <li style="margin-bottom: 6px;"><b>No card numbers in Odoo.</b> Cards are typed on Fawry's pages only. With the Server-to-Server integration, Odoo uses Fawry's card tokenization page, which Fawry requires from merchants without PCI-DSS certification, and keeps only Fawry's token, the last four digits and the expiry date.</li>
                 <li style="margin-bottom: 6px;"><b>3-D Secure</b> on every card payment, saved cards included: the customer confirms each payment with their bank.</li>
@@ -858,11 +1061,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 12. FAQ -->
+<!-- ============================================================== 15. FAQ -->
 <section class="container" id="faq">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 16px;">12. Questions and troubleshooting</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 16px;">15. Questions and troubleshooting</h3>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937;">The Fawry methods don't show at checkout.</h4>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
@@ -871,6 +1074,15 @@
                 <li>Methods other than cards are offered to customers whose address is in <b>Egypt</b>.</li>
                 <li>Does the provider belong to the website's company, and do its <b>Restrictions</b> (amount, countries, websites) allow the order?</li>
             </ul>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">What does a Fawry error code mean?</h4>
+            <p style="font-size: 15px; color: #374151;">Open the transaction: its Fawry tab explains the code. Every code is also listed in <a href="#error-codes" style="color: #006D95;">Fawry error codes</a>.</p>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Customers don't see any installment plan.</h4>
+            <p style="font-size: 15px; color: #374151;">Plans appear only with the Server-to-Server APIs, with <b>Bank Installments</b> ticked, and when Fawry has an active plan for the card's bank and the amount. Click <b>Show Installment Plans</b>: if the list is empty, ask Fawry to activate the plans of your banks.</p>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Payments fail with code 8000453 or 9985 after turning on Payment Split.</h4>
+            <p style="font-size: 15px; color: #374151;">8000453: a sub-account code of the Payment Split tab doesn't exist at Fawry; copy it again from Fawry's dashboard. 9985: the shares of an item didn't add up to its price; check the shares of the sub-accounts. With Express Checkout, Fawry checks the sub-accounts when the customer pays on its checkout.</p>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Test Connection says "Fawry rejected the credentials".</h4>
             <p style="font-size: 15px; color: #374151;">Check the merchant code and the secure key, without spaces. Test credentials work only with <b>Live</b> unticked, live credentials only with <b>Live</b> ticked.</p>
@@ -908,11 +1120,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 13. REQUIREMENTS -->
+<!-- ============================================================== 16. REQUIREMENTS -->
 <section class="container" id="requirements">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 32px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">13. Requirements and support</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">16. Requirements and support</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <tbody>
@@ -922,8 +1134,8 @@
                         <tr><td><b>Website</b></td><td>Reachable from the internet over HTTPS</td></tr>
                         <tr><td><b>Currency</b></td><td>Egyptian pound (EGP)</td></tr>
                         <tr><td><b>Languages</b></td><td>English and Arabic, for every Arabic language installed in Odoo</td></tr>
-                        <tr><td><b>Version</b></td><td>20.0.1.1.0</td></tr>
-                        <tr><td><b>What's new</b></td><td><b>20.0.1.1.0:</b> customers add, choose and remove their saved cards on the website; expiry dates shown; saved cards kept in line with Fawry.<br/><b>20.0.1.0.0:</b> first release.</td></tr>
+                        <tr><td><b>Version</b></td><td>20.0.1.2.0</td></tr>
+                        <tr><td><b>What's new</b></td><td><b>20.0.1.2.0:</b> bank installments; payment split; every Fawry error code explained to staff and customers; customer-facing texts name your company.<br/><b>20.0.1.1.0:</b> customers add, choose and remove their saved cards on the website; expiry dates shown; saved cards kept in line with Fawry.<br/><b>20.0.1.0.0:</b> first release.</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -16,11 +16,13 @@
                 <t t-call="payment_fawry_cf.inline_hint" icon_name.f="lock">
                     <t t-if="is_validation">
                         You will enter your card details on Fawry's secure page and confirm them
-                        with your bank. Odoo never sees your card number.
+                        with your bank. <t t-out="provider_sudo.company_id.name"/> never sees your
+                        card number.
                     </t>
                     <t t-else="">
                         You will enter your card details on Fawry's secure page, then confirm the
-                        payment with your bank (3-D Secure). Odoo never sees your card number.
+                        payment with your bank (3-D Secure).
+                        <t t-out="provider_sudo.company_id.name"/> never sees your card number.
                     </t>
                 </t>
             </t>
@@ -242,6 +244,65 @@
                             + (' ms-4 ms-md-0' if allow_token_selection else '')"
             >Expires <t t-out="token_sudo.fawry_card_expiry"/></p>
         </xpath>
+    </template>
+
+    <!-- The choice between paying in full and a bank installment plan, before a card is charged. -->
+    <template id="installment_plans" name="Fawry: Installment Plans">
+        <t t-set="page_title">Pay in installments</t>
+        <t t-set="additional_title"><t t-out="page_title"/></t>
+        <t t-call="portal.frontend_layout" page_title="page_title" additional_title="additional_title">
+            <div class="wrap">
+                <div class="container">
+                    <div class="row justify-content-center my-5">
+                        <div class="col-12 col-md-10 col-lg-7">
+                            <h1 class="h3 mb-2">How would you like to pay?</h1>
+                            <p class="text-muted mb-4">
+                                Your bank offers installment plans for this card. Choose to pay
+                                <t t-out="tx.company_id.name"/> in full, or in monthly installments.
+                            </p>
+                            <form t-att-action="action_url" method="post" class="o_fawry_installment_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="list-group mb-4">
+                                    <label class="list-group-item list-group-item-action d-flex gap-3 align-items-center py-3">
+                                        <input class="form-check-input flex-shrink-0 mt-0" type="radio" name="plan" value="full" checked="checked"/>
+                                        <span class="flex-grow-1">
+                                            <span class="d-block fw-bold">Pay in full</span>
+                                            <span class="small text-muted">One payment, today.</span>
+                                        </span>
+                                        <span class="fw-bold text-nowrap" t-out="tx.amount" t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"/>
+                                    </label>
+                                    <label t-foreach="plan_options" t-as="option" class="list-group-item list-group-item-action d-flex gap-3 align-items-center py-3">
+                                        <input class="form-check-input flex-shrink-0 mt-0" type="radio" name="plan" t-att-value="option['id']"/>
+                                        <span class="flex-grow-1">
+                                            <span class="d-block fw-bold">
+                                                <t t-out="option['months']"/> monthly installments
+                                            </span>
+                                            <span class="d-block small text-muted" t-out="option['label']"/>
+                                            <span t-if="option['rate']" class="d-block small text-muted">
+                                                Bank rate: <t t-out="option['rate']"/>%,
+                                                about <t t-out="option['total']" t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"/>
+                                                in total
+                                            </span>
+                                            <span t-else="" class="d-block small text-muted">No interest</span>
+                                        </span>
+                                        <span class="text-end text-nowrap">
+                                            <span class="d-block fw-bold" t-out="option['monthly']" t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"/>
+                                            <span class="small text-muted">per month</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <p class="small text-muted">
+                                    <i class="oi me-1" data-icon="lock" aria-hidden="true"/>
+                                    Your bank confirms the payment and the final amount of the plan
+                                    (3-D Secure). The installments are collected by your bank.
+                                </p>
+                                <button type="submit" class="btn btn-primary w-100">Continue</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
     </template>
 
 </odoo>

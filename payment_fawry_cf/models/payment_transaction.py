@@ -25,6 +25,7 @@ from odoo.addons.payment.logging import get_payment_logger
 from odoo.addons.payment_fawry_cf import const
 from odoo.addons.payment_fawry_cf import utils as fawry_utils
 from odoo.addons.payment_fawry_cf.controllers.main import FawryController
+from odoo.addons.payment_fawry_cf.exceptions import FawryError
 
 _logger = get_payment_logger(__name__, const.SENSITIVE_KEYS)
 
@@ -76,10 +77,47 @@ class PaymentTransaction(models.Model):
     )
     fawry_redirect_url = fields.Char(
         string="Fawry 3-D Secure URL",
-        help="Where the customer authenticates the payment with their bank.",
+        help="Where the customer authenticates the payment with their bank, or chooses an "
+        "installment plan.",
         readonly=True,
     )
     fawry_last_sync = fields.Datetime(string="Fawry Last Status Check", readonly=True)
+    fawry_installment_plan_id = fields.Integer(
+        string="Fawry Installment Plan ID",
+        help="The Fawry installment plan the customer chose to pay with.",
+        readonly=True,
+    )
+    fawry_installment_plan = fields.Char(
+        string="Installment Plan",
+        help="The installment plan the customer chose to pay with.",
+        readonly=True,
+    )
+    fawry_error_code = fields.Char(
+        string="Fawry Error Code",
+        help="The code of the last error Fawry returned for this payment.",
+        readonly=True,
+    )
+    fawry_error_details = fields.Char(
+        string="Fawry Error Details",
+        help="The description of the error, as Fawry sent it.",
+        readonly=True,
+    )
+    fawry_error_explanation = fields.Char(
+        string="Fawry Error",
+        help="What the error returned by Fawry means.",
+        compute="_compute_fawry_error_explanation",
+    )
+
+    # === COMPUTE METHODS === #
+
+    @api.depends("fawry_error_code", "fawry_error_details")
+    def _compute_fawry_error_explanation(self):
+        for tx in self:
+            tx.fawry_error_explanation = (tx.fawry_error_code or tx.fawry_error_details) and (
+                tx.provider_id._fawry_get_error_message(
+                    tx.fawry_error_code, tx.fawry_error_details,
+                )
+            )
 
     # === BUSINESS METHODS - PAYMENT FLOW === #
 
@@ -138,7 +176,7 @@ class PaymentTransaction(models.Model):
         try:
             checkout_url = self._fawry_init_checkout()
         except ValidationError as error:
-            self._set_error(str(error))
+            self._fawry_set_error(error)
             return {}
         return {
             "api_url": checkout_url.split("?", 1)[0],
@@ -219,7 +257,7 @@ class PaymentTransaction(models.Model):
         try:
             checkout_url = self._fawry_init_checkout()
         except ValidationError as error:
-            self._set_error(str(error))
+            self._fawry_set_error(error)
             return {}
         mode = const.DISPLAY_MODES.get(provider.fawry_display_mode, "POPUP")
         return {
@@ -279,10 +317,11 @@ class PaymentTransaction(models.Model):
             "POST", endpoint, json=payload, reference=self.reference,
         )
 
-    def _fawry_charge_card_token(self, card_token):
+    def _fawry_charge_card_token(self, card_token, installment_plan=None):
         """Charge a card saved at Fawry, with 3-D Secure.
 
         :param str card_token: The Fawry card token.
+        :param dict installment_plan: The bank installment plan to pay with, if any.
         :return: The charge response; it holds the 3-D Secure redirection when one is needed.
         :rtype: dict
         :raise ValidationError: If Fawry rejects the charge.
@@ -307,7 +346,18 @@ class PaymentTransaction(models.Model):
             "returnUrl": return_url,
             "orderWebHookUrl": provider.fawry_webhook_url,
         }
-        # The CVV is not collected: it is signed as an empty value, before the return URL.
+        plan_id = ""
+        if installment_plan:
+            plan_id = str(installment_plan["id"])
+            payload["installmentPlanId"] = installment_plan["id"]
+            self.with_context(payment_safe_write=True).write({
+                "fawry_installment_plan_id": installment_plan["id"],
+                "fawry_installment_plan": provider._fawry_get_installment_plan_label(
+                    installment_plan,
+                ),
+            })
+        # The CVV is not collected: it is signed as an empty value. The installment plan, if any,
+        # is signed before the return URL.
         payload["signature"] = provider._fawry_sign(
             provider.fawry_merchant_code,
             self.reference,
@@ -315,6 +365,7 @@ class PaymentTransaction(models.Model):
             "CARD",
             amount,
             card_token,
+            plan_id,
             return_url,
         )
         return provider._send_api_request(
@@ -365,8 +416,95 @@ class PaymentTransaction(models.Model):
         self.with_context(payment_safe_write=True).fawry_customer_profile_id = (
             self.token_id.fawry_customer_profile_id or self._fawry_get_customer_profile_id()
         )
-        response = self._fawry_charge_card_token(self.token_id.provider_ref)
+        if self._fawry_get_installment_plans(self.token_id.fawry_card_bin):
+            # The customer first chooses between paying in full and the installment plans.
+            self.with_context(payment_safe_write=True).fawry_redirect_url = (
+                f"{FawryController._installments_url}/{self.id}/{self._fawry_get_access_token()}"
+            )
+            return None
+        try:
+            response = self._fawry_charge_card_token(self.token_id.provider_ref)
+        except FawryError as error:
+            # `_charge_with_token` shows the message to the customer: explain it to them.
+            self.with_context(payment_safe_write=True).write({
+                "fawry_error_code": error.code,
+                "fawry_error_details": error.description,
+            })
+            raise ValidationError(
+                self.provider_id._fawry_get_customer_error_message(error.code, error.description),
+            ) from None
         self._fawry_handle_charge_response(response)
+
+    def _fawry_get_card(self):
+        """Return the Fawry token and the first six digits of the card paying this transaction.
+
+        :return: The card token and the first digits, either of the saved card or of the card
+                 entered on Fawry's secure page.
+        :rtype: tuple[str, str]
+        """
+        self.ensure_one()
+        if self.token_id:
+            return self.token_id.provider_ref, self.token_id.fawry_card_bin
+        return self.sudo().fawry_card_token, (self.fawry_card_data or {}).get("firstSixDigits")
+
+    def _fawry_get_installment_options(self, plans):
+        """Return what each installment plan costs the customer, to show the plans.
+
+        Fawry adds the rate of the plan to the amount of the order; the bank confirms the final
+        amount during the payment.
+
+        :param list plans: The installment plans.
+        :return: For each plan: its id, label, number of months, rate, total and monthly amount.
+        :rtype: list[dict]
+        """
+        self.ensure_one()
+        rounding = self.currency_id.rounding
+        options = []
+        for plan in plans:
+            total = float_round(
+                self.amount * (1 + (plan["rate"] or 0) / 100), precision_rounding=rounding,
+            )
+            options.append({
+                "id": plan["id"],
+                "label": self.provider_id._fawry_get_installment_plan_label(plan),
+                "months": plan["months"],
+                "rate": plan["rate"],
+                "total": total,
+                "monthly": float_round(total / plan["months"], precision_rounding=rounding),
+            })
+        return options
+
+    def _fawry_get_installment_plans(self, card_bin):
+        """Return the bank installment plans the customer can pay this transaction with.
+
+        :param str card_bin: The first six digits of the card.
+        :rtype: list[dict]
+        """
+        self.ensure_one()
+        if self.operation not in ("online_redirect", "online_direct", "online_token"):
+            return []
+        return self.provider_id._fawry_get_eligible_installment_plans(
+            self.amount, card_bin, product_codes=self._fawry_get_product_codes(),
+        )
+
+    def _fawry_set_error(self, error):
+        """Put the transaction in error after Fawry refused it.
+
+        The customer gets an explanation they can act on; the staff find the code and what it means
+        in the Fawry tab of the transaction.
+
+        :param ValidationError error: The error raised while talking to Fawry.
+        :rtype: None
+        """
+        tx = self.with_context(payment_safe_write=True)
+        if isinstance(error, FawryError):
+            tx.write({"fawry_error_code": error.code, "fawry_error_details": error.description})
+            message = self.provider_id._fawry_get_customer_error_message(
+                error.code, error.description,
+            )
+        else:
+            message = str(error)
+        tx._set_error(message)
 
     def _send_refund_request(self):
         """Override of `payment` to refund a Fawry payment, fully or partially.
@@ -492,16 +630,56 @@ class PaymentTransaction(models.Model):
         """
         self.ensure_one()
         currency = self.currency_id
-        if items := self._fawry_get_order_items():
-            total = sum(item["price"] * item["quantity"] for item in items)
-            if float_is_zero(total - self.amount, precision_rounding=currency.rounding):
-                return items
-        return [{
-            "itemId": self.reference,
-            "description": self._fawry_get_description(),
-            "price": float_round(self.amount, precision_rounding=currency.rounding),
-            "quantity": 1,
-        }]
+        items = self._fawry_get_order_items()
+        total = sum(item["price"] * item["quantity"] for item in items)
+        if not items or not float_is_zero(total - self.amount, precision_rounding=currency.rounding):
+            items = [{
+                "itemId": self.reference,
+                "description": self._fawry_get_description(),
+                "price": float_round(self.amount, precision_rounding=currency.rounding),
+                "quantity": 1,
+            }]
+        self._fawry_add_split_accounts(items)
+        return [
+            {key: value for key, value in item.items() if not key.startswith("_")}
+            for item in items
+        ]
+
+    def _fawry_add_split_accounts(self, items):
+        """Add the accounts that share each item when the provider splits the payments.
+
+        Each sub-account that applies to an item gets its share of the item's price; the rest goes
+        to the merchant's own account. Fawry requires the shares of an item to add up to its price.
+
+        :param list items: The charge items; their private `_product_tmpl` key holds the product
+                           paid, if known.
+        :rtype: None
+        """
+        provider = self.provider_id
+        accounts = provider.sudo().fawry_split_account_ids.filtered("active")
+        if not provider.fawry_payment_split:
+            return
+        rounding = self.currency_id.rounding
+        for item in items:
+            item_total = float_round(item["price"] * item["quantity"], precision_rounding=rounding)
+            product = item.get("_product_tmpl")
+            item_accounts = accounts.filtered(
+                lambda a, product=product: a.apply_to == "all"
+                or (product and product in a.product_tmpl_ids),
+            )
+            shares = []
+            remainder = item_total
+            for account in item_accounts:
+                amount = min(
+                    float_round(item_total * account.share / 100, precision_rounding=rounding),
+                    remainder,
+                )
+                if amount > 0:
+                    shares.append({"accountCode": account.code, "amount": amount})
+                    remainder = float_round(remainder - amount, precision_rounding=rounding)
+            if remainder > 0:
+                shares.append({"accountCode": provider.fawry_merchant_code, "amount": remainder})
+            item["accounts"] = shares
 
     def _fawry_get_order_items(self):
         """Return the lines of the sales order paid by this transaction, if they can be sent.
@@ -524,8 +702,18 @@ class PaymentTransaction(models.Model):
                 "description": (line.name or line.product_id.display_name or "")[:100],
                 "price": price,
                 "quantity": int(quantity),
+                "_product_tmpl": line.product_id.product_tmpl_id,  # Not sent to Fawry.
             })
         return items
+
+    def _fawry_get_product_codes(self):
+        """Return the internal references of the products paid, for the installment plans that
+        are limited to some products.
+        """
+        if "sale_order_ids" not in self._fields:
+            return []
+        lines = self.sale_order_ids.order_line.filtered(lambda line: not line.display_type)
+        return [code for code in lines.product_id.mapped("default_code") if code]
 
     def _fawry_get_expiry_timestamp(self):
         """Return when the payment expires at Fawry, in milliseconds since the epoch."""
@@ -589,13 +777,19 @@ class PaymentTransaction(models.Model):
         elif order_status in const.PAYMENT_STATUS_MAPPING["error"]:
             reason = payment_data.get("failureReason") or payment_data.get("statusDescription")
             code = payment_data.get("failureErrorCode")
-            message = self.env._("The payment was declined.")
-            if reason:
+            if code or reason:
+                self.fawry_error_code = str(code) if code else False
+                self.fawry_error_details = reason or False
+            if code and str(code) in const.ERROR_CODES:
+                message = self.provider_id._fawry_get_customer_error_message(code, reason)
+            elif reason:
                 message = self.env._(
                     "The payment was declined: %(reason)s (code %(code)s)",
                     reason=reason,
                     code=code or "-",
                 )
+            else:
+                message = self.env._("The payment was declined.")
             self._set_error(message)
         elif order_status in const.PAYMENT_STATUS_MAPPING["refunded"]:
             # Refunds are tracked by their own transactions; the payment itself stays done.
@@ -670,6 +864,7 @@ class PaymentTransaction(models.Model):
             "payment_details": card_data.get("lastFourDigits") or "",
             "fawry_customer_profile_id": self.fawry_customer_profile_id,
             "fawry_card_expiry": card_data.get("expiryDate") or False,
+            "fawry_card_bin": card_data.get("firstSixDigits") or False,
             "fawry_last_check": fields.Datetime.now(),  # The card was just found at Fawry.
         }
         brand_code = fawry_utils.get_brand_code(

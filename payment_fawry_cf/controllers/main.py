@@ -39,6 +39,7 @@ class FawryController(http.Controller):
     _webhook_url = "/payment/fawry/webhook"
     _charge_url = "/payment/fawry/charge"
     _poll_url = "/payment/fawry/poll"
+    _installments_url = "/payment/fawry/installments"
 
     @http.route(
         f"{_return_url}/<int:tx_id>/<string:access_token>",
@@ -115,7 +116,7 @@ class FawryController(http.Controller):
         try:
             cards = provider_sudo._fawry_list_card_tokens(profile_id)
         except ValidationError as error:
-            self._fawry_record_failure(tx_sudo, str(error))
+            self._fawry_record_error(tx_sudo, error)
             return request.redirect("/payment/status")
         card = next((card for card in cards if card.get("token") == card_token), None)
         if not card:
@@ -136,11 +137,75 @@ class FawryController(http.Controller):
             tx_sudo._record({"merchantRefNumber": tx_sudo.reference, "fawry_validation": True})
             return request.redirect("/payment/status")
 
+        if tx_sudo._fawry_get_installment_plans(card.get("firstSixDigits")):
+            # The customer first chooses between paying in full and the installment plans.
+            return request.redirect(
+                f"{self._installments_url}/{tx_sudo.id}/{tx_sudo._fawry_get_access_token()}",
+            )
         try:
             response = tx_sudo._fawry_charge_card_token(card_token)
             redirect_url = tx_sudo._fawry_handle_charge_response(response)
         except ValidationError as error:
-            self._fawry_record_failure(tx_sudo, str(error))
+            self._fawry_record_error(tx_sudo, error)
+            return request.redirect("/payment/status")
+        if redirect_url:
+            return request.redirect(redirect_url, local=False)
+        return request.redirect("/payment/status")
+
+    @http.route(
+        f"{_installments_url}/<int:tx_id>/<string:access_token>",
+        type="http",
+        auth="public",
+        methods=["GET", "POST"],
+        website=True,
+        sitemap=False,
+    )
+    def fawry_installments(self, tx_id, access_token, plan=None, **_kwargs):
+        """Let the customer pay a card payment in full or with a bank installment plan.
+
+        The page is shown after the card was entered on Fawry's secure page, or a saved card was
+        chosen, when Fawry has installment plans for the card and the amount. The chosen plan is
+        checked again against the plans Fawry offers before the card is charged.
+
+        :param int tx_id: The id of the transaction.
+        :param str access_token: The access token of the transaction.
+        :param str plan: The id of the chosen plan, or "full" to pay in full (POST only).
+        """
+        tx_sudo = self._fawry_get_transaction(tx_id, access_token)
+        card_token, card_bin = tx_sudo._fawry_get_card()
+        provider_sudo = tx_sudo.provider_id
+        if tx_sudo.state != "draft" or not card_token:
+            return request.redirect("/payment/status")
+        if provider_sudo._fawry_is_own_url(tx_sudo.fawry_redirect_url):
+            # The card was already charged; the customer still has to authenticate the payment.
+            return request.redirect(tx_sudo.fawry_redirect_url, local=False)
+
+        plans = tx_sudo._fawry_get_installment_plans(card_bin)
+        if request.httprequest.method == "GET" and plans:
+            return request.render("payment_fawry_cf.installment_plans", {
+                "tx": tx_sudo,
+                "plans": plans,
+                "plan_options": tx_sudo._fawry_get_installment_options(plans),
+                "action_url": f"{self._installments_url}/{tx_sudo.id}/{access_token}",
+            })
+
+        installment_plan = None
+        if plan and plan != "full":
+            installment_plan = next((p for p in plans if str(p["id"]) == plan), None)
+            if not installment_plan:
+                _logger.warning(
+                    "The installment plan %s is not available for transaction %s.",
+                    plan,
+                    tx_sudo.reference,
+                )
+                return request.redirect(
+                    f"{self._installments_url}/{tx_sudo.id}/{access_token}",
+                )
+        try:
+            response = tx_sudo._fawry_charge_card_token(card_token, installment_plan)
+            redirect_url = tx_sudo._fawry_handle_charge_response(response)
+        except ValidationError as error:
+            self._fawry_record_error(tx_sudo, error)
             return request.redirect("/payment/status")
         if redirect_url:
             return request.redirect(redirect_url, local=False)
@@ -206,8 +271,8 @@ class FawryController(http.Controller):
                 wallet_number=wallet_number,
             )
         except ValidationError as error:
-            tx_sudo.with_context(payment_safe_write=True)._set_error(str(error))
-            return {"error": str(error)}
+            tx_sudo._fawry_set_error(error)
+            return {"error": tx_sudo.state_message}
         tx_sudo._record(response)
         return {"redirect_url": "/payment/status"}
 
@@ -276,6 +341,15 @@ class FawryController(http.Controller):
             data, tx_sudo.provider_id.fawry_secure_key,
         )
         return consteq(received_signature, expected_signature)
+
+    @classmethod
+    def _fawry_record_error(cls, tx_sudo, error):
+        """Record a request Fawry refused before it created an order, with Fawry's error code."""
+        cls._fawry_record_failure(
+            tx_sudo,
+            getattr(error, "description", None) or str(error),
+            getattr(error, "code", None),
+        )
 
     @staticmethod
     def _fawry_record_failure(tx_sudo, message, code=None):

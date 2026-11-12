@@ -34,7 +34,15 @@
                         </group>
                         <group>
                             <field name="fawry_deep_link" widget="url" invisible="not fawry_deep_link"/>
+                            <field name="fawry_installment_plan" invisible="not fawry_installment_plan"/>
                             <field name="fawry_last_sync"/>
+                        </group>
+                    </group>
+                    <group invisible="not fawry_error_code and not fawry_error_details">
+                        <group colspan="2">
+                            <field name="fawry_error_code"/>
+                            <field name="fawry_error_explanation"/>
+                            <field name="fawry_error_details"/>
                         </group>
                     </group>
                 </page>

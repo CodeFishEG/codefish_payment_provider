@@ -163,6 +163,25 @@ ones Fawry no longer has or that expired, without deleting them at Fawry again. 
 reached. Cards found at Fawry but unknown to Odoo are never imported: the customer may have entered them for a
 single payment, and the Fawry customer profile is the partner id, which isn't unique across databases.
 
+### Bank installments and payment split
+
+- **Bank installments** (Server-to-Server APIs): after the card is entered, or a saved card is chosen, the
+  customer chooses between paying in full and the installment plans of their bank that Fawry activated on the
+  account (Get Installment Plans, filtered by card prefix, amount, dates and products). The card token is then
+  charged with `installmentPlanId`, signed before the return URL.
+- **Payment split**: each charge item carries `accounts` with the share of every sub-account that applies to it
+  (all items or selected products) and the rest for the merchant's own account. Set on the provider's
+  Payment Split tab (model `payment.fawry.split.account`).
+
+Both are turned on and off on the Fawry provider (**Bank Installments**, **Payment Split**).
+
+### Fawry error codes
+
+`const.ERROR_CODES` explains every Fawry error code (Fawry's Error Codes page, the APIs' status codes, and codes
+met on staging such as `8000453` and `9985`). Fawry's errors are raised as `FawryError`, which keeps the code;
+customers get the explanation of card and bank errors, or a neutral message with the code for errors about the
+merchant's account; staff see the explanation in the transaction's Fawry tab.
+
 ### Usage
 
 - **Website:** the methods appear at the payment step of the shop, on invoices in the customer portal and on
@@ -190,11 +209,14 @@ codefish_payment_provider/
 ├── .github/assets/               logos of the README footer
 └── payment_fawry_cf/
     ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
-    ├── const.py                  endpoints, method and status mappings
+    ├── const.py                  endpoints, method and status mappings, error codes
+    ├── exceptions.py             FawryError (an error returned by Fawry, with its code)
     ├── utils.py                  signatures, amounts, phone numbers, languages, card brands
-    ├── controllers/main.py       return, card page, webhook, charge and poll routes
+    ├── controllers/main.py       return, card page, installment plans, webhook, charge and poll routes
     ├── controllers/portal.py     checks the saved cards with Fawry before the payment forms show them
-    ├── models/                   payment.provider, payment.transaction, payment.token
+    ├── models/                   payment.provider, payment.transaction, payment.token,
+    │                             payment.fawry.split.account (payment split sub-accounts)
+    ├── security/ir.access.csv    access to the split sub-accounts
     ├── views/                    provider/transaction/token forms, inline forms, payment instructions
     ├── data/                     provider, payment methods, cron, neutralize.sql
     ├── static/src/               payment form patch, status patch, instructions interaction, SCSS

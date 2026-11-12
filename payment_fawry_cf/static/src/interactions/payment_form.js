@@ -155,7 +155,11 @@ patch(PaymentForm.prototype, {
      */
     _processTokenFlow(providerCode, paymentOptionId, paymentMethodCode, processingValues) {
         const redirectUrl = processingValues.fawry_redirect_url;
-        if (providerCode === 'fawry' && redirectUrl && redirectUrl.startsWith('https://')) {
+        const isAllowedUrl = redirectUrl && (
+            redirectUrl.startsWith('https://')
+            || (redirectUrl.startsWith('/') && !redirectUrl.startsWith('//'))  // Installment plans.
+        );
+        if (providerCode === 'fawry' && isAllowedUrl) {
             // Navigate the top window: the bank's pages refuse to be shown in a frame.
             window.top.location = redirectUrl;
         } else {
