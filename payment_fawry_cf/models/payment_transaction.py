@@ -669,6 +669,8 @@ class PaymentTransaction(models.Model):
             "provider_ref": card_token,
             "payment_details": card_data.get("lastFourDigits") or "",
             "fawry_customer_profile_id": self.fawry_customer_profile_id,
+            "fawry_card_expiry": card_data.get("expiryDate") or False,
+            "fawry_last_check": fields.Datetime.now(),  # The card was just found at Fawry.
         }
         brand_code = fawry_utils.get_brand_code(
             card_data.get("brand"), card_data.get("firstSixDigits"),

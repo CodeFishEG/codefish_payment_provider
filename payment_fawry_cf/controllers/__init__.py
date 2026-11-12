@@ -12,4 +12,4 @@
 # You should have received a copy of the License along with this program.
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
-from . import main
+from . import main, portal

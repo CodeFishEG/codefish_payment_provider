@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:11+0000\n"
-"PO-Revision-Date: 2026-11-12 11:11+0000\n"
+"POT-Creation-Date: 2026-11-12 14:18+0000\n"
+"PO-Revision-Date: 2026-11-12 14:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,11 @@ msgid ""
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model:ir.model,name:payment_fawry_cf.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
+
+#. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_instructions
 msgid "Approve it with your wallet PIN."
 msgstr ""
@@ -103,6 +108,11 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model:payment.method,name:payment_fawry_cf.payment_method_card
 msgid "Card"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_card_expiry
+msgid "Card Expiry"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -146,6 +156,7 @@ msgid "Connection successful"
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__display_name
@@ -170,6 +181,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.payment_provider_form
 msgid ""
 "Every method is paid on FawryPay's secure checkout. Cards can't be saved."
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.token_form
+msgid "Expires"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -394,6 +410,7 @@ msgid ""
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_account_chart_template__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__id
@@ -404,6 +421,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/payment_fawry_cf/static/src/interactions/payment_form.js:0
 msgid "Invalid wallet number"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_last_check
+msgid "Last Checked at Fawry"
 msgstr ""
 
 #. module: payment_fawry_cf
@@ -622,6 +644,11 @@ msgid "The mobile wallet that received the payment request."
 msgstr ""
 
 #. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_card_expiry
+msgid "The month and year the card expires (MM/YY), as saved at Fawry."
+msgstr ""
+
+#. module: payment_fawry_cf
 #. odoo-python
 #: code:addons/payment_fawry_cf/models/payment_transaction.py:0
 msgid "The payment expired before it was made."
@@ -705,6 +732,12 @@ msgstr ""
 #. module: payment_fawry_cf
 #: model_terms:ir.ui.view,arch_db:payment_fawry_cf.wallet_form
 msgid "Wallet payment options"
+msgstr ""
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_last_check
+msgid ""
+"When Odoo last found the card among the cards the customer saved at Fawry."
 msgstr ""
 
 #. module: payment_fawry_cf

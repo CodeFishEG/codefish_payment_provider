@@ -129,7 +129,7 @@ card page refuses `localhost` return addresses: test on a public address, or on 
 | **Checkout Display** | Full page, pop-up window or side panel, for FawryPay's checkout. |
 | **Payment Expiry (Hours)** | How long reference codes, wallet requests and QR codes stay payable. Default 48. |
 | **Notification URL** | Read-only. The address Fawry calls when a payment changes; give it to Fawry. |
-| **Allow Saving Payment Methods** | Server-to-Server only: customers can save cards. |
+| **Allow Saving Payment Methods** | Server-to-Server only: customers add, choose and remove their saved cards on the website (see the [user guide](user_guide.md#saved-cards-add-choose-remove)). |
 | **Payment Journal** | Where paid orders are posted. Fawry Pay by default. |
 | **Currencies** | Egyptian pound (EGP) only. |
 | **Restrictions** tab | Odoo's usual limits: maximum amount, countries, websites. |
@@ -190,7 +190,7 @@ Notifications are never trusted alone: Odoo asks Fawry for the status before rec
 
 - **No card numbers in Odoo.** Cards are typed on Fawry's pages only. With the Server-to-Server integration, Odoo
   uses Fawry's card tokenization page, which Fawry requires from merchants without PCI-DSS certification, and
-  keeps only Fawry's token and the last four digits.
+  keeps only Fawry's token, the last four digits and the expiry date.
 - **3-D Secure** on every card payment, saved cards included. Saved cards can't be charged without the customer,
   so they can't be used for automatic charges such as subscriptions.
 - **Signed requests.** Every request to Fawry is signed with your secure key, and Fawry's answers, returns and
@@ -208,6 +208,7 @@ Notifications are never trusted alone: Odoo asks Fawry for the status before rec
 | "Fawry rejected the credentials" | The merchant code and secure key, without spaces. Test credentials work only with **Live** unticked, live ones only with **Live** ticked. |
 | Paid at Fawry, but the order still waits | Click **Check Fawry Status**. If it happens often: Fawry has your notification URL, the website is reachable over HTTPS, and the scheduled action **Fawry: check pending payments** is active (Settings › Technical › Scheduled Actions, developer mode). |
 | Customers can't save cards | Server-to-Server integration, **Allow Saving Payment Methods** ticked, customer signed in. |
+| A customer's saved card is no longer listed | Fawry no longer has it, or it expired: Odoo checks the cards with Fawry when it shows them (at most every 10 minutes) and stops offering those. The customer adds the card again. |
 | The pop-up opens as a full page | Expected on iPhone, iPad and Mac. |
 | A refund is refused | Odoo shows Fawry's reason and records nothing. Check the amount left to refund, and ask Fawry whether the method used can be refunded on your account. |
 | Another currency | Not possible: Fawry processes EGP only. |

@@ -156,3 +156,24 @@ def get_brand_code(brand, first_digits=None):
         if re.match(prefix_pattern, first_digits):
             return code
     return None
+
+
+def is_card_expired(expiry_date, today):
+    """Return whether a card has expired.
+
+    A card stays valid until the end of its expiry month.
+
+    :param str expiry_date: The expiry date as Fawry sends it: "MM/YY".
+    :param datetime.date today: The current date.
+    :return: Whether the card has expired; ``False`` when the expiry date is unknown or malformed.
+    :rtype: bool
+    """
+    match = re.fullmatch(r"\s*(\d{1,2})\s*/\s*(\d{2}|\d{4})\s*", expiry_date or "")
+    if not match:
+        return False
+    month, year = int(match[1]), int(match[2])
+    if not 1 <= month <= 12:
+        return False
+    if year < 100:
+        year += 2000
+    return (year, month) < (today.year, today.month)

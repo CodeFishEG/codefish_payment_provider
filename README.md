@@ -147,11 +147,28 @@ The provider accepts EGP only.
 Refunds (full and partial) use Fawry's refund API. A card entered for a single payment is deleted at Fawry once
 the payment is over; removing a saved card in Odoo deletes it at Fawry too.
 
+### Saved cards
+
+With the Server-to-Server integration and **Allow Saving Payment Methods**, signed-in customers:
+
+- add a card while paying (**Save my payment details**) or from **My Account › Payment Methods**, on Fawry's
+  card page;
+- choose a saved card, or a new one, at checkout, on portal invoices and orders and on payment links; every
+  payment is confirmed with 3-D Secure;
+- remove a card: it is deleted at Fawry too.
+
+Each card shows its last four digits and expiry date. Whenever the cards are shown (`_prepare_payment_form_values`),
+Odoo lists the customer's cards at Fawry (List Card Tokens, at most every 10 minutes per card) and archives the
+ones Fawry no longer has or that expired, without deleting them at Fawry again. Nothing changes when Fawry can't be
+reached. Cards found at Fawry but unknown to Odoo are never imported: the customer may have entered them for a
+single payment, and the Fawry customer profile is the partner id, which isn't unique across databases.
+
 ### Usage
 
 - **Website:** the methods appear at the payment step of the shop, on invoices in the customer portal and on
   payment links.
-- **Customers:** cards are saved from **My Account › Payment Methods** (server-to-server integration).
+- **Customers:** cards are added, chosen and removed from **My Account › Payment Methods** and at checkout
+  (server-to-server integration, see [Saved cards](#saved-cards)).
 - **Back office:** **Invoicing › Configuration › Payment Providers › Fawry**; transactions are in **Invoicing ›
   Configuration › Payment Transactions** (developer mode).
 
@@ -176,6 +193,7 @@ codefish_payment_provider/
     ├── const.py                  endpoints, method and status mappings
     ├── utils.py                  signatures, amounts, phone numbers, languages, card brands
     ├── controllers/main.py       return, card page, webhook, charge and poll routes
+    ├── controllers/portal.py     checks the saved cards with Fawry before the payment forms show them
     ├── models/                   payment.provider, payment.transaction, payment.token
     ├── views/                    provider/transaction/token forms, inline forms, payment instructions
     ├── data/                     provider, payment methods, cron, neutralize.sql

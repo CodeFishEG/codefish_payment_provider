@@ -8,6 +8,8 @@
         <field name="arch" type="xml">
             <field name="provider_ref" position="after">
                 <field name="fawry_customer_profile_id" invisible="provider_code != 'fawry'"/>
+                <field name="fawry_card_expiry" invisible="provider_code != 'fawry' or not fawry_card_expiry"/>
+                <field name="fawry_last_check" invisible="provider_code != 'fawry' or not fawry_last_check"/>
             </field>
         </field>
     </record>

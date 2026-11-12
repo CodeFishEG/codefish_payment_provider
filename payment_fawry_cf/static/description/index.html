@@ -75,12 +75,13 @@
                             <li style="margin-bottom: 4px;"><a href="#methods" style="color: #006D95;">Payment methods</a></li>
                             <li style="margin-bottom: 4px;"><a href="#integrations" style="color: #006D95;">Two integrations</a></li>
                             <li style="margin-bottom: 4px;"><a href="#customers" style="color: #006D95;">What your customers see</a></li>
+                            <li style="margin-bottom: 4px;"><a href="#saved-cards" style="color: #006D95;">Saved cards: add, choose, remove</a></li>
                             <li style="margin-bottom: 4px;"><a href="#admin" style="color: #006D95;">Set-up guide for administrators</a></li>
                             <li style="margin-bottom: 4px;"><a href="#settings" style="color: #006D95;">Settings reference</a></li>
                         </ol>
                     </div>
                     <div class="col-md-6">
-                        <ol start="7" style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 0;">
+                        <ol start="8" style="font-size: 15px; color: #374151; padding-left: 20px; margin-bottom: 0;">
                             <li style="margin-bottom: 4px;"><a href="#staff" style="color: #006D95;">Daily use for your team</a></li>
                             <li style="margin-bottom: 4px;"><a href="#accounting" style="color: #006D95;">Accounting</a></li>
                             <li style="margin-bottom: 4px;"><a href="#statuses" style="color: #006D95;">Payment statuses</a></li>
@@ -140,8 +141,8 @@
             <div class="border rounded h-100" style="padding: 22px; border-color: #FFD228 !important; border-width: 2px !important;">
                 <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">Saved cards, safely</h4>
                 <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
-                    Customers save a card at checkout or in their account and pay the next orders in a few clicks. Card
-                    numbers are typed on Fawry's page only; Odoo keeps Fawry's token.
+                    Customers add, choose and remove their cards on your website, each shown with its expiry date, and
+                    kept in line with Fawry. Card numbers are typed on Fawry's page only; Odoo keeps Fawry's token.
                 </p>
             </div>
         </div>
@@ -396,20 +397,15 @@
         </div>
     </div>
 
-    <div class="row" style="align-items: center;">
-        <div class="col-lg-5 offset-lg-1" style="margin-bottom: 24px;">
-            <h4 style="font-size: 20px; font-weight: 700; color: #1F2937;">Saved cards</h4>
-            <p style="font-size: 15px; color: #374151;">With the Server-to-Server integration, signed-in customers can:</p>
-            <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
-                <li style="margin-bottom: 6px;">tick <b>Save my payment details</b> when they pay by card;</li>
-                <li style="margin-bottom: 6px;">add a card from <b>My Account › Payment Methods</b>, on Fawry's secure page;</li>
-                <li style="margin-bottom: 6px;">pay the next orders with the saved card, confirmed with their bank;</li>
-                <li style="margin-bottom: 6px;">delete a card: it is deleted at Fawry too.</li>
-            </ul>
-        </div>
-        <div class="col-lg-5 text-center" style="margin-bottom: 24px;">
-            <img src="screenshot_saved_cards.png" alt="Saved card in the customer's payment methods" class="img-fluid border rounded shadow-sm"/>
-            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The customer's saved card in "My payment methods".</p>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="margin-bottom: 24px;">
+            <div class="rounded" style="padding: 16px 20px; background-color: #E6F3F8;">
+                <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; margin-bottom: 6px;">Saved cards</h4>
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    Signed-in customers can keep their cards and pay the next orders in a few clicks. See
+                    <a href="#saved-cards" style="color: #006D95;">Saved cards: add, choose, remove</a>.
+                </p>
+            </div>
         </div>
     </div>
 
@@ -435,11 +431,116 @@
     </div>
 </section>
 
-<!-- ============================================================== 5. ADMIN GUIDE -->
+<!-- ============================================================== 5. SAVED CARDS -->
+<section class="container" id="saved-cards">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">5. Saved cards: add, choose, remove</h3>
+            <p style="font-size: 16px; color: #374151;">
+                With the Server-to-Server integration, signed-in customers manage their own cards from your website.
+                They add a card once, pick it at the next checkout or pay with a new one, and remove the cards they no
+                longer want. Card numbers are typed on Fawry's secure page only: Odoo keeps Fawry's card token, the last
+                four digits and the expiry date.
+            </p>
+        </div>
+    </div>
+
+    <div class="row" style="align-items: center;">
+        <div class="col-lg-5 offset-lg-1" style="margin-bottom: 24px;">
+            <h4 style="font-size: 20px; font-weight: 700; color: #1F2937;">Add a card</h4>
+            <p style="font-size: 15px; color: #374151;">Two ways:</p>
+            <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
+                <li style="margin-bottom: 6px;"><b>While paying:</b> the customer pays with a new card and ticks <b>Save my payment details</b>.</li>
+                <li style="margin-bottom: 6px;"><b>From their account:</b> <b>My Account › Payment Methods</b>, choose <b>Card</b>, click <b>Save</b>, type the card on Fawry's secure page and confirm it with the bank (3-D Secure).</li>
+            </ul>
+            <p style="font-size: 15px; color: #374151;">
+                The card is listed with its brand logo, its last four digits and <b>Expires MM/YY</b>. A card saved twice
+                is kept once.
+            </p>
+        </div>
+        <div class="col-lg-5 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_saved_cards.png" alt="Two saved cards with their expiry dates in My payment methods" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">"My payment methods" with two saved cards and the form to add another.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="margin-bottom: 8px;">
+            <h4 style="font-size: 20px; font-weight: 700; color: #1F2937;">Choose a saved card, or a new one, at checkout</h4>
+            <p style="font-size: 15px; color: #374151;">
+                At the payment step, the customer's saved cards come first, the newest on top. The customer picks one
+                and clicks <b>Pay now</b>; Fawry asks the bank to confirm the payment (3-D Secure), so a saved card is
+                never charged without the cardholder. To use another card, the customer clicks <b>Choose another
+                method</b>, picks <b>Card</b> and may tick <b>Save my payment details</b> to keep it too. The same choice
+                appears when paying an invoice or an order from the portal, or a payment link.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 text-center" style="margin-bottom: 32px;">
+            <img src="screenshot_checkout_saved_cards.png" alt="Saved cards offered at the payment step of the shop" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The saved cards at checkout.</p>
+        </div>
+        <div class="col-lg-6 text-center" style="margin-bottom: 32px;">
+            <img src="screenshot_checkout_new_card.png" alt="Paying with a new card and saving it at checkout" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">"Choose another method": a new card, saved if the customer wishes.</p>
+        </div>
+    </div>
+
+    <div class="row" style="align-items: center;">
+        <div class="col-lg-5 offset-lg-1" style="margin-bottom: 24px;">
+            <h4 style="font-size: 20px; font-weight: 700; color: #1F2937;">Remove a card</h4>
+            <p style="font-size: 15px; color: #374151;">
+                In <b>My Payment Methods</b>, the customer clicks the bin next to a card and confirms. The card is removed
+                from Odoo and deleted at Fawry at once.
+            </p>
+        </div>
+        <div class="col-lg-5 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_delete_card.png" alt="Confirming the removal of a saved card" class="img-fluid border rounded shadow-sm"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">Removing a card.</p>
+        </div>
+    </div>
+
+    <div class="row" style="align-items: center;">
+        <div class="col-lg-5 offset-lg-1" style="margin-bottom: 24px;">
+            <h4 style="font-size: 20px; font-weight: 700; color: #1F2937;">Always in line with Fawry</h4>
+            <p style="font-size: 15px; color: #374151;">
+                Each time cards are shown to a customer, Odoo retrieves the customer's cards from Fawry (at most every
+                10 minutes):
+            </p>
+            <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
+                <li style="margin-bottom: 6px;">a card that Fawry no longer has, or that has expired, disappears, so customers never pick a card that would be refused;</li>
+                <li style="margin-bottom: 6px;">the expiry date shown is the one Fawry knows;</li>
+                <li style="margin-bottom: 6px;">if Fawry can't be reached, the cards stay as they are.</li>
+            </ul>
+            <p style="font-size: 15px; color: #374151;">
+                Cards that customers entered for a single payment are never added to their saved cards.
+            </p>
+        </div>
+        <div class="col-lg-5 text-center" style="margin-bottom: 24px;">
+            <img src="screenshot_saved_cards_arabic.png" alt="A saved card with its expiry date, on a phone, in Arabic" class="img-fluid border rounded shadow-sm" style="max-width: 300px;"/>
+            <p style="font-size: 14px; color: #5B6472; margin-top: 10px;">The same page on a phone, in Arabic.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1" style="margin-bottom: 32px;">
+            <div class="rounded" style="padding: 16px 20px; background-color: #FFF8DC;">
+                <p style="font-size: 15px; color: #374151; margin-bottom: 0;">
+                    <b>To turn it on:</b> on the Fawry provider, choose <b>Server-to-Server APIs</b> and tick <b>Allow
+                    Saving Payment Methods</b>. Customers must be signed in. FawryPay Express Checkout can't save cards:
+                    Fawry's hosted checkout doesn't return them to Odoo.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================== 6. ADMIN GUIDE -->
 <section class="container" id="admin">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 24px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">5. Set-up guide for administrators</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">6. Set-up guide for administrators</h3>
             <p style="font-size: 16px; color: #374151;">Plan about 15 minutes. You need the <b>Administration / Settings</b> access right.</p>
 
             <div class="rounded" style="padding: 16px 20px; background-color: #FFF8DC; margin-bottom: 24px;">
@@ -550,11 +651,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 6. SETTINGS -->
+<!-- ============================================================== 7. SETTINGS -->
 <section class="container" id="settings">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">6. Settings reference</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">7. Settings reference</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <thead>
@@ -584,11 +685,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 7. STAFF -->
+<!-- ============================================================== 8. STAFF -->
 <section class="container" id="staff">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">7. Daily use for your team</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">8. Daily use for your team</h3>
             <p style="font-size: 16px; color: #374151;">
                 Your sales and accounting team works with Fawry payments like with any other Odoo payment. Here are the
                 Fawry-specific tasks.
@@ -656,18 +757,20 @@
 
             <h4 style="font-size: 20px; font-weight: 700; color: #1F2937; margin-top: 24px;">Saved cards</h4>
             <p style="font-size: 15px; color: #374151;">
-                The <b>Tokens</b> smart button of the provider lists the saved cards (last four digits only). Archiving a
-                card in Odoo deletes it at Fawry too; the customer can do the same from their account.
+                The <b>Tokens</b> smart button of the provider lists the saved cards (last four digits only). Each card
+                shows its <b>Card Expiry</b> and when it was <b>Last Checked at Fawry</b>. Archiving a card in Odoo
+                deletes it at Fawry too; the customer can do the same from their account. Cards that Fawry no longer has,
+                or that have expired, are archived by Odoo the next time they would be shown to the customer.
             </p>
         </div>
     </div>
 </section>
 
-<!-- ============================================================== 8. ACCOUNTING -->
+<!-- ============================================================== 9. ACCOUNTING -->
 <section class="container" id="accounting">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 8px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">8. Accounting</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">9. Accounting</h3>
             <p style="font-size: 16px; color: #374151;">
                 The module creates, in each company, a <b>bank journal</b> for Fawry:
             </p>
@@ -703,11 +806,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 9. STATUSES -->
+<!-- ============================================================== 10. STATUSES -->
 <section class="container" id="statuses">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">9. Payment statuses</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">10. Payment statuses</h3>
             <p style="font-size: 16px; color: #374151;">How each Fawry status shows in Odoo:</p>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
@@ -738,13 +841,13 @@
     </div>
 </section>
 
-<!-- ============================================================== 10. SECURITY -->
+<!-- ============================================================== 11. SECURITY -->
 <section class="container" id="security">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">10. Security</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">11. Security</h3>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
-                <li style="margin-bottom: 6px;"><b>No card numbers in Odoo.</b> Cards are typed on Fawry's pages only. With the Server-to-Server integration, Odoo uses Fawry's card tokenization page, which Fawry requires from merchants without PCI-DSS certification, and keeps only Fawry's token and the last four digits.</li>
+                <li style="margin-bottom: 6px;"><b>No card numbers in Odoo.</b> Cards are typed on Fawry's pages only. With the Server-to-Server integration, Odoo uses Fawry's card tokenization page, which Fawry requires from merchants without PCI-DSS certification, and keeps only Fawry's token, the last four digits and the expiry date.</li>
                 <li style="margin-bottom: 6px;"><b>3-D Secure</b> on every card payment, saved cards included: the customer confirms each payment with their bank.</li>
                 <li style="margin-bottom: 6px;"><b>Signed requests.</b> Every request to Fawry is signed with your secure key, and Fawry's answers, returns and notifications are checked against Fawry's signature.</li>
                 <li style="margin-bottom: 6px;"><b>Protected pages.</b> Payment pages and status checks are tied to the payment by a secret token; one customer cannot see another's payment.</li>
@@ -755,11 +858,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 11. FAQ -->
+<!-- ============================================================== 12. FAQ -->
 <section class="container" id="faq">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 24px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 16px;">11. Questions and troubleshooting</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 16px;">12. Questions and troubleshooting</h3>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937;">The Fawry methods don't show at checkout.</h4>
             <ul style="font-size: 15px; color: #374151; padding-left: 20px;">
@@ -777,6 +880,9 @@
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">A reference code expired.</h4>
             <p style="font-size: 15px; color: #374151;">The transaction is canceled. Send the customer a new payment link for the order or the invoice; paying it creates a new code. Raise the <b>Payment Expiry</b> if your customers need more time.</p>
+
+            <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">A customer's saved card is no longer listed.</h4>
+            <p style="font-size: 15px; color: #374151;">Fawry no longer has it (it was removed at Fawry) or it has expired, so Odoo stopped offering it. The customer adds the card again from <b>My Account › Payment Methods</b>, or pays with a new card and ticks <b>Save my payment details</b>.</p>
 
             <h4 style="font-size: 17px; font-weight: 700; color: #1F2937; margin-top: 16px;">Customers can't save their cards.</h4>
             <p style="font-size: 15px; color: #374151;">Saving cards needs the <b>Server-to-Server</b> integration and <b>Allow Saving Payment Methods</b> ticked, and the customer must be signed in.</p>
@@ -802,11 +908,11 @@
     </div>
 </section>
 
-<!-- ============================================================== 12. REQUIREMENTS -->
+<!-- ============================================================== 13. REQUIREMENTS -->
 <section class="container" id="requirements">
     <div class="row">
         <div class="col-lg-10 offset-lg-1" style="padding-top: 8px; padding-bottom: 32px;">
-            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">12. Requirements and support</h3>
+            <h3 style="font-size: 28px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">13. Requirements and support</h3>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size: 15px; color: #374151;">
                     <tbody>
@@ -816,7 +922,8 @@
                         <tr><td><b>Website</b></td><td>Reachable from the internet over HTTPS</td></tr>
                         <tr><td><b>Currency</b></td><td>Egyptian pound (EGP)</td></tr>
                         <tr><td><b>Languages</b></td><td>English and Arabic, for every Arabic language installed in Odoo</td></tr>
-                        <tr><td><b>Version</b></td><td>20.0.1.0.0: first release</td></tr>
+                        <tr><td><b>Version</b></td><td>20.0.1.1.0</td></tr>
+                        <tr><td><b>What's new</b></td><td><b>20.0.1.1.0:</b> customers add, choose and remove their saved cards on the website; expiry dates shown; saved cards kept in line with Fawry.<br/><b>20.0.1.0.0:</b> first release.</td></tr>
                     </tbody>
                 </table>
             </div>

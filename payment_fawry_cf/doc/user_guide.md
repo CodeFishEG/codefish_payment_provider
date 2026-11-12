@@ -6,12 +6,13 @@ customers see. Setting the module up is in the [administrator guide](admin_guide
 ## Contents
 
 - [What customers see](#what-customers-see)
+  - [Saved cards: add, choose, remove](#saved-cards-add-choose-remove)
 - [Find a payment](#find-a-payment)
 - [Check a payment at Fawry](#check-a-payment-at-fawry)
 - [Cancel an unpaid reference code](#cancel-an-unpaid-reference-code)
 - [Refund a payment](#refund-a-payment)
 - [Send a payment link](#send-a-payment-link)
-- [Saved cards](#saved-cards)
+- [Saved cards in the back office](#saved-cards-in-the-back-office)
 - [Answering customers](#answering-customers)
 
 ## What customers see
@@ -61,13 +62,39 @@ checkout, which opens in a full page, a pop-up window or a side panel, as set by
 
 ![FawryPay's checkout in a side panel](../static/description/screenshot_side_panel.png)
 
-### Saved cards
+### Saved cards: add, choose, remove
 
-With the Server-to-Server integration, signed-in customers can tick **Save my payment details** when they pay by
-card, or add a card from **My Account › Payment Methods**. They pay the next orders with it, confirmed with their
-bank, and can delete it; it is then deleted at Fawry too.
+With the Server-to-Server integration, signed-in customers manage their own cards on the website. Odoo keeps only
+Fawry's card token, the last four digits and the expiry date.
 
-![A saved card](../static/description/screenshot_saved_cards.png)
+**Add a card**, in two ways:
+
+- while paying with a new card, by ticking **Save my payment details**;
+- from **My Account › Payment Methods**: choose **Card**, click **Save**, type the card on Fawry's secure page and
+  confirm it with the bank (3-D Secure).
+
+Each card is listed with its brand logo, its last four digits and **Expires MM/YY**.
+
+![Two saved cards in My payment methods](../static/description/screenshot_saved_cards.png)
+
+**Choose a saved card or a new one.** At the payment step, the saved cards come first, the newest on top. The
+customer picks one and clicks **Pay now**; the bank confirms the payment (3-D Secure). To use another card, the
+customer clicks **Choose another method**, picks **Card**, and may tick **Save my payment details**. The same
+choice appears when paying an invoice or an order from the portal, or a payment link, when the customer is signed
+in.
+
+![Saved cards at checkout](../static/description/screenshot_checkout_saved_cards.png)
+
+![A new card at checkout](../static/description/screenshot_checkout_new_card.png)
+
+**Remove a card.** In **My Payment Methods**, the customer clicks the bin next to the card and confirms. The card is
+removed from Odoo and deleted at Fawry.
+
+![Removing a card](../static/description/screenshot_delete_card.png)
+
+**In line with Fawry.** Each time cards are shown to the customer, Odoo retrieves the customer's cards from Fawry
+(at most every 10 minutes). A card that Fawry no longer has, or that has expired, disappears; the expiry date shown
+is Fawry's. If Fawry can't be reached, the cards stay. Cards entered for a single payment are never added.
 
 Everything works on phones and in Arabic, right to left.
 
@@ -117,10 +144,12 @@ For an order or invoice paid outside the shop, use **Generate a Payment Link** i
 order or the invoice. The customer opens it and pays with any Fawry method. If a reference code expired, send a
 new link: each payment attempt gets a new code.
 
-## Saved cards
+## Saved cards in the back office
 
-The **Tokens** smart button of the Fawry provider lists the saved cards (last four digits only). Archiving a card
-in Odoo deletes it at Fawry too.
+The **Tokens** smart button of the Fawry provider lists the saved cards (last four digits only). Each card shows its
+**Card Expiry** and when it was **Last Checked at Fawry**. Archiving a card in Odoo deletes it at Fawry too. Cards
+that Fawry no longer has, or that have expired, are archived by Odoo the next time they would be shown to the
+customer.
 
 ## Answering customers
 
@@ -131,4 +160,6 @@ in Odoo deletes it at Fawry too.
 | "My code expired." | Send a new payment link. |
 | "I want to cancel my order." | Cancel the order and, if the code is still unpaid, click **Cancel Fawry Payment**. If it was paid, refund it. |
 | "My card was declined." | The transaction shows Fawry's reason. The customer can try another card or another method. |
+| "My saved card is gone." | Fawry no longer has it, or it expired. The customer adds it again from **My Account › Payment Methods**. |
+| "How do I remove my card?" | **My Account › Payment Methods**, the bin next to the card. It is deleted at Fawry too. |
 | "Can you take my card number by phone?" | No. Card numbers are only typed on Fawry's secure page; send a payment link instead. |

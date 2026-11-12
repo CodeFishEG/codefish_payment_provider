@@ -233,4 +233,15 @@
         </div>
     </template>
 
+    <!-- The expiry date under the number of a saved Fawry card. -->
+    <template id="token_form" inherit_id="payment.token_form">
+        <xpath expr="//p[@t-out='token_sudo.display_name']" position="after">
+            <p t-if="token_sudo.provider_code == 'fawry' and token_sudo.fawry_card_expiry"
+               name="o_fawry_card_expiry"
+               t-att-class="'mb-0 small text-600'
+                            + (' ms-4 ms-md-0' if allow_token_selection else '')"
+            >Expires <t t-out="token_sudo.fawry_card_expiry"/></p>
+        </xpath>
+    </template>
+
 </odoo>

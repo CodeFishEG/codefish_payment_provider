@@ -161,6 +161,7 @@ msgid "Connection successful"
 msgstr "تم الاتصال بنجاح"
 
 #. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__display_name
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__display_name
@@ -422,6 +423,7 @@ msgstr ""
 "للدفع."
 
 #. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_account_chart_template__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_provider__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__id
 #: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_transaction__id
@@ -850,3 +852,35 @@ msgstr "التجريبية"
 #: model:payment.method,name:payment_fawry_cf.payment_method_valu
 msgid "valU"
 msgstr "valU"
+
+#. module: payment_fawry_cf
+#: model:ir.model,name:payment_fawry_cf.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "قالب مخطط الحسابات"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_card_expiry
+msgid "Card Expiry"
+msgstr "تاريخ انتهاء البطاقة"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,field_description:payment_fawry_cf.field_payment_token__fawry_last_check
+msgid "Last Checked at Fawry"
+msgstr "آخر تحقق لدى فوري"
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_card_expiry
+msgid "The month and year the card expires (MM/YY), as saved at Fawry."
+msgstr "شهر وسنة انتهاء البطاقة (MM/YY)، كما هي محفوظة لدى فوري."
+
+#. module: payment_fawry_cf
+#: model:ir.model.fields,help:payment_fawry_cf.field_payment_token__fawry_last_check
+msgid ""
+"When Odoo last found the card among the cards the customer saved at Fawry."
+msgstr ""
+"آخر مرة وجد فيها أودو البطاقة ضمن البطاقات التي حفظها العميل لدى فوري."
+
+#. module: payment_fawry_cf
+#: model_terms:ir.ui.view,arch_db:payment_fawry_cf.token_form
+msgid "Expires"
+msgstr "تنتهي في"

@@ -12,6 +12,8 @@
 # You should have received a copy of the License along with this program.
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
+from datetime import date
+
 from odoo.tests import BaseCase, tagged
 
 from odoo.addons.payment_fawry_cf import utils as fawry_utils
@@ -106,3 +108,14 @@ class TestFawryUtils(BaseCase):
         self.assertEqual(fawry_utils.get_brand_code(None, "507808"), "meeza")
         self.assertEqual(fawry_utils.get_brand_code("BMISCARD", "222100"), "mastercard")
         self.assertIsNone(fawry_utils.get_brand_code("BMISCARD", "360000"))
+
+    def test_card_expiry(self):
+        """A card is valid until the end of its expiry month."""
+        today = date(2026, 11, 12)
+        self.assertFalse(fawry_utils.is_card_expired("01/39", today))
+        self.assertFalse(fawry_utils.is_card_expired("11/26", today))
+        self.assertTrue(fawry_utils.is_card_expired("10/26", today))
+        self.assertTrue(fawry_utils.is_card_expired("12/2025", today))
+        self.assertFalse(fawry_utils.is_card_expired("", today))
+        self.assertFalse(fawry_utils.is_card_expired(None, today))
+        self.assertFalse(fawry_utils.is_card_expired("13/20", today))

@@ -21,7 +21,7 @@
                    "APIs, where cards are saved on Fawry's secure card page and charged with 3-D Secure, and "
                    "Fawry reference codes, wallet QR codes and myFawry payments are shown on your website. "
                    "Includes saved cards, refunds, payment notifications and Arabic.",
-    'version': '20.0.1.0.0',
+    'version': '20.0.1.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'author': "mediafish",

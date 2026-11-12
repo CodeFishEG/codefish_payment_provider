@@ -15,7 +15,7 @@
 from odoo.addons.payment.const import SENSITIVE_KEYS as PAYMENT_SENSITIVE_KEYS
 
 # Keys redacted from the payment logs. The secure key itself is never sent to Fawry.
-SENSITIVE_KEYS = {"cardToken", "token"}
+SENSITIVE_KEYS = {"cardToken", "token", "cardHolderName"}
 PAYMENT_SENSITIVE_KEYS.update(SENSITIVE_KEYS)
 
 # Base URLs of the Fawry platform, by environment.
@@ -41,6 +41,10 @@ JOURNAL_CURRENCY_XMLID = "base.EGP"
 
 # Fawry's secure page where customers save a card.
 CARD_TOKEN_PLUGIN_PATH = "/atfawry/plugin/card-token"
+
+# How long a saved card checked at Fawry is trusted before it is checked again, in minutes. The
+# cards are checked when they are shown to the customer.
+CARD_CHECK_INTERVAL_MINUTES = 10
 
 # The values Fawry signs in a charge response (see `utils.compute_charge_response_signature`).
 SIGNED_CHARGE_RESPONSE_KEYS = (

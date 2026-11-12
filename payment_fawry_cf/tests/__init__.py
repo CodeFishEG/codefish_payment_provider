@@ -16,6 +16,7 @@ from . import (
     test_account_journal,
     test_fawry_utils,
     test_payment_provider,
+    test_payment_token,
     test_payment_transaction,
     test_processing_flows,
 )
