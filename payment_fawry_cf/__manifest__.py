@@ -30,7 +30,8 @@
     'price': 99.0,
     'currency': 'USD',
     'support': 'info@codefish.com.eg',
-    'depends': ['payment'],
+    # account_payment: the provider gets its own "Fawry Pay" bank journal (website_sale needs it too).
+    'depends': ['payment', 'account_payment'],
     'data': [
         # Templates first: the provider record refers to them.
         'views/payment_fawry_templates.xml',

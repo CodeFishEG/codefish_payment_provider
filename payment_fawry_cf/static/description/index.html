@@ -187,7 +187,8 @@
             <h3 style="font-size: 22px; font-weight: 700; color: #1F2937; margin-bottom: 12px;">How to set it up</h3>
             <ol style="font-size: 15px; color: #374151; padding-left: 20px;">
                 <li style="margin-bottom: 8px;">Get your merchant code and secure key from Fawry (a test account comes first, then the live one).</li>
-                <li style="margin-bottom: 8px;">Install the module, then open <b>Invoicing / Website › Configuration › Payment Providers › Fawry</b>.</li>
+                <li style="margin-bottom: 8px;">Install the module: it creates a <b>Fawry Pay</b> bank journal in EGP (in Arabic, مدفوعات فورى) and sets it as the provider's payment journal, so Fawry payments are posted apart from your other banks.</li>
+                <li style="margin-bottom: 8px;">Open <b>Invoicing / Website › Configuration › Payment Providers › Fawry</b>.</li>
                 <li style="margin-bottom: 8px;">Enter the merchant code and the secure key and click <b>Test Connection</b>.</li>
                 <li style="margin-bottom: 8px;">Choose the integration (Express Checkout or Server-to-Server), how the checkout is shown, and how long reference codes stay payable.</li>
                 <li style="margin-bottom: 8px;">Give the <b>Notification URL</b> shown on the provider to Fawry, turn on the payment methods of your account, then publish the provider.</li>
@@ -207,7 +208,7 @@
                 <li style="margin-bottom: 8px;">Cards can be saved with the Server-to-Server integration only. Fawry asks the customer to confirm every card payment with their bank, so saved cards are charged with the customer present.</li>
                 <li style="margin-bottom: 8px;">valU, Forsa, Souhoola, Fawry Yellow Card and FawryPay always use FawryPay's checkout.</li>
                 <li style="margin-bottom: 8px;">On iPhone, iPad and Mac, FawryPay's checkout opens in a full page, as Fawry requires.</li>
-                <li style="margin-bottom: 8px;">Requires the Odoo <b>Payment</b> module; works with eCommerce, invoices, payment links and the customer portal.</li>
+                <li style="margin-bottom: 8px;">Requires Odoo's <b>Payment</b> and <b>Invoicing</b> apps (Invoicing is installed with eCommerce); works with eCommerce, invoices, payment links and the customer portal.</li>
             </ul>
         </div>
     </div>

@@ -18,7 +18,7 @@ installment partners.
 
 | Technical name | Name | What it does | Licence | Depends on |
 |---|---|---|---|---|
-| [`payment_fawry_cf`](payment_fawry_cf) | Fawry Payments | Fawry payment provider: FawryPay Express Checkout or the server-to-server APIs, saved cards, refunds, reference codes and wallet QR codes shown on the website | OPL-1 (paid) | `payment` |
+| [`payment_fawry_cf`](payment_fawry_cf) | Fawry Payments | Fawry payment provider: FawryPay Express Checkout or the server-to-server APIs, saved cards, refunds, reference codes and wallet QR codes shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
 
 ## Requirements
 
@@ -93,6 +93,20 @@ only stores Fawry's card token. Fawry asks the customer to confirm every card pa
 
 Methods other than card are limited to Egypt and EGP. Turn on the methods Fawry enabled on your account.
 
+### Accounting journal
+
+Installing the module creates, in each company, a bank journal named **Fawry Pay** (in Arabic
+"مدفوعات فورى"), code `FAWRY`, in **EGP**, with its own bank account, and sets it as the **Payment Journal**
+of the company's Fawry provider. Payments received through Fawry are posted in it, apart from your other
+bank journals.
+
+- A company without a chart of accounts gets the journal when its chart is installed (for example a company
+  created later).
+- The journal is found again by its code: reinstalling the module doesn't create a second one, and a journal
+  you already named `FAWRY` is reused.
+- The Arabic name is set for the Arabic languages installed when the journal is created.
+- Uninstalling the module keeps the journal and its entries.
+
 ### Configuration
 
 | Field | Use |
@@ -103,6 +117,7 @@ Methods other than card are limited to Egypt and EGP. Turn on the methods Fawry 
 | Payment Expiry (Hours) | How long a reference code, wallet request or QR code stays payable (default 48). |
 | Notification URL | Give it to Fawry; Odoo also sends it with every payment. |
 | Live | Off: Fawry's staging environment. On: production. |
+| Payment Journal | Fawry Pay, created by the module (see above); you can choose another bank journal. |
 
 The provider accepts EGP only.
 

@@ -184,6 +184,74 @@ class PaymentProvider(models.Model):
             },
         }
 
+    # === BUSINESS METHODS - ACCOUNTING === #
+
+    @api.model
+    def _fawry_setup_journals(self, companies=None):
+        """Give the Fawry provider of each company its own "Fawry Pay" bank journal, in EGP.
+
+        The journal is created once per company, then reused: it is found by its code. Companies
+        without a chart of accounts are skipped; they get the journal when a chart is installed
+        (see `account.chart.template._post_load_data`).
+
+        :param res.company companies: The companies to set up; all companies by default.
+        :rtype: None
+        """
+        domain = [("code", "=", "fawry")]
+        if companies is not None:
+            domain.append(("company_id", "in", companies.ids))
+        for provider in self.sudo().with_context(active_test=False).search(domain):
+            company = provider.company_id
+            if not company.chart_template:
+                continue  # Accounting isn't set up yet.
+            journal = provider._fawry_get_or_create_journal()
+            if journal and provider.journal_id != journal:
+                provider.journal_id = journal
+
+    def _fawry_get_or_create_journal(self):
+        """Return the company's "Fawry Pay" journal, created if needed.
+
+        :return: The bank journal, or an empty recordset if another kind of journal already uses
+                 the code.
+        :rtype: account.journal
+        """
+        self.ensure_one()
+        Journal = self.env["account.journal"].sudo().with_context(lang="en_US")
+        company = self.company_id
+        journal = Journal.search(
+            [("company_id", "=", company.id), ("code", "=", const.JOURNAL_CODE)], limit=1,
+        )
+        if journal:
+            if journal.type != "bank":
+                _logger.warning(
+                    "Journal %s of company %s isn't a bank journal: Fawry payments keep the "
+                    "provider's journal.",
+                    const.JOURNAL_CODE,
+                    company.name,
+                )
+                return Journal
+            return journal
+
+        currency = self.env.ref(const.JOURNAL_CURRENCY_XMLID).sudo()
+        if not currency.active:
+            currency.active = True
+        journal = Journal.with_company(company).create({
+            "name": const.JOURNAL_NAME,
+            "code": const.JOURNAL_CODE,
+            "type": "bank",
+            "currency_id": currency.id,
+            "company_id": company.id,
+        })
+        translations = {
+            lang_code: const.JOURNAL_NAME_TRANSLATIONS[lang_code.split("_")[0]]
+            for lang_code, _name in self.env["res.lang"].get_installed()
+            if lang_code.split("_")[0] in const.JOURNAL_NAME_TRANSLATIONS
+        }
+        if translations:
+            journal.update_field_translations("name", translations)
+        _logger.info("Created the Fawry Pay journal of company %s.", company.name)
+        return journal
+
     # === BUSINESS METHODS - FLOWS === #
 
     def _fawry_get_flow(self, payment_method_code, is_validation=False):

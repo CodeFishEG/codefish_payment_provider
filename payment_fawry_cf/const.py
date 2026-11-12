@@ -33,6 +33,12 @@ ENDPOINT_REFUND = "/ECommerceWeb/Fawry/payments/refund"
 ENDPOINT_CANCEL_UNPAID = "/ECommerceWeb/api/orders/cancel-unpaid-order"
 ENDPOINT_CARD_TOKENS = "/ECommerceWeb/Fawry/cards/cardToken"  # List (GET) and delete (DELETE)
 
+# The bank journal created for the Fawry provider of each company, where Fawry payments are posted.
+JOURNAL_CODE = "FAWRY"
+JOURNAL_NAME = "Fawry Pay"
+JOURNAL_NAME_TRANSLATIONS = {"ar": "مدفوعات فورى"}  # By language ISO code.
+JOURNAL_CURRENCY_XMLID = "base.EGP"
+
 # Fawry's secure page where customers save a card.
 CARD_TOKEN_PLUGIN_PATH = "/atfawry/plugin/card-token"
 

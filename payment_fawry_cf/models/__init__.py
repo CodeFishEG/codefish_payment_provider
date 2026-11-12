@@ -12,4 +12,9 @@
 # You should have received a copy of the License along with this program.
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
-from . import payment_provider, payment_token, payment_transaction
+from . import (
+    account_chart_template,
+    payment_provider,
+    payment_token,
+    payment_transaction,
+)

@@ -18,6 +18,7 @@ from odoo.addons.payment import reset_payment_provider, setup_provider
 
 def post_init_hook(env):
     setup_provider(env, "fawry")
+    env["payment.provider"]._fawry_setup_journals()
 
 
 def uninstall_hook(env):

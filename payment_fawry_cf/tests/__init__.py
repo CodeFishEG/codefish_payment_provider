@@ -13,6 +13,7 @@
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
 from . import (
+    test_account_journal,
     test_fawry_utils,
     test_payment_provider,
     test_payment_transaction,
