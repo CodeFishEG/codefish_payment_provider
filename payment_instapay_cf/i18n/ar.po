@@ -1,0 +1,2688 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 22:01+0000\n"
+"PO-Revision-Date: 2026-11-12 22:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"%(iban)s isn't a valid Egyptian IBAN (EG followed by 27 digits). Check it on"
+" a bank document."
+msgstr ""
+"%(iban)s ليس رقم IBAN مصريًا صحيحًا (EG متبوعًا بـ 27 رقمًا). راجعه في أحد "
+"مستندات البنك."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid ""
+"%(invoices)s is already paid. Confirming would record a second payment."
+msgstr "%(invoices)s مدفوعة بالفعل. التأكيد سيسجّل دفعة ثانية."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "%(ipa)s isn't an InstaPay address. It looks like yourshop@instapay."
+msgstr "%(ipa)s ليس عنوان إنستاباي. يكون العنوان بصيغة yourshop@instapay."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"%(number)s isn't an Egyptian mobile number (11 digits starting with 010, "
+"011, 012 or 015)."
+msgstr ""
+"%(number)s ليس رقم هاتف محمول مصريًا (11 رقمًا تبدأ بـ 010 أو 011 أو 012 أو "
+"015)."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid ""
+"%(orders)s is already paid by %(payments)s. Confirming would record a second"
+" payment."
+msgstr ""
+"%(orders)s مدفوع بالفعل بواسطة %(payments)s. التأكيد سيسجّل دفعة ثانية."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "%(receipt)s: added by a staff member, not by the customer."
+msgstr "%(receipt)s: أضافه موظف، وليس العميل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "%(receipt)s: the amount sent differs from the amount to pay."
+msgstr "%(receipt)s: المبلغ المرسل يختلف عن المبلغ المطلوب."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"%(receipt)s: the same screenshot or reference was sent for another payment "
+"(%(others)s)."
+msgstr ""
+"%(receipt)s: أُرسلت لقطة الشاشة نفسها أو المرجع نفسه لدفعة أخرى "
+"(%(others)s)."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "%(receipt)s: the transfer is dated before the order."
+msgstr "%(receipt)s: تاريخ التحويل سابق للطلب."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "%(receipt)s: the transfer is dated in the future."
+msgstr "%(receipt)s: تاريخ التحويل في المستقبل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"%(received)s were received but %(expected)s are due. Reject the receipt with"
+" the reason \"Amount lower than expected\" instead, so the customer sends "
+"the rest."
+msgstr ""
+"تم استلام %(received)s بينما المستحق %(expected)s. بدلًا من ذلك، ارفض "
+"الإيصال بالسبب \"المبلغ أقل من المطلوب\" ليرسل العميل باقي المبلغ."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "%(user)s cancelled the InstaPay payment."
+msgstr "ألغى %(user)s دفعة إنستاباي."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"%(user)s found the InstaPay transfer of %(amount)s in %(account)s and "
+"confirmed the payment."
+msgstr ""
+"وجد %(user)s تحويل إنستاباي بمبلغ %(amount)s في %(account)s وأكّد الدفعة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "%(user)s rejected the InstaPay receipt: %(reason)s."
+msgstr "رفض %(user)s إيصال إنستاباي: %(reason)s."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "(optional)"
+msgstr "(اختياري)"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid ""
+",\n"
+"                                so it was cancelled."
+msgstr ""
+"،\n"
+"                                لذا تم إلغاؤها."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid ""
+". Any InstaPay fee is paid by you, on top\n"
+"                                of the amount."
+msgstr ""
+". تتحمّل أنت أي رسوم لإنستاباي،\n"
+"                                إضافةً إلى المبلغ."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ". Then upload a screenshot of the receipt."
+msgstr ". ثم ارفع لقطة شاشة للإيصال."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid ". To pay it, send"
+msgstr ". لدفع قيمته، أرسل"
+
+#. module: payment_instapay_cf
+#: model:mail.template,body_html:payment_instapay_cf.mail_template_instapay_cancelled
+msgid ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('cancelled')\"></t></div>\n"
+"        "
+msgstr ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('cancelled')\"></t></div>\n"
+"        "
+
+#. module: payment_instapay_cf
+#: model:mail.template,body_html:payment_instapay_cf.mail_template_instapay_confirmed
+msgid ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('confirmed')\"></t></div>\n"
+"        "
+msgstr ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('confirmed')\"></t></div>\n"
+"        "
+
+#. module: payment_instapay_cf
+#: model:mail.template,body_html:payment_instapay_cf.mail_template_instapay_instructions
+msgid ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('instructions')\"></t></div>\n"
+"        "
+msgstr ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('instructions')\"></t></div>\n"
+"        "
+
+#. module: payment_instapay_cf
+#: model:mail.template,body_html:payment_instapay_cf.mail_template_instapay_receipt_received
+msgid ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('received')\"></t></div>\n"
+"        "
+msgstr ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('received')\"></t></div>\n"
+"        "
+
+#. module: payment_instapay_cf
+#: model:mail.template,body_html:payment_instapay_cf.mail_template_instapay_rejected
+msgid ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('rejected')\"></t></div>\n"
+"        "
+msgstr ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('rejected')\"></t></div>\n"
+"        "
+
+#. module: payment_instapay_cf
+#: model:mail.template,body_html:payment_instapay_cf.mail_template_instapay_reminder
+msgid ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('reminder')\"></t></div>\n"
+"        "
+msgstr ""
+"<div><t t-out=\"object._instapay_cf_get_email_body('reminder')\"></t></div>\n"
+"        "
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.copy_value
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                <span class=\"o_instapay_cf_copy_label\">Copy</span>\n"
+"                <span class=\"o_instapay_cf_copied_label d-none\">Copied</span>"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"content_copy\" aria-hidden=\"true\"/>\n"
+"                <span class=\"o_instapay_cf_copy_label\">نسخ</span>\n"
+"                <span class=\"o_instapay_cf_copied_label d-none\">تم النسخ</span>"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.account_card
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"open_in_new\" aria-hidden=\"true\"/>\n"
+"                        Open InstaPay"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"open_in_new\" aria-hidden=\"true\"/>\n"
+"                        افتح إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"check_circle\" aria-hidden=\"true\"/>\n"
+"            We received your receipt."
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"check_circle\" aria-hidden=\"true\"/>\n"
+"            استلمنا إيصالك."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"upload\" aria-hidden=\"true\"/>\n"
+"                Upload your receipt"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"upload\" aria-hidden=\"true\"/>\n"
+"                ارفع إيصالك"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"<i class=\"oi me-1\" data-icon=\"warning\" aria-hidden=\"true\"/>\n"
+"                We couldn't confirm your transfer:"
+msgstr ""
+"<i class=\"oi me-1\" data-icon=\"warning\" aria-hidden=\"true\"/>\n"
+"                تعذّر علينا تأكيد تحويلك:"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid ""
+"<span class=\"o_instapay_cf_submit_label\">Send the receipt</span>\n"
+"                        <span class=\"o_instapay_cf_submit_busy d-none\">\n"
+"                            <span class=\"spinner-border spinner-border-sm me-1\" aria-hidden=\"true\"/>\n"
+"                            Sending…\n"
+"                        </span>"
+msgstr ""
+"<span class=\"o_instapay_cf_submit_label\">أرسل الإيصال</span>\n"
+"                        <span class=\"o_instapay_cf_submit_busy d-none\">\n"
+"                            <span class=\"spinner-border spinner-border-sm me-1\" aria-hidden=\"true\"/>\n"
+"                            جارٍ الإرسال…\n"
+"                        </span>"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"<span>Paying on your phone? Scan this code to upload the receipt from "
+"it.</span>"
+msgstr "<span>تدفع من هاتفك؟ امسح هذا الرمز لرفع الإيصال منه.</span>"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_provider_form
+msgid "<span>days</span>"
+msgstr "<span>يوم</span>"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_provider_form
+msgid "<span>working days</span>"
+msgstr "<span>يوم عمل</span>"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid ""
+"<strong>Before confirming:</strong> find this transfer in the statement of the\n"
+"                        account it was sent to (bank app, wallet app or InstaPay history). Never confirm\n"
+"                        from the screenshot or an SMS alone: both can be faked. Check the amount, the date\n"
+"                        and time, and that the reference wasn't used before."
+msgstr ""
+"<strong>قبل التأكيد:</strong> ابحث عن هذا التحويل في كشف الحساب الذي أُرسل "
+"إليه (تطبيق البنك أو تطبيق المحفظة أو سجل إنستاباي). لا تؤكد أبدًا اعتمادًا "
+"على لقطة الشاشة أو رسالة SMS وحدها: فكلتاهما يمكن تزويرها. راجع المبلغ "
+"والتاريخ والوقت، وتأكد من أن المرجع لم يُستخدم من قبل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"A decision on this payment is being applied. Reload the page in a few "
+"seconds."
+msgstr "جارٍ تطبيق قرار على هذه الدفعة. أعد تحميل الصفحة بعد بضع ثوانٍ."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"A published InstaPay provider needs a receiving account: unpublish it first."
+msgstr "يحتاج مزود دفع إنستاباي المنشور إلى حساب استلام: ألغِ نشره أولًا."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "A receipt of the InstaPay transfer was added."
+msgstr "تمت إضافة إيصال لتحويل إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.module.module,summary:base.module_payment_instapay_cf
+msgid ""
+"Accept InstaPay transfers in Egypt: your customers pay to your InstaPay "
+"account, mobile wallet or bank account, upload the receipt, and your "
+"accountant confirms the payment"
+msgstr ""
+"استقبل تحويلات إنستاباي في مصر: يدفع عملاؤك إلى حسابك على إنستاباي أو محفظتك"
+" الإلكترونية أو حسابك البنكي، ويرفعون الإيصال، ثم يؤكد محاسبك الدفعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__state__accepted
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Accepted"
+msgstr "مقبول"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid ""
+"Accepted receipts are the proof of a confirmed payment and can't be deleted."
+msgstr "الإيصالات المقبولة هي إثبات لدفعة مؤكدة ولا يمكن حذفها."
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "قالب دليل الحسابات"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__account_number
+msgid "Account Number"
+msgstr "رقم الحساب"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "Account number"
+msgstr "رقم الحساب"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_plans_ids
+msgid "Activity Plans"
+msgstr "خطط النشاط"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_form
+msgid "Add Receipt"
+msgstr "إضافة إيصال"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_form
+msgid ""
+"Add a proof of transfer the customer sent another way, e.g. by WhatsApp or "
+"email."
+msgstr ""
+"أضف إثبات تحويل أرسله العميل بطريقة أخرى، مثل واتساب أو البريد الإلكتروني."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid "Add a receipt"
+msgstr "إضافة إيصال"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid ""
+"Add at least one receiving account (InstaPay, mobile wallet or bank account)"
+" before publishing InstaPay."
+msgstr ""
+"أضف حساب استلام واحدًا على الأقل (إنستاباي أو محفظة إلكترونية أو حساب بنكي) "
+"قبل نشر إنستاباي."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"Add the mobile number, the payment link or the QR code of your InstaPay "
+"account."
+msgstr "أضف رقم الهاتف المحمول أو رابط الدفع أو رمز QR لحسابك على إنستاباي."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"Add the payment link and the QR code exported from the InstaPay app: recent "
+"versions of the app don't let customers type an InstaPay address."
+msgstr ""
+"أضف رابط الدفع ورمز QR المُصدَّرين من تطبيق إنستاباي: الإصدارات الحديثة من "
+"التطبيق لا تتيح للعملاء كتابة عنوان إنستاباي."
+
+#. module: payment_instapay_cf
+#. odoo-javascript
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+#: code:addons/payment_instapay_cf/static/src/interactions/receipt_form.js:0
+msgid "Add the screenshot of the success screen of your transfer."
+msgstr "أضف لقطة شاشة لشاشة نجاح تحويلك."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Add the screenshot of the transfer."
+msgstr "أضف لقطة شاشة التحويل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Added by Staff"
+msgstr "أضافه موظف"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__cancel_payment
+msgid "Also cancel the payment"
+msgstr "إلغاء الدفعة أيضًا"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__amount_mismatch
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Amount Mismatch"
+msgstr "اختلاف المبلغ"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__amount_received
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__amount_received
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_amount_received
+msgid "Amount Received"
+msgstr "المبلغ المستلم"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__amount_sent
+msgid "Amount Sent"
+msgstr "المبلغ المرسل"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_kanban
+msgid "Amount differs"
+msgstr "المبلغ مختلف"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__amount_short
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__amount_short
+msgid "Amount lower than expected"
+msgstr "المبلغ أقل من المطلوب"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Amount sent"
+msgstr "المبلغ المرسل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__amount_expected
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__amount_expected
+msgid "Amount to Pay"
+msgstr "المبلغ المطلوب"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__note
+msgid "An extra line shown to customers under this account."
+msgstr "سطر إضافي يظهر للعملاء أسفل هذا الحساب."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "Any InstaPay fee is paid by you, on top of the amount."
+msgstr "تتحمّل أنت أي رسوم لإنستاباي، إضافةً إلى المبلغ."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "As InstaPay shows it to the payer"
+msgstr "كما يعرضه إنستاباي للدافع"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__bank_name
+msgid "Bank"
+msgstr "البنك"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__kind__bank
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "Bank Account"
+msgstr "حساب بنكي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__wallet_operator__bank_wallet
+msgid "Bank wallet"
+msgstr "محفظة بنكية"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "Beneficiary"
+msgstr "المستفيد"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__holder_name
+msgid "Beneficiary Name"
+msgstr "اسم المستفيد"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_expiry_days
+msgid "Cancel After (Days)"
+msgstr "الإلغاء بعد (أيام)"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_form
+msgid "Cancel Payment"
+msgstr "إلغاء الدفعة"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid "Cancel the InstaPay payment"
+msgstr "إلغاء دفعة إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__decision__cancel
+msgid "Cancel the payment"
+msgstr "إلغاء الدفعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_expiry_days
+msgid ""
+"Cancel the payments still waiting for a receipt after this many days. 0: "
+"never."
+msgstr ""
+"إلغاء الدفعات التي لا تزال في انتظار إيصال بعد هذا العدد من الأيام. 0: عدم "
+"الإلغاء أبدًا."
+
+#. module: payment_instapay_cf
+#. odoo-javascript
+#: code:addons/payment_instapay_cf/static/src/interactions/receipt_form.js:0
+msgid ""
+"Cancel this InstaPay payment to pay another way? Don't send money for it "
+"afterwards."
+msgstr ""
+"هل تريد إلغاء دفعة إنستاباي هذه للدفع بطريقة أخرى؟ لا ترسل أي مبلغ لها بعد "
+"ذلك."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_cancel_message
+msgid "Cancellation Message"
+msgstr "رسالة الإلغاء"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_status__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_cancelled_by
+msgid "Cancelled By"
+msgstr "أُلغي بواسطة"
+
+#. module: payment_instapay_cf
+#: model:mail.activity.type,summary:payment_instapay_cf.mail_activity_type_instapay_review
+msgid "Check the InstaPay transfer"
+msgstr "التحقق من تحويل إنستاباي"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Check the InstaPay transfer of %(reference)s"
+msgstr "التحقق من تحويل إنستاباي للدفعة %(reference)s"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_review_wizard__statement_checked
+msgid ""
+"Check the bank, wallet or InstaPay app history of the account: never confirm"
+" from the screenshot or an SMS alone."
+msgstr ""
+"راجع سجل الحساب في تطبيق البنك أو المحفظة أو إنستاباي: لا تؤكد أبدًا "
+"اعتمادًا على لقطة الشاشة أو رسالة SMS وحدها."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Check the warnings, then tick the box."
+msgstr "راجع التحذيرات، ثم حدّد المربع."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Choose the account that received the money."
+msgstr "اختر الحساب الذي استلم المبلغ."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Choose the reason of the rejection."
+msgstr "اختر سبب الرفض."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "Choose the wallet and enter its number."
+msgstr "اختر المحفظة وأدخل رقمها."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Choose where you sent the money"
+msgstr "اختر الحساب الذي أرسلت إليه المبلغ"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "Choose where you sent the money."
+msgstr "اختر الحساب الذي أرسلت إليه المبلغ."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__code
+msgid "Code"
+msgstr "الكود"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__company_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__company_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__company_id
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Company"
+msgstr "الشركة"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid ""
+"Confirm InstaPay payments from their receipt: open the receipt and click "
+"Confirm Payment, or add the receipt the customer sent you first."
+msgstr ""
+"أكّد دفعات إنستاباي من إيصالاتها: افتح الإيصال واضغط تأكيد الدفعة، أو أضف "
+"أولًا الإيصال الذي أرسله إليك العميل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid "Confirm Payment"
+msgstr "تأكيد الدفعة"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Confirm the InstaPay payment"
+msgstr "تأكيد دفعة إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__decision__confirm
+msgid "Confirm the payment"
+msgstr "تأكيد الدفعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_status__confirmed
+msgid "Confirmed"
+msgstr "مؤكد"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_reviewer_id
+msgid "Confirmed By"
+msgstr "أُكّد بواسطة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__create_uid
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__create_uid
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__create_date
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__create_date
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__currency_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__partner_id
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__source__customer
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_cancelled_by__customer
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Customer"
+msgstr "العميل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_require_reference
+msgid "Customers must type the reference number shown on their receipt."
+msgstr "يجب على العملاء كتابة الرقم المرجعي الظاهر في إيصالهم."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__time_warning
+msgid "Date Warning"
+msgstr "تحذير التاريخ"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Date and time of the transfer"
+msgstr "تاريخ التحويل ووقته"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__decision
+msgid "Decision"
+msgstr "القرار"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "Declared on the Receipt"
+msgstr "البيانات المُصرَّح بها في الإيصال"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid "Discard"
+msgstr "إهمال"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_account_move__display_name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__display_name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__display_name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__display_name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "EG00 0000 0000 0000 0000 0000 0000 0"
+msgstr "EG00 0000 0000 0000 0000 0000 0000 0"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_send_emails
+msgid "Email the Customers"
+msgstr "إرسال بريد إلكتروني للعملاء"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "Enter the amount you sent, e.g. 1500 or 1500.50."
+msgstr "أدخل المبلغ الذي أرسلته، مثل 1500 أو 1500.50."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "Enter the bank's name and the account number or the IBAN."
+msgstr "أدخل اسم البنك ورقم الحساب أو رقم IBAN."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "Enter the date and time shown on the receipt."
+msgstr "أدخل التاريخ والوقت الظاهرين في الإيصال."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "Enter the reference number shown on the receipt."
+msgstr "أدخل الرقم المرجعي الظاهر في الإيصال."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"Find the transfer in the statement of the receiving account first, then tick"
+" the box. A screenshot or an SMS alone can be faked."
+msgstr ""
+"ابحث أولًا عن التحويل في كشف حساب الاستلام، ثم حدّد المربع. يمكن تزوير لقطة "
+"الشاشة أو رسالة SMS وحدها."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_follower_ids
+msgid "Followers"
+msgstr "المتابعين"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعين (الشركاء)"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Hello"
+msgstr "مرحبًا"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__warnings_checked
+msgid "I checked the warnings above"
+msgstr "راجعت التحذيرات أعلاه"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__statement_checked
+msgid "I found this transfer in the statement of the receiving account"
+msgstr "وجدت هذا التحويل في كشف حساب الاستلام"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__iban
+msgid "IBAN"
+msgstr "IBAN"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_account_chart_template__id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_account_move__id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "الأيقونة للإشارة إلى النشاط المستثنى."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة عليك رؤيتها."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__message_has_error
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فقد حدث خطأ في تسليم بعض الرسائل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "If your app lets you add a note to the transfer, write"
+msgstr "إذا كان تطبيقك يتيح إضافة ملاحظة إلى التحويل، فاكتب"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "If your app lets you add a note to the transfer, write this reference."
+msgstr ""
+"إذا كان تطبيقك يتيح إضافة ملاحظة إلى التحويل، فاكتب هذا الرقم المرجعي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__image_filename
+msgid "Image Filename"
+msgstr "اسم ملف الصورة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid ""
+"In the InstaPay app, open your profile: share your payment link and\n"
+"                                export your QR code, then paste the link and upload the QR code here."
+msgstr ""
+"في تطبيق إنستاباي، افتح ملفك الشخصي: شارك رابط الدفع الخاص بك وصدّر رمز QR، "
+"ثم الصق الرابط وارفع رمز QR هنا."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__kind__instapay
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_provider__code__instapay_cf
+#: model:payment.method,name:payment_instapay_cf.payment_method_instapay
+#: model:payment.provider,name:payment_instapay_cf.payment_provider_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_form
+msgid "InstaPay"
+msgstr "إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "InstaPay Account"
+msgstr "حساب إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__ipa
+msgid "InstaPay Address"
+msgstr "عنوان إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_payment_instapay_review_wizard
+msgid "InstaPay Payment Review"
+msgstr "مراجعة دفعة إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.module.module,shortdesc:base.module_payment_instapay_cf
+msgid "InstaPay Payments"
+msgstr "مدفوعات إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.account_card
+msgid "InstaPay QR code"
+msgstr "رمز QR لإنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_payment_instapay_receipt
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "InstaPay Receipt"
+msgstr "إيصال إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.actions.act_window,name:payment_instapay_cf.action_instapay_receipts
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_receipt_ids
+#: model:ir.ui.menu,name:payment_instapay_cf.menu_instapay_receipts
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_list
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "InstaPay Receipts"
+msgstr "إيصالات إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_payment_instapay_account
+msgid "InstaPay Receiving Account"
+msgstr "حساب استلام إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__transfer_reference
+msgid "InstaPay Reference"
+msgstr "مرجع إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_status
+msgid "InstaPay Status"
+msgstr "حالة إنستاباي"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "InstaPay address"
+msgstr "عنوان إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "InstaPay allows"
+msgstr "يسمح إنستاباي بحد أقصى"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid "InstaPay can't save payment methods."
+msgstr "لا يمكن لإنستاباي حفظ وسائل الدفع."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid "InstaPay payment cancelled (%(by)s)."
+msgstr "تم إلغاء دفعة إنستاباي (%(by)s)."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "InstaPay receipt"
+msgstr "إيصال إنستاباي"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "InstaPay reference"
+msgstr "مرجع إنستاباي"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "InstaPay transfers are in EGP: choose a journal in EGP."
+msgstr "تحويلات إنستاباي بعملة EGP: اختر دفتر يومية بعملة EGP."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_search
+msgid "InstaPay: Receipt to Review"
+msgstr "إنستاباي: إيصال بانتظار المراجعة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_search
+msgid "InstaPay: Waiting for the Transfer"
+msgstr "إنستاباي: في انتظار التحويل"
+
+#. module: payment_instapay_cf
+#: model:mail.template,name:payment_instapay_cf.mail_template_instapay_cancelled
+msgid "InstaPay: payment cancelled"
+msgstr "إنستاباي: إلغاء الدفعة"
+
+#. module: payment_instapay_cf
+#: model:mail.template,name:payment_instapay_cf.mail_template_instapay_confirmed
+msgid "InstaPay: payment confirmed"
+msgstr "إنستاباي: تأكيد الدفعة"
+
+#. module: payment_instapay_cf
+#: model:mail.template,name:payment_instapay_cf.mail_template_instapay_instructions
+msgid "InstaPay: payment details"
+msgstr "إنستاباي: بيانات الدفع"
+
+#. module: payment_instapay_cf
+#: model:mail.template,name:payment_instapay_cf.mail_template_instapay_receipt_received
+msgid "InstaPay: receipt received"
+msgstr "إنستاباي: استلام الإيصال"
+
+#. module: payment_instapay_cf
+#: model:mail.template,name:payment_instapay_cf.mail_template_instapay_rejected
+msgid "InstaPay: receipt rejected"
+msgstr "إنستاباي: رفض الإيصال"
+
+#. module: payment_instapay_cf
+#: model:ir.actions.server,name:payment_instapay_cf.cron_instapay_remind_and_expire_ir_actions_server
+msgid "InstaPay: remind and cancel unpaid payments"
+msgstr "إنستاباي: التذكير بالدفعات غير المدفوعة وإلغاؤها"
+
+#. module: payment_instapay_cf
+#: model:mail.template,name:payment_instapay_cf.mail_template_instapay_reminder
+msgid "InstaPay: reminder"
+msgstr "إنستاباي: تذكير"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_calendar_warning
+msgid "Instapay Cf Calendar Warning"
+msgstr "تحذير جدول العمل لإنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_instructions_sent
+msgid "Instapay Cf Instructions Sent"
+msgstr "تم إرسال تعليمات إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_notify_cancel
+msgid "Instapay Cf Notify Cancel"
+msgstr "إشعار العميل بإلغاء إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_reminder_sent
+msgid "Instapay Cf Reminder Sent"
+msgstr "تم إرسال تذكير إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_reviewer_warning
+msgid "Instapay Cf Reviewer Warning"
+msgstr "تحذير مراجع إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__journal_id
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__write_uid
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__write_uid
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__write_date
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__write_date
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "المرفق الرئيسي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__activity_type_icon
+msgid "Material Symbols icon e.g. checklist"
+msgstr "أيقونة Material Symbols، مثل checklist"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسائل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__reject_message
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__customer_message
+msgid "Message to the Customer"
+msgstr "رسالة إلى العميل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__mobile
+msgid "Mobile Number"
+msgstr "رقم الهاتف المحمول"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__kind__wallet
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "Mobile Wallet"
+msgstr "محفظة إلكترونية"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "Mobile number"
+msgstr "رقم الهاتف المحمول"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "My Activities"
+msgstr "أنشطتي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطاتي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__name
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.actions.act_window,help:payment_instapay_cf.action_instapay_receipts
+msgid "No InstaPay receipt to review"
+msgstr "لا توجد إيصالات إنستاباي بانتظار المراجعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_cancelled_by__expiry
+msgid "No receipt in time"
+msgstr "لم يصل إيصال في الموعد"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid "No receiving account is set."
+msgstr "لم يتم ضبط أي حساب استلام."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid ""
+"Nobody will be asked to review the receipts: choose a reviewer, or add users"
+" to the reviewers role."
+msgstr ""
+"لن يُطلب من أحد مراجعة الإيصالات: اختر مراجعًا، أو أضف مستخدمين إلى دور "
+"المراجعين."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_provider_form
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__note
+msgid "Note for Customers"
+msgstr "ملاحظة للعملاء"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل الحادث بها خطأ في التسليم"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Only waiting or cancelled payments can be confirmed."
+msgstr "لا يمكن تأكيد إلا الدفعات المنتظرة أو الملغاة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Only waiting payments can be cancelled."
+msgstr "لا يمكن إلغاء إلا الدفعات المنتظرة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Open InstaPay on your phone"
+msgstr "افتح إنستاباي على هاتفك"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid ""
+"Open the bank, wallet or InstaPay app of the account below and find this\n"
+"                        transfer. Never confirm from the screenshot or an SMS alone: both can be faked."
+msgstr ""
+"افتح تطبيق البنك أو المحفظة أو إنستاباي الخاص بالحساب أدناه وابحث عن هذا "
+"التحويل. لا تؤكد أبدًا اعتمادًا على لقطة الشاشة أو رسالة SMS وحدها: فكلتاهما"
+" يمكن تزويرها."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__wallet_operator__orange_cash
+msgid "Orange Cash"
+msgstr "أورنج كاش"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__other
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__other
+msgid "Other reason"
+msgstr "سبب آخر"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__wallet_operator__other
+msgid "Other wallet"
+msgstr "محفظة أخرى"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__is_overdue
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_kanban
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "PNG or JPEG, up to 10 MB."
+msgstr "PNG أو JPEG، بحد أقصى 10 ميجابايت."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__paid_elsewhere
+msgid "Paid Elsewhere"
+msgstr "مدفوع بطريقة أخرى"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instructions
+msgid "Pay again"
+msgstr "ادفع مرة أخرى"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "Pay another way"
+msgstr "ادفع بطريقة أخرى"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "Pay with InstaPay"
+msgstr "ادفع عبر إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "Payment"
+msgstr "الدفعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__payment_link
+msgid "Payment Link"
+msgstr "رابط الدفع"
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_payment_provider
+msgid "Payment Provider"
+msgstr "مزود الدفع"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__tx_reference
+msgid "Payment Reference"
+msgstr "مرجع الدفعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__order_date
+msgid "Payment Started On"
+msgstr "تاريخ بدء الدفع"
+
+#. module: payment_instapay_cf
+#: model:ir.model,name:payment_instapay_cf.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "معاملة الدفع"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Payment cancelled."
+msgstr "تم إلغاء الدفعة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Payment confirmed."
+msgstr "تم تأكيد الدفعة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"Payment confirmed. The order and the invoice are updated within a few "
+"seconds."
+msgstr "تم تأكيد الدفعة. سيتم تحديث الطلب والفاتورة خلال ثوانٍ قليلة."
+
+#. module: payment_instapay_cf
+#: model:ir.module.module,description:base.module_payment_instapay_cf
+msgid ""
+"Payment provider for InstaPay (Egypt), which has no merchant API. Customers "
+"see your receiving accounts (InstaPay link and QR, mobile number, mobile "
+"wallets, bank account and IBAN), send the exact amount, then upload a "
+"screenshot of the receipt. Your accountants review each receipt within your "
+"working days, with duplicate and amount checks, and confirm or reject it; "
+"the order and the invoice follow. Includes reminders and cancellation of "
+"unpaid payments, customer emails, a journal per receiving account, and "
+"Arabic."
+msgstr ""
+"مزود دفع لإنستاباي (مصر)، الذي لا يوفر واجهة API للتجار. يرى العملاء حسابات "
+"الاستلام الخاصة بك (رابط إنستاباي ورمز QR، ورقم الهاتف المحمول، والمحافظ "
+"الإلكترونية، والحساب البنكي ورقم IBAN)، ويرسلون المبلغ المطلوب بالضبط، ثم "
+"يرفعون لقطة شاشة للإيصال. يراجع المحاسبون لديك كل إيصال خلال أيام العمل "
+"لديك، مع التحقق من التكرار ومن المبلغ، ثم يؤكدونه أو يرفضونه؛ ويُحدَّث الطلب"
+" والفاتورة تبعًا لذلك. يشمل التذكير بالدفعات غير المدفوعة وإلغاءها، ورسائل "
+"البريد الإلكتروني للعملاء، ودفتر يومية لكل حساب استلام، واللغة العربية."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"Payments are posted in the InstaPay journal: choose the journal of the real "
+"account to reconcile them with its bank statements."
+msgstr ""
+"تُرحَّل الدفعات في دفتر يومية إنستاباي: اختر دفتر يومية الحساب الفعلي "
+"لتسويتها مع كشوف حسابه البنكية."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "Please upload a new receipt."
+msgstr "يُرجى رفع إيصال جديد."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "Please wait a few seconds before sending another receipt."
+msgstr "يُرجى الانتظار بضع ثوانٍ قبل إرسال إيصال آخر."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__has_duplicate
+msgid "Possible Duplicate"
+msgstr "تكرار محتمل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__duplicate_receipt_ids
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Possible Duplicates"
+msgstr "تكرارات محتملة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_kanban
+msgid "Possible duplicate"
+msgstr "تكرار محتمل"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Preview of the screenshot"
+msgstr "معاينة لقطة الشاشة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__provider_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__provider_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__provider_id
+msgid "Provider"
+msgstr "مزود الدفع"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__qr_image
+msgid "QR Code"
+msgstr "رمز QR"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "QR code of this page"
+msgstr "رمز QR لهذه الصفحة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__reject_reason
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid "Reason"
+msgstr "السبب"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__already_used
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__already_used
+msgid "Receipt already used"
+msgstr "الإيصال مستخدم من قبل"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Receipt of the InstaPay transfer."
+msgstr "إيصال تحويل إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_status__rejected
+msgid "Receipt rejected"
+msgstr "إيصال مرفوض"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Receipt rejected and payment cancelled."
+msgstr "تم رفض الإيصال وإلغاء الدفعة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Receipt rejected."
+msgstr "تم رفض الإيصال."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Receipt rejected. The customer was asked to send a new receipt."
+msgstr "تم رفض الإيصال. طُلب من العميل إرسال إيصال جديد."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_status__in_review
+msgid "Receipt to review"
+msgstr "إيصال بانتظار المراجعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__receipt_ids
+msgid "Receipts"
+msgstr "الإيصالات"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Receipts belong to InstaPay payments."
+msgstr "يجب أن تتبع الإيصالات دفعات إنستاباي."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid "Receipts can only be added to waiting or cancelled payments."
+msgstr "لا يمكن إضافة الإيصالات إلا إلى الدفعات المنتظرة أو الملغاة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid "Receipts of %(reference)s"
+msgstr "إيصالات %(reference)s"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_transaction.py:0
+msgid "Receipts of the InstaPay transfer."
+msgstr "إيصالات تحويل إنستاباي."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "Receipts you sent"
+msgstr "الإيصالات التي أرسلتها"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__received_account_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__received_account_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_account_id
+msgid "Received In"
+msgstr "استُلم في الحساب"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__submitted_at
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__date_received
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_received_date
+msgid "Received On"
+msgstr "تاريخ الاستلام"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "Receiving Account"
+msgstr "حساب الاستلام"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_account_ids
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_provider_form
+msgid "Receiving Accounts"
+msgstr "حسابات الاستلام"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Reference %(reference)s"
+msgstr "المرجع %(reference)s"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Reference number"
+msgstr "الرقم المرجعي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid "Reject Receipt"
+msgstr "رفض الإيصال"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__decision__reject
+msgid "Reject the receipt"
+msgstr "رفض الإيصال"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__state__rejected
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__reject_reason
+msgid "Rejection Reason"
+msgstr "سبب الرفض"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_reminder_days
+msgid ""
+"Remind customers who chose InstaPay but sent no receipt after this many "
+"days. 0: no reminder."
+msgstr ""
+"تذكير العملاء الذين اختاروا إنستاباي ولم يرسلوا إيصالًا بعد هذا العدد من "
+"الأيام. 0: بدون تذكير."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_reminder_days
+msgid "Reminder After (Days)"
+msgstr "التذكير بعد (أيام)"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_require_reference
+msgid "Require the Transfer Reference"
+msgstr "اشتراط مرجع التحويل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "Review"
+msgstr "المراجعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__review_date
+msgid "Review By"
+msgstr "المراجعة بحلول"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__review_deadline
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_transaction__instapay_cf_review_deadline
+msgid "Review Deadline"
+msgstr "الموعد النهائي للمراجعة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid "Review InstaPay Payment"
+msgstr "مراجعة دفعة إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:mail.activity.type,name:payment_instapay_cf.mail_activity_type_instapay_review
+msgid "Review InstaPay receipt"
+msgstr "مراجعة إيصال إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_transaction_form
+msgid "Review Receipt"
+msgstr "مراجعة الإيصال"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_review_days
+msgid "Review Time (Working Days)"
+msgstr "مدة المراجعة (أيام العمل)"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__reviewed_by_id
+msgid "Reviewed By"
+msgstr "رُوجع بواسطة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__reviewed_at
+msgid "Reviewed On"
+msgstr "تاريخ المراجعة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_reviewer_user_id
+msgid "Reviewer"
+msgstr "المراجع"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_reviewer_role_id
+msgid "Reviewers Role"
+msgstr "دور المراجعين"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرسائل النصية القصيرة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.account_card
+msgid "Scan with the InstaPay app on your phone"
+msgstr "امسحه بتطبيق إنستاباي على هاتفك"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__image
+msgid "Screenshot"
+msgstr "لقطة الشاشة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__image_sha256
+msgid "Screenshot Fingerprint"
+msgstr "بصمة لقطة الشاشة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Screenshot of the receipt"
+msgstr "لقطة شاشة الإيصال"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__unreadable
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__unreadable
+msgid "Screenshot unreadable"
+msgstr "لقطة الشاشة غير مقروءة"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Select the receipts of the transfer you found."
+msgstr "حدّد إيصالات التحويل الذي وجدته."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Select the receipts to reject."
+msgstr "حدّد الإيصالات المراد رفضها."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Send a new receipt"
+msgstr "أرسل إيصالًا جديدًا"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "Send another receipt"
+msgstr "أرسل إيصالًا آخر"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "Send exactly this amount"
+msgstr "أرسل هذا المبلغ بالضبط"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"Send the amount below with InstaPay, from your bank or wallet app, to one of the accounts\n"
+"            of"
+msgstr ""
+"أرسل المبلغ أدناه عبر إنستاباي، من تطبيق البنك أو المحفظة، إلى أحد حسابات"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.inline_form
+msgid ""
+"Send the amount with InstaPay from your bank or wallet app, then upload a screenshot\n"
+"                of the receipt."
+msgstr ""
+"أرسل المبلغ عبر إنستاباي من تطبيق البنك أو المحفظة، ثم ارفع لقطة شاشة "
+"للإيصال."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_send_emails
+msgid ""
+"Send the payment details, the receipt confirmation, rejections, reminders "
+"and cancellations by email."
+msgstr ""
+"إرسال بيانات الدفع وتأكيد استلام الإيصال وحالات الرفض والتذكيرات والإلغاءات "
+"بالبريد الإلكتروني."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Send the receipt"
+msgstr "أرسل الإيصال"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__sender_name
+msgid "Sender"
+msgstr "المُرسِل"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Sender <span class=\"fw-normal text-muted\">(optional)</span>"
+msgstr "المُرسِل <span class=\"fw-normal text-muted\">(اختياري)</span>"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__source
+msgid "Sent By"
+msgstr "أُرسل بواسطة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__account_id
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Sent To"
+msgstr "أُرسل إلى"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__account_label
+msgid "Sent To (as shown)"
+msgstr "أُرسل إلى (كما ظهر)"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Sent to"
+msgstr "أُرسل إلى"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__wrong_account
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__wrong_account
+msgid "Sent to another account"
+msgstr "أُرسل إلى حساب آخر"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Shown as \"Reference\" on the receipt."
+msgstr "يظهر في الإيصال باسم \"Reference\" (الرقم المرجعي)."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid "Shown to the customer and sent by email"
+msgstr "يظهر للعميل ويُرسل بالبريد الإلكتروني"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid "Some of these receipts were already reviewed."
+msgstr "تمت مراجعة بعض هذه الإيصالات بالفعل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"Someone else is handling this payment right now. Try again in a moment."
+msgstr "يتعامل شخص آخر مع هذه الدفعة الآن. حاول مرة أخرى بعد قليل."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__source__staff
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_cancelled_by__staff
+msgid "Staff"
+msgstr "موظف"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__state
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الأنشطة المعتمدة على الحالة\n"
+"المتأخرة: تاريخ الاستحقاق مر\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"المخطط: الأنشطة المستقبلية."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid ""
+"Take a screenshot of the success screen of your transfer, then fill in what "
+"it shows."
+msgstr "التقط لقطة شاشة لشاشة نجاح تحويلك، ثم املأ البيانات الظاهرة فيها."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"Take a screenshot of the success screen: it shows the amount and the "
+"reference number."
+msgstr "التقط لقطة شاشة لشاشة النجاح: فهي تُظهر المبلغ والرقم المرجعي."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Thank you for your order"
+msgstr "شكرًا لطلبك"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "Thank you! We received your receipt."
+msgstr "شكرًا لك! استلمنا إيصالك."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"The InstaPay reference %(reference)s was already accepted for another "
+"payment."
+msgstr "مرجع إنستاباي %(reference)s مقبول بالفعل لدفعة أخرى."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid ""
+"The InstaPay reference has 6 to 32 letters and digits (12 digits on most "
+"receipts)."
+msgstr ""
+"يتكون مرجع إنستاباي من 6 إلى 32 حرفًا ورقمًا (12 رقمًا في معظم الإيصالات)."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__qr_image
+msgid ""
+"The QR code exported from the InstaPay app. Without it, a QR code is made "
+"from the payment link."
+msgstr ""
+"رمز QR المُصدَّر من تطبيق إنستاباي. في حال عدم وجوده، يُنشأ رمز QR من رابط "
+"الدفع."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"The QR code must be a PNG or JPEG image, as exported from the InstaPay app."
+msgstr "يجب أن يكون رمز QR صورة PNG أو JPEG، كما يُصدَّر من تطبيق إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__holder_name
+msgid ""
+"The account holder's name, as InstaPay shows it to customers before they "
+"confirm."
+msgstr "اسم صاحب الحساب كما يعرضه إنستاباي للعملاء قبل أن يؤكدوا التحويل."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_review_wizard__received_account_id
+msgid ""
+"The account where you found the money. The payment is posted in its journal."
+msgstr "الحساب الذي وجدت فيه المبلغ. تُرحَّل الدفعة في دفتر يوميته."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "The amount sent differs from the amount to pay."
+msgstr "المبلغ المرسل يختلف عن المبلغ المطلوب."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid ""
+"The amount we received is lower than the amount of your order. Please send "
+"the remaining amount and upload the receipt of that transfer."
+msgstr ""
+"المبلغ الذي استلمناه أقل من مبلغ طلبك. يُرجى إرسال المبلغ المتبقي ورفع إيصال"
+" ذلك التحويل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_review_wizard_form
+msgid ""
+"The customer can no longer pay this order with this payment. Any receipt still\n"
+"                        to review is rejected."
+msgstr ""
+"لن يتمكن العميل بعد الآن من دفع هذا الطلب بهذه الدفعة. ويُرفض أي إيصال لا "
+"يزال بانتظار المراجعة."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_review_wizard__cancel_payment
+msgid ""
+"The customer can't send another receipt for this payment, and must pay "
+"again."
+msgstr "لا يمكن للعميل إرسال إيصال آخر لهذه الدفعة، وعليه الدفع مرة أخرى."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "The customer sent the receipt of their InstaPay transfer."
+msgstr "أرسل العميل إيصال تحويله عبر إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__tx_reference
+msgid "The internal reference of the transaction"
+msgstr "مرجع المعاملة الداخلي"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"The journal %(journal)s has no incoming payment method: add a manual one in "
+"its Incoming Payments tab."
+msgstr ""
+"دفتر اليومية %(journal)s ليس له طريقة دفع واردة: أضف طريقة يدوية في علامة "
+"تبويب المدفوعات الواردة."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__journal_id
+msgid ""
+"The journal of the real bank account or wallet the money lands in, to post "
+"the payments there. The InstaPay journal when empty."
+msgstr ""
+"دفتر يومية الحساب البنكي أو المحفظة الفعلية التي يصل إليها المبلغ، لترحيل "
+"الدفعات فيه. إذا تُرك فارغًا، يُستخدم دفتر يومية إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__payment_link
+msgid ""
+"The link generated in the InstaPay app (Share link), e.g. "
+"https://ipn.eg/S/yourshop/instapay/AbC123. On a phone, it opens the InstaPay"
+" app."
+msgstr ""
+"الرابط الذي يُنشئه تطبيق إنستاباي (Share link)، مثل "
+"https://ipn.eg/S/yourshop/instapay/AbC123. على الهاتف، يفتح تطبيق إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__mobile
+msgid "The mobile number registered on your InstaPay account."
+msgstr "رقم الهاتف المحمول المسجل في حسابك على إنستاباي."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__sender_name
+msgid "The payer's name or InstaPay address."
+msgstr "اسم الدافع أو عنوانه على إنستاباي."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/wizard/payment_instapay_review_wizard.py:0
+msgid ""
+"The payment is cancelled within a few seconds; the customer gets an email."
+msgstr "سيتم إلغاء الدفعة خلال ثوانٍ قليلة؛ وسيصل إلى العميل بريد إلكتروني."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid ""
+"The payment link must be an InstaPay link, starting with https://ipn.eg/S/. "
+"Copy it from the InstaPay app (Share link)."
+msgstr ""
+"يجب أن يكون رابط الدفع رابط إنستاباي يبدأ بـ https://ipn.eg/S/. انسخه من "
+"تطبيق إنستاباي (Share link)."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid ""
+"The reference has letters and digits only: copy it from the receipt (12 "
+"digits on most receipts)."
+msgstr ""
+"يتكون المرجع من حروف وأرقام فقط: انسخه من الإيصال (12 رقمًا في معظم "
+"الإيصالات)."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__transfer_reference
+msgid "The reference number shown on the receipt of the transfer."
+msgstr "الرقم المرجعي الظاهر في إيصال التحويل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid "The reminder and cancel delays can't be negative."
+msgstr "لا يمكن أن تكون مهلتا التذكير والإلغاء بقيم سالبة."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid "The reminder must come before the payment is cancelled."
+msgstr "يجب أن يأتي التذكير قبل إلغاء الدفعة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid ""
+"The review deadline is past: the customer was told their payment would be\n"
+"                        confirmed by now."
+msgstr ""
+"انقضى الموعد النهائي للمراجعة: أُبلغ العميل بأن دفعته ستكون قد تأكدت بحلول "
+"الآن."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid "The review time must be 1 to 10 working days."
+msgstr "يجب أن تكون مدة المراجعة من 1 إلى 10 أيام عمل."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_reviewer_role_id
+msgid "The role whose members check the receipts, when no reviewer is set."
+msgstr "الدور الذي يراجع أعضاؤه الإيصالات عند عدم تحديد مراجع."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "The same screenshot or reference was sent for another payment:"
+msgstr "أُرسلت لقطة الشاشة نفسها أو المرجع نفسه لدفعة أخرى:"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid ""
+"The screenshot and the details declared with it can't be changed. Reject the"
+" receipt and add a new one instead."
+msgstr ""
+"لا يمكن تغيير لقطة الشاشة والبيانات المُصرَّح بها معها. بدلًا من ذلك، ارفض "
+"الإيصال وأضف إيصالًا جديدًا."
+
+#. module: payment_instapay_cf
+#. odoo-javascript
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+#: code:addons/payment_instapay_cf/static/src/interactions/receipt_form.js:0
+msgid "The screenshot is too large: send an image of at most 10 MB."
+msgstr "لقطة الشاشة كبيرة جدًا: أرسل صورة لا يتجاوز حجمها 10 ميجابايت."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "The screenshot must be a PNG or JPEG image of at most 10 MB."
+msgstr "يجب أن تكون لقطة الشاشة صورة PNG أو JPEG لا يتجاوز حجمها 10 ميجابايت."
+
+#. module: payment_instapay_cf
+#. odoo-javascript
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+#: code:addons/payment_instapay_cf/static/src/interactions/receipt_form.js:0
+msgid "The screenshot must be a PNG or JPEG image."
+msgstr "يجب أن تكون لقطة الشاشة صورة PNG أو JPEG."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr "الكود التقني لمزود الدفع هذا."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__name
+msgid ""
+"The title customers see, e.g. \"InstaPay\", \"Vodafone Cash\" or the bank's "
+"name."
+msgstr "العنوان الذي يراه العملاء، مثل \"إنستاباي\" أو \"فودافون كاش\" أو اسم البنك."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "The transfer is dated before the payment started."
+msgstr "تاريخ التحويل سابق لبدء الدفع."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_form
+msgid "The transfer is dated in the future."
+msgstr "تاريخ التحويل في المستقبل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid ""
+"The working schedule %(calendar)s works on Fridays. In Egypt, choose a "
+"Sunday-to-Thursday schedule."
+msgstr ""
+"جدول العمل %(calendar)s يتضمن أيام الجمعة. في مصر، اختر جدولًا من الأحد إلى "
+"الخميس."
+
+#. module: payment_instapay_cf
+#: model:ir.model.constraint,message:payment_instapay_cf.constraint_payment_instapay_receipt_accepted_reference_unique
+msgid "This InstaPay reference was already accepted for another payment."
+msgstr "مرجع إنستاباي هذا مقبول بالفعل لدفعة أخرى."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "This file can't be read. Take a new screenshot and send it again."
+msgstr "تعذّرت قراءة هذا الملف. التقط لقطة شاشة جديدة وأرسلها مرة أخرى."
+
+#. module: payment_instapay_cf
+#: model_terms:payment.provider,cancel_msg:payment_instapay_cf.payment_provider_instapay_cf
+msgid "This payment is cancelled."
+msgstr "تم إلغاء هذه الدفعة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "This payment is cancelled. You can pay your order another way."
+msgstr "تم إلغاء هذه الدفعة. يمكنك دفع قيمة طلبك بطريقة أخرى."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid ""
+"This payment no longer waits for a receipt. Please contact %(company)s."
+msgstr "لم تعد هذه الدفعة في انتظار إيصال. يُرجى التواصل مع %(company)s."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "This receipt was already reviewed."
+msgstr "تمت مراجعة هذا الإيصال بالفعل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid ""
+"This receipt was already used for another payment. Please upload the receipt"
+" of the transfer you made for this order."
+msgstr ""
+"استُخدم هذا الإيصال بالفعل لدفعة أخرى. يُرجى رفع إيصال التحويل الذي أجريته "
+"لهذا الطلب."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid ""
+"This transfer was sent to an account that is not ours. Please check the "
+"receiving details on this page and contact us."
+msgstr ""
+"أُرسل هذا التحويل إلى حساب لا يخصنا. يُرجى مراجعة بيانات الاستلام في هذه "
+"الصفحة والتواصل معنا."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__state__submitted
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_search
+msgid "To Review"
+msgstr "بانتظار المراجعة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_receipt_list
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__transaction_id
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__transaction_id
+msgid "Transaction"
+msgstr "المعاملة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_receipt__transferred_at
+msgid "Transfer Date"
+msgstr "تاريخ التحويل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__time_warning__before_order
+msgid "Transfer before the order"
+msgstr "تحويل قبل الطلب"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_receipt.py:0
+msgid "Transfer date"
+msgstr "تاريخ التحويل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__time_warning__future
+msgid "Transfer date in the future"
+msgstr "تاريخ التحويل في المستقبل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__not_received
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__not_received
+msgid "Transfer not found"
+msgstr "لم يُعثر على التحويل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_receipt__reject_reason__still_pending
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_review_wizard__reject_reason__still_pending
+msgid "Transfer still pending"
+msgstr "التحويل ما زال معلقًا"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__kind
+msgid "Type"
+msgstr "النوع"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_receipt__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط المستثنى في السجل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "Under review"
+msgstr "قيد المراجعة"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Upload your receipt"
+msgstr "ارفع إيصالك"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "View your order"
+msgstr "عرض طلبك"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__wallet_operator__vodafone_cash
+msgid "Vodafone Cash"
+msgstr "فودافون كاش"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__wallet_operator__we_pay
+msgid "WE Pay"
+msgstr "WE Pay"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_transaction__instapay_cf_status__awaiting
+msgid "Waiting for the transfer"
+msgstr "في انتظار التحويل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__wallet_operator
+msgid "Wallet"
+msgstr "المحفظة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__wallet_number
+msgid "Wallet Number"
+msgstr "رقم المحفظة"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_instapay_account.py:0
+msgid "Wallet number"
+msgstr "رقم المحفظة"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_account__warning
+msgid "Warning"
+msgstr "تحذير"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_instapay_review_wizard__warning_text
+msgid "Warning Text"
+msgstr "نص التحذير"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid "We could not confirm your transfer."
+msgstr "تعذّر علينا تأكيد تحويلك."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid ""
+"We could not find this transfer in our account. Please check the transfer in"
+" your app and send a screenshot of the success screen, with its reference "
+"number."
+msgstr ""
+"لم نجد هذا التحويل في حسابنا. يُرجى مراجعة التحويل في تطبيقك وإرسال لقطة "
+"شاشة لشاشة النجاح، متضمنة الرقم المرجعي."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid ""
+"We could not read your screenshot. Please upload a clear screenshot of the "
+"whole success screen, including the amount and the reference number."
+msgstr ""
+"تعذّرت علينا قراءة لقطة الشاشة. يُرجى رفع لقطة شاشة واضحة لشاشة النجاح "
+"كاملة، تتضمن المبلغ والرقم المرجعي."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "We couldn't confirm your InstaPay transfer for"
+msgstr "تعذّر علينا تأكيد تحويلك عبر إنستاباي بخصوص"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "We received no receipt for the InstaPay payment"
+msgstr "لم نستلم أي إيصال لدفعة إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instructions
+msgid "We received no receipt in time, so this payment was cancelled."
+msgstr "لم نستلم أي إيصال في الموعد المحدد، لذا تم إلغاء هذه الدفعة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "We received the receipt of your InstaPay transfer for"
+msgstr "استلمنا إيصال تحويلك عبر إنستاباي بخصوص"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.actions.act_window,help:payment_instapay_cf.action_instapay_receipts
+msgid ""
+"When customers pay with InstaPay, they upload a screenshot of their transfer. Each one\n"
+"                waits here until you find the money in your account and confirm the payment."
+msgstr ""
+"عندما يدفع العملاء عبر إنستاباي، يرفعون لقطة شاشة لتحويلهم. وتنتظر كل لقطة "
+"هنا حتى تجد المبلغ في حسابك وتؤكد الدفعة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_provider_form
+msgid ""
+"Where your customers send the money: your InstaPay account (payment link, QR\n"
+"                        code and mobile number from the InstaPay app), your mobile wallets and your bank\n"
+"                        accounts. Customers see them in this order, with copy buttons. Set the journal of\n"
+"                        each account to post the payments where the money lands."
+msgstr ""
+"الحسابات التي يرسل إليها عملاؤك المبلغ: حسابك على إنستاباي (رابط الدفع ورمز "
+"QR ورقم الهاتف المحمول من تطبيق إنستاباي)، ومحافظك الإلكترونية، وحساباتك "
+"البنكية. يراها العملاء بهذا الترتيب، مع أزرار للنسخ. حدّد دفتر اليومية لكل "
+"حساب لترحيل الدفعات حيث يصل المبلغ."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_account_ids
+msgid ""
+"Where your customers send the money: your InstaPay account, mobile wallets "
+"and bank accounts."
+msgstr ""
+"الحسابات التي يرسل إليها عملاؤك المبلغ: حسابك على إنستاباي، والمحافظ "
+"الإلكترونية، والحسابات البنكية."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_reviewer_user_id
+msgid ""
+"Who checks the receipts. Each receipt gets a review activity for this user, "
+"or for the reviewers role when empty."
+msgstr ""
+"الشخص الذي يراجع الإيصالات. يحصل كل إيصال على نشاط مراجعة لهذا المستخدم، أو "
+"لدور المراجعين إذا تُرك فارغًا."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/models/payment_provider.py:0
+msgid ""
+"Without a working schedule and a company timezone, the review time skips "
+"Fridays and Saturdays only."
+msgstr ""
+"بدون جدول عمل ومنطقة زمنية للشركة، تستثني مدة المراجعة أيام الجمعة والسبت "
+"فقط."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,field_description:payment_instapay_cf.field_payment_provider__instapay_cf_calendar_id
+msgid "Working Schedule"
+msgstr "جدول العمل"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_calendar_id
+msgid ""
+"Working days and public holidays used to count the review time (in Egypt: "
+"Sunday to Thursday). The company's working schedule when empty."
+msgstr ""
+"أيام العمل والعطلات الرسمية المستخدمة لحساب مدة المراجعة (في مصر: من الأحد "
+"إلى الخميس). إذا تُرك فارغًا، يُستخدم جدول عمل الشركة."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_provider__instapay_cf_review_days
+msgid ""
+"Working days your team needs to check a receipt. Customers see the resulting"
+" date; 2 working days are 48 hours of working days."
+msgstr ""
+"عدد أيام العمل التي يحتاجها فريقك لمراجعة إيصال. يرى العملاء التاريخ الناتج؛"
+" فمدة 2 من أيام العمل تعادل 48 ساعة من أيام العمل."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "You already sent this screenshot for this payment."
+msgstr "أرسلت لقطة الشاشة هذه بالفعل لهذه الدفعة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instructions
+msgid "You chose to pay another way."
+msgstr "اخترت الدفع بطريقة أخرى."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "You sent many receipts for this payment. Please contact %(company)s."
+msgstr "أرسلت إيصالات كثيرة لهذه الدفعة. يُرجى التواصل مع %(company)s."
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields,help:payment_instapay_cf.field_payment_instapay_account__ipa
+msgid ""
+"Your InstaPay Payment Address, e.g. yourshop@instapay. Customers can't type "
+"it in the app any more: add the payment link or the QR too."
+msgstr ""
+"عنوان الدفع الخاص بك على إنستاباي، مثل yourshop@instapay. لم يعد بإمكان "
+"العملاء كتابته في التطبيق: أضف رابط الدفع أو رمز QR أيضًا."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Your InstaPay transfer of"
+msgstr "تحويلك عبر إنستاباي بمبلغ"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.receipt_form
+msgid "Your name or your InstaPay address."
+msgstr "اسمك أو عنوانك على إنستاباي."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "Your order"
+msgstr "طلبك"
+
+#. module: payment_instapay_cf
+#: model_terms:payment.provider,pending_msg:payment_instapay_cf.payment_provider_instapay_cf
+msgid "Your order is reserved until your transfer is confirmed."
+msgstr "طلبك محجوز حتى يتم تأكيد تحويلك."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "Your order reference"
+msgstr "الرقم المرجعي لطلبك"
+
+#. module: payment_instapay_cf
+#: model_terms:payment.provider,auth_msg:payment_instapay_cf.payment_provider_instapay_cf
+msgid "Your payment has been authorized."
+msgstr "تم تفويض دفعتك."
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/controllers/main.py:0
+msgid "Your payment is being updated. Please try again in a moment."
+msgstr "جارٍ تحديث دفعتك. يُرجى المحاولة مرة أخرى بعد قليل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+#: model_terms:payment.provider,done_msg:payment_instapay_cf.payment_provider_instapay_cf
+msgid "Your transfer is confirmed. Thank you!"
+msgstr "تم تأكيد تحويلك. شكرًا لك!"
+
+#. module: payment_instapay_cf
+#. odoo-python
+#: code:addons/payment_instapay_cf/const.py:0
+msgid ""
+"Your transfer is still pending at the bank. We will check it again; you can "
+"also upload a new screenshot once the transfer is successful."
+msgstr ""
+"لا يزال تحويلك معلقًا لدى البنك. سنراجعه مرة أخرى؛ ويمكنك أيضًا رفع لقطة "
+"شاشة جديدة بعد نجاح التحويل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "by"
+msgstr "بحلول"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "cancelled the InstaPay payment"
+msgstr "ألغت دفعة إنستاباي"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instructions
+msgid "cancelled this payment."
+msgstr "ألغت هذه الدفعة."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.inline_form
+msgid ""
+"confirms your payment\n"
+"                within"
+msgstr ""
+"تؤكد دفعتك\n"
+"                خلال مدة أقصاها"
+
+#. module: payment_instapay_cf
+#: model:ir.model.fields.selection,name:payment_instapay_cf.selection__payment_instapay_account__wallet_operator__etisalat_cash
+msgid "e& cash"
+msgstr "e& cash"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "e.g. Business account of our company"
+msgstr "مثال: حساب الأعمال الخاص بشركتنا"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "for"
+msgstr "بخصوص"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "https://ipn.eg/S/yourshop/instapay/AbC123"
+msgstr "https://ipn.eg/S/yourshop/instapay/AbC123"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "is confirmed. Thank you!"
+msgstr "تم تأكيده. شكرًا لك!"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid ""
+"is still waiting for your\n"
+"                                InstaPay transfer of"
+msgstr ""
+"لا يزال في انتظار تحويلك\n"
+"                                عبر إنستاباي بمبلغ"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid ""
+"per transfer: send the\n"
+"                amount in several transfers and upload each receipt."
+msgstr ""
+"لكل تحويل: أرسل المبلغ\n"
+"                على عدة تحويلات وارفع إيصال كل منها."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "will confirm your payment"
+msgstr "ستؤكد دفعتك"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "will confirm your payment by"
+msgstr "ستؤكد دفعتك بحلول"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid "will confirm your payment within"
+msgstr "ستؤكد دفعتك خلال مدة أقصاها"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+msgid ""
+"with InstaPay to one of the accounts\n"
+"                                below, then upload a screenshot of the receipt."
+msgstr ""
+"عبر إنستاباي إلى أحد الحسابات\n"
+"                                أدناه، ثم ارفع لقطة شاشة للإيصال."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "within"
+msgstr "خلال مدة أقصاها"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.email_body
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.inline_form
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_details
+msgid "working days."
+msgstr "من أيام العمل."
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.payment_instapay_account_form
+msgid "yourshop@instapay"
+msgstr "yourshop@instapay"
+
+#. module: payment_instapay_cf
+#: model:mail.template,subject:payment_instapay_cf.mail_template_instapay_instructions
+msgid ""
+"{{ object.company_id.name }}: how to pay {{ object.reference }} with "
+"InstaPay"
+msgstr ""
+"{{ object.company_id.name }}: طريقة دفع {{ object.reference }} عبر إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:mail.template,subject:payment_instapay_cf.mail_template_instapay_rejected
+msgid ""
+"{{ object.company_id.name }}: we couldn't confirm your transfer for {{ "
+"object.reference }}"
+msgstr ""
+"{{ object.company_id.name }}: تعذّر علينا تأكيد تحويلك بخصوص {{ "
+"object.reference }}"
+
+#. module: payment_instapay_cf
+#: model:mail.template,subject:payment_instapay_cf.mail_template_instapay_receipt_received
+msgid ""
+"{{ object.company_id.name }}: we received your receipt for {{ "
+"object.reference }}"
+msgstr ""
+"{{ object.company_id.name }}: استلمنا إيصالك بخصوص {{ object.reference }}"
+
+#. module: payment_instapay_cf
+#: model:mail.template,subject:payment_instapay_cf.mail_template_instapay_cancelled
+msgid ""
+"{{ object.company_id.name }}: your InstaPay payment {{ object.reference }} "
+"is cancelled"
+msgstr ""
+"{{ object.company_id.name }}: تم إلغاء دفعة إنستاباي {{ object.reference }}"
+
+#. module: payment_instapay_cf
+#: model:mail.template,subject:payment_instapay_cf.mail_template_instapay_reminder
+msgid ""
+"{{ object.company_id.name }}: your order {{ object.reference }} is waiting "
+"for your InstaPay transfer"
+msgstr ""
+"{{ object.company_id.name }}: طلبك {{ object.reference }} في انتظار تحويلك "
+"عبر إنستاباي"
+
+#. module: payment_instapay_cf
+#: model:mail.template,subject:payment_instapay_cf.mail_template_instapay_confirmed
+msgid ""
+"{{ object.company_id.name }}: your payment {{ object.reference }} is "
+"confirmed"
+msgstr "{{ object.company_id.name }}: تم تأكيد دفعتك {{ object.reference }}"
+
+#. module: payment_instapay_cf
+#: model_terms:ir.ui.view,arch_db:payment_instapay_cf.pay_page
+msgid "· Questions?"
+msgstr "· لديك أسئلة؟"

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- While an InstaPay payment of the invoice waits, Odoo hides the Pay button and shows no
+         status: show where to send the money and the link to upload the receipt. -->
+    <template id="portal_invoice_page_instapay" inherit_id="account_payment.portal_invoice_page_inherit_payment">
+        <xpath expr="//div[@id='portal_pay'][1]" position="before">
+            <t t-set="instapay_tx" t-value="invoice._instapay_cf_get_open_transaction()"/>
+            <div t-if="instapay_tx" class="o_instapay_cf_invoice_status mb-3">
+                <t t-call="payment.state_header" tx="instapay_tx"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

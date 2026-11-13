@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_instapay_review_wizard_form" model="ir.ui.view">
+        <field name="name">payment.instapay.review.wizard.form</field>
+        <field name="model">payment.instapay.review.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Review InstaPay Payment">
+                <field name="transaction_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="provider_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="warning_text" invisible="1"/>
+                <field name="paid_elsewhere" invisible="1"/>
+                <div class="alert alert-danger" role="alert" invisible="not paid_elsewhere or decision != 'confirm'">
+                    <field name="paid_elsewhere" nolabel="1"/>
+                </div>
+                <group>
+                    <field name="decision" widget="radio"/>
+                    <field name="amount_expected"/>
+                    <field
+                        name="receipt_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                        invisible="decision == 'cancel' and not receipt_ids"
+                    />
+                </group>
+
+                <!-- Confirm -->
+                <div invisible="decision != 'confirm'">
+                    <div class="alert alert-info" role="status">
+                        Open the bank, wallet or InstaPay app of the account below and find this
+                        transfer. Never confirm from the screenshot or an SMS alone: both can be faked.
+                    </div>
+                    <group>
+                        <field
+                            name="received_account_id"
+                            required="decision == 'confirm'"
+                            options="{'no_create': True, 'no_open': True}"
+                        />
+                        <field name="amount_received" required="decision == 'confirm'"/>
+                        <field name="date_received" required="decision == 'confirm'"/>
+                    </group>
+                    <div class="alert alert-warning" role="alert" invisible="not warning_text">
+                        <field name="warning_text" nolabel="1" class="text-break" style="white-space: pre-line;"/>
+                    </div>
+                    <group>
+                        <field name="warnings_checked" invisible="not warning_text"/>
+                        <field name="statement_checked"/>
+                    </group>
+                </div>
+
+                <!-- Reject -->
+                <group invisible="decision != 'reject'">
+                    <field name="reject_reason" required="decision == 'reject'"/>
+                    <field name="customer_message" placeholder="Shown to the customer and sent by email"/>
+                    <field name="cancel_payment"/>
+                </group>
+
+                <!-- Cancel -->
+                <div invisible="decision != 'cancel'">
+                    <div class="alert alert-warning" role="alert">
+                        The customer can no longer pay this order with this payment. Any receipt still
+                        to review is rejected.
+                    </div>
+                    <group>
+                        <field name="reject_reason" string="Reason" required="decision == 'cancel'"/>
+                        <field name="customer_message" placeholder="Shown to the customer and sent by email"/>
+                    </group>
+                </div>
+
+                <footer>
+                    <button
+                        string="Confirm Payment"
+                        type="object"
+                        name="action_apply"
+                        class="btn-primary"
+                        invisible="decision != 'confirm'"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Reject Receipt"
+                        type="object"
+                        name="action_apply"
+                        class="btn-primary"
+                        invisible="decision != 'reject'"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel Payment"
+                        type="object"
+                        name="action_apply"
+                        class="btn-primary"
+                        invisible="decision != 'cancel'"
+                        data-hotkey="q"
+                    />
+                    <button string="Discard" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

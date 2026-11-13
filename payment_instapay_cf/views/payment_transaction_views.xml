@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_transaction_form" model="ir.ui.view">
+        <field name="name">InstaPay Transaction Form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <field name="provider_code" invisible="1"/>
+                <field name="instapay_cf_status" invisible="1"/>
+                <button
+                    string="Review Receipt"
+                    type="object"
+                    name="action_instapay_cf_review"
+                    class="oe_highlight"
+                    invisible="provider_code != 'instapay_cf' or instapay_cf_status != 'in_review'"
+                    groups="account.group_account_invoice"
+                />
+                <button
+                    string="Add Receipt"
+                    type="object"
+                    name="action_instapay_cf_add_receipt"
+                    help="Add a proof of transfer the customer sent another way, e.g. by WhatsApp or email."
+                    invisible="provider_code != 'instapay_cf' or state not in ('pending', 'cancel')"
+                    groups="account.group_account_invoice"
+                />
+                <button
+                    string="Cancel Payment"
+                    type="object"
+                    name="action_instapay_cf_cancel"
+                    invisible="provider_code != 'instapay_cf' or state != 'pending'"
+                    groups="account.group_account_invoice"
+                />
+            </header>
+            <notebook position="inside">
+                <page string="InstaPay" name="instapay_cf" invisible="provider_code != 'instapay_cf'">
+                    <group>
+                        <group>
+                            <field name="instapay_cf_status"/>
+                            <field name="instapay_cf_review_deadline" invisible="not instapay_cf_review_deadline"/>
+                            <field name="instapay_cf_cancelled_by" invisible="not instapay_cf_cancelled_by"/>
+                            <field name="instapay_cf_cancel_message" invisible="not instapay_cf_cancel_message"/>
+                        </group>
+                        <group invisible="instapay_cf_status != 'confirmed'">
+                            <field name="instapay_cf_account_id"/>
+                            <field name="instapay_cf_amount_received"/>
+                            <field name="instapay_cf_received_date"/>
+                            <field name="instapay_cf_reviewer_id"/>
+                        </group>
+                    </group>
+                    <field name="instapay_cf_receipt_ids" nolabel="1">
+                        <list
+                            decoration-danger="is_overdue"
+                            decoration-muted="state != 'submitted'"
+                        >
+                            <field name="is_overdue" column_invisible="True"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="submitted_at"/>
+                            <field name="transfer_reference"/>
+                            <field name="amount_sent"/>
+                            <field name="account_label"/>
+                            <field name="source"/>
+                            <field name="review_deadline" widget="relative_date"/>
+                            <field
+                                name="state"
+                                widget="badge"
+                                decoration-info="state == 'submitted'"
+                                decoration-success="state == 'accepted'"
+                                decoration-warning="state == 'rejected'"
+                            />
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="payment_transaction_search" model="ir.ui.view">
+        <field name="name">InstaPay Transaction Search</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_search"/>
+        <field name="arch" type="xml">
+            <filter name="live_transactions" position="after">
+                <separator/>
+                <filter
+                    string="InstaPay: Receipt to Review"
+                    name="instapay_cf_in_review"
+                    domain="[('instapay_cf_status', '=', 'in_review')]"
+                />
+                <filter
+                    string="InstaPay: Waiting for the Transfer"
+                    name="instapay_cf_awaiting"
+                    domain="[('instapay_cf_status', 'in', ('awaiting', 'rejected'))]"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>

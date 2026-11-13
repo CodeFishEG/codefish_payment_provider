@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_instapay_receipts"
+        name="InstaPay Receipts"
+        parent="account.menu_finance_receivables"
+        action="action_instapay_receipts"
+        sequence="16"
+        groups="account.group_account_invoice,account.group_account_readonly"
+    />
+
+</odoo>

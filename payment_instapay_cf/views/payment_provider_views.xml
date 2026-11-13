@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">InstaPay Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <!-- InstaPay has no test environment: the provider is always live. -->
+            <xpath expr="//field[@name='is_live']" position="attributes">
+                <attribute name="invisible" separator=" or " add="code == 'instapay_cf'"/>
+            </xpath>
+            <page name="payment_methods" position="after">
+                <page string="Receiving Accounts" name="instapay_cf_accounts" invisible="code != 'instapay_cf'">
+                    <div class="text-muted mb-3">
+                        Where your customers send the money: your InstaPay account (payment link, QR
+                        code and mobile number from the InstaPay app), your mobile wallets and your bank
+                        accounts. Customers see them in this order, with copy buttons. Set the journal of
+                        each account to post the payments where the money lands.
+                    </div>
+                    <field name="instapay_cf_account_ids" nolabel="1" context="{'default_provider_id': id}">
+                        <list>
+                            <field name="sequence" widget="handle"/>
+                            <field name="kind" widget="badge"/>
+                            <field name="name"/>
+                            <field name="holder_name"/>
+                            <field name="journal_id"/>
+                            <field name="warning" string="Note" class="text-warning"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </list>
+                    </field>
+                </page>
+            </page>
+            <!-- InstaPay has no credentials: its settings take the place of the empty group. -->
+            <group name="provider_credentials" position="attributes">
+                <attribute name="invisible" separator=" or " add="code == 'instapay_cf'"/>
+            </group>
+            <group name="provider_credentials" position="after">
+                <group string="InstaPay" name="instapay_cf_options" invisible="code != 'instapay_cf'">
+                    <div
+                        colspan="2"
+                        class="alert alert-warning mb-2"
+                        role="alert"
+                        invisible="not instapay_cf_calendar_warning"
+                    >
+                        <field name="instapay_cf_calendar_warning" nolabel="1"/>
+                    </div>
+                    <div
+                        colspan="2"
+                        class="alert alert-warning mb-2"
+                        role="alert"
+                        invisible="not instapay_cf_reviewer_warning"
+                    >
+                        <field name="instapay_cf_reviewer_warning" nolabel="1"/>
+                    </div>
+                    <label for="instapay_cf_review_days"/>
+                    <div class="o_row">
+                        <field name="instapay_cf_review_days" class="oe_inline"/>
+                        <span>working days</span>
+                    </div>
+                    <field name="instapay_cf_calendar_id"/>
+                    <field name="instapay_cf_reviewer_user_id"/>
+                    <field name="instapay_cf_reviewer_role_id" invisible="instapay_cf_reviewer_user_id"/>
+                    <field name="instapay_cf_require_reference"/>
+                    <label for="instapay_cf_reminder_days"/>
+                    <div class="o_row">
+                        <field name="instapay_cf_reminder_days" class="oe_inline"/>
+                        <span>days</span>
+                    </div>
+                    <label for="instapay_cf_expiry_days"/>
+                    <div class="o_row">
+                        <field name="instapay_cf_expiry_days" class="oe_inline"/>
+                        <span>days</span>
+                    </div>
+                    <field name="instapay_cf_send_emails"/>
+                </group>
+            </group>
+            <field name="available_currency_ids" position="attributes">
+                <attribute name="readonly" separator=" or " add="code == 'instapay_cf'"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

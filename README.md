@@ -1,12 +1,14 @@
 # codefish_payment_provider
 
 Payment providers for Odoo 20.0, built by codefish, the software development division of mediafish. The
-repository holds two modules:
+repository holds three modules:
 
 - **Fawry Payments** connects Odoo to Fawry (FawryPay), the Egyptian payment network: cards with 3-D Secure, Fawry
   reference codes paid in cash, mobile wallets, myFawry and Fawry's installment partners.
 - **Paymob Payments** connects Odoo to Paymob in Egypt, Saudi Arabia, the UAE, Oman and Pakistan: cards, wallets,
   kiosk payments, bank installments and buy-now-pay-later brands, Apple Pay and Google Pay.
+- **InstaPay Payments** takes payments by InstaPay, mobile wallet or bank transfer in Egypt, without any API: the
+  customer sends the money and uploads the receipt, and the accounting team confirms it within 2 working days.
 
 ## Contents
 
@@ -15,6 +17,7 @@ repository holds two modules:
 - [Installation](#installation)
 - [Fawry Payments](#fawry-payments-payment_fawry_cf)
 - [Paymob Payments](#paymob-payments-payment_paymob_cf)
+- [InstaPay Payments](#instapay-payments-payment_instapay_cf)
 - [Development](#development)
 - [Licence](#licence)
 
@@ -24,6 +27,7 @@ repository holds two modules:
 |---|---|---|---|---|
 | [`payment_fawry_cf`](payment_fawry_cf) | Fawry Payments | Fawry payment provider: FawryPay Express Checkout or the server-to-server APIs, saved cards, refunds, reference codes and wallet QR codes shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
 | [`payment_paymob_cf`](payment_paymob_cf) | Paymob Payments | Paymob payment provider for five countries: Paymob Checkout or an embedded card form, saved cards, MOTO charges, authorize and capture, refunds, payment split, kiosk references shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
+| [`payment_instapay_cf`](payment_instapay_cf) | InstaPay Payments | Manual InstaPay, mobile wallet and bank transfer payments: payment details with copy buttons, link and QR code, receipt upload, review by the accountants within working days, reminders and cancellation | OPL-1 (paid) | `payment`, `account_payment`, `mail`, `resource` |
 
 ## Requirements
 
@@ -33,6 +37,8 @@ repository holds two modules:
   first.
 - Paymob Payments: a Paymob account (secret, public and API keys, HMAC secret, integration IDs), in test mode
   first.
+- InstaPay Payments: an InstaPay account for the business (payment link and QR code from the app) and/or mobile
+  wallets and bank accounts in EGP. No API key: InstaPay has no merchant API.
 - The Odoo server must be reachable from the internet over HTTPS in production, so that the payment providers can
   send their notifications and redirect customers back.
 
@@ -53,8 +59,8 @@ repository holds two modules:
    ```
 
 3. Restart the Odoo server, turn on developer mode, then open **Apps › Update Apps List**.
-4. In **Apps**, remove the **Apps** filter, search for **Fawry Payments** (`payment_fawry_cf`) or **Paymob
-   Payments** (`payment_paymob_cf`) and click **Activate**.
+4. In **Apps**, remove the **Apps** filter, search for **Fawry Payments** (`payment_fawry_cf`), **Paymob
+   Payments** (`payment_paymob_cf`) or **InstaPay Payments** (`payment_instapay_cf`) and click **Activate**.
 
 From the command line:
 
@@ -301,6 +307,35 @@ public page from opening a private address), so the pop-up and the side panel al
 - the side panel (the same frame as the pop-up), the other countries and the amount format of OMR (3 decimals), the
   `split_amounts` rules, installments, Apple Pay and Google Pay (live only).
 
+## InstaPay Payments (`payment_instapay_cf`)
+
+Guides:
+
+- [Administrator guide](payment_instapay_cf/doc/admin_guide.md): how it works, receiving accounts, review time and
+  reviewers, reminders, settings, accounting, statuses, emails, security, limits, troubleshooting.
+- [User guide](payment_instapay_cf/doc/user_guide.md): what customers see, and how the team reviews, confirms and
+  rejects receipts.
+
+InstaPay, Egypt's instant payment network, has no merchant API. The module turns it into a payment method with a
+manual confirmation:
+
+1. At checkout the customer chooses InstaPay; the transaction waits (`pending`).
+2. The confirmation page, the portal and an email show the amount, the reference and the receiving accounts
+   (`payment.instapay.account`): InstaPay link and QR code, mobile wallets, bank accounts and IBANs, with Copy
+   buttons.
+3. On a tokenized page (`/payment/instapay_cf/pay/<tx>/<token>`), the customer uploads the screenshot of the
+   transfer with its reference. The image is checked and re-encoded (PNG or JPEG only, metadata removed).
+4. A receipt (`payment.instapay.receipt`) gets a review activity for the reviewer user or role, due after the review
+   time counted in working time on the company's working schedule, public holidays skipped (`plan_hours`).
+5. In the review wizard, an accountant confirms (after finding the credit in the statement of the receiving account)
+   or rejects with a reason. The decision is recorded with `tx._record()`; the order, the payment (in the journal of
+   the receiving account, memo = InstaPay reference) and the invoice follow through Odoo's payment engine.
+6. An hourly cron reminds customers who sent no receipt, then cancels their payment after N days.
+
+Warnings flag a screenshot or reference sent for another payment, an amount that differs and a transfer dated
+outside the order's time; a reference can be accepted once per company. Customer emails are sent without Odoo's
+email layout and name the company.
+
 ## Development
 
 ### Repository layout
@@ -329,23 +364,41 @@ codefish_payment_provider/
 │   ├── doc/                      administrator and user guides
 │   ├── i18n/                     payment_fawry_cf.pot, ar.po
 │   └── tests/
-└── payment_paymob_cf/
+├── payment_paymob_cf/
+│   ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
+│   ├── const.py                  countries, endpoints, gateway types, HMAC fields, response codes
+│   ├── exceptions.py             PaymobError (an error returned by Paymob, with its code)
+│   ├── utils.py                  HMAC strings, redirection parsing, declines, error classification, cards
+│   ├── controllers/main.py       return, frame return, card form completion, webhook and poll routes
+│   ├── controllers/portal.py     leaves out expired saved cards
+│   ├── models/                   payment.provider, payment.transaction, payment.token, payment.method,
+│   │                             payment.paymob.split.merchant (payment split)
+│   ├── security/ir.access.csv    access to the connected merchants
+│   ├── views/                    provider (with Test Data tab), method, transaction, token forms, templates
+│   ├── data/                     provider, payment methods, cron, neutralize.sql
+│   ├── static/src/               payment form patch (checkout frame, Pixel), status patch, instructions
+│   ├── static/img/               logos of the methods Odoo has no logo for
+│   ├── static/description/       Apps store page, banner, icons, screenshots
+│   ├── doc/                      administrator and user guides
+│   ├── i18n/                     payment_paymob_cf.pot, ar.po
+│   └── tests/
+└── payment_instapay_cf/
     ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
-    ├── const.py                  countries, endpoints, gateway types, HMAC fields, response codes
-    ├── exceptions.py             PaymobError (an error returned by Paymob, with its code)
-    ├── utils.py                  HMAC strings, redirection parsing, declines, error classification, cards
-    ├── controllers/main.py       return, frame return, card form completion, webhook and poll routes
-    ├── controllers/portal.py     leaves out expired saved cards
-    ├── models/                   payment.provider, payment.transaction, payment.token, payment.method,
-    │                             payment.paymob.split.merchant (payment split)
-    ├── security/ir.access.csv    access to the connected merchants
-    ├── views/                    provider (with Test Data tab), method, transaction, token forms, templates
-    ├── data/                     provider, payment methods, cron, neutralize.sql
-    ├── static/src/               payment form patch (checkout frame, Pixel), status patch, instructions
-    ├── static/img/               logos of the methods Odoo has no logo for
+    ├── const.py                  events, limits, patterns, wallets, rejection reasons
+    ├── utils.py                  digits, mobile numbers, IBAN check, InstaPay links, image sanitizing
+    ├── controllers/main.py       checkout, payment page, receipt upload and "pay another way" routes
+    ├── models/                   payment.provider, payment.transaction, account.move,
+    │                             payment.instapay.account (receiving accounts),
+    │                             payment.instapay.receipt (screenshots to review)
+    ├── wizard/                   payment.instapay.review.wizard (confirm, reject, cancel)
+    ├── security/ir.access.csv    accountants review, read-only accountants read, company rules
+    ├── views/                    provider, account, receipt, transaction views, menu, templates, emails
+    ├── data/                     provider, payment method, activity type, emails, cron, neutralize.sql
+    ├── static/src/               copy buttons, receipt form, status patch, SCSS
+    ├── static/img/               InstaPay logo and icon
     ├── static/description/       Apps store page, banner, icons, screenshots
     ├── doc/                      administrator and user guides
-    ├── i18n/                     payment_paymob_cf.pot, ar.po
+    ├── i18n/                     payment_instapay_cf.pot, ar.po
     └── tests/
 ```
 
@@ -368,13 +421,21 @@ python odoo-bin db -c odoo-server.conf drop odoo20_payment_fawry_cf_test
 python odoo-bin -c odoo-server.conf -d odoo20_payment_paymob_cf_test -i payment_paymob_cf \
     --test-tags /payment_paymob_cf --stop-after-init --http-port=8099
 python odoo-bin db -c odoo-server.conf drop odoo20_payment_paymob_cf_test
+
+python odoo-bin -c odoo-server.conf -d odoo20_payment_instapay_cf_test -i payment_instapay_cf \
+    --test-tags /payment_instapay_cf --stop-after-init --http-port=8099
+python odoo-bin db -c odoo-server.conf drop odoo20_payment_instapay_cf_test
 ```
 
 The tests mock Fawry's API: they check every signature against an independent implementation, the state
 mapping, refunds, saved cards, bank installments, payment split, error codes, the routes (signatures, access
 tokens), the waiting page and the POS Emulator page. The Paymob tests check the HMAC strings against Paymob's
 documented examples, the intention payloads, every route (HMAC, access tokens), the state mapping, saved cards,
-MOTO charges, refunds, captures, voids, payment split, response codes and the journal.
+MOTO charges, refunds, captures, voids, payment split, response codes and the journal. The InstaPay tests check the
+text and IBAN helpers, the image sanitizing (formats, truncated files, metadata, sizes), the review deadline on a
+Sunday-to-Thursday schedule with a public holiday, the receiving accounts, the events, the review wizard, the routes
+(access tokens, CSRF, upload limits) and the reminder and cancellation cron. Run them also with `website_sale`,
+`sale_management` and `l10n_eg_cf` installed.
 
 ### Translations
 
@@ -385,15 +446,17 @@ MOTO charges, refunds, captures, voids, payment split, response codes and the jo
 python odoo-bin i18n export -c <config> -d <database> payment_fawry_cf -l pot ar_EG
 ```
 
-Use `payment_paymob_cf` the same way for the Paymob module.
+Use `payment_paymob_cf` and `payment_instapay_cf` the same way for the other modules. InstaPay is written
+"إنستاباي" in Arabic.
 
 ## Licence
 
-`payment_fawry_cf` and `payment_paymob_cf` are licensed under the Odoo Proprietary License v1.0 (OPL-1): see [`LICENSE`](LICENSE) and
+`payment_fawry_cf`, `payment_paymob_cf` and `payment_instapay_cf` are licensed under the Odoo Proprietary License v1.0 (OPL-1): see [`LICENSE`](LICENSE) and
 [`COPYRIGHT`](COPYRIGHT). Copyright (c) 2010-Present mediafish (https://www.mediafish.agency).
 
-Fawry, FawryPay, myFawry, Paymob and the names and logos of the payment methods are trademarks of their owners
-and are used only to show which payment methods are accepted.
+Fawry, FawryPay, myFawry, Paymob, InstaPay, IPN and the names and logos of the payment methods are trademarks of
+their owners and are used only to show which payment methods are accepted. The modules are not affiliated with or
+endorsed by these companies.
 
 <p align="center">
   <img src=".github/assets/codefish_logo_orange.png" alt="codefish" height="72">

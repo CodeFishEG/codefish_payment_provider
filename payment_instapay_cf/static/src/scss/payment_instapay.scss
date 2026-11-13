@@ -1,0 +1,67 @@
+// The InstaPay transfer details, the receipt form and the payment page. Colours come from the
+// website theme (Bootstrap variables) so that they follow the shop's palette and right-to-left
+// layouts; the InstaPay logo carries the InstaPay brand.
+
+.o_instapay_cf_inline_form {
+    .o_instapay_cf_hint .oi {
+        font-size: 1.1rem;
+    }
+}
+
+.o_instapay_cf_logo {
+    display: block;
+    align-self: flex-start; // Not stretched in the flex column of the payment details.
+    height: 22px;
+    width: auto;
+}
+
+.o_instapay_cf_instructions {
+    .o_instapay_cf_amount,
+    .o_instapay_cf_account {
+        background-color: $white;
+        color: $gray-900;
+    }
+
+    .o_instapay_cf_row_text {
+        min-width: 0;
+    }
+
+    // Numbers, IBANs and amounts read left to right, also in Arabic: the elements carry
+    // dir="ltr" (a CSS `direction` would be flipped by Odoo's right-to-left stylesheets).
+    .o_instapay_cf_value {
+        unicode-bidi: isolate;
+        font-family: $font-family-monospace;
+        overflow-wrap: anywhere; // Long IBANs wrap between their groups first.
+    }
+
+    .o_instapay_cf_qr {
+        width: 180px;
+
+        img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            background-color: $white;
+        }
+    }
+
+    .o_instapay_cf_page_qr {
+        width: 72px;
+        height: 72px;
+        background-color: $white;
+        padding: 4px;
+        border-radius: $border-radius;
+    }
+
+    .o_instapay_cf_message p:last-child,
+    .o_instapay_cf_status p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.o_instapay_cf_receipt_form {
+    .o_instapay_cf_preview {
+        max-height: 320px;
+        width: auto;
+    }
+}

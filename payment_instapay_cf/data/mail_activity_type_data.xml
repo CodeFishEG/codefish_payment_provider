@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Scheduled for the reviewer when a customer sends the receipt of an InstaPay transfer, due on
+         the review deadline (the provider's review time, in working days). -->
+    <record id="mail_activity_type_instapay_review" model="mail.activity.type">
+        <field name="name">Review InstaPay receipt</field>
+        <field name="summary">Check the InstaPay transfer</field>
+        <field name="icon">receipt_long</field>
+        <field name="res_model">payment.instapay.receipt</field>
+        <field name="delay_count">0</field>
+        <field name="sequence">50</field>
+    </record>
+
+</odoo>

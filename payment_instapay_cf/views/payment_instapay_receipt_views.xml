@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_instapay_receipt_list" model="ir.ui.view">
+        <field name="name">payment.instapay.receipt.list</field>
+        <field name="model">payment.instapay.receipt</field>
+        <field name="arch" type="xml">
+            <list
+                string="InstaPay Receipts"
+                create="false"
+                decoration-danger="is_overdue"
+                decoration-warning="state == 'submitted' and (has_duplicate or amount_mismatch or time_warning)"
+                decoration-muted="state != 'submitted'"
+            >
+                <field name="is_overdue" column_invisible="True"/>
+                <field name="has_duplicate" column_invisible="True"/>
+                <field name="amount_mismatch" column_invisible="True"/>
+                <field name="time_warning" column_invisible="True"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="tx_reference"/>
+                <field name="partner_id"/>
+                <field name="amount_expected" sum="Total"/>
+                <field name="amount_sent"/>
+                <field name="transfer_reference"/>
+                <field name="account_label" optional="show"/>
+                <field name="submitted_at" optional="show"/>
+                <field name="review_deadline" widget="relative_date" optional="show"/>
+                <field name="source" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'submitted'"
+                    decoration-success="state == 'accepted'"
+                    decoration-warning="state == 'rejected'"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="payment_instapay_receipt_kanban" model="ir.ui.view">
+        <field name="name">payment.instapay.receipt.kanban</field>
+        <field name="model">payment.instapay.receipt</field>
+        <field name="arch" type="xml">
+            <kanban
+                class="o_kanban_mobile"
+                default_group_by="state"
+                records_draggable="0"
+                group_create="0"
+                quick_create="0"
+                create="0"
+            >
+                <field name="currency_id"/>
+                <field name="state"/>
+                <field name="is_overdue"/>
+                <field name="has_duplicate"/>
+                <field name="amount_mismatch"/>
+                <templates>
+                    <t t-name="card" class="flex-row">
+                        <aside class="me-2">
+                            <field name="image" widget="image" options="{'size': [64, 64], 'img_class': 'object-fit-cover rounded'}"/>
+                        </aside>
+                        <main class="flex-grow-1 min-w-0">
+                            <div class="d-flex align-items-baseline gap-2">
+                                <field class="fw-bold" name="tx_reference"/>
+                                <field class="fw-bold ms-auto" name="amount_sent" widget="monetary"/>
+                            </div>
+                            <field class="text-muted" name="partner_id"/>
+                            <div class="d-flex flex-wrap gap-1 mt-1">
+                                <field name="transfer_reference" class="small"/>
+                                <t t-if="record.state.raw_value == 'submitted'">
+                                    <span t-if="record.is_overdue.raw_value" class="badge text-bg-danger">Overdue</span>
+                                    <span t-if="record.has_duplicate.raw_value" class="badge text-bg-warning">Possible duplicate</span>
+                                    <span t-if="record.amount_mismatch.raw_value" class="badge text-bg-warning">Amount differs</span>
+                                </t>
+                            </div>
+                            <div class="d-flex mt-1">
+                                <field name="review_deadline" widget="relative_date" class="small" invisible="state != 'submitted'"/>
+                                <field name="activity_ids" widget="kanban_activity" class="ms-auto"/>
+                            </div>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="payment_instapay_receipt_form" model="ir.ui.view">
+        <field name="name">payment.instapay.receipt.form</field>
+        <field name="model">payment.instapay.receipt</field>
+        <field name="arch" type="xml">
+            <form string="InstaPay Receipt">
+                <header>
+                    <button
+                        string="Confirm Payment"
+                        type="object"
+                        name="action_open_confirm"
+                        class="oe_highlight"
+                        invisible="not id or state != 'submitted'"
+                        groups="account.group_account_invoice"
+                    />
+                    <button
+                        string="Reject Receipt"
+                        type="object"
+                        name="action_open_reject"
+                        invisible="not id or state != 'submitted'"
+                        groups="account.group_account_invoice"
+                    />
+                    <field name="state" widget="statusbar" statusbar_visible="submitted,accepted"/>
+                </header>
+                <sheet>
+                    <field name="is_overdue" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="provider_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <div class="alert alert-danger" role="alert" invisible="not is_overdue">
+                        The review deadline is past: the customer was told their payment would be
+                        confirmed by now.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not has_duplicate or state != 'submitted'">
+                        The same screenshot or reference was sent for another payment:
+                        <field name="duplicate_receipt_ids" widget="many2many_tags" nolabel="1" class="d-inline"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not amount_mismatch or state != 'submitted'">
+                        The amount sent differs from the amount to pay.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="time_warning != 'before_order' or state != 'submitted'">
+                        The transfer is dated before the payment started.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="time_warning != 'future' or state != 'submitted'">
+                        The transfer is dated in the future.
+                    </div>
+                    <div class="alert alert-info" role="status" invisible="not id or state != 'submitted'">
+                        <strong>Before confirming:</strong> find this transfer in the statement of the
+                        account it was sent to (bank app, wallet app or InstaPay history). Never confirm
+                        from the screenshot or an SMS alone: both can be faked. Check the amount, the date
+                        and time, and that the reference wasn't used before.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="tx_reference" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Payment">
+                            <field
+                                name="transaction_id"
+                                readonly="id"
+                                options="{'no_create': True}"
+                                domain="[('provider_code', '=', 'instapay_cf'), ('state', 'in', ('pending', 'cancel'))]"
+                                groups="account.group_account_invoice"
+                            />
+                            <field name="partner_id"/>
+                            <field name="amount_expected"/>
+                            <field name="order_date"/>
+                        </group>
+                        <group string="Declared on the Receipt">
+                            <field name="transfer_reference" readonly="id"/>
+                            <field name="amount_sent" readonly="id"/>
+                            <field name="transferred_at" readonly="id"/>
+                            <field name="sender_name" readonly="id"/>
+                            <field name="account_id" readonly="id" invisible="id and not account_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="account_label" invisible="not id"/>
+                            <field name="submitted_at" invisible="not id"/>
+                            <field name="review_deadline" invisible="not id"/>
+                            <field name="source" invisible="not id"/>
+                        </group>
+                    </group>
+                    <group invisible="id">
+                        <field name="image" widget="image" required="not id" options="{'size': [0, 320]}"/>
+                    </group>
+                    <group string="Review" invisible="state == 'submitted'">
+                        <group>
+                            <field name="reviewed_by_id"/>
+                            <field name="reviewed_at"/>
+                        </group>
+                        <group>
+                            <field name="amount_received" invisible="state != 'accepted'"/>
+                            <field name="received_account_id" invisible="state != 'accepted'"/>
+                            <field name="reject_reason" invisible="state != 'rejected'"/>
+                            <field name="reject_message" invisible="state != 'rejected'"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="o_attachment_preview"/>
+                <chatter reload_on_attachment="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="payment_instapay_receipt_search" model="ir.ui.view">
+        <field name="name">payment.instapay.receipt.search</field>
+        <field name="model">payment.instapay.receipt</field>
+        <field name="arch" type="xml">
+            <search string="InstaPay Receipts">
+                <field name="tx_reference"/>
+                <field name="transfer_reference"/>
+                <field name="partner_id"/>
+                <filter string="To Review" name="to_review" domain="[('state', '=', 'submitted')]"/>
+                <filter string="Overdue" name="overdue" domain="[('is_overdue', '=', True)]"/>
+                <filter string="Possible Duplicates" name="duplicates" domain="[('has_duplicate', '=', True)]"/>
+                <filter string="Amount Mismatch" name="amount_mismatch" domain="[('amount_mismatch', '=', True)]"/>
+                <filter string="Added by Staff" name="staff" domain="[('source', '=', 'staff')]"/>
+                <separator/>
+                <filter string="Accepted" name="accepted" domain="[('state', '=', 'accepted')]"/>
+                <filter string="Rejected" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter string="My Activities" name="my_activities" domain="[('activity_user_id', '=', uid)]"/>
+                <group>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Sent To" name="group_account" context="{'group_by': 'account_label'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_instapay_receipts" model="ir.actions.act_window">
+        <field name="name">InstaPay Receipts</field>
+        <field name="res_model">payment.instapay.receipt</field>
+        <field name="path">instapay-receipts</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="payment_instapay_receipt_search"/>
+        <field name="context">{'search_default_to_review': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No InstaPay receipt to review</p>
+            <p>
+                When customers pay with InstaPay, they upload a screenshot of their transfer. Each one
+                waits here until you find the money in your account and confirm the payment.
+            </p>
+        </field>
+    </record>
+
+</odoo>

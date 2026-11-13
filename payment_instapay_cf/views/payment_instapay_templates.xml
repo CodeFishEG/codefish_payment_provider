@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- No "Secured by" badge: customers pay in their own bank or wallet app. -->
+    <template id="payment_method_form" inherit_id="payment.method_form">
+        <xpath expr="//t[@t-set='hide_secured_by']" position="attributes">
+            <attribute name="t-value" separator=" " add="or provider_sudo.code == 'instapay_cf'"/>
+        </xpath>
+    </template>
+
+    <!-- Shown under InstaPay once it is selected at checkout. -->
+    <template id="inline_form">
+        <div name="o_instapay_cf_inline_form" class="o_instapay_cf_inline_form">
+            <t t-call="payment_instapay_cf.inline_hint" icon_name.f="send">
+                Send the amount with InstaPay from your bank or wallet app, then upload a screenshot
+                of the receipt. <t t-out="provider_sudo.company_id.name"/> confirms your payment
+                within <t t-out="provider_sudo.instapay_cf_review_days"/> working days.
+            </t>
+        </div>
+    </template>
+
+    <template id="inline_hint">
+        <!-- Parameters: icon_name (Material Symbols name); the body is the text. -->
+        <div class="o_instapay_cf_hint d-flex align-items-start gap-2 small text-muted">
+            <i class="oi flex-shrink-0 mt-1" t-att-data-icon="icon_name" aria-hidden="true"/>
+            <span><t t-out="0"/></span>
+        </div>
+    </template>
+
+    <!-- A value customers copy into their app: a number, an IBAN, the amount. -->
+    <template id="copy_value">
+        <!-- Parameters: label, display (as shown), copy (as copied). -->
+        <div class="o_instapay_cf_row d-flex align-items-center justify-content-between gap-2">
+            <div class="o_instapay_cf_row_text">
+                <div class="small opacity-75" t-out="label"/>
+                <span class="o_instapay_cf_value fw-semibold" dir="ltr" t-out="display"/>
+            </div>
+            <button
+                type="button"
+                class="btn btn-sm btn-light o_instapay_cf_copy flex-shrink-0"
+                t-att-data-copy="copy or display"
+            >
+                <i class="oi me-1" data-icon="content_copy" aria-hidden="true"/>
+                <span class="o_instapay_cf_copy_label">Copy</span>
+                <span class="o_instapay_cf_copied_label d-none">Copied</span>
+            </button>
+        </div>
+    </template>
+
+    <!-- One of the company's receiving accounts. -->
+    <template id="account_card">
+        <!-- Parameter: account (see payment.instapay.account._get_customer_values). -->
+        <div class="o_instapay_cf_account card">
+            <div class="card-body d-flex flex-column flex-md-row gap-3">
+                <div class="flex-grow-1 d-flex flex-column gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <i
+                            class="oi"
+                            t-att-data-icon="{'instapay': 'send', 'wallet': 'smartphone', 'bank': 'account_balance'}[account['kind']]"
+                            aria-hidden="true"
+                        />
+                        <span class="fw-bold" t-out="account['title']"/>
+                    </div>
+                    <t t-foreach="account['rows']" t-as="row">
+                        <t
+                            t-call="payment_instapay_cf.copy_value"
+                            label="row['label']"
+                            display="row['display']"
+                            copy="row['copy']"
+                        />
+                    </t>
+                    <div t-if="account['note']" class="small opacity-75" t-out="account['note']"/>
+                    <a
+                        t-if="account['link']"
+                        t-att-href="account['link']"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary o_instapay_cf_open_app d-md-none"
+                    >
+                        <i class="oi me-1" data-icon="open_in_new" aria-hidden="true"/>
+                        Open InstaPay
+                    </a>
+                </div>
+                <div
+                    t-if="account['qr_data_uri']"
+                    class="o_instapay_cf_qr text-center flex-shrink-0 d-none d-md-block"
+                >
+                    <img t-att-src="account['qr_data_uri']" alt="InstaPay QR code" class="img-fluid"/>
+                    <div class="small opacity-75 mt-1">Scan with the InstaPay app on your phone</div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- What the customer does next, and the receiving accounts. Shared by the status message and
+         the pay page. -->
+    <template id="payment_details">
+        <!-- Parameter: values (payment.transaction._instapay_cf_get_instructions_values). -->
+        <t t-set="status" t-value="values['status']"/>
+        <img
+            t-if="not values['on_pay_page']"
+            src="/payment_instapay_cf/static/img/instapay_logo.png"
+            alt="InstaPay"
+            class="o_instapay_cf_logo"
+        />
+        <div t-if="status == 'in_review'" class="o_instapay_cf_status alert alert-success mb-0" role="status">
+            <i class="oi me-1" data-icon="check_circle" aria-hidden="true"/>
+            We received your receipt. <t t-out="values['company_name']"/> will confirm your payment
+            <t t-if="values['review_date_text']">by <strong t-out="values['review_date_text']"/>.</t>
+            <t t-else="">within <t t-out="values['review_days']"/> working days.</t>
+        </div>
+        <div t-elif="status == 'rejected' and values['rejection']" class="o_instapay_cf_status alert alert-warning mb-0" role="status">
+            <div class="fw-semibold">
+                <i class="oi me-1" data-icon="warning" aria-hidden="true"/>
+                We couldn't confirm your transfer: <t t-out="values['rejection']['reason']"/>.
+            </div>
+            <div t-if="values['rejection']['message']" class="mt-1" t-out="values['rejection']['message']"/>
+            <div class="mt-1">Please upload a new receipt.</div>
+        </div>
+        <p t-else="" class="o_instapay_cf_status mb-0">
+            Send the amount below with InstaPay, from your bank or wallet app, to one of the accounts
+            of <t t-out="values['company_name']"/>. Then upload a screenshot of the receipt.
+        </p>
+
+        <div class="o_instapay_cf_amount card">
+            <div class="card-body d-flex flex-column gap-2">
+                <t
+                    t-call="payment_instapay_cf.copy_value"
+                    label.translate="Send exactly this amount"
+                    display="values['amount_display']"
+                    copy="values['amount_copy']"
+                />
+                <t
+                    t-call="payment_instapay_cf.copy_value"
+                    label.translate="Your order reference"
+                    display="values['reference']"
+                    copy="values['reference']"
+                />
+                <div class="small opacity-75">
+                    If your app lets you add a note to the transfer, write this reference.
+                </div>
+            </div>
+        </div>
+
+        <div class="o_instapay_cf_accounts d-flex flex-column gap-2">
+            <t t-foreach="values['accounts']" t-as="account">
+                <t t-call="payment_instapay_cf.account_card" account="account"/>
+            </t>
+        </div>
+
+        <ul class="o_instapay_cf_notes small opacity-75 mb-0 ps-3">
+            <li>Any InstaPay fee is paid by you, on top of the amount.</li>
+            <li t-if="values['over_limit']">
+                InstaPay allows <t t-out="values['max_per_transfer']"/> per transfer: send the
+                amount in several transfers and upload each receipt.
+            </li>
+            <li>Take a screenshot of the success screen: it shows the amount and the reference number.</li>
+        </ul>
+
+        <div
+            t-if="not values['on_pay_page'] and values['can_upload'] and status in ('awaiting', 'rejected')"
+            class="o_instapay_cf_upload d-flex flex-column flex-md-row align-items-md-center gap-3"
+        >
+            <a t-att-href="values['pay_page_url']" class="btn btn-primary btn-lg text-nowrap flex-shrink-0">
+                <i class="oi me-1" data-icon="upload" aria-hidden="true"/>
+                Upload your receipt
+            </a>
+            <div t-if="values['pay_page_qr']" class="d-none d-md-flex align-items-center gap-2 small opacity-75">
+                <img t-att-src="values['pay_page_qr']" alt="QR code of this page" class="o_instapay_cf_page_qr"/>
+                <span>Paying on your phone? Scan this code to upload the receipt from it.</span>
+            </div>
+        </div>
+        <a
+            t-elif="not values['on_pay_page'] and values['can_upload'] and status == 'in_review'"
+            t-att-href="values['pay_page_url']"
+            class="small"
+        >Send another receipt</a>
+    </template>
+
+    <!-- The payment status: rendered by payment.transaction._get_status_message wherever the status
+         of the payment is shown (confirmation page, portal order and invoice). -->
+    <template id="payment_instructions">
+        <div class="o_instapay_cf_instructions d-flex flex-column gap-3">
+            <t t-if="values['tx'].state == 'cancel'">
+                <div class="o_instapay_cf_cancelled d-flex flex-column gap-2">
+                    <div t-if="status_message" t-out="status_message"/>
+                    <div t-if="values['cancelled_by'] == 'customer'">You chose to pay another way.</div>
+                    <div t-elif="values['cancelled_by'] == 'expiry'">
+                        We received no receipt in time, so this payment was cancelled.
+                    </div>
+                    <div t-elif="values['cancelled_by'] == 'staff'">
+                        <t t-out="values['company_name']"/> cancelled this payment.
+                    </div>
+                    <div t-if="values['cancel_message']" t-out="values['cancel_message']"/>
+                    <div>
+                        <a t-att-href="values['document_url']" class="btn btn-primary">Pay again</a>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div t-if="status_message" class="o_instapay_cf_message" t-out="status_message"/>
+                <t t-call="payment_instapay_cf.payment_details"/>
+            </t>
+        </div>
+    </template>
+
+    <!-- The form sending the screenshot of the transfer. -->
+    <template id="receipt_form">
+        <form
+            class="o_instapay_cf_receipt_form card"
+            method="post"
+            enctype="multipart/form-data"
+            t-att-action="receipt_url"
+            t-att-data-max-size="max_size"
+        >
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <div class="card-body d-flex flex-column gap-3">
+                <div>
+                    <h2 class="h5 mb-1">Send the receipt</h2>
+                    <p class="small text-muted mb-0">
+                        Take a screenshot of the success screen of your transfer, then fill in what it shows.
+                    </p>
+                </div>
+                <div>
+                    <label for="o_instapay_cf_receipt" class="form-label fw-semibold">Screenshot of the receipt</label>
+                    <input
+                        id="o_instapay_cf_receipt"
+                        name="receipt"
+                        type="file"
+                        class="form-control"
+                        t-att-accept="accept"
+                        required="required"
+                    />
+                    <div class="form-text">PNG or JPEG, up to 10 MB.</div>
+                    <img class="o_instapay_cf_preview img-thumbnail mt-2 d-none" alt="Preview of the screenshot"/>
+                </div>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="o_instapay_cf_reference" class="form-label fw-semibold">
+                            Reference number
+                            <span t-if="not values['require_reference']" class="fw-normal text-muted">(optional)</span>
+                        </label>
+                        <input
+                            id="o_instapay_cf_reference"
+                            name="transfer_reference"
+                            type="text"
+                            class="form-control"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            maxlength="40"
+                            dir="ltr"
+                            t-att-required="values['require_reference'] and 'required' or None"
+                            t-att-value="form['transfer_reference']"
+                        />
+                        <div class="form-text">Shown as "Reference" on the receipt.</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="o_instapay_cf_amount" class="form-label fw-semibold">Amount sent</label>
+                        <input
+                            id="o_instapay_cf_amount"
+                            name="amount_sent"
+                            type="text"
+                            class="form-control"
+                            inputmode="decimal"
+                            required="required"
+                            dir="ltr"
+                            t-att-value="form['amount_sent']"
+                        />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="o_instapay_cf_date" class="form-label fw-semibold">Date and time of the transfer</label>
+                        <input
+                            id="o_instapay_cf_date"
+                            name="transferred_at"
+                            type="datetime-local"
+                            class="form-control"
+                            t-att-value="form['transferred_at']"
+                            t-att-max="now_local"
+                        />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="o_instapay_cf_sender" class="form-label fw-semibold">
+                            Sender <span class="fw-normal text-muted">(optional)</span>
+                        </label>
+                        <input
+                            id="o_instapay_cf_sender"
+                            name="sender_name"
+                            type="text"
+                            class="form-control"
+                            maxlength="128"
+                            autocomplete="name"
+                            t-att-value="form['sender_name']"
+                        />
+                        <div class="form-text">Your name or your InstaPay address.</div>
+                    </div>
+                    <div t-if="len(values['accounts']) &gt; 1" class="col-12">
+                        <label for="o_instapay_cf_account" class="form-label fw-semibold">Sent to</label>
+                        <select id="o_instapay_cf_account" name="account_id" class="form-select" required="required">
+                            <option value="">Choose where you sent the money</option>
+                            <t t-foreach="values['accounts']" t-as="account">
+                                <option
+                                    t-att-value="account['id']"
+                                    t-att-selected="str(account['id']) == str(form['account_id']) or None"
+                                >
+                                    <t t-out="account['label']"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+                <div class="o_instapay_cf_form_error alert alert-danger d-none mb-0" role="alert"/>
+                <div>
+                    <button type="submit" class="btn btn-primary o_instapay_cf_submit">
+                        <span class="o_instapay_cf_submit_label">Send the receipt</span>
+                        <span class="o_instapay_cf_submit_busy d-none">
+                            <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"/>
+                            Sending…
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </template>
+
+    <!-- The page where customers see the transfer details and send the receipt. -->
+    <template id="pay_page" name="InstaPay: Payment Page">
+        <t t-set="page_title">Pay with InstaPay</t>
+        <t t-set="additional_title"><t t-out="page_title"/></t>
+        <!-- Without the website module, the footer says "Powered by Odoo": customers only know the
+             company, so the copyright line is hidden. Websites keep the footer the company set. -->
+        <t
+            t-call="portal.frontend_layout"
+            page_title="page_title"
+            additional_title="additional_title"
+            title.f="{{ page_title }} | {{ tx.company_id.name }}"
+            no_copyright="not website"
+        >
+            <div class="wrap">
+                <div class="container">
+                    <div class="row justify-content-center my-4">
+                        <div class="col-12 col-md-10 col-lg-8 d-flex flex-column gap-3">
+                            <div>
+                                <img
+                                    src="/payment_instapay_cf/static/img/instapay_logo.png"
+                                    alt="InstaPay"
+                                    class="o_instapay_cf_logo mb-2"
+                                />
+                                <h1 class="h3 mb-1">Pay with InstaPay</h1>
+                                <div class="text-muted">
+                                    <t t-out="values['company_name']"/> ·
+                                    <span dir="ltr" t-out="values['reference']"/> ·
+                                    <span dir="ltr" t-out="values['amount_display']"/>
+                                </div>
+                            </div>
+
+                            <!-- While the receipt waits for review, the status above the details says so. -->
+                            <div t-if="flash == 'receipt_sent' and values['status'] != 'in_review'" class="alert alert-success mb-0" role="status">
+                                Thank you! We received your receipt.
+                            </div>
+                            <div t-elif="flash == 'cancelled' and tx.state == 'cancel'" class="alert alert-info mb-0" role="status">
+                                This payment is cancelled. You can pay your order another way.
+                            </div>
+                            <div t-if="error" class="alert alert-danger mb-0" role="alert" t-out="error"/>
+
+                            <div class="o_instapay_cf_instructions d-flex flex-column gap-3">
+                                <t t-if="tx.state == 'pending'">
+                                    <t t-call="payment_instapay_cf.payment_details"/>
+                                    <t
+                                        t-if="values['can_upload']"
+                                        t-call="payment_instapay_cf.receipt_form"
+                                    />
+                                </t>
+                                <t t-elif="tx.state == 'done'">
+                                    <div class="alert alert-success mb-0" role="status">
+                                        Your transfer is confirmed. Thank you!
+                                    </div>
+                                </t>
+                                <t t-elif="tx.state == 'cancel'">
+                                    <t t-call="payment_instapay_cf.payment_instructions" status_message="False"/>
+                                </t>
+                            </div>
+
+                            <div t-if="values['receipts']" class="o_instapay_cf_history">
+                                <h2 class="h6">Receipts you sent</h2>
+                                <ul class="list-unstyled small mb-0">
+                                    <li t-foreach="values['receipts']" t-as="receipt" class="d-flex gap-2">
+                                        <span t-out="receipt['submitted_at']"/>
+                                        <span t-if="receipt['reference']" dir="ltr" t-out="receipt['reference']"/>
+                                        <span t-if="receipt['state'] == 'submitted'" class="badge text-bg-info">Under review</span>
+                                        <span t-elif="receipt['state'] == 'accepted'" class="badge text-bg-success">Accepted</span>
+                                        <span t-else="" class="badge text-bg-warning">Rejected</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <form
+                                t-if="values['can_cancel']"
+                                method="post"
+                                t-att-action="cancel_url"
+                                class="o_instapay_cf_cancel_form"
+                            >
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <button type="submit" class="btn btn-link px-0">Pay another way</button>
+                            </form>
+
+                            <div class="small text-muted">
+                                <a t-att-href="values['document_url']">View your order</a>
+                                <t t-if="values['company_phone'] or values['company_email']">
+                                    · Questions?
+                                    <span t-if="values['company_phone']" dir="ltr" t-out="values['company_phone']"/>
+                                    <span t-if="values['company_email']" t-out="values['company_email']"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

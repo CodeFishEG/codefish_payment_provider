@@ -1,0 +1,11 @@
+id,name,model_id,group_id/id,operation,domain
+payment_instapay_account_system,payment.instapay.account.system,payment.instapay.account,base.group_system,crud,
+payment_instapay_account_invoice,payment.instapay.account.invoice,payment.instapay.account,account.group_account_invoice,r,
+payment_instapay_account_readonly,payment.instapay.account.readonly,payment.instapay.account,account.group_account_readonly,r,
+payment_instapay_account_company_rule,Receiving accounts of allowed companies,payment.instapay.account,,crud,"[('company_id', 'in', company_ids)]"
+payment_instapay_receipt_system,payment.instapay.receipt.system,payment.instapay.receipt,base.group_system,crud,
+payment_instapay_receipt_invoice,payment.instapay.receipt.invoice,payment.instapay.receipt,account.group_account_invoice,cru,
+payment_instapay_receipt_readonly,payment.instapay.receipt.readonly,payment.instapay.receipt,account.group_account_readonly,r,
+payment_instapay_receipt_company_rule,Receipts of allowed companies,payment.instapay.receipt,,crud,"[('company_id', 'in', company_ids)]"
+payment_instapay_review_wizard_invoice,payment.instapay.review.wizard.invoice,payment.instapay.review.wizard,account.group_account_invoice,crud,
+payment_instapay_review_wizard_rule,Own review wizards only,payment.instapay.review.wizard,,crud,"[('create_uid', '=', user.id)]"
