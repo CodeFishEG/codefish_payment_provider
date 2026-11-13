@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_transaction_form" model="ir.ui.view">
+        <field name="name">Kashier Transaction Form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Check Kashier Status"
+                    help="Fetch the latest status of this payment from Kashier."
+                    type="object"
+                    name="action_kashier_cf_sync"
+                    invisible="provider_code != 'kashier_cf' or state in ('done', 'error') or not kashier_cf_order_ref"
+                />
+            </header>
+            <notebook position="inside">
+                <page string="Kashier" name="kashier_cf" invisible="provider_code != 'kashier_cf'">
+                    <group>
+                        <group>
+                            <field name="kashier_cf_order_ref"/>
+                            <field name="kashier_cf_order_id"/>
+                            <field name="kashier_cf_transaction_id"/>
+                            <field name="kashier_cf_session_id"/>
+                            <field name="kashier_cf_operation" invisible="not kashier_cf_operation"/>
+                        </group>
+                        <group>
+                            <field name="kashier_cf_channel" invisible="not kashier_cf_channel"/>
+                            <field name="kashier_cf_outcome_unknown" invisible="not kashier_cf_outcome_unknown"/>
+                            <field name="kashier_cf_last_sync"/>
+                        </group>
+                    </group>
+                    <group invisible="not kashier_cf_error_code and not kashier_cf_error_details">
+                        <group colspan="2">
+                            <field name="kashier_cf_error_code"/>
+                            <field name="kashier_cf_error_details"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

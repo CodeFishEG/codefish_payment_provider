@@ -1,0 +1,8 @@
+{
+  "url": "https://developers.kashier.io/openapi.yaml",
+  "downloaded": "2026-11-13",
+  "sha256": "bc8270bfe178303eb1bbf35b9c51c43d2ee1055e9ca730745d5d9f5ec23956a3",
+  "bytes": 627470,
+  "cache_file": ".cache/openapi-2026-11-13.yaml",
+  "note": "Kashier's document is proprietary: only this lock is committed. generate.py downloads the copy into .cache/ and refuses any other content."
+}

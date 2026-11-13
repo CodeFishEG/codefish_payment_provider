@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shown under a Kashier payment method at checkout. Customers know the company, not Odoo. -->
+    <template id="inline_form">
+        <t t-set="company_name" t-value="provider_sudo.company_id.name"/>
+        <div class="o_kashier_cf_hint small text-muted">
+            <p class="mb-0">
+                You'll pay on Kashier's secure page, then come back to <t t-out="company_name"/>.
+                Your payment details are never shared with <t t-out="company_name"/>.
+            </p>
+        </div>
+    </template>
+
+</odoo>

@@ -1,7 +1,7 @@
 # codefish_payment_provider
 
 Payment providers for Odoo 20.0, built by codefish, the software development division of mediafish. The
-repository holds three modules:
+repository holds four modules:
 
 - **Fawry Payments** connects Odoo to Fawry (FawryPay), the Egyptian payment network: cards with 3-D Secure, Fawry
   reference codes paid in cash, mobile wallets, myFawry and Fawry's installment partners.
@@ -9,6 +9,8 @@ repository holds three modules:
   kiosk payments, bank installments and buy-now-pay-later brands, Apple Pay and Google Pay.
 - **InstaPay Payments** takes payments by InstaPay, mobile wallet or bank transfer in Egypt, without any API: the
   customer sends the money and uploads the receipt, and the accounting team confirms it within 2 working days.
+- **Kashier Payments** connects Odoo to Kashier, the Egyptian payment gateway: customers pay on Kashier's hosted
+  page with Visa, Mastercard and Meeza cards, mobile wallets, instalments and buy-now-pay-later brands such as valU.
 
 ## Contents
 
@@ -18,6 +20,7 @@ repository holds three modules:
 - [Fawry Payments](#fawry-payments-payment_fawry_cf)
 - [Paymob Payments](#paymob-payments-payment_paymob_cf)
 - [InstaPay Payments](#instapay-payments-payment_instapay_cf)
+- [Kashier Payments](#kashier-payments-payment_kashier_cf)
 - [Development](#development)
 - [Licence](#licence)
 
@@ -28,6 +31,7 @@ repository holds three modules:
 | [`payment_fawry_cf`](payment_fawry_cf) | Fawry Payments | Fawry payment provider: FawryPay Express Checkout or the server-to-server APIs, saved cards, refunds, reference codes and wallet QR codes shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
 | [`payment_paymob_cf`](payment_paymob_cf) | Paymob Payments | Paymob payment provider for five countries: Paymob Checkout or an embedded card form, saved cards, MOTO charges, authorize and capture, refunds, payment split, kiosk references shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
 | [`payment_instapay_cf`](payment_instapay_cf) | InstaPay Payments | Manual InstaPay, mobile wallet and bank transfer payments: payment details with copy buttons, link and QR code, receipt upload, review by the accountants within working days, reminders and cancellation | OPL-1 (paid) | `payment`, `account_payment`, `mail`, `resource` |
+| [`payment_kashier_cf`](payment_kashier_cf) | Kashier Payments | Kashier payment provider: Kashier's hosted payment page for cards or every method of the account, saved cards (also charged without the customer), refunds, authorize and capture, status always read from Kashier's API | OPL-1 (paid) | `payment`, `account_payment` |
 
 ## Requirements
 
@@ -39,6 +43,7 @@ repository holds three modules:
   first.
 - InstaPay Payments: an InstaPay account for the business (payment link and QR code from the app) and/or mobile
   wallets and bank accounts in EGP. No API key: InstaPay has no merchant API.
+- Kashier Payments: a Kashier merchant account (Merchant ID, Payment API Key and Secret Key), in test mode first.
 - The Odoo server must be reachable from the internet over HTTPS in production, so that the payment providers can
   send their notifications and redirect customers back.
 
@@ -60,7 +65,8 @@ repository holds three modules:
 
 3. Restart the Odoo server, turn on developer mode, then open **Apps › Update Apps List**.
 4. In **Apps**, remove the **Apps** filter, search for **Fawry Payments** (`payment_fawry_cf`), **Paymob
-   Payments** (`payment_paymob_cf`) or **InstaPay Payments** (`payment_instapay_cf`) and click **Activate**.
+   Payments** (`payment_paymob_cf`), **InstaPay Payments** (`payment_instapay_cf`) or **Kashier Payments**
+   (`payment_kashier_cf`) and click **Activate**.
 
 From the command line:
 
@@ -336,6 +342,112 @@ Warnings flag a screenshot or reference sent for another payment, an amount that
 outside the order's time; a reference can be accepted once per company. Customer emails are sent without Odoo's
 email layout and name the company.
 
+## Kashier Payments (`payment_kashier_cf`)
+
+Guides, with screenshots:
+
+- [Administrator guide](payment_kashier_cf/doc/admin_guide.md): how it works, the three keys, options,
+  notifications, testing in Kashier's test mode, saved cards, capture, refunds, statuses, unknown outcomes,
+  accounting, several companies or databases, security, troubleshooting.
+- [User guide](payment_kashier_cf/doc/user_guide.md): what customers see, and the daily tasks of the team
+  (following, refunding, capturing and voiding payments, saved cards, alerts and activities).
+
+Customers always pay on Kashier's hosted payment page (`payments.kashier.io`), in the same window: there is no
+embedded or pop-up mode. Card numbers never reach Odoo. Provider code `kashier_cf`; three credentials: Merchant ID,
+Payment API Key (sessions, `Kashier-Hash` signatures, and the signatures Kashier puts on redirects and webhooks) and
+Secret Key (status, refunds, captures, voids). Test and live keys work only on Kashier's test and live hosts, chosen
+by the provider's **Live** flag.
+
+### Payment methods
+
+| Code | Name | Kashier's page | Odoo features |
+|---|---|---|---|
+| `card`, brands `visa`, `mastercard`, `meeza` | Card | `allowedMethods: card`, 3-D Secure | Saved cards, manual capture (full only), partial refunds |
+| `kashier` | Kashier | Every method of the merchant account, or the provider's **Kashier Methods** (`allowedMethods`, e.g. `wallet, bnpl[valu]`) | Partial refunds |
+
+Currencies: EGP, USD, GBP, EUR (Meeza: EGP). Once paid, the transaction's payment method becomes the card brand
+Kashier reports, or `kashier` for the other methods. Manual capture needs the `kashier` method off (core rule).
+
+### Payment flow
+
+- **Session.** `_get_specific_rendering_values` creates a payment session (`POST /v3/payment/sessions`, Secret Key
+  and Payment API Key) with `order` (the cleaned reference, a 6-character code of the database taken from
+  `database.uuid`, and a nonce), `merchantRedirect` (`/payment/kashier_cf/return/<tx>/<access token>`),
+  `serverWebhook` (`/payment/kashier_cf/webhook`), `expireAt`, `maxFailureAttempts`, `display` (`ar` or `en`, from
+  the partner's language), and `manualCapture` / `saveCard` when they apply. The generic redirect form sends the
+  customer to the session URL, accepted only on `payments.kashier.io`.
+- **Saved card, customer present** (`online_token`): a session with `retrieveSavedCard`; the payment form patch
+  sends the top window there, where Kashier asks for the CVC and 3-D Secure.
+- **Saved card, customer away** (`offline`): `POST /v3/orders` on Kashier's FEP host with `interactionSource:
+  RECURRING`, no 3-D Secure, signed with `Kashier-Hash`. Meeza cards are refused before sending
+  (`const.MIT_REFUSED_BRANDS`). Cards are saved during a paid checkout only: the provider is left out of
+  validation (`_find_available_providers`).
+- **Deleting a card** (portal, or **Delete at Kashier** on the token): `DELETE /v3/cards/tokens/{token}`. Other
+  archiving keeps the card at Kashier (context key `const.DELETE_AT_KASHIER`).
+
+### How payments stay in sync
+
+- Redirects and webhooks are signed by Kashier, but Kashier's session documents expose the key that signs them, so
+  their content is never recorded: they only trigger `_kashier_cf_sync_from_provider`. It reads the session
+  (`GET /v3/payment/sessions/{id}/payment`) and the orders (`GET /v3/payment/orders?search=<order>`) with the Secret
+  Key, keeps those of this merchant and this order, and queues a snapshot with `tx._record()`. `_apply_updates`
+  maps it, after checking the amount and the currency.
+- Webhook (`x-kashier-signature`, HMAC-SHA256 of the `signatureKeys` with the Payment API Key): HTTP 403 for a bad
+  signature; 503 when Kashier can't be reached or the order belongs to this database but isn't committed yet, so
+  that Kashier retries; 200 otherwise, also for orders of other databases.
+- The return always checks; webhooks check at most once every 10 seconds per payment. Neither checks while an
+  answer waits for processing or is being applied (`FOR UPDATE NOWAIT`).
+- The cron **Kashier: check unfinished payments** (15 minutes) takes drafts with a session (2 days), pending (10
+  days) and authorized (32 days) payments, cancelled ones within their 48-hour late window
+  (`kashier_cf_late_check_until`) and unknown outcomes; 200 per run, with `_commit_progress`.
+- **Check Kashier Status** on the transaction (`action_kashier_cf_sync`).
+
+### Refunds, capture, void, errors
+
+- Refunds, captures (full only) and voids: `PUT /v3/orders/{orderId}` on the FEP host, `apiOperation` `REFUND`,
+  `CAPTURE` or `VOID`. The refund of a payment captured later targets its capture. Once money has moved, only the
+  child transaction is written, so that a serialization failure can't replay the request; the root is reconciled
+  by the next check.
+- Requests that move money get a 45-second timeout, the others 15 seconds. A read timeout, a lost connection or a
+  5xx answer is an unknown outcome (`KashierError.unknown_outcome`): never resent; the transaction waits as pending
+  (`kashier_cf_outcome_unknown`), the cron is triggered 2 minutes later, and after `const.UNKNOWN_OUTCOME_HOURS` (2)
+  the transaction goes into error with a message to check Kashier's dashboard.
+- A charge without the customer that succeeds after Odoo marked it failed is not revived (staff get an activity); a
+  cancelled online payment found paid later is confirmed.
+- Refunds made in Kashier's dashboard (refund legs no child claims) are noted once on the documents
+  (`kashier_cf_noted_legs`); staff alerts (note + To-Do activity) are sent once per payment and kind
+  (`kashier_cf_alerted`).
+- `const.ERROR_CODES` explains Kashier's response codes (card schemes, 3-D Secure, gateway, `k_*`) and the HTTP-level
+  errors found by `utils.classify_error`, each as a customer, merchant or unknown-outcome error: customers get the
+  explanation of card and bank errors and a neutral message with the code otherwise; staff see the code, the
+  explanation and Kashier's message in the transaction's **Kashier** tab.
+- The payment logger redacts Kashier's keys, signatures and card tokens (`const.SENSITIVE_KEYS`), and
+  `logging_filters.py` masks the card token, the signature, the masked card and the access token in the HTTP access
+  log line of the return route.
+
+### Checked in Kashier's test mode
+
+Tested with mocked API calls (signatures against Kashier's documented examples), then checked on 2026-11-13 with a
+Kashier test account, on a local server with demo data:
+
+- a card payment with 3-D Secure (test card 5123 4500 0000 0008, expiry 12/30, CVC 100, then the successful answer
+  of the 3-D Secure test page);
+- a decline (expiry 04/27, code 54): the customer stays on Kashier's page and can retry up to the attempts setting;
+  when the page expires, the payment shows the reason ("The card has expired.");
+- an outcome decided later (expiry 05/37, code CC first);
+- 3-D Secure left unfinished: cancelled when the page validity ends;
+- the Kashier method and the portal in Arabic, with card, wallet, instalments and buy-now-pay-later on Kashier's
+  page;
+- a saved card paid again (Kashier asks only for the CVC);
+- refunds: a fully refunded order stays `CAPTURED` at Kashier, with its refund lines.
+
+### API client
+
+`kashier_api.py` is a typed client of Kashier's API (TypedDicts and `KashierClient`, one method per operation, each
+calling `payment.provider._send_api_request`). It is generated from Kashier's OpenAPI document by
+[`tools/kashier_openapi/`](tools/kashier_openapi/README.md), a standard-library-only generator pinned by
+`spec.lock.json`; `generate.py --check` fails when the committed client is out of date.
+
 ## Development
 
 ### Repository layout
@@ -382,24 +494,45 @@ codefish_payment_provider/
 │   ├── doc/                      administrator and user guides
 │   ├── i18n/                     payment_paymob_cf.pot, ar.po
 │   └── tests/
-└── payment_instapay_cf/
-    ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
-    ├── const.py                  events, limits, patterns, wallets, rejection reasons
-    ├── utils.py                  digits, mobile numbers, IBAN check, InstaPay links, image sanitizing
-    ├── controllers/main.py       checkout, payment page, receipt upload and "pay another way" routes
-    ├── models/                   payment.provider, payment.transaction, account.move,
-    │                             payment.instapay.account (receiving accounts),
-    │                             payment.instapay.receipt (screenshots to review)
-    ├── wizard/                   payment.instapay.review.wizard (confirm, reject, cancel)
-    ├── security/ir.access.csv    accountants review, read-only accountants read, company rules
-    ├── views/                    provider, account, receipt, transaction views, menu, templates, emails
-    ├── data/                     provider, payment method, activity type, emails, cron, neutralize.sql
-    ├── static/src/               copy buttons, receipt form, status patch, SCSS
-    ├── static/img/               InstaPay logo and icon
-    ├── static/description/       Apps store page, banner, icons, screenshots
-    ├── doc/                      administrator and user guides
-    ├── i18n/                     payment_instapay_cf.pot, ar.po
-    └── tests/
+├── payment_instapay_cf/
+│   ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
+│   ├── const.py                  events, limits, patterns, wallets, rejection reasons
+│   ├── utils.py                  digits, mobile numbers, IBAN check, InstaPay links, image sanitizing
+│   ├── controllers/main.py       checkout, payment page, receipt upload and "pay another way" routes
+│   ├── models/                   payment.provider, payment.transaction, account.move,
+│   │                             payment.instapay.account (receiving accounts),
+│   │                             payment.instapay.receipt (screenshots to review)
+│   ├── wizard/                   payment.instapay.review.wizard (confirm, reject, cancel)
+│   ├── security/ir.access.csv    accountants review, read-only accountants read, company rules
+│   ├── views/                    provider, account, receipt, transaction views, menu, templates, emails
+│   ├── data/                     provider, payment method, activity type, emails, cron, neutralize.sql
+│   ├── static/src/               copy buttons, receipt form, status patch, SCSS
+│   ├── static/img/               InstaPay logo and icon
+│   ├── static/description/       Apps store page, banner, icons, screenshots
+│   ├── doc/                      administrator and user guides
+│   ├── i18n/                     payment_instapay_cf.pot, ar.po
+│   └── tests/
+├── payment_kashier_cf/
+│   ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
+│   ├── const.py                  hosts, methods, session and order statuses, delays, error codes, journal
+│   ├── exceptions.py             KashierError (code, Kashier's message, unknown outcome)
+│   ├── utils.py                  signatures, amounts, order references, checkout URL check, error classification
+│   ├── kashier_api.py            typed client of Kashier's API, generated by tools/kashier_openapi
+│   ├── logging_filters.py        masks card tokens, signatures and access tokens in the HTTP access log
+│   ├── controllers/main.py       return and webhook routes
+│   ├── controllers/portal.py     deletes the card at Kashier when the customer deletes it
+│   ├── models/                   payment.provider, payment.transaction, payment.token,
+│   │                             account.chart.template (journal of companies set up later)
+│   ├── views/                    provider, transaction and token forms, checkout hint
+│   ├── data/                     provider, payment methods, cron, neutralize.sql
+│   ├── static/src/               payment form patch (saved cards), status patch
+│   ├── static/img/               Kashier logo
+│   ├── static/description/       Apps store page, banner, icons, screenshots
+│   ├── doc/                      administrator and user guides
+│   ├── i18n/                     payment_kashier_cf.pot, ar.po
+│   └── tests/
+└── tools/
+    └── kashier_openapi/          generator of payment_kashier_cf/kashier_api.py (see its README)
 ```
 
 ### Conventions
@@ -425,6 +558,14 @@ python odoo-bin db -c odoo-server.conf drop odoo20_payment_paymob_cf_test
 python odoo-bin -c odoo-server.conf -d odoo20_payment_instapay_cf_test -i payment_instapay_cf \
     --test-tags /payment_instapay_cf --stop-after-init --http-port=8099
 python odoo-bin db -c odoo-server.conf drop odoo20_payment_instapay_cf_test
+
+python odoo-bin -c odoo-server.conf -d odoo20_payment_kashier_cf_test -i payment_kashier_cf \
+    --test-tags /payment_kashier_cf --stop-after-init --http-port=8099
+python odoo-bin db -c odoo-server.conf drop odoo20_payment_kashier_cf_test
+
+# The generator of the Kashier client, from the repository root (no Odoo needed):
+python3 -I -m unittest discover -s tools/kashier_openapi/tests
+python3 -I tools/kashier_openapi/generate.py --check
 ```
 
 The tests mock Fawry's API: they check every signature against an independent implementation, the state
@@ -434,7 +575,13 @@ documented examples, the intention payloads, every route (HMAC, access tokens), 
 MOTO charges, refunds, captures, voids, payment split, response codes and the journal. The InstaPay tests check the
 text and IBAN helpers, the image sanitizing (formats, truncated files, metadata, sizes), the review deadline on a
 Sunday-to-Thursday schedule with a public holiday, the receiving accounts, the events, the review wizard, the routes
-(access tokens, CSRF, upload limits) and the reminder and cancellation cron. Run them also with `website_sale`,
+(access tokens, CSRF, upload limits) and the reminder and cancellation cron. The Kashier tests mock Kashier's API:
+they check the signatures against Kashier's documented examples, the error classification, the log masking, the
+session payloads (card, Kashier method, Arabic, saved cards, manual capture), the state mapping (paid, declined,
+still on the page, unknown and late outcomes, amount mismatch, staff alerted once), refunds, captures and voids
+(refused, unknown outcome), saved cards (customer present, without the customer, Meeza, deletion), the journal, the
+cron and the routes (access token, signed, unsigned and badly signed notifications, unknown orders, Kashier
+unreachable). Run them also with `website_sale`,
 `sale_management` and `l10n_eg_cf` installed.
 
 ### Translations
@@ -446,17 +593,17 @@ Sunday-to-Thursday schedule with a public holiday, the receiving accounts, the e
 python odoo-bin i18n export -c <config> -d <database> payment_fawry_cf -l pot ar_EG
 ```
 
-Use `payment_paymob_cf` and `payment_instapay_cf` the same way for the other modules. InstaPay is written
-"إنستاباي" in Arabic.
+Use `payment_paymob_cf`, `payment_instapay_cf` and `payment_kashier_cf` the same way for the other modules.
+InstaPay is written "إنستاباي" in Arabic, Kashier "كاشير".
 
 ## Licence
 
-`payment_fawry_cf`, `payment_paymob_cf` and `payment_instapay_cf` are licensed under the Odoo Proprietary License v1.0 (OPL-1): see [`LICENSE`](LICENSE) and
+`payment_fawry_cf`, `payment_paymob_cf`, `payment_instapay_cf` and `payment_kashier_cf` are licensed under the Odoo Proprietary License v1.0 (OPL-1): see [`LICENSE`](LICENSE) and
 [`COPYRIGHT`](COPYRIGHT). Copyright (c) 2010-Present mediafish (https://www.mediafish.agency).
 
-Fawry, FawryPay, myFawry, Paymob, InstaPay, IPN and the names and logos of the payment methods are trademarks of
-their owners and are used only to show which payment methods are accepted. The modules are not affiliated with or
-endorsed by these companies.
+Fawry, FawryPay, myFawry, Paymob, InstaPay, IPN, Kashier and the names and logos of the payment methods are
+trademarks of their owners and are used only to show which payment methods are accepted. The modules are not
+affiliated with or endorsed by these companies.
 
 <p align="center">
   <img src=".github/assets/codefish_logo_orange.png" alt="codefish" height="72">

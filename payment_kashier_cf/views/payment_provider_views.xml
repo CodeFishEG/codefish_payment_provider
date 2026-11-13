@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Kashier Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Test Connection"
+                    help="Ask Kashier to check the Secret Key and the Payment API Key of this mode (test or live)."
+                    type="object"
+                    name="action_kashier_cf_test_connection"
+                    invisible="code != 'kashier_cf'"
+                    class="btn-secondary"
+                />
+            </header>
+            <group name="provider_credentials" position="inside">
+                <field
+                    name="kashier_cf_merchant_id"
+                    invisible="code != 'kashier_cf'"
+                    required="is_live and code == 'kashier_cf'"
+                    placeholder="MID-123-456"
+                />
+                <field
+                    name="kashier_cf_payment_api_key"
+                    invisible="code != 'kashier_cf'"
+                    required="is_live and code == 'kashier_cf'"
+                    widget="password"
+                />
+                <field
+                    name="kashier_cf_secret_key"
+                    invisible="code != 'kashier_cf'"
+                    required="is_live and code == 'kashier_cf'"
+                    widget="password"
+                />
+            </group>
+            <group name="provider_credentials" position="after">
+                <group string="Kashier" name="kashier_cf_options" invisible="code != 'kashier_cf'">
+                    <field name="kashier_cf_allowed_methods" placeholder="All methods of the Kashier account"/>
+                    <field name="kashier_cf_session_expiry"/>
+                    <field name="kashier_cf_max_attempts"/>
+                    <field name="kashier_cf_webhook_url" widget="CopyClipboardChar"/>
+                    <div colspan="2" class="text-muted">
+                        Card payments open Kashier's page on cards only; the Kashier method opens it on
+                        every method enabled on your Kashier account. Payments are confirmed with the Secret Key,
+                        never from the browser alone. To capture payments manually, turn off the Kashier method
+                        first: wallets and installments can't be captured later.
+                    </div>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

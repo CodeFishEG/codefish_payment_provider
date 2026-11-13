@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_token_form" model="ir.ui.view">
+        <field name="name">Kashier Token Form</field>
+        <field name="model">payment.token</field>
+        <field name="inherit_id" ref="payment.payment_token_form"/>
+        <field name="arch" type="xml">
+            <field name="provider_ref" position="after">
+                <field name="kashier_cf_expiry" invisible="provider_code != 'kashier_cf' or not kashier_cf_expiry"/>
+                <field name="kashier_cf_customer_reference" invisible="provider_code != 'kashier_cf'"/>
+                <field name="kashier_cf_is_live" invisible="provider_code != 'kashier_cf'"/>
+            </field>
+            <xpath expr="//form/*[1]" position="before">
+                <header invisible="provider_code != 'kashier_cf' or not active">
+                    <button
+                        string="Delete at Kashier"
+                        help="Archive the saved card and delete it at Kashier: it can't be charged again."
+                        type="object"
+                        name="action_kashier_cf_delete"
+                        confirm="The card will be deleted at Kashier and can't be charged again. Continue?"
+                    />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

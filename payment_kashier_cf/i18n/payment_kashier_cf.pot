@@ -1,0 +1,1076 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_kashier_cf
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 12:47+0000\n"
+"PO-Revision-Date: 2026-11-13 12:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "%(explanation)s (Kashier code %(code)s)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "%(message)s Kashier's message: %(description)s"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "(%(ref)s)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid ""
+".\n"
+"                Your payment details are never shared with"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.module.module,summary:base.module_payment_kashier_cf
+msgid ""
+"Accept Kashier in Egypt: cards (Visa, Mastercard, Meeza), wallets, "
+"installments and valU on Kashier's hosted payment page, with saved cards, "
+"refunds and manual capture"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model,name:payment_kashier_cf.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "All methods of the Kashier account"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"Another payment of this order is in progress. The outcome is checked with "
+"Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_token_form
+msgid ""
+"Archive the saved card and delete it at Kashier: it can't be charged again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid ""
+"Ask Kashier to check the Secret Key and the Payment API Key of this mode "
+"(test or live)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_max_attempts
+msgid "Attempts on Kashier's Page"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"Authorize and capture is not enabled on the Kashier account. Ask Kashier to "
+"enable it, or turn off manual capture."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_operation__capture
+msgid "Capture"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_card
+msgid "Card"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid ""
+"Card payments open Kashier's page on cards only; the Kashier method opens it on\n"
+"                        every method enabled on your Kashier account. Payments are confirmed with the Secret Key,\n"
+"                        never from the browser alone. To capture payments manually, turn off the Kashier method\n"
+"                        first: wallets and installments can't be captured later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_transaction_form
+msgid "Check Kashier Status"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Check the Kashier payment %(ref)s"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__code
+msgid "Code"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Connection successful"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Could not reach Kashier. Try again in a moment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_token_form
+msgid "Delete at Kashier"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__display_name
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Enter the Merchant ID, the Payment API Key and the Secret Key first."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_transaction_form
+msgid "Fetch the latest status of this payment from Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_session_expiry
+msgid ""
+"How long the customer can pay on Kashier's page after choosing Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_max_attempts
+msgid ""
+"How many times the customer can try again on Kashier's page after a declined"
+" card, before the payment fails."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_account_chart_template__id
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__id
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__id
+msgid "ID"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_provider__code__kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_kashier
+#: model:payment.provider,name:payment_kashier_cf.payment_provider_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_transaction_form
+msgid "Kashier"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_alerted
+msgid "Kashier Alerts Sent"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__kashier_cf_expiry
+msgid "Kashier Card Expiry"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__kashier_cf_customer_reference
+msgid "Kashier Customer"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_error_code
+msgid "Kashier Error Code"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_error_details
+msgid "Kashier Error Details"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_late_check_until
+msgid "Kashier Late Check Until"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__kashier_cf_is_live
+msgid "Kashier Live Card"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_merchant_id
+msgid "Kashier Merchant ID"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_allowed_methods
+msgid "Kashier Methods"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_webhook_url
+msgid "Kashier Notification URL"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_operation
+msgid "Kashier Operation"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_order_ref
+msgid "Kashier Order"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_order_id
+msgid "Kashier Order ID"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_outcome_unknown
+msgid "Kashier Outcome Unknown"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_redirect_url
+msgid "Kashier Page URL"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_payment_api_key
+msgid "Kashier Payment API Key"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.module.module,shortdesc:base.module_payment_kashier_cf
+msgid "Kashier Payments"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_noted_legs
+msgid "Kashier Refunds Noted"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_secret_key
+msgid "Kashier Secret Key"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_session_id
+msgid "Kashier Session"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_transaction_id
+msgid "Kashier Transaction"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"Kashier accepted the Secret Key and the Payment API Key (%(mode)s mode)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier already has an order with this reference."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier answered too late. The outcome is checked with Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier asked to slow down. The request is checked again later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier charged the saved card after this payment was marked failed. "
+"Register the payment of %(amount)s by hand."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Kashier confirmed a late payment of this transaction."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier confirmed a payment whose amount or currency differs from this "
+"payment. Check the order in Kashier's dashboard."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_payment_api_key
+msgid ""
+"Kashier dashboard: Integrate now > Payment API keys. Test and live modes "
+"have different keys. It also signs Kashier's notifications."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_secret_key
+msgid ""
+"Kashier dashboard: Integrate now > Secret key. Test and live modes have "
+"different keys. It confirms payments, refunds and captures; the dashboard "
+"user it belongs to needs the refund permission for refunds."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_merchant_id
+msgid "Kashier dashboard: shown under your name (MID-xxx-xxx)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"Kashier didn't answer in time. The request may still have been processed: it"
+" is checked with Kashier before anything is sent again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_outcome_unknown
+msgid ""
+"Kashier didn't answer the request: the outcome is checked with Kashier "
+"before anything is sent again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Kashier didn't answer. Try again in a moment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier didn't confirm this operation. Check it in Kashier's dashboard "
+"before trying again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier doesn't know this payment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier had an error. The outcome is checked with Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier has several paid orders for this payment: %(orders)s. Refund the "
+"extra ones."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Kashier hasn't confirmed this payment yet: check its status first."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier hasn't decided the outcome of this payment. Check the order in "
+"Kashier's dashboard before asking the customer to pay again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier refunded %(amount)s of this payment outside Odoo (Kashier "
+"transaction %(tx)s). Record the refund in Odoo if it isn't yet."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"Kashier refused the credentials. Check the Secret Key, the Payment API Key "
+"and the Merchant ID, and that they are for the right mode (test or live)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"Kashier refused the request signature. Check the Payment API Key and the "
+"Merchant ID."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Kashier refused the request."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Kashier refused the request: %(description)s (Kashier code %(code)s)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"Kashier refused the server's IP address. Add it to the allowed IP addresses "
+"in Kashier's dashboard."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"Kashier rejected the connection.\n"
+"%(error)s"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier returned a general error."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier reversed or cancelled this payment after it was confirmed. Check the"
+" order in Kashier's dashboard and refund or cancel the documents."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Kashier sent an answer Odoo can't read."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Kashier sent an unexpected payment page."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier sent the latest status. The payment is updated within a few seconds;"
+" reload the page to see it."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_transaction_id
+msgid ""
+"Kashier's id of the operation that moved the money (payment, authorization, "
+"capture, refund or void)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_order_id
+msgid "Kashier's id of the order; refunds, captures and voids use it."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Kashier's operation amount differs from this transaction."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_redirect_url
+msgid ""
+"Kashier's page where the customer confirms a payment with a saved card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.actions.server,name:payment_kashier_cf.cron_sync_payments_ir_actions_server
+msgid "Kashier: check unfinished payments"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_last_sync
+msgid "Last Kashier Check"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "MID-123-456"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_token__kashier_cf_expiry
+msgid "MM/YY"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_mastercard
+msgid "Mastercard"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_meeza
+msgid "Meeza"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"Meeza cards can't be charged automatically. Pay online with the card "
+"instead."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_webhook_url
+msgid ""
+"Odoo sends it with every payment. You can also add it as a webhook in "
+"Kashier's dashboard."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_channel
+msgid "Paid With (Kashier)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_session_expiry
+msgid "Payment Page Validity (Minutes)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model,name:payment_kashier_cf.model_payment_provider
+msgid "Payment Provider"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model,name:payment_kashier_cf.model_payment_token
+msgid "Payment Token"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model,name:payment_kashier_cf.model_payment_transaction
+msgid "Payment Transaction"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.module.module,description:base.module_payment_kashier_cf
+msgid ""
+"Payment provider for Kashier. Customers pay on Kashier's hosted payment "
+"page: cards with 3-D Secure, or every method enabled on the Kashier account "
+"(mobile wallets, bank installments, valU and other buy-now-pay-later "
+"brands). Payments are confirmed from Kashier's API, never from the browser "
+"alone. Includes saved cards (also charged again without the customer, for "
+"subscriptions and invoices), full and partial refunds, authorize and "
+"capture, payment notifications, a status check every 15 minutes, a typed "
+"client of Kashier's API, and Arabic."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_operation__refund
+msgid "Refund"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "Test Connection"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"The Kashier Merchant ID looks like MID-123-456 (it is shown under your name "
+"in Kashier's dashboard)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The Kashier account is not live yet. Use test mode until Kashier activates "
+"it."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The PIN is not correct."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The amount is not valid for this card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The amount of Kashier's operation doesn't match."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The amount paid at Kashier doesn't match."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "The attempts on Kashier's page must be between %(low)s and %(high)s."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The authentication failed. Check the card details."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The authorization was released."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank answered too late. The outcome is checked with Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"The bank asks the customer to confirm this payment. Ask the customer to pay "
+"online with the card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank asks you to contact it before paying."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The bank couldn't process the payment. Ask the bank or use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank declined the payment. Try again or contact the bank."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank declined the payment. Try again or use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The bank disabled refunds for this merchant account. Ask the bank or Kashier"
+" to enable them."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The bank doesn't recognise the merchant account. Check the account with "
+"Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank had a system error. Try again later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank is not available. Try again later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The bank's authentication is not available. Try again later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card details are not valid. Check the number and the expiry date."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The card doesn't allow this kind of payment. Ask the bank or use another "
+"card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card doesn't support secure online payments (3-D Secure)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The card doesn't support this payment. Ask the bank or use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card has expired."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card has not enough funds."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The card has reached its number of payments. Try later or use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card holder's authentication (3-D Secure) failed."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card is blocked. Contact the bank."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card was reported lost. Use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The card was reported stolen. Use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_token_form
+msgid ""
+"The card will be deleted at Kashier and can't be charged again. Continue?"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_token__kashier_cf_customer_reference
+msgid "The customer reference Kashier saved the card under."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_allowed_methods
+msgid ""
+"The methods offered when customers choose the Kashier payment method, as "
+"Kashier names them, separated by commas (e.g. 'wallet, bank_installments, "
+"bnpl[valu]'). Leave empty to offer every method enabled on your Kashier "
+"account. Cards are always offered by the Card payment method."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_operation
+msgid "The operation a child transaction sent to Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_order_ref
+msgid "The order reference sent to Kashier (merchantOrderId)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The order was not paid."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The outcome of the payment is not known yet. It is checked with Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method (error %(code)s)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"The payment couldn't be processed. Please try again later or choose another "
+"payment method."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment failed. Try again or use another card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment is above the card's limit."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment is in progress. The outcome is checked with Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The payment page expired before the payment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment page expired."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"The payment page validity must be between %(low)s and %(high)s minutes."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment system had an error. Try again later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment was already refunded."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The payment was cancelled at Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment was cancelled."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The refund is larger than what can still be refunded on this payment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The saved card was not found at Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The security code (CVV) is not correct."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The transaction is not linked to a saved card."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The user owning the Secret Key lacks a permission in Kashier (refunds need "
+"the refund permission)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.constraint,message:payment_kashier_cf.constraint_payment_transaction_kashier_cf_transaction_unique
+msgid "This Kashier operation is already linked to another transaction."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "This mobile number has no wallet."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Too many attempts. Try again later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_visa
+msgid "Visa"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_operation__void
+msgid "Void"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Waiting for Kashier's answer."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"Write the Kashier methods as Kashier names them, separated by commas, e.g. "
+"'wallet, bank_installments, bnpl[valu]'."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid "You'll pay on Kashier's secure page, then come back to"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:payment.provider,auth_msg:payment_kashier_cf.payment_provider_kashier_cf
+msgid "Your payment has been authorized."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:payment.provider,cancel_msg:payment_kashier_cf.payment_provider_kashier_cf
+msgid "Your payment has been cancelled."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:payment.provider,done_msg:payment_kashier_cf.payment_provider_kashier_cf
+msgid "Your payment has been processed."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:payment.provider,pending_msg:payment_kashier_cf.payment_provider_kashier_cf
+msgid ""
+"Your payment is being confirmed. Your order is reserved in the meantime."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "live"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "no details given"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "test"
+msgstr ""

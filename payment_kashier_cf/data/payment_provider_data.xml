@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_provider_kashier_cf" model="payment.provider">
+        <field name="name">Kashier</field>
+        <field name="code">kashier_cf</field>
+        <field name="sequence">8</field>
+        <field name="image_128" type="bytes" file="payment_kashier_cf/static/description/icon.png"/>
+        <field name="module_id" ref="base.module_payment_kashier_cf"/>
+        <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+        <field name="inline_form_view_id" ref="payment_kashier_cf.inline_form"/>
+        <field name="pending_msg" type="html">
+            <p>Your payment is being confirmed. Your order is reserved in the meantime.</p>
+        </field>
+    </record>
+
+</odoo>
