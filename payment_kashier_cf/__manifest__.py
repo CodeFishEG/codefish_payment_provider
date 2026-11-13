@@ -17,16 +17,48 @@
     'summary': "Every Kashier payment method in Egypt (cards, Apple Pay, mobile wallets, InstaPay, Basata, "
                "bank installments, valU and other buy-now-pay-later), each on Kashier's page, inside the "
                "checkout or run by Odoo's server, with saved cards, refunds and manual capture",
-    'description': "Payment provider for Kashier. Every Kashier method is its own payment method: cards (Visa, "
-                   "Mastercard, Meeza, 3-D Secure), Apple Pay, mobile wallets, InstaPay, Basata kiosk codes, bank "
-                   "installments, valU, Souhoola, Contact, Aman, Forsa, Octo, MoGo and TRU; the methods the Kashier "
-                   "account doesn't accept are hidden. Each method runs on Kashier's page, on Kashier's page shown "
-                   "inside the checkout, or server side (wallet requests, Basata codes and InstaPay QR codes shown "
-                   "by Odoo; cards always stay on Kashier's page). Apple Pay can also be a button on the payment "
-                   "step. Payments are confirmed from Kashier's API, never from the browser alone. Includes saved "
-                   "cards (also charged again without the customer, for subscriptions and invoices), refunds, "
-                   "authorize and capture, payment notifications, a status check every 15 minutes, a typed client "
-                   "of Kashier's API, and Arabic.",
+    'description': """
+Kashier payments for Odoo 20 (Egypt)
+====================================
+
+Payment methods
+---------------
+- Every Kashier method is its own payment method: cards (Visa, Mastercard, Meeza) with 3-D Secure, Apple Pay,
+  mobile wallets, InstaPay, Basata, bank installments, valU, Souhoola, Contact, Aman, Forsa, Octo, MoGo and TRU.
+- The methods your Kashier account doesn't accept are hidden at checkout ("Sync Kashier Methods" button and a
+  daily check); a notice lists the methods another payment provider shows instead.
+- Cards in EGP, USD, GBP and EUR; the other methods in Egyptian pounds.
+
+How each method runs (chosen per method)
+----------------------------------------
+- Kashier page: the customer pays on Kashier's secure page and comes back.
+- Kashier page inside the checkout: the same page shown in the payment step, 3-D Secure included.
+- Server side, for wallets, Basata and InstaPay: Odoo's own page sends the wallet request, shows the Basata code
+  (also emailed to the customer) or the InstaPay QR code, and waits for the result. Cards always stay on Kashier's
+  page: card details never reach Odoo.
+- Apple Pay button on the payment step (beta), with the domain file served by Odoo.
+
+After the payment
+-----------------
+- Full and partial refunds from Odoo for cards, Apple Pay, wallets and bank installments.
+- Authorize, then capture or void card payments.
+- Saved cards: paid again with the security code, or charged without the customer for invoices and
+  subscriptions; deleting a card in the customer portal deletes it at Kashier.
+- Bank installments wait until Kashier completes them.
+
+Reliability and security
+------------------------
+- Every payment is confirmed from Kashier's API with the Secret Key; Kashier's signed redirects and notifications
+  only trigger that check; the amount and the currency are verified.
+- Status from Kashier's notifications, the customer's return and a check every 15 minutes, plus a "Check Kashier
+  Status" button for the staff.
+- A request that moves money is never sent twice: an unanswered refund, capture, void or charge waits for
+  Kashier's answer. Late payments are still recorded, and the staff are alerted once on the order or the invoice.
+- Test Connection button, a Kashier bank journal per company, several companies or databases on one Kashier
+  account, keys and card tokens masked in the logs.
+- Customer pages and emails name your company, never Odoo. English and Arabic.
+- Includes a typed client of Kashier's API, generated from Kashier's API document.
+""",
     'version': '20.0.1.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
