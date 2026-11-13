@@ -1,15 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Shown under a Kashier payment method at checkout. Customers know the company, not Odoo. -->
+    <!-- Shown under a Kashier payment method at checkout, as the method's integration works. Customers know
+         the company, not Odoo. The empty container receives Kashier's page or its Apple Pay button. -->
     <template id="inline_form">
         <t t-set="company_name" t-value="provider_sudo.company_id.name"/>
+        <t t-set="integration" t-value="pm_sudo._kashier_cf_get_integration() if pm_sudo else 'redirect'"/>
+        <t t-set="server_kind" t-value="pm_sudo._kashier_cf_spec().get('server') if pm_sudo else False"/>
         <div class="o_kashier_cf_hint small text-muted">
-            <p class="mb-0">
+            <p class="mb-0" t-if="integration == 'redirect'">
                 You'll pay on Kashier's secure page, then come back to <t t-out="company_name"/>.
                 Your payment details are never shared with <t t-out="company_name"/>.
             </p>
+            <p class="mb-0" t-elif="integration == 'embedded'">
+                Kashier's secure page opens here, without leaving <t t-out="company_name"/>.
+                Your payment details are never shared with <t t-out="company_name"/>.
+            </p>
+            <p class="mb-0" t-elif="integration == 'apple_pay_button'">
+                Click Pay, then the Apple Pay button that appears here.
+            </p>
+            <t t-elif="integration == 'server'">
+                <p class="mb-0" t-if="server_kind == 'wallet'">
+                    Next, enter your wallet's mobile number, then approve the payment in your wallet app.
+                </p>
+                <p class="mb-0" t-elif="server_kind == 'basata'">
+                    Next, you get a code to pay at a Basata kiosk or point of sale.
+                </p>
+                <p class="mb-0" t-else="">
+                    Next, scan a QR code with your bank's app, or get a payment request on your InstaPay address.
+                </p>
+            </t>
         </div>
+        <div class="o_kashier_cf_container mt-2 d-none"/>
+    </template>
+
+    <!-- Each payment option says how it reaches Kashier: the form embeds Kashier's page or shows the Apple Pay
+         button itself; the other integrations are plain redirects. -->
+    <template id="method_form" inherit_id="payment.method_form">
+        <xpath expr="//input[@name='o_payment_radio']" position="attributes">
+            <attribute name="t-att-data-kashier-cf-integration">
+                pm_sudo._kashier_cf_get_integration() if provider_sudo.code == 'kashier_cf' else None
+            </attribute>
+        </xpath>
+    </template>
+
+    <!-- The page of a payment Odoo asks Kashier for itself (no Kashier page): wallet request, Basata code or
+         InstaPay QR. Without the website module the footer says "Powered by Odoo": customers only know the
+         company, so the copyright line is hidden. -->
+    <template id="server_payment_page" name="Kashier: Payment Page">
+        <t t-set="page_title">Payment</t>
+        <t
+            t-call="portal.frontend_layout"
+            page_title="page_title"
+            title.f="{{ page_title }} | {{ company.name }}"
+            no_copyright="not website"
+        >
+            <div class="wrap">
+                <div class="container">
+                    <div class="row justify-content-center my-4">
+                        <div
+                            class="col-12 col-md-8 col-lg-6 o_kashier_cf_server_page"
+                            t-att-data-tx-id="tx.id"
+                            t-att-data-access-token="access_token"
+                            t-att-data-kind="kind"
+                            t-att-data-state="tx.state"
+                            t-att-data-expires-at="expires_at"
+                            t-att-data-start-url="start_url"
+                            t-att-data-poll-url="poll_url"
+                        >
+                            <div class="card">
+                                <div class="card-body d-flex flex-column gap-3">
+                                    <div>
+                                        <h4 class="mb-1" t-out="company.name"/>
+                                        <div class="text-muted">
+                                            <span><t t-out="tx.amount" t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"/></span>
+                                            · <span><t t-out="tx.reference"/></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 1. Ask for the number / address. -->
+                                    <form t-attf-class="o_kashier_cf_start_form d-flex flex-column gap-2 #{'d-none' if tx.state != 'draft' else ''}">
+                                        <t t-if="kind == 'wallet'">
+                                            <label class="form-label mb-0" for="o_kashier_cf_value">Your wallet's mobile number</label>
+                                            <input id="o_kashier_cf_value" name="value" class="form-control" type="tel" inputmode="numeric"
+                                                   autocomplete="tel" dir="ltr" placeholder="01XXXXXXXXX" t-att-value="phone" required="required"/>
+                                            <small class="text-muted">You'll get a payment request in your wallet app (Vodafone Cash, Orange Cash, e&amp; cash, WE Pay...).</small>
+                                            <button type="submit" class="btn btn-primary">Send the payment request</button>
+                                        </t>
+                                        <t t-elif="kind == 'basata'">
+                                            <label class="form-label mb-0" for="o_kashier_cf_value">Your mobile number</label>
+                                            <input id="o_kashier_cf_value" name="value" class="form-control" type="tel" inputmode="numeric"
+                                                   autocomplete="tel" dir="ltr" placeholder="01XXXXXXXXX" t-att-value="phone" required="required"/>
+                                            <button type="submit" class="btn btn-primary">Get my payment code</button>
+                                        </t>
+                                        <t t-else="">
+                                            <button type="submit" class="btn btn-primary">Show the QR code</button>
+                                            <div class="text-muted small text-center">or</div>
+                                            <label class="form-label mb-0" for="o_kashier_cf_value">Your InstaPay address</label>
+                                            <input id="o_kashier_cf_value" name="value" class="form-control" type="text" dir="ltr"
+                                                   placeholder="name@instapay"/>
+                                            <button type="submit" class="btn btn-secondary o_kashier_cf_request">Send the request to my InstaPay</button>
+                                        </t>
+                                        <div class="alert alert-danger mb-0 d-none o_kashier_cf_error" role="alert"/>
+                                    </form>
+
+                                    <!-- 2. Waiting for the customer (wallet app, InstaPay). -->
+                                    <div t-attf-class="o_kashier_cf_waiting text-center #{'' if tx.state == 'pending' and kind != 'basata' else 'd-none'}">
+                                        <img t-if="qr_data_uri" t-att-src="qr_data_uri" class="o_kashier_cf_qr img-fluid mb-2" alt="InstaPay QR code" width="240" height="240"/>
+                                        <img t-else="" class="o_kashier_cf_qr img-fluid mb-2 d-none" alt="InstaPay QR code" width="240" height="240"/>
+                                        <p class="mb-1 o_kashier_cf_waiting_text">
+                                            <t t-if="kind == 'wallet'">Approve the payment in your wallet app.</t>
+                                            <t t-else="">Scan the QR code with your bank's app or InstaPay, or approve the request.</t>
+                                        </p>
+                                        <p class="text-muted mb-0">Time left: <span class="o_kashier_cf_countdown" dir="ltr">--:--</span></p>
+                                    </div>
+
+                                    <!-- 3. Basata: the code. -->
+                                    <div t-attf-class="o_kashier_cf_code_block text-center #{'' if kind == 'basata' and tx.kashier_cf_reference_code and tx.state == 'pending' else 'd-none'}">
+                                        <p class="mb-1">Your payment code:</p>
+                                        <p class="display-6 fw-bold mb-1 o_kashier_cf_code" dir="ltr"><t t-out="tx.kashier_cf_reference_code or ''"/></p>
+                                        <p class="text-muted mb-2">
+                                            Give it at a Basata kiosk or point of sale and pay
+                                            <span><t t-out="tx.amount" t-options="{'widget': 'monetary', 'display_currency': tx.currency_id}"/></span>.
+                                            Time left: <span class="o_kashier_cf_countdown" dir="ltr">--:--</span>
+                                        </p>
+                                        <a href="/payment/status" class="btn btn-primary">Done</a>
+                                    </div>
+
+                                    <div class="small text-muted d-flex align-items-center gap-1">
+                                        <i class="oi" data-icon="lock" aria-hidden="true"/>
+                                        <span>Secured by Kashier</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
     </template>
 
 </odoo>

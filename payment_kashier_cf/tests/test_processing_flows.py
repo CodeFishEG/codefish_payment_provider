@@ -15,12 +15,16 @@
 import json
 from unittest.mock import patch
 
+from lxml import html as lxml_html
+
 from odoo.tests import tagged
-from odoo.tools import mute_logger
+from odoo.tools import BinaryBytes, mute_logger
 
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
+from odoo.addons.payment_kashier_cf import const
 from odoo.addons.payment_kashier_cf import utils as kashier_utils
 from odoo.addons.payment_kashier_cf.controllers.main import KashierController
+from odoo.addons.payment_kashier_cf.exceptions import KashierError
 from odoo.addons.payment_kashier_cf.tests.common import (
     KashierCommon,
     kashier_order,
@@ -117,3 +121,79 @@ class TestProcessingFlows(KashierCommon, PaymentHttpCommon):
             response = self._webhook(self._webhook_data(tx))
         self.assertEqual(response.status_code, 200)
         sync.assert_not_called()
+
+    # === SERVER-SIDE PAGE, START, POLL, APPLE PAY FILE === #
+
+    def _server_tx(self, method):
+        method.kashier_cf_integration = const.INTEGRATION_SERVER
+        tx = self._create_transaction("redirect", payment_method_id=method.id, reference=f"S-SRV-{method.code}")
+        token = self._generate_test_access_token(tx.reference, tx.partner_id.id)
+        return tx, token
+
+    def _jsonrpc(self, url, params):
+        response = self.url_open(self._build_url(url), data=json.dumps({"jsonrpc": "2.0", "params": params}),
+                                 headers={"Content-Type": "application/json"})
+        return response.json()["result"]
+
+    def test_server_page_names_the_company(self):
+        tx, token = self._server_tx(self.pm_wallet)
+        self.partner.phone = "+20 100 100 1001"
+        response = self.url_open(self._build_url(f"{KashierController._pay_url}/{tx.id}/{token}"))
+        self.assertEqual(response.status_code, 200)
+        card = lxml_html.fromstring(response.content).xpath("//div[contains(@class, 'o_kashier_cf_server_page')]")[0]
+        text = card.text_content()
+        self.assertIn(tx.company_id.name, text)
+        self.assertNotIn("Odoo", text)
+        self.assertEqual(card.xpath(".//input[@name='value']")[0].get("value"), "01001001001")
+        self.assertTrue(tx.kashier_cf_order_ref and tx.kashier_cf_expires_at, "Prepared when the page opens.")
+
+    @mute_logger("odoo.http")
+    def test_server_page_needs_the_token(self):
+        tx, _token = self._server_tx(self.pm_wallet)
+        response = self.url_open(self._build_url(f"{KashierController._pay_url}/{tx.id}/wrong"))
+        self.assertEqual(response.status_code, 403)
+
+    def test_start_and_poll(self):
+        tx, token = self._server_tx(self.pm_wallet)
+        tx._kashier_cf_prepare_server_payment()
+        answer = {"status": "SUCCESS", "response": {"status": "SUCCESS", "transactionResponseCode": "k_4"}}
+        with self._set_answer("POST", "/v3/orders", answer):
+            result = self._jsonrpc(KashierController._start_url, {"tx_id": tx.id, "access_token": token, "value": "01001001001"})
+        self.assertTrue(result["ok"])
+        self.assertEqual((result["state"], result["final"]), ("pending", False))
+        with patch(SYNC, return_value=True) as sync:
+            polled = self._jsonrpc(KashierController._poll_url, {"tx_id": tx.id, "access_token": token})
+        self.assertEqual(polled["state"], "pending")
+        sync.assert_called_once()
+
+    def test_instapay_qr_is_drawn_by_odoo(self):
+        tx, token = self._server_tx(self.pm_instapay)
+        tx._kashier_cf_prepare_server_payment()
+        answer = {"status": "SUCCESS", "response": {"status": "SUCCESS", "payload": {"body": {"ISOQR": "000201SECRETQR"}}}}
+        with self._set_answer("POST", "/v3/orders", answer):
+            result = self._jsonrpc(KashierController._start_url, {"tx_id": tx.id, "access_token": token, "value": ""})
+        self.assertTrue(result["qr_data_uri"].startswith("data:image/png;base64,"))
+        page = self.url_open(self._build_url(f"{KashierController._pay_url}/{tx.id}/{token}")).text
+        self.assertIn("data:image/png;base64,", page)
+        self.assertNotIn("000201SECRETQR", page)
+        self.assertNotIn("000201SECRETQR", json.dumps(result))
+
+    def test_webhook_finds_an_earlier_attempt(self):
+        tx, _token = self._server_tx(self.pm_wallet)
+        tx._kashier_cf_prepare_server_payment()
+        first_ref = tx.kashier_cf_order_ref
+        with self._set_answer("POST", "/v3/orders", KashierError("general", code="k_default")):
+            tx._kashier_cf_start_server_payment("01001001001")
+        self.assertNotEqual(tx.kashier_cf_order_ref, first_ref)
+        data = {"merchantOrderId": first_ref, "status": "SUCCESS", "signatureKeys": ["merchantOrderId", "status"]}
+        with patch(SYNC, return_value=True) as sync:
+            response = self._webhook(data, sign(kashier_utils.webhook_signing_string(data)))
+        self.assertEqual(response.status_code, 200)
+        sync.assert_called_once()
+
+    def test_apple_pay_domain_file(self):
+        url = self._build_url(const.APPLE_PAY_DOMAIN_FILE_URL)
+        self.kashier.kashier_cf_apple_pay_domain_file = BinaryBytes(b"7B227073-kashier-domain-file")
+        for path in (url, f"{url}.txt"):
+            response = self.url_open(path)
+            self.assertEqual((response.status_code, response.text), (200, "7B227073-kashier-domain-file"))

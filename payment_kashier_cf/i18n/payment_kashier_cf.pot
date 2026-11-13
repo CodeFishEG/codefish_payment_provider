@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 12:47+0000\n"
-"PO-Revision-Date: 2026-11-13 12:47+0000\n"
+"POT-Creation-Date: 2026-11-13 14:34+0000\n"
+"PO-Revision-Date: 2026-11-13 14:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,23 @@ msgstr ""
 
 #. module: payment_kashier_cf
 #. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_method.py:0
+msgid ""
+"%(method)s can't use the integration \"%(integration)s\" with Kashier. "
+"Possible: %(allowed)s."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_transaction.py:0
 msgid "(%(ref)s)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid ""
+".\n"
+"                                            Time left: <span class=\"o_kashier_cf_countdown\" dir=\"ltr\">--:--</span>"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -41,11 +56,57 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
-#: model:ir.module.module,summary:base.module_payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "01XXXXXXXXX"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:mail.template,body_html:payment_kashier_cf.mail_template_basata_code
 msgid ""
-"Accept Kashier in Egypt: cards (Visa, Mastercard, Meeza), wallets, "
-"installments and valU on Kashier's hosted payment page, with saved cards, "
-"refunds and manual capture"
+"<div style=\"font-family: Arial, sans-serif; font-size: 14px; color: #1F2937;\">\n"
+"    <p>Hello <t t-out=\"object.partner_name or ''\"></t>,</p>\n"
+"    <p>\n"
+"        To pay <strong t-out=\"format_amount(object.amount, object.currency_id)\"></strong> to\n"
+"        <t t-out=\"object.company_id.name\"></t> (<t t-out=\"object.reference\"></t>), give this code at a Basata kiosk or\n"
+"        point of sale:\n"
+"    </p>\n"
+"    <p style=\"font-size: 24px; font-weight: bold; letter-spacing: 3px;\" t-out=\"object.kashier_cf_reference_code\"></p>\n"
+"    <p>The code is valid until <t t-out=\"format_datetime(object.kashier_cf_expires_at, tz=object.partner_id.tz or 'Africa/Cairo', dt_format='short')\"></t>.</p>\n"
+"    <p><t t-out=\"object.company_id.name\"></t></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid ""
+"<i class=\"oi\" data-icon=\"lock\" aria-hidden=\"true\"/>\n"
+"                                        <span>Secured by Kashier</span>"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid ""
+"<small class=\"text-muted\">You'll get a payment request in your wallet app "
+"(Vodafone Cash, Orange Cash, e&amp; cash, WE Pay...).</small>"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid ""
+"<span>: customers see these methods from another payment provider with a lower sequence.\n"
+"                            Deactivate them there, or move Kashier up in the providers list.</span>"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_account_methods_display
+msgid "Accepted by your Kashier Account"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Accepted by your Kashier account: %s"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -59,11 +120,42 @@ msgid "All methods of the Kashier account"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_aman
+msgid "Aman"
+msgstr ""
+
+#. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/const.py:0
 msgid ""
 "Another payment of this order is in progress. The outcome is checked with "
 "Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_apple_pay
+msgid "Apple Pay"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "Apple Pay button"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_method__kashier_cf_integration__apple_pay_button
+msgid "Apple Pay button on the payment step (beta)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-javascript
+#: code:addons/payment_kashier_cf/static/src/interactions/payment_form.js:0
+msgid "Apple Pay isn't available right now. Choose another payment method."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Approve the payment in your wallet app."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -80,6 +172,13 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid ""
+"Ask Kashier which payment methods your account accepts. The others are "
+"hidden at checkout."
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_max_attempts
 msgid "Attempts on Kashier's Page"
 msgstr ""
@@ -93,6 +192,16 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_installments_eg
+msgid "Bank Installments"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_server_kind__basata
+msgid "Basata code"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_operation__capture
 msgid "Capture"
 msgstr ""
@@ -100,15 +209,6 @@ msgstr ""
 #. module: payment_kashier_cf
 #: model:payment.method,name:payment_kashier_cf.payment_method_card
 msgid "Card"
-msgstr ""
-
-#. module: payment_kashier_cf
-#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
-msgid ""
-"Card payments open Kashier's page on cards only; the Kashier method opens it on\n"
-"                        every method enabled on your Kashier account. Payments are confirmed with the Secret Key,\n"
-"                        never from the browser alone. To capture payments manually, turn off the Kashier method\n"
-"                        first: wallets and installments can't be captured later."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -123,6 +223,17 @@ msgid "Check the Kashier payment %(ref)s"
 msgstr ""
 
 #. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Checking the payment with Kashier..."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid "Click Pay, then the Apple Pay button that appears here."
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__code
 msgid "Code"
 msgstr ""
@@ -131,6 +242,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_provider.py:0
 msgid "Connection successful"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_contact
+msgid "Contact"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -146,10 +262,37 @@ msgstr ""
 
 #. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_method__display_name
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__display_name
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__display_name
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Done"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid ""
+"Each payment method opens Kashier's page, shows it inside the checkout, or is run by\n"
+"                        Odoo's server: choose it in the method's \"Kashier Integration\" (Payment Methods tab).\n"
+"                        Cards always stay on Kashier's page. Payments are confirmed with the Secret Key, never\n"
+"                        from the browser alone. To capture card payments manually, turn off the other methods\n"
+"                        first: they can't be captured later."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_attempt_refs
+msgid "Earlier Kashier Orders"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Enter the Kashier Merchant ID first."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -159,8 +302,65 @@ msgid "Enter the Merchant ID, the Payment API Key and the Secret Key first."
 msgstr ""
 
 #. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Enter your Egyptian mobile number: 11 digits, starting with 010, 011, 012 or"
+" 015."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Enter your InstaPay address, like name@instapay."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.module.module,summary:base.module_payment_kashier_cf
+msgid ""
+"Every Kashier payment method in Egypt (cards, Apple Pay, mobile wallets, "
+"InstaPay, Basata, bank installments, valU and other buy-now-pay-later), each"
+" on Kashier's page, inside the checkout or run by Odoo's server, with saved "
+"cards, refunds and manual capture"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_transaction_form
 msgid "Fetch the latest status of this payment from Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid ""
+"For the Apple Pay button on the payment step (Apple Pay method, integration \"Apple Pay\n"
+"                        button\"): ask Kashier to register your shop's domain for Apple Pay and upload the file they\n"
+"                        send. Without it, Apple Pay opens on Kashier's page. In beta: check it on an Apple device\n"
+"                        before going live."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_forsa
+msgid "Forsa"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Get my payment code"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Give it at a Basata kiosk or point of sale and pay"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_method__kashier_cf_integration
+msgid ""
+"How customers pay with this method:\n"
+"- Kashier page: they go to Kashier's secure page and come back.\n"
+"- Kashier page inside the checkout: the same page, shown in the checkout without leaving the shop.\n"
+"- Server side: Odoo asks Kashier for the payment and shows the next step itself (wallet request, Basata code, InstaPay QR). Not for cards: card details always stay on Kashier's page.\n"
+"- Apple Pay button: Kashier's Apple Pay button on the payment step (needs the shop's domain registered with Kashier)."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -178,10 +378,34 @@ msgstr ""
 
 #. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_account_chart_template__id
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_method__id
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__id
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_token__id
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__id
 msgid "ID"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_server_kind__instapay
+#: model:payment.method,name:payment_kashier_cf.payment_method_instapay
+msgid "InstaPay"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_qr_payload
+msgid "InstaPay QR"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "InstaPay QR code"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"InstaPay is not enabled on the Kashier account. Ask Kashier to enable it."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -194,8 +418,33 @@ msgid "Kashier"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_account_methods
+msgid "Kashier Account Methods"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_alerted
 msgid "Kashier Alerts Sent"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_apple_pay_domain_file
+msgid "Kashier Apple Pay Domain File"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_apple_pay_domain_filename
+msgid "Kashier Apple Pay Domain File Name"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_apple_pay_domain_url
+msgid "Kashier Apple Pay Domain File URL"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_attempts
+msgid "Kashier Attempts"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -219,6 +468,12 @@ msgid "Kashier Error Details"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_method__kashier_cf_integration
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "Kashier Integration"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_late_check_until
 msgid "Kashier Late Check Until"
 msgstr ""
@@ -236,6 +491,16 @@ msgstr ""
 #. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_allowed_methods
 msgid "Kashier Methods"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_account_methods_date
+msgid "Kashier Methods Checked On"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_shadowed_methods
+msgid "Kashier Methods Shown by Another Provider"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -274,8 +539,18 @@ msgid "Kashier Payment API Key"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_reference_code
+msgid "Kashier Payment Code"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.module.module,shortdesc:base.module_payment_kashier_cf
 msgid "Kashier Payments"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_method__kashier_cf_provider_code
+msgid "Kashier Provider Code"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -284,8 +559,18 @@ msgid "Kashier Refunds Noted"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_expires_at
+msgid "Kashier Request Valid Until"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_provider__kashier_cf_secret_key
 msgid "Kashier Secret Key"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_server_kind
+msgid "Kashier Server Payment"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -382,6 +667,7 @@ msgstr ""
 
 #. module: payment_kashier_cf
 #. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
 #: code:addons/payment_kashier_cf/models/payment_transaction.py:0
 msgid "Kashier didn't answer. Try again in a moment."
 msgstr ""
@@ -417,6 +703,14 @@ msgstr ""
 #. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid ""
+"Kashier hasn't completed this installment payment after 3 days. Check the "
+"order in Kashier's dashboard."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
 msgid "Kashier hasn't confirmed this payment yet: check its status first."
 msgstr ""
 
@@ -426,6 +720,16 @@ msgstr ""
 msgid ""
 "Kashier hasn't decided the outcome of this payment. Check the order in "
 "Kashier's dashboard before asking the customer to pay again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_method__kashier_cf_integration__redirect
+msgid "Kashier page"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_method__kashier_cf_integration__embedded
+msgid "Kashier page inside the checkout"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -471,6 +775,12 @@ msgstr ""
 msgid ""
 "Kashier refused the server's IP address. Add it to the allowed IP addresses "
 "in Kashier's dashboard."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "Kashier refused the validity of the InstaPay request."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -540,8 +850,33 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid "Kashier's secure page opens here, without leaving"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:mail.template,name:payment_kashier_cf.mail_template_basata_code
+msgid "Kashier: Basata payment code"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.actions.server,name:payment_kashier_cf.cron_sync_payments_ir_actions_server
 msgid "Kashier: check unfinished payments"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.actions.server,name:payment_kashier_cf.cron_sync_account_methods_ir_actions_server
+msgid "Kashier: list the methods of the Kashier accounts"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_kiosk
+msgid "Kiosk (Basata)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_last_attempt
+msgid "Last Kashier Attempt"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -578,6 +913,63 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "Methods of the Kashier Choice"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_mogo
+msgid "MoGo"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_mobile_wallet_eg
+msgid "Mobile Wallets"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid ""
+"Next, enter your wallet's mobile number, then approve the payment in your "
+"wallet app."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid ""
+"Next, scan a QR code with your bank's app, or get a payment request on your "
+"InstaPay address."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
+msgid "Next, you get a code to pay at a Basata kiosk or point of sale."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "No method."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Not accepted by the Kashier account"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "Not checked yet: every active method is offered."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_octo
+msgid "Octo"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_webhook_url
 msgid ""
 "Odoo sends it with every payment. You can also add it as a webhook in "
@@ -587,6 +979,22 @@ msgstr ""
 #. module: payment_kashier_cf
 #: model:ir.model.fields,field_description:payment_kashier_cf.field_payment_transaction__kashier_cf_channel
 msgid "Paid With (Kashier)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Pay it at a Basata kiosk or point of sale before %(expiry)s."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Payment"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model,name:payment_kashier_cf.model_payment_method
+msgid "Payment Method"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -610,16 +1018,26 @@ msgid "Payment Transaction"
 msgstr ""
 
 #. module: payment_kashier_cf
+#. odoo-javascript
+#: code:addons/payment_kashier_cf/static/src/interactions/payment_form.js:0
+msgid "Payment processing failed"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.module.module,description:base.module_payment_kashier_cf
 msgid ""
-"Payment provider for Kashier. Customers pay on Kashier's hosted payment "
-"page: cards with 3-D Secure, or every method enabled on the Kashier account "
-"(mobile wallets, bank installments, valU and other buy-now-pay-later "
-"brands). Payments are confirmed from Kashier's API, never from the browser "
-"alone. Includes saved cards (also charged again without the customer, for "
-"subscriptions and invoices), full and partial refunds, authorize and "
-"capture, payment notifications, a status check every 15 minutes, a typed "
-"client of Kashier's API, and Arabic."
+"Payment provider for Kashier. Every Kashier method is its own payment "
+"method: cards (Visa, Mastercard, Meeza, 3-D Secure), Apple Pay, mobile "
+"wallets, InstaPay, Basata kiosk codes, bank installments, valU, Souhoola, "
+"Contact, Aman, Forsa, Octo, MoGo and TRU; the methods the Kashier account "
+"doesn't accept are hidden. Each method runs on Kashier's page, on Kashier's "
+"page shown inside the checkout, or server side (wallet requests, Basata "
+"codes and InstaPay QR codes shown by Odoo; cards always stay on Kashier's "
+"page). Apple Pay can also be a button on the payment step. Payments are "
+"confirmed from Kashier's API, never from the browser alone. Includes saved "
+"cards (also charged again without the customer, for subscriptions and "
+"invoices), refunds, authorize and capture, payment notifications, a status "
+"check every 15 minutes, a typed client of Kashier's API, and Arabic."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -628,8 +1046,82 @@ msgid "Refund"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid ""
+"Scan the QR code with your bank's app or InstaPay, or approve the request."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-javascript
+#: code:addons/payment_kashier_cf/static/src/interactions/payment_form.js:0
+msgid "Secure payment"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Send the payment request"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Send the request to my InstaPay"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:mail.template,description:payment_kashier_cf.mail_template_basata_code
+msgid "Sent to the customer with the Basata code of a payment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_transaction_form
+msgid "Server Side"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_method__kashier_cf_integration__server
+msgid "Server side (no Kashier page)"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Show the QR code"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_souhoola
+msgid "Souhoola"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
+msgid "Sync Kashier Methods"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_tru
+msgid "TRU"
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model_terms:ir.ui.view,arch_db:payment_kashier_cf.payment_provider_form
 msgid "Test Connection"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_reference_code
+msgid "The Basata code the customer pays with at a kiosk."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The InstaPay request expired before the payment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "The InstaPay request expired."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -694,6 +1186,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_kashier_cf/const.py:0
 msgid "The bank answered too late. The outcome is checked with Kashier."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The bank approved the installments. Kashier completes the payment."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -845,12 +1343,27 @@ msgid "The customer reference Kashier saved the card under."
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_apple_pay_domain_file
+msgid ""
+"The file apple-developer-merchantid-domain-association that Kashier gives "
+"when it registers your shop's domain for Apple Pay. Needed for the Apple Pay"
+" button on the payment step only."
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_allowed_methods
 msgid ""
 "The methods offered when customers choose the Kashier payment method, as "
 "Kashier names them, separated by commas (e.g. 'wallet, bank_installments, "
 "bnpl[valu]'). Leave empty to offer every method enabled on your Kashier "
 "account. Cards are always offered by the Card payment method."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_account_methods
+msgid ""
+"The methods the Kashier account accepts, as Kashier last listed them, with "
+"the Merchant ID and the mode (test or live) they were listed for."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -861,6 +1374,14 @@ msgstr ""
 #. module: payment_kashier_cf
 #: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_order_ref
 msgid "The order reference sent to Kashier (merchantOrderId)."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_attempt_refs
+msgid ""
+"The order references of earlier attempts of this payment (a new wallet "
+"number, a new code...). They are checked too, so that a late payment of an "
+"earlier attempt is never missed."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -877,6 +1398,17 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_transaction__kashier_cf_server_kind
+msgid "The payment Odoo asked Kashier for, without Kashier's page."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The payment code expired before the payment."
+msgstr ""
+
+#. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_provider.py:0
 msgid ""
@@ -890,6 +1422,12 @@ msgstr ""
 msgid ""
 "The payment couldn't be processed. Please try again later or choose another "
 "payment method."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-javascript
+#: code:addons/payment_kashier_cf/static/src/interactions/server_payment_page.js:0
+msgid "The payment couldn't be started. Try again."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -932,6 +1470,13 @@ msgstr ""
 #. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/const.py:0
+msgid ""
+"The payment request was sent to the wallet. It is waiting for the customer."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
 msgid "The payment system had an error. Try again later."
 msgstr ""
 
@@ -956,6 +1501,12 @@ msgstr ""
 #. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/const.py:0
+msgid "The payment was declined in the InstaPay app."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
 msgid "The refund is larger than what can still be refunded on this payment."
 msgstr ""
 
@@ -972,6 +1523,7 @@ msgid "The security code (CVV) is not correct."
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_method__kashier_cf_provider_code
 #: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__code
 msgid "The technical code of this payment provider."
 msgstr ""
@@ -991,14 +1543,75 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "The wallet request expired before the payment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/const.py:0
+msgid "This InstaPay address or number is not registered."
+msgstr ""
+
+#. module: payment_kashier_cf
 #: model:ir.model.constraint,message:payment_kashier_cf.constraint_payment_transaction_kashier_cf_transaction_unique
 msgid "This Kashier operation is already linked to another transaction."
 msgstr ""
 
 #. module: payment_kashier_cf
 #. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid ""
+"This isn't Apple's domain file. Upload the file apple-developer-merchantid-"
+"domain-association as Kashier gave it, without renaming or opening it."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
 #: code:addons/payment_kashier_cf/const.py:0
 msgid "This mobile number has no wallet."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/controllers/main.py:0
+msgid "This payment is being processed. Wait a moment."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "This payment method can't be used this way. Choose it again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "This payment method doesn't work this way."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "This payment page expired. Start the payment again from your order."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "This payment was already started. Wait for its result."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Time left: <span class=\"o_kashier_cf_countdown\" dir=\"ltr\">--:--</span>"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Too many attempts. Start the payment again from your order."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -1020,7 +1633,25 @@ msgstr ""
 #. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Wait a few seconds before trying again."
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
 msgid "Waiting for Kashier's answer."
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields.selection,name:payment_kashier_cf.selection__payment_transaction__kashier_cf_server_kind__wallet
+msgid "Wallet request"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:ir.model.fields,help:payment_kashier_cf.field_payment_provider__kashier_cf_apple_pay_domain_url
+msgid ""
+"Where Apple reads the domain file. Open it to check it shows a long line of "
+"text."
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -1034,6 +1665,27 @@ msgstr ""
 #. module: payment_kashier_cf
 #: model_terms:ir.ui.view,arch_db:payment_kashier_cf.inline_form
 msgid "You'll pay on Kashier's secure page, then come back to"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_transaction.py:0
+msgid "Your Basata payment code:"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Your InstaPay address"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Your mobile number"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Your payment code:"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -1058,9 +1710,25 @@ msgid ""
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "Your wallet's mobile number"
+msgstr ""
+
+#. module: payment_kashier_cf
+#. odoo-python
+#: code:addons/payment_kashier_cf/models/payment_provider.py:0
+msgid "buy now, pay later: %s"
+msgstr ""
+
+#. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_provider.py:0
 msgid "live"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "name@instapay"
 msgstr ""
 
 #. module: payment_kashier_cf
@@ -1070,7 +1738,24 @@ msgid "no details given"
 msgstr ""
 
 #. module: payment_kashier_cf
+#: model_terms:ir.ui.view,arch_db:payment_kashier_cf.server_payment_page
+msgid "or"
+msgstr ""
+
+#. module: payment_kashier_cf
 #. odoo-python
 #: code:addons/payment_kashier_cf/models/payment_provider.py:0
 msgid "test"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:payment.method,name:payment_kashier_cf.payment_method_valu
+msgid "valU"
+msgstr ""
+
+#. module: payment_kashier_cf
+#: model:mail.template,subject:payment_kashier_cf.mail_template_basata_code
+msgid ""
+"{{ object.company_id.name }}: your payment code {{ "
+"object.kashier_cf_reference_code }}"
 msgstr ""

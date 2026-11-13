@@ -18,6 +18,7 @@ import hashlib
 import hmac
 import json
 import re
+from datetime import UTC, datetime
 from urllib.parse import quote, urlsplit
 
 from odoo.addons.payment_kashier_cf import const
@@ -209,3 +210,73 @@ def classify_error(status, body):
     if code:
         return code
     return "bad_request" if status and status >= 400 else None
+
+
+def parse_account_methods(answer):
+    """The methods a Kashier account accepts, from `GET /v2/merchants/{mid}/paymentMethods`.
+
+    Kashier answers `{"acceptedPaymentMethods": [...], "acceptedBNPLMethods": [...], ...}`; its API document
+    describes a map of method names to booleans instead, accepted too.
+
+    :return: The accepted methods and the accepted buy-now-pay-later brands, lowercase and sorted.
+    :rtype: tuple[list[str], list[str]]
+    """
+    if not isinstance(answer, dict):
+        return [], []
+    if "acceptedPaymentMethods" in answer or "acceptedBNPLMethods" in answer:
+        methods = answer.get("acceptedPaymentMethods") or []
+        bnpl = answer.get("acceptedBNPLMethods") or []
+    else:
+        methods = [name for name, enabled in answer.items() if enabled is True]
+        bnpl = []
+    clean = lambda names: sorted({str(name).strip().lower() for name in names if isinstance(name, str) and name.strip()})  # noqa: E731
+    return clean(methods), clean(bnpl)
+
+
+def normalize_eg_mobile(value):
+    """An Egyptian mobile number as Kashier wants it (01XXXXXXXXX), from what a customer types.
+
+    :return: The number, or an empty string if it isn't one.
+    :rtype: str
+    """
+    digits = re.sub(r"[^0-9]", "", str(value or ""))
+    if digits.startswith("0020"):
+        digits = digits[4:]
+    elif digits.startswith("20") and len(digits) == 12:
+        digits = digits[2:]
+    if len(digits) == 10 and digits.startswith("1"):
+        digits = f"0{digits}"
+    return digits if re.match(const.EG_MOBILE_PATTERN, digits) else ""
+
+
+def normalize_instapay_address(value):
+    """An InstaPay address (name@instapay), from what a customer types (the suffix may be left out)."""
+    address = str(value or "").strip().lower()
+    if address and "@" not in address:
+        address = f"{address}@instapay"
+    return address if re.match(const.INSTAPAY_ADDRESS_PATTERN, address) else ""
+
+
+def parse_datetime(value):
+    """A naive UTC datetime from Kashier's ISO dates, or None."""
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed.astimezone(UTC).replace(tzinfo=None) if parsed.tzinfo else parsed
+
+
+def find_instapay_qr(answer):
+    """The InstaPay QR payload of Kashier's answer to GENERATE_QR (its place isn't documented)."""
+    response = (answer or {}).get("response") or {}
+    instapay = (response.get("paymentMethod") or {}).get("instapay") or {}
+    for value in (
+        instapay.get("qrCode"),
+        ((response.get("payload") or {}).get("body") or {}).get("ISOQR"),
+        (((answer or {}).get("payload") or {}).get("body") or {}).get("ISOQR"),
+    ):
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""

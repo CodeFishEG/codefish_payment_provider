@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
 
-    <!-- Kashier's payment methods. `card` opens Kashier's page on cards only; `kashier`
-         opens it on every method enabled on the merchant account. Both are activated at installation. -->
+    <!-- Kashier's payment methods, one per method of Kashier's page. Each reaches Kashier as set in its
+         "Integration" (Kashier's page, embedded page, server side, Apple Pay button); the methods the merchant
+         account doesn't accept are hidden at checkout. `kashier` offers every method of the account at once and
+         is not activated at installation. -->
 
     <record id="payment_method_card" model="payment.method">
         <field name="name">Card</field>
@@ -13,6 +15,7 @@
         <field name="support_tokenization">True</field>
         <field name="support_manual_capture">full_only</field>
         <field name="support_refund">partial</field>
+        <field name="kashier_cf_integration">redirect</field>
     </record>
 
     <record id="payment_method_kashier" model="payment.method">
@@ -23,6 +26,165 @@
         <field name="image" type="bytes" file="payment_kashier_cf/static/img/kashier.png"/>
         <field name="support_refund">partial</field>
         <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP'), ref('base.USD'), ref('base.GBP'), ref('base.EUR')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <!-- Methods of Kashier's page other than cards (Egypt, EGP). -->
+
+    <record id="payment_method_apple_pay" model="payment.method">
+        <field name="name">Apple Pay</field>
+        <field name="code">apple_pay</field>
+        <field name="sequence">15</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/apple_pay.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_mobile_wallet_eg" model="payment.method">
+        <field name="name">Mobile Wallets</field>
+        <field name="code">mobile_wallet_eg</field>
+        <field name="sequence">20</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/wallet.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_instapay" model="payment.method">
+        <field name="name">InstaPay</field>
+        <field name="code">instapay</field>
+        <field name="sequence">25</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment_kashier_cf/static/img/instapay.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_installments_eg" model="payment.method">
+        <field name="name">Bank Installments</field>
+        <field name="code">installments_eg</field>
+        <field name="sequence">30</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/bank.png"/>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_valu" model="payment.method">
+        <field name="name">valU</field>
+        <field name="code">valu</field>
+        <field name="sequence">40</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/valu.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_souhoola" model="payment.method">
+        <field name="name">Souhoola</field>
+        <field name="code">souhoola</field>
+        <field name="sequence">41</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/souhoola.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_contact" model="payment.method">
+        <field name="name">Contact</field>
+        <field name="code">contact</field>
+        <field name="sequence">42</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/contact.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_aman" model="payment.method">
+        <field name="name">Aman</field>
+        <field name="code">aman</field>
+        <field name="sequence">43</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/aman.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_forsa" model="payment.method">
+        <field name="name">Forsa</field>
+        <field name="code">forsa</field>
+        <field name="sequence">44</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/forsa.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_octo" model="payment.method">
+        <field name="name">Octo</field>
+        <field name="code">octo</field>
+        <field name="sequence">45</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/pay_later.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_mogo" model="payment.method">
+        <field name="name">MoGo</field>
+        <field name="code">mogo</field>
+        <field name="sequence">46</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/pay_later.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_tru" model="payment.method">
+        <field name="name">TRU</field>
+        <field name="code">tru</field>
+        <field name="sequence">47</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/pay_later.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
+    </record>
+
+    <record id="payment_method_kiosk" model="payment.method">
+        <field name="name">Kiosk (Basata)</field>
+        <field name="code">kiosk</field>
+        <field name="sequence">50</field>
+        <field name="provider_id" ref="payment_kashier_cf.payment_provider_kashier_cf"/>
+        <field name="image" type="bytes" file="payment/static/img/kiosk.png"/>
+        <field name="support_refund">none</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+        <field name="kashier_cf_integration">redirect</field>
     </record>
 
     <!-- Card brands. -->

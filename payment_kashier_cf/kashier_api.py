@@ -452,6 +452,10 @@ class DeleteSavedTokenResponse(TypedDict, total=False):
     message: str
 
 
+class CheckoutMerchantPaymentMethods(TypedDict, total=False):
+    pass
+
+
 # === Operations === #
 
 OPERATIONS = {
@@ -599,6 +603,14 @@ OPERATIONS = {
         'path_params': {'token': 'token'},
         'query': {},
     },
+    'getMerchantPaymentMethods': {
+        'method': 'GET',
+        'path': '/v2/merchants/{merchantId}/paymentMethods',
+        'host': 'dashboard',
+        'auth': 'none',
+        'path_params': {'merchant_id': 'merchantId'},
+        'query': {},
+    },
 }
 
 
@@ -700,3 +712,7 @@ class KashierClient:
     def delete_saved_token(self, token: str, *, reference: str | None = None) -> DeleteSavedTokenResponse:
         """DELETE /v3/payment/tokenization/tokens/{token} on the Dashboard API; authentication: Secret Key."""
         return self._request('deleteSavedToken', path_params={'token': token}, reference=reference)
+
+    def get_merchant_payment_methods(self, merchant_id: str, *, reference: str | None = None) -> CheckoutMerchantPaymentMethods:
+        """GET /v2/merchants/{merchantId}/paymentMethods on the Dashboard API; authentication: no credential."""
+        return self._request('getMerchantPaymentMethods', path_params={'merchant_id': merchant_id}, reference=reference)

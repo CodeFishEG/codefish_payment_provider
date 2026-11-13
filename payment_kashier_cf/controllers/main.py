@@ -12,15 +12,16 @@
 # You should have received a copy of the License along with this program.
 # If not, see <https://www.mediafish.agency/license.html/>
 #################################################################################
+import base64
 import hashlib
 from datetime import timedelta
 
 import psycopg2.errors
-from werkzeug.exceptions import Forbidden
+from werkzeug.exceptions import Forbidden, NotFound
 
 from odoo import fields, http
 from odoo.http import request
-from odoo.tools import SQL
+from odoo.tools import SQL, file_open
 
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment.logging import get_payment_logger
@@ -33,6 +34,9 @@ _logger = get_payment_logger(__name__, const.SENSITIVE_KEYS)
 class KashierController(http.Controller):
     _return_url = "/payment/kashier_cf/return"
     _webhook_url = "/payment/kashier_cf/webhook"
+    _pay_url = "/payment/kashier_cf/pay"
+    _start_url = "/payment/kashier_cf/start"
+    _poll_url = "/payment/kashier_cf/poll"
 
     @http.route(
         f"{_return_url}/<int:tx_id>/<string:access_token>",
@@ -73,11 +77,7 @@ class KashierController(http.Controller):
         if not isinstance(data, dict):
             return request.make_response("", status=200)
         order_ref = str(data.get("merchantOrderId") or "")
-        Transaction = request.env["payment.transaction"].sudo()
-        tx_sudo = Transaction.search([
-            ("provider_code", "=", const.PROVIDER_CODE),
-            ("kashier_cf_order_ref", "=", order_ref),
-        ], limit=1) if order_ref else Transaction
+        tx_sudo = self._kashier_cf_find_by_order_ref(order_ref)
         if not tx_sudo:
             if order_ref and self._kashier_cf_is_own_order_ref(order_ref):
                 # An order of this database not committed yet (a charge still running): retry later.
@@ -103,7 +103,124 @@ class KashierController(http.Controller):
             return request.make_response("", status=503)
         return request.make_response("", status=200)
 
+    # === SERVER-SIDE PAYMENTS (no Kashier page) === #
+
+    @http.route(
+        f"{_pay_url}/<int:tx_id>/<string:access_token>", type="http", auth="public", methods=["GET"], website=True,
+    )
+    def kashier_cf_pay_page(self, tx_id, access_token):
+        """The page of a payment Odoo asks Kashier for itself: the customer enters a mobile number (wallet,
+        Basata) or scans a QR (InstaPay), then waits for the result here.
+        """
+        tx_sudo = self._kashier_cf_get_transaction(tx_id, access_token)
+        if tx_sudo._kashier_cf_integration() != const.INTEGRATION_SERVER:
+            return request.redirect("/payment/status")
+        if tx_sudo.state == "draft":
+            tx_sudo._kashier_cf_prepare_server_payment()
+        partner = tx_sudo.partner_id
+        values = {
+            "tx": tx_sudo,
+            "kind": tx_sudo.payment_method_id._kashier_cf_spec().get("server"),
+            "company": tx_sudo.company_id,
+            "access_token": access_token,
+            "phone": kashier_utils.normalize_eg_mobile(partner.phone or ""),
+            "qr_data_uri": self._kashier_cf_qr_data_uri(tx_sudo.kashier_cf_qr_payload),
+            "expires_at": fields.Datetime.to_string(tx_sudo.kashier_cf_expires_at) if tx_sudo.kashier_cf_expires_at else "",
+            "start_url": self._start_url,
+            "poll_url": self._poll_url,
+            "max_attempts": const.SERVER_MAX_ATTEMPTS,
+        }
+        return request.render("payment_kashier_cf.server_payment_page", values)
+
+    @http.route(_start_url, type="jsonrpc", auth="public")
+    def kashier_cf_start(self, tx_id, access_token, value=""):
+        """Send the request of a server-side payment (once at a time per payment)."""
+        tx_sudo = self._kashier_cf_get_transaction(tx_id, access_token)
+        if not self._kashier_cf_lock(tx_sudo):
+            return {"ok": False, "busy": True, "can_retry": False,
+                    "message": request.env._("This payment is being processed. Wait a moment.")}
+        result = tx_sudo._kashier_cf_start_server_payment(value)
+        result.update(self._kashier_cf_state_values(tx_sudo))
+        result["qr_data_uri"] = self._kashier_cf_qr_data_uri(tx_sudo.kashier_cf_qr_payload)
+        return result
+
+    @http.route(_poll_url, type="jsonrpc", auth="public")
+    def kashier_cf_poll(self, tx_id, access_token):
+        """Check the payment with Kashier (at most every few seconds) and return its state."""
+        tx_sudo = self._kashier_cf_get_transaction(tx_id, access_token)
+        if tx_sudo.state in ("draft", "pending", "authorized"):
+            self._kashier_cf_sync(tx_sudo)
+        return self._kashier_cf_state_values(tx_sudo)
+
+    # === APPLE PAY DOMAIN FILE === #
+
+    @http.route(
+        [const.APPLE_PAY_DOMAIN_FILE_URL, f"{const.APPLE_PAY_DOMAIN_FILE_URL}.txt"],
+        type="http", auth="public", methods=["GET"],
+    )
+    def kashier_cf_apple_pay_domain_file(self):
+        """Serve the Apple Pay domain file of the shop's host.
+
+        One file per host: Kashier's when a Kashier provider has one, else our Paymob module's, else Odoo's
+        Stripe connector's (they serve the same address; this route is matched first).
+        """
+        host = request.httprequest.host.split(":")[0]
+        Provider = request.env["payment.provider"]
+        content = Provider._kashier_cf_get_apple_pay_domain_file(host)
+        if content is None and hasattr(Provider, "_paymob_cf_get_apple_pay_domain_file"):
+            content = Provider._paymob_cf_get_apple_pay_domain_file(host)
+        if content is None:
+            if request.env["ir.module.module"].sudo()._get("payment_stripe").state != "installed":
+                raise NotFound
+            with file_open("payment_stripe/static/files/apple-developer-merchantid-domain-association", "rb") as f:
+                content = f.read()
+        return request.make_response(content, headers=[("Content-Type", "text/plain")])
+
     # === HELPERS === #
+
+    @staticmethod
+    def _kashier_cf_find_by_order_ref(order_ref):
+        """The Kashier transaction of an order reference, current or of an earlier attempt."""
+        Transaction = request.env["payment.transaction"].sudo()
+        if not order_ref:
+            return Transaction
+        tx_sudo = Transaction.search([("provider_code", "=", const.PROVIDER_CODE), ("kashier_cf_order_ref", "=", order_ref)], limit=1)
+        if not tx_sudo:
+            tx_sudo = Transaction.search([
+                ("provider_code", "=", const.PROVIDER_CODE), ("kashier_cf_attempt_refs", "ilike", order_ref),
+            ]).filtered(lambda tx: order_ref in (tx.kashier_cf_attempt_refs or "").split(","))[:1]
+        return tx_sudo
+
+    @staticmethod
+    def _kashier_cf_lock(tx_sudo):
+        """Lock the payment for this request; False when another request holds it."""
+        try:
+            with request.env.cr.savepoint(flush=False):
+                request.env.cr.execute(SQL("SELECT id FROM payment_transaction WHERE id = %s FOR UPDATE NOWAIT", tx_sudo.id))
+        except psycopg2.errors.LockNotAvailable:
+            return False
+        return True
+
+    @staticmethod
+    def _kashier_cf_state_values(tx_sudo):
+        tx_sudo.invalidate_recordset()
+        return {
+            "state": tx_sudo.state,
+            "final": tx_sudo.state in ("done", "authorized", "cancel", "error")
+            or (tx_sudo.state == "pending" and tx_sudo.kashier_cf_server_kind == "basata"),
+            "attempts": tx_sudo.kashier_cf_attempts,
+            "expires_at": fields.Datetime.to_string(tx_sudo.kashier_cf_expires_at) if tx_sudo.kashier_cf_expires_at else "",
+            "code": tx_sudo.kashier_cf_reference_code or "",
+            "status_url": "/payment/status",
+        }
+
+    @staticmethod
+    def _kashier_cf_qr_data_uri(payload):
+        """The InstaPay QR as a PNG data URI, drawn by Odoo (the payload never reaches the page)."""
+        if not payload:
+            return ""
+        png = request.env["ir.actions.report"].barcode("QR", payload, width=300, height=300)
+        return "data:image/png;base64," + base64.b64encode(png).decode()
 
     @staticmethod
     def _kashier_cf_get_transaction(tx_id, access_token):

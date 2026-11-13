@@ -129,12 +129,16 @@ class TestStatusMapping(KashierCommon):
         self.assertEqual(tx.payment_method_id, self.pm_mastercard)
         self.assertIn("Mastercard", tx.kashier_cf_channel)
 
-    def test_wallet_maps_to_the_kashier_method(self):
-        tx = self._create_kashier_tx()
-        self.fake.orders = [kashier_order(tx.kashier_cf_order_ref, method="wallet", legs=[leg("pay", tx_id="TX-w")])]
-        self._sync(tx)
-        self.assertEqual(tx.state, "done")
-        self.assertEqual(tx.payment_method_id, self.pm_kashier)
+    def test_orders_map_to_their_method(self):
+        for method, pm in (("wallet", self.pm_wallet), ("valu", self.pm_valu), ("basata", self.pm_kiosk),
+                           ("instapay", self.pm_instapay), ("bank_installments", self.pm_installments),
+                           ("someday_new", self.pm_card)):
+            with self.subTest(method=method):
+                tx = self._create_kashier_tx(reference=f"S-MAP-{method}")
+                self.fake.orders = [kashier_order(tx.kashier_cf_order_ref, method=method, legs=[leg("pay", tx_id=f"TX-{method}")])]
+                self._sync(tx)
+                self.assertEqual(tx.state, "done")
+                self.assertEqual(tx.payment_method_id, pm, "Unknown names keep the method the customer chose.")
 
     def test_other_orders_are_ignored(self):
         tx = self._create_kashier_tx()

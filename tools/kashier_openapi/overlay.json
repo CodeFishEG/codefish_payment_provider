@@ -1,24 +1,82 @@
 {
   "comment": "Payment operations generated into payment_kashier_cf/kashier_api.py. host: dashboard (test-api / api) or fep (test-fep / fep). auth: secret = raw Secret Key in Authorization; secret+apikey = also the Payment API Key in api-key; hash = Kashier-Hash header (HMAC-SHA256 with the Payment API Key); none = no credential.",
   "operations": {
-    "createPaymentSession": {"host": "dashboard", "auth": "secret+apikey"},
-    "listPaymentSessions": {"host": "dashboard", "auth": "secret"},
-    "abandonPaymentSession": {"host": "dashboard", "auth": "none"},
-    "getPaymentSession": {"host": "dashboard", "auth": "secret"},
-    "listTransactions": {"host": "dashboard", "auth": "secret"},
-    "getTransactionDetails": {"host": "dashboard", "auth": "secret"},
-    "searchOrders": {"host": "dashboard", "auth": "secret"},
-    "updateOrder": {"host": "fep", "auth": "secret"},
-    "refundOrder": {"host": "dashboard", "auth": "secret"},
-    "voidOrder": {"host": "dashboard", "auth": "secret"},
-    "captureOrder": {"host": "dashboard", "auth": "secret"},
-    "reverseOrder": {"host": "dashboard", "auth": "secret"},
-    "payWithToken": {"host": "fep", "auth": "hash"},
-    "retrieveTokens": {"host": "fep", "auth": "hash"},
-    "getToken": {"host": "fep", "auth": "hash"},
-    "deleteToken": {"host": "fep", "auth": "hash"},
-    "listSavedTokens": {"host": "dashboard", "auth": "secret"},
-    "deleteSavedToken": {"host": "dashboard", "auth": "secret"}
+    "createPaymentSession": {
+      "host": "dashboard",
+      "auth": "secret+apikey"
+    },
+    "listPaymentSessions": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "abandonPaymentSession": {
+      "host": "dashboard",
+      "auth": "none"
+    },
+    "getPaymentSession": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "listTransactions": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "getTransactionDetails": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "searchOrders": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "updateOrder": {
+      "host": "fep",
+      "auth": "secret"
+    },
+    "refundOrder": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "voidOrder": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "captureOrder": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "reverseOrder": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "payWithToken": {
+      "host": "fep",
+      "auth": "hash"
+    },
+    "retrieveTokens": {
+      "host": "fep",
+      "auth": "hash"
+    },
+    "getToken": {
+      "host": "fep",
+      "auth": "hash"
+    },
+    "deleteToken": {
+      "host": "fep",
+      "auth": "hash"
+    },
+    "listSavedTokens": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "deleteSavedToken": {
+      "host": "dashboard",
+      "auth": "secret"
+    },
+    "getMerchantPaymentMethods": {
+      "host": "dashboard",
+      "auth": "none"
+    }
   },
   "excluded": {
     "createToken": "Takes the raw card number: card data would pass through the merchant's server (PCI DSS scope). Cards are saved on Kashier's hosted page instead.",
@@ -26,7 +84,13 @@
     "*": "Every other operation is not a payment operation (payouts and transfers, merchant settings, API keys, webhook management, payment links, reports, customers, discounts)."
   },
   "hosts": {
-    "dashboard": {"test": "https://test-api.kashier.io", "live": "https://api.kashier.io"},
-    "fep": {"test": "https://test-fep.kashier.io", "live": "https://fep.kashier.io"}
+    "dashboard": {
+      "test": "https://test-api.kashier.io",
+      "live": "https://api.kashier.io"
+    },
+    "fep": {
+      "test": "https://test-fep.kashier.io",
+      "live": "https://fep.kashier.io"
+    }
   }
 }

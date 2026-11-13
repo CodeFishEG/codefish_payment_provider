@@ -15,6 +15,14 @@
                     invisible="code != 'kashier_cf'"
                     class="btn-secondary"
                 />
+                <button
+                    string="Sync Kashier Methods"
+                    help="Ask Kashier which payment methods your account accepts. The others are hidden at checkout."
+                    type="object"
+                    name="action_kashier_cf_sync_account_methods"
+                    invisible="code != 'kashier_cf'"
+                    class="btn-secondary"
+                />
             </header>
             <group name="provider_credentials" position="inside">
                 <field
@@ -38,18 +46,65 @@
             </group>
             <group name="provider_credentials" position="after">
                 <group string="Kashier" name="kashier_cf_options" invisible="code != 'kashier_cf'">
-                    <field name="kashier_cf_allowed_methods" placeholder="All methods of the Kashier account"/>
+                    <field name="kashier_cf_account_methods_display"/>
+                    <field name="kashier_cf_account_methods_date" invisible="not kashier_cf_account_methods_date"/>
                     <field name="kashier_cf_session_expiry"/>
                     <field name="kashier_cf_max_attempts"/>
                     <field name="kashier_cf_webhook_url" widget="CopyClipboardChar"/>
+                    <field
+                        name="kashier_cf_allowed_methods"
+                        placeholder="All methods of the Kashier account"
+                        string="Methods of the Kashier Choice"
+                    />
                     <div colspan="2" class="text-muted">
-                        Card payments open Kashier's page on cards only; the Kashier method opens it on
-                        every method enabled on your Kashier account. Payments are confirmed with the Secret Key,
-                        never from the browser alone. To capture payments manually, turn off the Kashier method
-                        first: wallets and installments can't be captured later.
+                        Each payment method opens Kashier's page, shows it inside the checkout, or is run by
+                        Odoo's server: choose it in the method's "Kashier Integration" (Payment Methods tab).
+                        Cards always stay on Kashier's page. Payments are confirmed with the Secret Key, never
+                        from the browser alone. To capture card payments manually, turn off the other methods
+                        first: they can't be captured later.
+                    </div>
+                    <div colspan="2" class="alert alert-warning mb-0" role="status" invisible="not kashier_cf_shadowed_methods">
+                        <field name="kashier_cf_shadowed_methods" class="d-inline" readonly="1"/>
+                        <span>: customers see these methods from another payment provider with a lower sequence.
+                            Deactivate them there, or move Kashier up in the providers list.</span>
+                    </div>
+                </group>
+                <group string="Apple Pay button" name="kashier_cf_apple_pay" invisible="code != 'kashier_cf'">
+                    <field name="kashier_cf_apple_pay_domain_file" filename="kashier_cf_apple_pay_domain_filename"/>
+                    <field name="kashier_cf_apple_pay_domain_filename" invisible="1"/>
+                    <field name="kashier_cf_apple_pay_domain_url" widget="url" invisible="not kashier_cf_apple_pay_domain_file"/>
+                    <div colspan="2" class="text-muted">
+                        For the Apple Pay button on the payment step (Apple Pay method, integration "Apple Pay
+                        button"): ask Kashier to register your shop's domain for Apple Pay and upload the file they
+                        send. Without it, Apple Pay opens on Kashier's page. In beta: check it on an Apple device
+                        before going live.
                     </div>
                 </group>
             </group>
+            <xpath expr="//field[@name='primary_payment_method_ids']/list/field[@name='active']" position="after">
+                <field
+                    name="kashier_cf_integration"
+                    string="Kashier Integration"
+                    column_invisible="parent.code != 'kashier_cf'"
+                    optional="show"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="payment_method_form" model="ir.ui.view">
+        <field name="name">Kashier Payment Method Form</field>
+        <field name="model">payment.method</field>
+        <field name="inherit_id" ref="payment.payment_method_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="kashier_cf_provider_code" invisible="1"/>
+                <field
+                    name="kashier_cf_integration"
+                    invisible="kashier_cf_provider_code != 'kashier_cf' or not is_primary"
+                    required="kashier_cf_provider_code == 'kashier_cf' and is_primary"
+                />
+            </field>
         </field>
     </record>
 

@@ -14,6 +14,7 @@
 #################################################################################
 from . import (
     account_chart_template,
+    payment_method,
     payment_provider,
     payment_token,
     payment_transaction,

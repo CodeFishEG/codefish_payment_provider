@@ -21,6 +21,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.http import request
 from odoo.tools import config, urls
 
+from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment.logging import get_payment_logger
 from odoo.addons.payment_kashier_cf import const
 from odoo.addons.payment_kashier_cf import utils as kashier_utils
@@ -86,6 +87,33 @@ class PaymentProvider(models.Model):
         "the payment fails.",
         default=const.MAX_ATTEMPTS_DEFAULT,
     )
+    kashier_cf_account_methods = fields.Json(
+        string="Kashier Account Methods",
+        help="The methods the Kashier account accepts, as Kashier last listed them, with the Merchant ID and "
+        "the mode (test or live) they were listed for.",
+        readonly=True,
+        copy=False,
+    )
+    kashier_cf_account_methods_date = fields.Datetime(string="Kashier Methods Checked On", readonly=True, copy=False)
+    kashier_cf_account_methods_display = fields.Char(
+        string="Accepted by your Kashier Account", compute="_compute_kashier_cf_account_methods_display",
+    )
+    kashier_cf_shadowed_methods = fields.Char(
+        string="Kashier Methods Shown by Another Provider", compute="_compute_kashier_cf_shadowed_methods",
+    )
+    kashier_cf_apple_pay_domain_file = fields.Binary(
+        string="Kashier Apple Pay Domain File",
+        help="The file apple-developer-merchantid-domain-association that Kashier gives when it registers "
+        "your shop's domain for Apple Pay. Needed for the Apple Pay button on the payment step only.",
+        attachment=True,
+        copy=False,
+    )
+    kashier_cf_apple_pay_domain_filename = fields.Char(string="Kashier Apple Pay Domain File Name", copy=False)
+    kashier_cf_apple_pay_domain_url = fields.Char(
+        string="Kashier Apple Pay Domain File URL",
+        help="Where Apple reads the domain file. Open it to check it shows a long line of text.",
+        compute="_compute_kashier_cf_apple_pay_domain_url",
+    )
     kashier_cf_webhook_url = fields.Char(
         string="Kashier Notification URL",
         help="Odoo sends it with every payment. You can also add it as a webhook in Kashier's "
@@ -108,6 +136,42 @@ class PaymentProvider(models.Model):
     def _compute_kashier_cf_webhook_url(self):
         for provider in self:
             provider.kashier_cf_webhook_url = provider._kashier_cf_url(KashierController._webhook_url)
+
+    def _compute_kashier_cf_apple_pay_domain_url(self):
+        for provider in self:
+            provider.kashier_cf_apple_pay_domain_url = provider._kashier_cf_url(const.APPLE_PAY_DOMAIN_FILE_URL)
+
+    @api.depends("kashier_cf_account_methods", "kashier_cf_merchant_id", "is_live")
+    def _compute_kashier_cf_account_methods_display(self):
+        for provider in self:
+            data = provider._kashier_cf_current_account_methods()
+            if data is None:
+                provider.kashier_cf_account_methods_display = self.env._(
+                    "Not checked yet: every active method is offered.",
+                )
+                continue
+            names = list(data.get("methods") or [])
+            if data.get("bnpl"):
+                names.append(self.env._("buy now, pay later: %s", ", ".join(data["bnpl"])))
+            provider.kashier_cf_account_methods_display = ", ".join(names) or self.env._("No method.")
+
+    @api.depends("payment_method_ids.active", "sequence", "company_id")
+    def _compute_kashier_cf_shadowed_methods(self):
+        """Active Kashier methods that customers see from another provider: Odoo shows a method once, from
+        the provider with the lowest sequence (e.g. our Paymob module's valU before Kashier's).
+        """
+        for provider in self:
+            if provider.code != const.PROVIDER_CODE or not provider.id:
+                provider.kashier_cf_shadowed_methods = False
+                continue
+            others = self.sudo().search([
+                ("id", "!=", provider.id), ("company_id", "=", provider.company_id.id),
+                ("is_published", "=", True), ("sequence", "<", provider.sequence),
+            ])
+            shadowed = provider.primary_payment_method_ids.filtered(lambda pm: pm.active and any(
+                pm.code in other.primary_payment_method_ids.filtered("active").mapped("code") for other in others
+            ))
+            provider.kashier_cf_shadowed_methods = ", ".join(shadowed.mapped("name")) or False
 
     # === CONSTRAINT METHODS === #
 
@@ -140,6 +204,16 @@ class PaymentProvider(models.Model):
                     low=low, high=high,
                 ))
 
+    @api.constrains("kashier_cf_apple_pay_domain_file")
+    def _check_kashier_cf_apple_pay_domain_file(self):
+        for provider in self.filtered("kashier_cf_apple_pay_domain_file"):
+            domain_file = provider.kashier_cf_apple_pay_domain_file
+            if domain_file.size > const.APPLE_PAY_DOMAIN_FILE_MAX_SIZE or b"\0" in domain_file.content:
+                raise ValidationError(self.env._(
+                    "This isn't Apple's domain file. Upload the file apple-developer-merchantid-domain-association "
+                    "as Kashier gave it, without renaming or opening it.",
+                ))
+
     # === CRUD METHODS === #
 
     @api.model_create_multi
@@ -155,7 +229,17 @@ class PaymentProvider(models.Model):
         for field in ("kashier_cf_payment_api_key", "kashier_cf_secret_key"):
             if vals.get(field):
                 vals = {**vals, field: vals[field].strip()}
-        return super().write(vals)
+        resync = bool({"kashier_cf_merchant_id", "is_live"} & set(vals)) and any(
+            p.code == const.PROVIDER_CODE for p in self
+        )
+        if resync:
+            # The accepted methods depend on the account and the mode: list them again, in the background
+            # (no request to Kashier while saving a form).
+            vals = {**vals, "kashier_cf_account_methods": False, "kashier_cf_account_methods_date": False}
+        result = super().write(vals)
+        if resync:
+            self.env.ref("payment_kashier_cf.cron_sync_account_methods")._trigger()
+        return result
 
     # === BUSINESS METHODS - PROVIDER CONTRACT === #
 
@@ -185,6 +269,22 @@ class PaymentProvider(models.Model):
                 "kashier_cf_secret_key": None,
             })
         return reset_values
+
+    def _find_available_payment_methods(self, *args, report=None, **kwargs):
+        """Override of `payment` to hide the Kashier methods the merchant account doesn't accept.
+
+        Called on every available provider: only Kashier's methods are filtered. Nothing is hidden while
+        the account's methods are unknown or were listed for another Merchant ID or mode.
+        """
+        methods = super()._find_available_payment_methods(*args, report=report, **kwargs)
+        refused = methods.filtered(
+            lambda pm: pm.provider_id.code == const.PROVIDER_CODE and not pm.provider_id._kashier_cf_accepts(pm),
+        )
+        if refused:
+            payment_utils.add_to_report(
+                report, refused, available=False, reason=self.env._("Not accepted by the Kashier account"),
+            )
+        return methods - refused
 
     @api.model
     def _find_available_providers(self, *args, is_validation=False, report=None, **kwargs):
@@ -247,6 +347,102 @@ class PaymentProvider(models.Model):
         """The typed Kashier client bound to this provider (see `kashier_api.py`)."""
         self.ensure_one()
         return KashierClient(self.sudo())
+
+    # === BUSINESS METHODS - ACCOUNT METHODS === #
+
+    def action_kashier_cf_sync_account_methods(self):
+        """List again the methods the Kashier account accepts."""
+        self.ensure_one()
+        if not self.kashier_cf_merchant_id:
+            raise UserError(self.env._("Enter the Kashier Merchant ID first."))
+        if not self._kashier_cf_sync_account_methods():
+            raise UserError(self.env._("Kashier didn't answer. Try again in a moment."))
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "message": self.env._("Accepted by your Kashier account: %s", self.kashier_cf_account_methods_display),
+                "next": {"type": "ir.actions.act_window_close"},
+                "sticky": False,
+            },
+        }
+
+    def _kashier_cf_sync_account_methods(self):
+        """Ask Kashier which methods the account accepts and keep the answer with its Merchant ID and mode.
+
+        :return: Whether Kashier answered.
+        :rtype: bool
+        """
+        self.ensure_one()
+        merchant_id = (self.kashier_cf_merchant_id or "").strip()
+        if not merchant_id:
+            return False
+        try:
+            answer = self._kashier_cf_client().get_merchant_payment_methods(merchant_id) or {}
+        except KashierError as error:
+            _logger.warning("Kashier didn't list the methods of the account: %s", error)
+            return False
+        methods, bnpl = kashier_utils.parse_account_methods(answer)
+        self.sudo().write({
+            "kashier_cf_account_methods": {
+                "mid": merchant_id, "mode": self._kashier_cf_mode(), "methods": methods, "bnpl": bnpl,
+            },
+            "kashier_cf_account_methods_date": fields.Datetime.now(),
+        })
+        return True
+
+    @api.model
+    def _cron_kashier_cf_sync_account_methods(self):
+        for provider in self.search([("code", "=", const.PROVIDER_CODE), ("kashier_cf_merchant_id", "!=", False)]):
+            provider._kashier_cf_sync_account_methods()
+
+    def _kashier_cf_current_account_methods(self):
+        """The account's methods when they were listed for the current Merchant ID and mode, else None."""
+        self.ensure_one()
+        data = self.kashier_cf_account_methods
+        if not isinstance(data, dict):
+            return None
+        if data.get("mid") != (self.kashier_cf_merchant_id or "").strip() or data.get("mode") != self._kashier_cf_mode():
+            return None
+        return data
+
+    def _kashier_cf_accepts(self, payment_method):
+        """Whether the merchant account accepts the method (True while unknown)."""
+        self.ensure_one()
+        data = self._kashier_cf_current_account_methods()
+        if data is None:
+            return True
+        spec = payment_method._kashier_cf_spec()
+        if not spec.get("account"):
+            return True
+        listed = data.get("bnpl" if spec.get("bnpl") else "methods") or []
+        return spec["account"] in listed
+
+    # === BUSINESS METHODS - APPLE PAY === #
+
+    def _kashier_cf_get_apple_pay_domain_file(self, host):
+        """Return Kashier's Apple Pay domain file for the website on the given host.
+
+        :param str host: The host of the request, e.g. `shop.example.com`.
+        :return: The content of the file, or None if no Kashier provider has one.
+        :rtype: bytes | None
+        """
+        providers = self.sudo().search([("code", "=", const.PROVIDER_CODE)]).filtered("kashier_cf_apple_pay_domain_file")
+        if not providers:
+            return None
+        if len(providers) > 1 and "website_id" in providers._fields:
+            host = (host or "").lower()
+
+            def rank(provider):
+                website = provider.website_id
+                if not website:
+                    return 1
+                domain = (website.domain or "").lower().split("://")[-1].split("/")[0]
+                return 0 if domain == host else 2
+
+            providers = providers.sorted(rank)
+        return providers[0].kashier_cf_apple_pay_domain_file.content
 
     def _kashier_cf_hash(self, message):
         """Sign a Kashier hash string with the Payment API Key."""

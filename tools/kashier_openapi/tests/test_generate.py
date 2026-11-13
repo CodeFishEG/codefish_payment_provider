@@ -151,7 +151,7 @@ class TestCommittedClient(unittest.TestCase):
         source = generate.DEFAULT_OUTPUT.read_text()
         self.assertNotIn("def create_token(", source)
         self.assertNotIn("getPaymentSessionById", source)
-        self.assertEqual(source.count("\n    def ") - 2, 18)  # __init__ and _request
+        self.assertEqual(source.count("\n    def ") - 2, 19)  # __init__ and _request
 
 
 if __name__ == "__main__":

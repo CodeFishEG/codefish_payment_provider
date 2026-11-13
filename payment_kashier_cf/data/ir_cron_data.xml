@@ -9,4 +9,12 @@
         <field name="interval_type">minutes</field>
     </record>
 
+    <record id="cron_sync_account_methods" model="ir.cron">
+        <field name="name">Kashier: list the methods of the Kashier accounts</field>
+        <field name="model_id" ref="payment.model_payment_provider"/>
+        <field name="code">model._cron_kashier_cf_sync_account_methods()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+
 </odoo>

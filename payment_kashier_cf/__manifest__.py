@@ -14,17 +14,20 @@
 #################################################################################
 {
     'name': "Kashier Payments",
-    'summary': "Accept Kashier in Egypt: cards (Visa, Mastercard, Meeza), wallets, "
-               "installments and valU on Kashier's hosted payment page, with saved cards, refunds "
-               "and manual capture",
-    'description': "Payment provider for Kashier. Customers pay on Kashier's hosted payment page: cards "
-                   "with 3-D Secure, or every method enabled on the Kashier account "
-                   "(mobile wallets, bank installments, valU and other buy-now-pay-later brands). "
-                   "Payments are confirmed from Kashier's API, never from the browser alone. Includes "
-                   "saved cards (also charged again without the customer, for subscriptions and "
-                   "invoices), full and partial refunds, authorize and capture, payment notifications, "
-                   "a status check every 15 minutes, a typed client of Kashier's API, and Arabic.",
-    'version': '20.0.1.0.0',
+    'summary': "Every Kashier payment method in Egypt (cards, Apple Pay, mobile wallets, InstaPay, Basata, "
+               "bank installments, valU and other buy-now-pay-later), each on Kashier's page, inside the "
+               "checkout or run by Odoo's server, with saved cards, refunds and manual capture",
+    'description': "Payment provider for Kashier. Every Kashier method is its own payment method: cards (Visa, "
+                   "Mastercard, Meeza, 3-D Secure), Apple Pay, mobile wallets, InstaPay, Basata kiosk codes, bank "
+                   "installments, valU, Souhoola, Contact, Aman, Forsa, Octo, MoGo and TRU; the methods the Kashier "
+                   "account doesn't accept are hidden. Each method runs on Kashier's page, on Kashier's page shown "
+                   "inside the checkout, or server side (wallet requests, Basata codes and InstaPay QR codes shown "
+                   "by Odoo; cards always stay on Kashier's page). Apple Pay can also be a button on the payment "
+                   "step. Payments are confirmed from Kashier's API, never from the browser alone. Includes saved "
+                   "cards (also charged again without the customer, for subscriptions and invoices), refunds, "
+                   "authorize and capture, payment notifications, a status check every 15 minutes, a typed client "
+                   "of Kashier's API, and Arabic.",
+    'version': '20.0.1.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'author': "mediafish",
@@ -44,6 +47,7 @@
         'data/payment_provider_data.xml',
         'data/payment_method_data.xml',
         'data/ir_cron_data.xml',
+        'data/mail_template_data.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -52,7 +56,10 @@
     },
     'images': [
         'static/description/banner.png',
-        'static/description/screenshot_checkout.png',
+        'static/description/screenshot_methods.png',
+        'static/description/screenshot_embedded.png',
+        'static/description/screenshot_basata_code.png',
+        'static/description/screenshot_kashier_integration.png',
         'static/description/screenshot_kashier_page.png',
         'static/description/screenshot_kashier_page_arabic.png',
         'static/description/screenshot_portal_arabic.png',
@@ -60,7 +67,7 @@
         'static/description/screenshot_refunds.png',
         'static/description/screenshot_refund_refused.png',
         'static/description/screenshot_transaction.png',
-        'static/description/screenshot_configuration.png',
+        'static/description/screenshot_kashier_settings.png',
     ],
     'post_init_hook': 'post_init_hook',
     'uninstall_hook': 'uninstall_hook',

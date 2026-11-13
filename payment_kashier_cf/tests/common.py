@@ -119,7 +119,14 @@ class KashierCommon(PaymentCommon):
         cls.pm_kashier = cls.env.ref("payment_kashier_cf.payment_method_kashier")
         cls.pm_mastercard = cls.env.ref("payment_kashier_cf.payment_method_mastercard")
         cls.pm_meeza = cls.env.ref("payment_kashier_cf.payment_method_meeza")
-        (cls.pm_card + cls.pm_kashier + cls.pm_mastercard + cls.pm_meeza).active = True
+        cls.pm_wallet = cls.env.ref("payment_kashier_cf.payment_method_mobile_wallet_eg")
+        cls.pm_kiosk = cls.env.ref("payment_kashier_cf.payment_method_kiosk")
+        cls.pm_instapay = cls.env.ref("payment_kashier_cf.payment_method_instapay")
+        cls.pm_valu = cls.env.ref("payment_kashier_cf.payment_method_valu")
+        cls.pm_installments = cls.env.ref("payment_kashier_cf.payment_method_installments_eg")
+        cls.pm_apple_pay = cls.env.ref("payment_kashier_cf.payment_method_apple_pay")
+        (cls.pm_card + cls.pm_kashier + cls.pm_mastercard + cls.pm_meeza + cls.pm_wallet + cls.pm_kiosk
+         + cls.pm_instapay + cls.pm_valu + cls.pm_installments + cls.pm_apple_pay).active = True
         cls.payment_method = cls.pm_card
         cls.payment_method_id = cls.pm_card.id
         cls.payment_method_code = "card"
@@ -142,8 +149,10 @@ class KashierCommon(PaymentCommon):
         return tx
 
     def _enable_manual_capture(self):
-        """Core refuses manual capture while a method without it (the Kashier choice) is active."""
-        self.pm_kashier.active = False
+        """Core refuses manual capture while a method without it is active: only cards stay on."""
+        self.kashier.with_context(active_test=False).primary_payment_method_ids.filtered(
+            lambda pm: pm.code != "card",
+        ).active = False
         self.kashier.capture_manually = True
 
     def _sync(self, tx):

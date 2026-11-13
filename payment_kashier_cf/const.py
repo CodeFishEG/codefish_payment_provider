@@ -26,6 +26,8 @@ PROVIDER_CODE = "kashier_cf"
 SENSITIVE_KEYS = {
     "apiKey", "api_key", "apiKeys", "secretKeys", "merchantAPIKeys", "key", "hash", "signature",
     "cardDataToken", "cardToken", "ccvToken", "securityCode", "token", "Kashier-Hash", "Authorization",
+    # Customers' wallet numbers and InstaPay addresses, and InstaPay QR payloads.
+    "mobilePhone", "mobileNumber", "payerAccount", "payerAddress", "ISOQR", "qrCode",
 }
 PAYMENT_SENSITIVE_KEYS.update(SENSITIVE_KEYS)
 
@@ -37,13 +39,59 @@ HOSTS = {
 # The hosted payment page: one host for both modes, the mode travels as `?mode=test|live`.
 CHECKOUT_HOST = "payments.kashier.io"
 
-# Odoo's payment methods. `card` (and its brands) opens Kashier's page on cards only; `kashier` opens it
-# on every method enabled on the merchant account (wallets, installments, valU and other BNPL...).
-DEFAULT_PAYMENT_METHOD_CODES = {"card", "kashier"}
+# === PAYMENT METHODS === #
+
+# How a payment method reaches Kashier, chosen per method (`payment.method.kashier_cf_integration`):
+# Kashier's hosted page (redirect, or embedded in the checkout), Kashier's Direct API run by Odoo's server (no
+# Kashier page; never for cards, whose details must stay on Kashier's page), or Kashier's Apple Pay button on
+# our own payment step.
+INTEGRATION_REDIRECT = "redirect"
+INTEGRATION_EMBEDDED = "embedded"
+INTEGRATION_SERVER = "server"
+INTEGRATION_APPLE_PAY_BUTTON = "apple_pay_button"
+PAGE_INTEGRATIONS = (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED)
+
+# Buy-now-pay-later brands Kashier offers on its page (`allowedMethods: bnpl[<brand>]`).
+BNPL_CODES = ("valu", "souhoola", "contact", "aman", "forsa", "octo", "mogo", "tru")
+
+# Odoo payment method code -> how Kashier knows it:
+#   session: the `allowedMethods` value of a hosted session (None: every method, or the provider's list);
+#   account: its name in the merchant account's accepted methods (None: always offered);
+#   bnpl: whether `account` is listed in `acceptedBNPLMethods` rather than `acceptedPaymentMethods`;
+#   orders: the order `method` values Kashier reports for it;
+#   integrations: the integrations it supports, the default first;
+#   server: the Direct API flow of the server integration.
+METHODS = {
+    "card": {"session": "card", "account": "card", "orders": ("card",),
+             "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED)},
+    "apple_pay": {"session": "card", "account": "card", "orders": ("applepay", "apple_pay"),
+                  "integrations": (INTEGRATION_REDIRECT, INTEGRATION_APPLE_PAY_BUTTON)},
+    "mobile_wallet_eg": {"session": "wallet", "account": "wallet", "orders": ("wallet",),
+                         "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED, INTEGRATION_SERVER),
+                         "server": "wallet"},
+    "installments_eg": {"session": "bank_installments", "account": "installments",
+                        "orders": ("bank_installments", "installments"),
+                        "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED)},
+    **{code: {"session": f"bnpl[{code}]", "account": code, "bnpl": True, "orders": (code,),
+              "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED)} for code in BNPL_CODES},
+    "instapay": {"session": "instapay", "account": "instapay", "orders": ("instapay",),
+                 "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED, INTEGRATION_SERVER),
+                 "server": "instapay"},
+    "kiosk": {"session": "basata", "account": "basata", "orders": ("basata",),
+              "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED, INTEGRATION_SERVER),
+              "server": "basata"},
+    "kashier": {"session": None, "account": None, "orders": (),
+                "integrations": (INTEGRATION_REDIRECT, INTEGRATION_EMBEDDED)},
+}
 CARD_METHOD_CODES = {"card", "visa", "mastercard", "meeza"}
 PROVIDER_WIDE_METHOD_CODE = "kashier"
+# Activated at installation: every method but the catch-all `kashier` choice (the merchant account decides
+# which ones customers see, see `payment.provider._find_available_payment_methods`).
+DEFAULT_PAYMENT_METHOD_CODES = (set(METHODS) - {PROVIDER_WIDE_METHOD_CODE}) | CARD_METHOD_CODES
 # Kashier's `cardBrand` values and the Odoo brand method of each.
 CARD_BRAND_MAPPING = {"mastercard": "mastercard", "visa": "visa", "meeza": "meeza"}
+# Kashier reports these methods as `card`: the transaction keeps the method the customer chose.
+CARD_RAIL_METHOD_CODES = {"apple_pay", "installments_eg"}
 SUPPORTED_CURRENCIES = ("EGP", "USD", "GBP", "EUR")
 
 # The Kashier `order` sent for a transaction: the reference, cleaned, with a code of the database
@@ -96,6 +144,26 @@ LEG_FAILURE = "FAILURE"
 LEG_UNDETERMINED = {"PENDING", "INITIATED", "UNKNOWN"}
 # Response codes whose outcome is not known yet: the payment is reconciled, never retried.
 UNDETERMINED_CODES = {"UNKNOWN", "CC", "k_timeout", "SUBMITTED", "TIMED_OUT", "68", "k_101", "PENDING"}
+
+# Legs that only prepare a payment: a wallet request, a Basata code or an InstaPay QR. The payment is
+# undecided while they are valid and expires with them; only a `pay` leg moves money.
+LEGS_SETUP = {"initiate_r2p", "generate_code", "generate_qr"}
+
+# === SERVER-SIDE PAYMENTS (Kashier's Direct API) === #
+
+# A wallet request stays valid this long in the customer's wallet app (Kashier's figure).
+WALLET_VALIDITY_MINUTES = 10
+# An InstaPay QR stays valid this long (seconds), as on Kashier's own page.
+INSTAPAY_QR_VALIDITY_SECONDS = 900
+# A Basata code is valid about an hour; Kashier sends its expiry with the code.
+BASATA_VALIDITY_MINUTES = 60
+# Attempts a customer gets for one payment (a new number after "no wallet", a new code after expiry), and the
+# minimum delay between two of them.
+SERVER_MAX_ATTEMPTS = 3
+SERVER_ATTEMPT_INTERVAL_SECONDS = 20
+# Egyptian mobile numbers (wallets, Basata) and InstaPay addresses.
+EG_MOBILE_PATTERN = r"^01[0125][0-9]{8}$"
+INSTAPAY_ADDRESS_PATTERN = r"^[A-Za-z0-9._-]{1,64}@instapay$"
 
 # How often the status is asked to Kashier at most (seconds), from the return page and the poll route.
 SYNC_THROTTLE_SECONDS = 10
@@ -172,11 +240,23 @@ ERROR_CODES = {
     "k_default": (ERROR_MERCHANT, _lt("Kashier returned a general error.")),
     "k_timeout": (ERROR_UNKNOWN, _lt("Kashier answered too late. The outcome is checked with Kashier.")),
     "k_1": (ERROR_MERCHANT, _lt("The saved card was not found at Kashier.")),
+    "k_4": (ERROR_UNKNOWN, _lt("The payment request was sent to the wallet. It is waiting for the customer.")),
     "k_5": (ERROR_CUSTOMER, _lt("This mobile number has no wallet.")),
     "k_7": (ERROR_CUSTOMER, _lt("The order was not paid.")),
     "k_10": (ERROR_MERCHANT, _lt("The payment was already refunded.")),
     "k_14": (ERROR_CUSTOMER, _lt("The payment page expired.")),
     "k_101": (ERROR_UNKNOWN, _lt("The payment is in progress. The outcome is checked with Kashier.")),
+    # InstaPay.
+    "20101": (ERROR_CUSTOMER, _lt("This InstaPay address or number is not registered.")),
+    "20102": (ERROR_MERCHANT, _lt("Kashier refused the validity of the InstaPay request.")),
+    "20201": (ERROR_CUSTOMER, _lt("The payment was declined in the InstaPay app.")),
+    "20202": (ERROR_CUSTOMER, _lt("The InstaPay request expired.")),
+    "20502": (ERROR_CUSTOMER, _lt("The payment was declined in the InstaPay app.")),
+    "20503": (ERROR_CUSTOMER, _lt("The InstaPay request expired.")),
+    "20905": (ERROR_MERCHANT, _lt("InstaPay is not enabled on the Kashier account. Ask Kashier to enable it.")),
+    "20906": (ERROR_MERCHANT, _lt("InstaPay is not enabled on the Kashier account. Ask Kashier to enable it.")),
+    "20907": (ERROR_MERCHANT, _lt("InstaPay is not enabled on the Kashier account. Ask Kashier to enable it.")),
+    "20908": (ERROR_MERCHANT, _lt("InstaPay is not enabled on the Kashier account. Ask Kashier to enable it.")),
     "REFUND_DISABLED": (ERROR_MERCHANT, _lt("The bank disabled refunds for this merchant account. Ask the bank or Kashier to enable them.")),
     "ERR_ORD_02": (ERROR_MERCHANT, _lt("Kashier already has an order with this reference.")),
     "INVALID_HASH_CHECK": (ERROR_MERCHANT, _lt("Kashier refused the request signature. Check the Payment API Key and the Merchant ID.")),
@@ -192,6 +272,12 @@ ERROR_CODES = {
     "server_error": (ERROR_UNKNOWN, _lt("Kashier had an error. The outcome is checked with Kashier.")),
     "bad_request": (ERROR_MERCHANT, _lt("Kashier refused the request.")),
 }
+
+# Apple Pay on the payment step: where Apple reads the domain file Kashier gives for the shop's domain.
+APPLE_PAY_DOMAIN_FILE_URL = "/.well-known/apple-developer-merchantid-domain-association"
+APPLE_PAY_DOMAIN_FILE_MAX_SIZE = 100 * 1024  # Apple's file is about 10 KB of text.
+# Kashier's script that shows the Apple Pay button (same URL in test and live).
+APPLE_PAY_SDK_URL = "https://payments.kashier.io/kashier-sdk.js"
 
 # The provider's bank journal, one per company, created at installation. No currency: Kashier takes EGP,
 # USD, GBP and EUR.

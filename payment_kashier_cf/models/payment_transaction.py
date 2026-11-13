@@ -22,6 +22,7 @@ from markupsafe import Markup
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
+from odoo.tools import format_datetime
 from odoo.tools.misc import hmac as odoo_hmac
 
 from odoo.addons.payment import utils as payment_utils
@@ -84,6 +85,28 @@ class PaymentTransaction(models.Model):
     kashier_cf_late_check_until = fields.Datetime(string="Kashier Late Check Until", readonly=True, copy=False)
     kashier_cf_noted_legs = fields.Char(string="Kashier Refunds Noted", readonly=True, copy=False)
     kashier_cf_alerted = fields.Char(string="Kashier Alerts Sent", readonly=True, copy=False)  # By kind.
+    kashier_cf_server_kind = fields.Selection(
+        string="Kashier Server Payment",
+        selection=[("wallet", "Wallet request"), ("basata", "Basata code"), ("instapay", "InstaPay")],
+        help="The payment Odoo asked Kashier for, without Kashier's page.",
+        readonly=True,
+        copy=False,
+    )
+    kashier_cf_attempt_refs = fields.Char(
+        string="Earlier Kashier Orders",
+        help="The order references of earlier attempts of this payment (a new wallet number, a new code...). "
+        "They are checked too, so that a late payment of an earlier attempt is never missed.",
+        readonly=True,
+        copy=False,
+        index="btree_not_null",
+    )
+    kashier_cf_attempts = fields.Integer(string="Kashier Attempts", readonly=True, copy=False)
+    kashier_cf_last_attempt = fields.Datetime(string="Last Kashier Attempt", readonly=True, copy=False)
+    kashier_cf_expires_at = fields.Datetime(string="Kashier Request Valid Until", readonly=True, copy=False)
+    kashier_cf_reference_code = fields.Char(
+        string="Kashier Payment Code", help="The Basata code the customer pays with at a kiosk.", readonly=True, copy=False,
+    )
+    kashier_cf_qr_payload = fields.Char(string="InstaPay QR", readonly=True, copy=False, groups="base.group_system")
     kashier_cf_error_code = fields.Char(string="Kashier Error Code", readonly=True, copy=False)
     kashier_cf_error_details = fields.Text(string="Kashier Error Details", readonly=True, copy=False)
 
@@ -102,12 +125,19 @@ class PaymentTransaction(models.Model):
         if self.provider_code != const.PROVIDER_CODE:
             return super()._get_specific_rendering_values(processing_values)
         provider = self.provider_id
+        status_page = {"api_url": provider._kashier_cf_url("/payment/status"), "http_method": "get", "url_params": {}}
+        if self.state == "error":
+            return status_page  # The session failed while computing the processing values.
+        if self._kashier_cf_integration() == const.INTEGRATION_SERVER:
+            # Odoo's own page asks for the number (or shows the QR) and starts the payment with Kashier.
+            self._kashier_cf_prepare_server_payment()
+            return {"api_url": self._kashier_cf_route_path(KashierController._pay_url), "http_method": "get", "url_params": {}}
         try:
-            session_url = self._kashier_cf_create_session()
+            session_url = self._kashier_cf_session_url()
         except ValidationError as error:
             self._kashier_cf_set_error(error)
             # The status page explains the error to the customer.
-            return {"api_url": provider._kashier_cf_url("/payment/status"), "http_method": "get", "url_params": {}}
+            return status_page
         # A GET form drops the query string of its action: send `mode` as a hidden input.
         parts = urlsplit(session_url)
         return {
@@ -117,11 +147,45 @@ class PaymentTransaction(models.Model):
         }
 
     def _get_specific_processing_values(self, processing_values):
-        """Override of `payment` to give the payment form Kashier's page for a saved card."""
+        """Override of `payment` to give the payment form what it shows itself: Kashier's page for a saved
+        card, Kashier's page inside the checkout (embedded), or Kashier's Apple Pay button.
+
+        The flow comes from the browser: a direct flow is accepted only for the Apple Pay button.
+        """
         res = super()._get_specific_processing_values(processing_values)
-        if self.provider_code == const.PROVIDER_CODE and self.operation == "online_token" \
-                and self.state == "draft" and self.kashier_cf_redirect_url:
-            res["kashier_cf_redirect_url"] = self.kashier_cf_redirect_url
+        if self.provider_code != const.PROVIDER_CODE or self.state != "draft":
+            return res
+        if self.operation == "online_token":
+            if self.kashier_cf_redirect_url:
+                res["kashier_cf_redirect_url"] = self.kashier_cf_redirect_url
+            return res
+        integration = self._kashier_cf_integration()
+        if self.operation == "online_direct" and integration != const.INTEGRATION_APPLE_PAY_BUTTON:
+            self._kashier_cf_set_error_text(self.env._("This payment method can't be used this way. Choose it again."))
+            return res
+        if self.operation == "online_redirect" and integration != const.INTEGRATION_EMBEDDED:
+            return res
+        try:
+            session_url = self._kashier_cf_session_url()
+        except ValidationError as error:
+            self._kashier_cf_set_error(error)
+            return res
+        token = payment_utils.generate_access_token(self.reference, self.partner_id.id, env=self.env)
+        res.update({
+            "kashier_cf_return_url": self._kashier_cf_route_url(KashierController._return_url),
+            "kashier_cf_poll_url": KashierController._poll_url,
+            "kashier_cf_access_token": token,
+            "kashier_cf_tx_id": self.id,
+        })
+        if integration == const.INTEGRATION_EMBEDDED:
+            res["kashier_cf_embed_url"] = session_url
+        else:
+            res.update({
+                "kashier_cf_session_id": self.kashier_cf_session_id,
+                "kashier_cf_mode": self.provider_id._kashier_cf_mode(),
+                "kashier_cf_sdk_url": const.APPLE_PAY_SDK_URL,
+                "kashier_cf_locale": "ar" if (self.partner_lang or "").startswith("ar") else "en",
+            })
         return res
 
     def _send_payment_request(self):
@@ -162,9 +226,23 @@ class PaymentTransaction(models.Model):
             raise KashierError(self.env._("Kashier sent an unexpected payment page."), code="bad_request")
         self.with_context(payment_safe_write=True).write({
             "kashier_cf_session_id": session["_id"],
-            "kashier_cf_redirect_url": session_url if saved_card else False,
+            "kashier_cf_redirect_url": session_url,
         })
         return session_url
+
+    def _kashier_cf_session_url(self):
+        """Kashier's page of the transaction, created once (the embedded page and the redirect share it)."""
+        self.ensure_one()
+        if self.kashier_cf_session_id and self.kashier_cf_redirect_url:
+            return self.kashier_cf_redirect_url
+        return self._kashier_cf_create_session()
+
+    def _kashier_cf_integration(self):
+        """How the payment reaches Kashier (see `const.METHODS`); saved cards always use Kashier's page."""
+        self.ensure_one()
+        if self.token_id or self.operation not in ("online_redirect", "online_direct"):
+            return const.INTEGRATION_REDIRECT
+        return self.payment_method_id._kashier_cf_get_integration()
 
     def _kashier_cf_session_payload(self, saved_card=False):
         self.ensure_one()
@@ -188,10 +266,13 @@ class PaymentTransaction(models.Model):
             "interactionSource": "ECOMMERCE",
         }
         method = self._kashier_cf_primary_method()
+        spec = method._kashier_cf_spec()
         if method.code in const.CARD_METHOD_CODES or saved_card:
             payload["allowedMethods"] = "card"
             if provider.capture_manually:
                 payload["manualCapture"] = True
+        elif spec["session"]:
+            payload["allowedMethods"] = spec["session"]
         elif provider.kashier_cf_allowed_methods:
             payload["allowedMethods"] = ",".join(
                 part.strip() for part in provider.kashier_cf_allowed_methods.split(",") if part.strip()
@@ -381,12 +462,11 @@ class PaymentTransaction(models.Model):
                 elif data:
                     _logger.warning("Kashier session of %s belongs to another order; ignored.", root.reference)
             orders = []
-            if root.kashier_cf_order_ref:
-                answer = client.search_orders(search=root.kashier_cf_order_ref, limit=50, reference=root.reference) or {}
-                orders = [
+            for order_ref in root._kashier_cf_all_order_refs():
+                answer = client.search_orders(search=order_ref, limit=50, reference=root.reference) or {}
+                orders += [
                     root._kashier_cf_order_snapshot(order) for order in answer.get("data") or []
-                    if order.get("merchantOrderId") == root.kashier_cf_order_ref
-                    and order.get("merchantId") in (merchant_id, None)
+                    if order.get("merchantOrderId") == order_ref and order.get("merchantId") in (merchant_id, None)
                 ]
         except KashierError as error:
             _logger.warning("Kashier status check of %s failed: %s", root.reference, error)
@@ -428,6 +508,7 @@ class PaymentTransaction(models.Model):
             "refunded": kashier_utils.to_number(order.get("totalRefundedAmount")) or 0.0,
             "authorized": kashier_utils.to_number(order.get("totalAuthorizedAmount")) or 0.0,
             "method": order.get("method"),
+            "agreement": order.get("paymentAgreement"),
             "card": snapshot_card,
             "legs": legs,
         }
@@ -540,6 +621,8 @@ class PaymentTransaction(models.Model):
             return self._kashier_cf_set_success(matching[0], authorized=False)
         if authorized:
             matching = [order for order in authorized if self._kashier_cf_amount_ok(order)]
+            if matching and self._kashier_cf_is_installments(matching[0]):
+                return self._kashier_cf_wait_installments(matching[0])
             if matching:
                 return self._kashier_cf_set_success(matching[0], authorized=True)
         if status in const.SESSION_PAID | const.SESSION_AUTHORIZED:
@@ -563,7 +646,9 @@ class PaymentTransaction(models.Model):
             )
             for order in orders for leg in order["legs"]
         ) or any(order["status"] in const.ORDER_INITIATED and order["legs"] and not all(
-            leg["op"] in const.LEGS_3DS for leg in order["legs"]) for order in orders)
+            leg["op"] in const.LEGS_3DS | const.LEGS_SETUP for leg in order["legs"]) for order in orders)
+        if not session and self.kashier_cf_server_kind:
+            return self._kashier_cf_apply_server_orders(orders, undetermined_money_leg)
         if not session_final:
             if orders and all(order["status"] in const.ORDER_FAILED for order in orders) and status in ("OPENED", "PENDING"):
                 return None  # The customer can still try again on Kashier's page.
@@ -645,7 +730,8 @@ class PaymentTransaction(models.Model):
         leg = None
         for order in failed_orders:
             for candidate in order["legs"]:
-                if candidate["op"] in const.MONEY_LEGS | const.LEGS_3DS and candidate["status"] == const.LEG_FAILURE:
+                if candidate["op"] in const.MONEY_LEGS | const.LEGS_3DS | const.LEGS_SETUP \
+                        and candidate["status"] == const.LEG_FAILURE:
                     leg = candidate
         code = leg and leg.get("code")
         self.write({"kashier_cf_error_code": code or False, "kashier_cf_error_details": (leg and leg.get("message")) or False})
@@ -666,7 +752,7 @@ class PaymentTransaction(models.Model):
             self._set_canceled(message, extra_allowed_states=extra_allowed_states)
 
     def _kashier_cf_set_error_text(self, message):
-        self._set_error(message)
+        self.with_context(payment_safe_write=True)._set_error(message)
 
     # === BUSINESS METHODS - ERRORS === #
 
@@ -741,6 +827,8 @@ class PaymentTransaction(models.Model):
                 | Domain("state", "=", "authorized") & Domain("create_date", ">=", now - timedelta(days=32))
                 | Domain("state", "=", "cancel") & Domain("kashier_cf_late_check_until", ">", now)
                 | Domain("kashier_cf_outcome_unknown", "=", True)
+                | Domain("state", "in", ("draft", "pending")) & Domain("kashier_cf_expires_at", "!=", False)
+                & Domain("kashier_cf_expires_at", ">", now - timedelta(hours=const.LATE_CHECK_HOURS))
             ),
             order="kashier_cf_last_sync asc nulls first, id asc",
             limit=200,
@@ -754,7 +842,10 @@ class PaymentTransaction(models.Model):
             if root.id not in done_roots:
                 done_roots.add(root.id)
                 root._kashier_cf_sync_from_provider()
+                if root.kashier_cf_server_kind == "wallet" and root.state == "pending":
+                    root._kashier_cf_reconcile_wallet()
             tx._kashier_cf_expire_unknown_outcome(now)
+            tx._kashier_cf_expire_server_page(now)
             if in_cron and not self.env["ir.cron"]._commit_progress(1):
                 break
 
@@ -789,6 +880,248 @@ class PaymentTransaction(models.Model):
                 "sticky": False,
             },
         }
+
+    # === BUSINESS METHODS - SERVER SIDE (Kashier's Direct API) === #
+
+    def _kashier_cf_prepare_server_payment(self):
+        """Set the order reference and the validity of the server page before anything is sent to Kashier.
+
+        The reference is saved by the request that opens the page, so that a replayed or double-clicked
+        "start" reuses it instead of creating a second Kashier order.
+        """
+        self.ensure_one()
+        self._kashier_cf_ensure_order_ref()
+        if self.state == "draft" and not self.kashier_cf_expires_at:
+            validity = timedelta(minutes=self.provider_id.sudo().kashier_cf_session_expiry)
+            self.with_context(payment_safe_write=True).kashier_cf_expires_at = fields.Datetime.now() + validity
+
+    def _kashier_cf_server_block_reason(self):
+        """Why the customer can't send a new request now (a text for the customer), or None."""
+        self.ensure_one()
+        now = fields.Datetime.now()
+        if self.state != "draft" or self.kashier_cf_outcome_unknown:
+            return self.env._("This payment was already started. Wait for its result.")
+        if self.kashier_cf_attempts >= const.SERVER_MAX_ATTEMPTS:
+            return self.env._("Too many attempts. Start the payment again from your order.")
+        if self.kashier_cf_expires_at and now > self.kashier_cf_expires_at:
+            return self.env._("This payment page expired. Start the payment again from your order.")
+        if self.kashier_cf_last_attempt and now < self.kashier_cf_last_attempt + timedelta(seconds=const.SERVER_ATTEMPT_INTERVAL_SECONDS):
+            return self.env._("Wait a few seconds before trying again.")
+        return None
+
+    def _kashier_cf_start_server_payment(self, value=""):
+        """Ask Kashier for the payment without its page: a wallet request, a Basata code or an InstaPay
+        QR or request. The caller holds a lock on the transaction.
+
+        :param str value: The mobile number (wallet, Basata), or the InstaPay address (empty for a QR).
+        :return: What the page shows: `ok`, `message`, `can_retry`, and the code or QR.
+        :rtype: dict
+        """
+        self.ensure_one()
+        kind = self.payment_method_id._kashier_cf_spec().get("server")
+        if not kind or self._kashier_cf_integration() != const.INTEGRATION_SERVER:
+            return {"ok": False, "message": self.env._("This payment method doesn't work this way."), "can_retry": False}
+        reason = self._kashier_cf_server_block_reason()
+        if reason:
+            return {"ok": False, "message": reason, "can_retry": False}
+        value = (value or "").strip()
+        payment_method = {"type": "wallet"} if kind == "wallet" else None
+        customer = {}
+        if kind in ("wallet", "basata"):
+            phone = kashier_utils.normalize_eg_mobile(value)
+            if not phone:
+                return {"ok": False, "can_retry": True, "message": self.env._(
+                    "Enter your Egyptian mobile number: 11 digits, starting with 010, 011, 012 or 015.",
+                )}
+            if kind == "wallet":
+                customer["mobilePhone"] = phone
+            else:
+                payment_method = {"type": "BASATA", "basata": {"mobileNumber": phone}}
+        else:
+            address = kashier_utils.normalize_instapay_address(value) if value else ""
+            if value and not address:
+                return {"ok": False, "can_retry": True, "message": self.env._(
+                    "Enter your InstaPay address, like name@instapay.",
+                )}
+            payment_method = {"type": "instapay", "instapay": {"validity": str(const.INSTAPAY_QR_VALIDITY_SECONDS)}}
+            if address:
+                payment_method["instapay"]["payerAddress"] = address
+        operation = {"wallet": "INITIATE_R2P", "basata": "GENERATE_CODE"}.get(kind) or (
+            "INITIATE_R2P" if payment_method["instapay"].get("payerAddress") else "GENERATE_QR"
+        )
+        provider = self.provider_id.sudo()
+        order_ref = self._kashier_cf_ensure_order_ref()
+        amount = kashier_utils.format_amount(self.amount)
+        currency = self.currency_id.name
+        body = {
+            "apiOperation": operation,
+            "paymentMethod": payment_method,
+            "order": {"reference": order_ref, "amount": amount, "currency": currency, "description": self.reference[:120]},
+            "interactionSource": "ECOMMERCE",
+            "merchantId": provider.kashier_cf_merchant_id,
+            "reconciliation": {
+                "webhookUrl": provider._kashier_cf_url(KashierController._webhook_url),
+                "merchantRedirect": self._kashier_cf_route_url(KashierController._return_url),
+            },
+            "customer": {"reference": f"cf-g-{order_ref}"[:64], **customer},
+        }
+        signature = provider._kashier_cf_hash(kashier_utils.order_hash_string(
+            provider.kashier_cf_merchant_id, order_ref, amount, currency,
+        ))
+        now = fields.Datetime.now()
+        attempt = {"kashier_cf_server_kind": kind, "kashier_cf_attempts": self.kashier_cf_attempts + 1,
+                   "kashier_cf_last_attempt": now}
+        try:
+            # POST /v3/orders: the generated client names it after its saved-card use.
+            answer = provider._kashier_cf_client().pay_with_token(body, kashier_hash=signature, reference=self.reference)
+        except KashierError as error:
+            if error.unknown_outcome:
+                self.with_context(payment_safe_write=True).write(attempt)
+                self._kashier_cf_mark_unknown(error)
+                return {"ok": True, "waiting": True, "message": self.env._("Checking the payment with Kashier...")}
+            return self._kashier_cf_server_attempt_failed(attempt, error.code, str(error))
+        response = answer.get("response") or {}
+        if str(answer.get("status") or response.get("status") or "").upper() == "FAILURE":
+            return self._kashier_cf_server_attempt_failed(
+                attempt, response.get("transactionResponseCode"), kashier_utils.message_of(answer),
+            )
+        values = {**attempt, "kashier_cf_error_code": False, "kashier_cf_error_details": False}
+        system_order_id = (response.get("order") or {}).get("systemOrderId")
+        if system_order_id:
+            values["kashier_cf_order_id"] = system_order_id
+        result = {"ok": True}
+        if kind == "wallet":
+            values["kashier_cf_expires_at"] = now + timedelta(minutes=const.WALLET_VALIDITY_MINUTES)
+        elif kind == "basata":
+            basata = (response.get("paymentMethod") or {}).get("basata") or {}
+            values["kashier_cf_reference_code"] = basata.get("referenceCode") or False
+            values["kashier_cf_expires_at"] = kashier_utils.parse_datetime(basata.get("expireAt")) or (
+                now + timedelta(minutes=const.BASATA_VALIDITY_MINUTES))
+            result["code"] = values["kashier_cf_reference_code"]
+        else:
+            qr = kashier_utils.find_instapay_qr(answer)
+            values["kashier_cf_qr_payload"] = qr or False
+            values["kashier_cf_expires_at"] = now + timedelta(seconds=const.INSTAPAY_QR_VALIDITY_SECONDS)
+        tx = self.with_context(payment_safe_write=True)
+        tx.write(values)
+        tx._set_pending()
+        if kind == "basata" and values.get("kashier_cf_reference_code"):
+            self._kashier_cf_send_code_email()
+        return result
+
+    def _kashier_cf_server_attempt_failed(self, attempt, code, details):
+        """A definite refusal (no wallet on the number...): the customer may try again with a new Kashier
+        order; the refused one is kept in the earlier attempts and still checked.
+        """
+        self.ensure_one()
+        refs = [ref for ref in (self.kashier_cf_attempt_refs or "").split(",") if ref] + [self.kashier_cf_order_ref]
+        self.with_context(payment_safe_write=True).write({
+            **attempt,
+            "kashier_cf_error_code": code or False,
+            "kashier_cf_error_details": details or False,
+            "kashier_cf_attempt_refs": ",".join(dict.fromkeys(refs)),
+            "kashier_cf_order_ref": self._kashier_cf_new_order_ref(),
+        })
+        return {
+            "ok": False,
+            "message": self.provider_id._kashier_cf_get_customer_error_message(code),
+            "can_retry": attempt["kashier_cf_attempts"] < const.SERVER_MAX_ATTEMPTS,
+        }
+
+    def _kashier_cf_reconcile_wallet(self):
+        """Ask Kashier to check a wallet request with the wallet provider (the cron does it; repeatable)."""
+        self.ensure_one()
+        provider = self.provider_id.sudo()
+        body = {"apiOperation": "RECONCILE_WALLET", "paymentMethod": {"type": "wallet"},
+                "merchantId": provider.kashier_cf_merchant_id}
+        try:
+            provider._kashier_cf_client().update_order(
+                self.kashier_cf_order_id or self.kashier_cf_order_ref, body, reference=self.reference,
+            )
+        except KashierError as error:
+            _logger.info("Kashier wallet check of %s: %s", self.reference, error)
+
+    def _kashier_cf_expire_server_page(self, now):
+        """End a server-side payment the customer left before any request succeeded."""
+        if self.provider_code != const.PROVIDER_CODE or self.state != "draft" or not self.kashier_cf_expires_at:
+            return
+        if now <= self.kashier_cf_expires_at or self.env["payment.data"].sudo().search_count(
+            [("transaction_id", "=", self.id), ("errored", "=", False)], limit=1,
+        ):
+            return
+        tx = self.with_context(payment_safe_write=True)
+        if self.kashier_cf_error_code:
+            tx._set_error(self.provider_id._kashier_cf_get_customer_error_message(self.kashier_cf_error_code))
+        else:
+            tx._set_canceled(self.env._("The payment page expired before the payment."))
+
+    def _kashier_cf_apply_server_orders(self, orders, undetermined_money_leg):
+        """Map the orders of a server-side payment (no Kashier page) to the state of the transaction."""
+        now = fields.Datetime.now()
+        expired = bool(self.kashier_cf_expires_at) and now > self.kashier_cf_expires_at
+        if undetermined_money_leg:
+            if expired:
+                self._kashier_cf_alert("undetermined", self.env._(
+                    "Kashier hasn't decided the outcome of this payment. Check the order in Kashier's dashboard "
+                    "before asking the customer to pay again.",
+                ))
+            return self._kashier_cf_set_state("pending")
+        if any(order["status"] in const.ORDER_INITIATED for order in orders):
+            if not expired:
+                return self._kashier_cf_set_state("pending")
+            self.with_context(payment_safe_write=True).kashier_cf_late_check_until = now + timedelta(hours=const.LATE_CHECK_HOURS)
+            message = {
+                "wallet": self.env._("The wallet request expired before the payment."),
+                "basata": self.env._("The payment code expired before the payment."),
+            }.get(self.kashier_cf_server_kind, self.env._("The InstaPay request expired before the payment."))
+            return self._kashier_cf_set_state("cancel", message)
+        failed = [order for order in orders if order["status"] in const.ORDER_FAILED]
+        if failed and len(failed) == len(orders):
+            if self.state == "draft" and not expired:
+                return None  # Refused before the request was sent: the customer can try again on the page.
+            return self._kashier_cf_set_failure(failed)
+        return None
+
+    # === BUSINESS METHODS - INSTALLMENTS, STATUS MESSAGE === #
+
+    def _kashier_cf_is_installments(self, order):
+        """Whether an order is a bank installment payment (Kashier reports it as a card payment)."""
+        method = (order.get("method") or "").lower()
+        return (order.get("agreement") or "").lower() == "installment" \
+            or method in const.METHODS["installments_eg"]["orders"] \
+            or (self._kashier_cf_primary_method().code == "installments_eg" and self._kashier_cf_is_card_order(order))
+
+    def _kashier_cf_wait_installments(self, order):
+        """An installment payment the bank authorized: Kashier completes it, the payment waits for that."""
+        self.with_context(payment_safe_write=True).write({
+            "kashier_cf_order_id": order["order_id"],
+            "kashier_cf_channel": self._kashier_cf_channel_label(order),
+        })
+        if self.create_date and self.create_date < fields.Datetime.now() - timedelta(days=3):
+            self._kashier_cf_alert("installments_waiting", self.env._(
+                "Kashier hasn't completed this installment payment after 3 days. Check the order in Kashier's "
+                "dashboard.",
+            ))
+        return self._kashier_cf_set_state("pending", self.env._("The bank approved the installments. Kashier completes the payment."))
+
+    def _get_status_message(self, **kwargs):
+        """Override of `payment` to give the customer their Basata code again while it is unpaid."""
+        message = super()._get_status_message(**kwargs)
+        if self.provider_code != const.PROVIDER_CODE or self.state != "pending" or not self.kashier_cf_reference_code:
+            return message
+        expiry = format_datetime(self.env, self.kashier_cf_expires_at, tz=self.partner_id.tz or "Africa/Cairo", dt_format="short")
+        return (message or Markup()) + Markup("<p>%s <strong>%s</strong><br/>%s</p>") % (
+            self.env._("Your Basata payment code:"),
+            self.kashier_cf_reference_code,
+            self.env._("Pay it at a Basata kiosk or point of sale before %(expiry)s.", expiry=expiry),
+        )
+
+    def _kashier_cf_send_code_email(self):
+        """Email the Basata code to the customer (invoice payments never show a pending page again)."""
+        self.ensure_one()
+        template = self.env.ref("payment_kashier_cf.mail_template_basata_code", raise_if_not_found=False)
+        if template and self.partner_email:
+            template.sudo().send_mail(self.id, force_send=False)
 
     # === BUSINESS METHODS - HELPERS === #
 
@@ -831,11 +1164,25 @@ class PaymentTransaction(models.Model):
         """The order reference sent to Kashier, created once per transaction."""
         self.ensure_one()
         if not self.kashier_cf_order_ref:
-            uuid = self.env["ir.config_parameter"].sudo().get_str("database.uuid") or self.env.cr.dbname
-            database_code = hashlib.sha1(uuid.encode()).hexdigest()[:6]  # noqa: S324 (not security)
-            order_ref = kashier_utils.build_order_reference(self.reference, database_code, secrets.token_hex(2))
-            self.with_context(payment_safe_write=True).kashier_cf_order_ref = order_ref
+            self.with_context(payment_safe_write=True).kashier_cf_order_ref = self._kashier_cf_new_order_ref()
         return self.kashier_cf_order_ref
+
+    def _kashier_cf_new_order_ref(self):
+        uuid = self.env["ir.config_parameter"].sudo().get_str("database.uuid") or self.env.cr.dbname
+        database_code = hashlib.sha1(uuid.encode()).hexdigest()[:6]  # noqa: S324 (not security)
+        return kashier_utils.build_order_reference(self.reference, database_code, secrets.token_hex(2))
+
+    def _kashier_cf_all_order_refs(self):
+        """The order reference of the payment and those of its earlier attempts."""
+        self.ensure_one()
+        refs = [self.kashier_cf_order_ref] + (self.kashier_cf_attempt_refs or "").split(",")
+        return list(dict.fromkeys(ref for ref in refs if ref))
+
+    def _kashier_cf_route_path(self, route):
+        """A route of this database for the transaction, relative (keeps the customer's host and session)."""
+        self.ensure_one()
+        token = payment_utils.generate_access_token(self.reference, self.partner_id.id, env=self.env)
+        return f"{route}/{self.id}/{token}"
 
     def _kashier_cf_route_url(self, route):
         self.ensure_one()
@@ -869,10 +1216,24 @@ class PaymentTransaction(models.Model):
         return method or False
 
     def _kashier_cf_payment_method(self, order):
-        """The Odoo payment method Kashier actually used: the card brand, or the Kashier method."""
+        """The Odoo payment method Kashier actually used.
+
+        Kashier reports Apple Pay and bank installments as `card`: the method the customer chose is kept
+        then (Apple Pay only from the Apple Pay button: on Kashier's page a typed card looks the same). Other
+        methods are found by Kashier's name (wallet, valu, basata...).
+        """
         provider = self.provider_id.with_context(active_test=False)
+        chosen = self._kashier_cf_primary_method()
+        method = (order.get("method") or "card").lower()
         if self._kashier_cf_is_card_order(order):
+            if self._kashier_cf_is_installments(order):
+                return provider._get_pm_from_code("installments_eg") or chosen
+            if chosen.code == "apple_pay" and chosen._kashier_cf_get_integration() == const.INTEGRATION_APPLE_PAY_BUTTON:
+                return chosen
             brand = ((order.get("card") or {}).get("brand") or "").lower()
             code = const.CARD_BRAND_MAPPING.get(brand) or "card"
-            return provider._get_pm_from_code(code) or provider._get_pm_from_code("card")
-        return provider._get_pm_from_code(const.PROVIDER_WIDE_METHOD_CODE)
+            return provider._get_pm_from_code(code) or provider._get_pm_from_code("card") or chosen
+        for code, spec in const.METHODS.items():
+            if method in spec["orders"]:
+                return provider._get_pm_from_code(code) or chosen
+        return chosen

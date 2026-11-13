@@ -9,8 +9,10 @@ repository holds four modules:
   kiosk payments, bank installments and buy-now-pay-later brands, Apple Pay and Google Pay.
 - **InstaPay Payments** takes payments by InstaPay, mobile wallet or bank transfer in Egypt, without any API: the
   customer sends the money and uploads the receipt, and the accounting team confirms it within 2 working days.
-- **Kashier Payments** connects Odoo to Kashier, the Egyptian payment gateway: customers pay on Kashier's hosted
-  page with Visa, Mastercard and Meeza cards, mobile wallets, instalments and buy-now-pay-later brands such as valU.
+- **Kashier Payments** connects Odoo to Kashier, the Egyptian payment gateway: Visa, Mastercard and Meeza cards,
+  Apple Pay, mobile wallets, InstaPay, Basata kiosk codes, bank installments and buy-now-pay-later brands such as
+  valU, each its own payment method, paid on Kashier's hosted page, on that page shown inside the checkout, or run
+  server side by Odoo.
 
 ## Contents
 
@@ -31,7 +33,7 @@ repository holds four modules:
 | [`payment_fawry_cf`](payment_fawry_cf) | Fawry Payments | Fawry payment provider: FawryPay Express Checkout or the server-to-server APIs, saved cards, refunds, reference codes and wallet QR codes shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
 | [`payment_paymob_cf`](payment_paymob_cf) | Paymob Payments | Paymob payment provider for five countries: Paymob Checkout or an embedded card form, saved cards, MOTO charges, authorize and capture, refunds, payment split, kiosk references shown on the website | OPL-1 (paid) | `payment`, `account_payment` |
 | [`payment_instapay_cf`](payment_instapay_cf) | InstaPay Payments | Manual InstaPay, mobile wallet and bank transfer payments: payment details with copy buttons, link and QR code, receipt upload, review by the accountants within working days, reminders and cancellation | OPL-1 (paid) | `payment`, `account_payment`, `mail`, `resource` |
-| [`payment_kashier_cf`](payment_kashier_cf) | Kashier Payments | Kashier payment provider: Kashier's hosted payment page for cards or every method of the account, saved cards (also charged without the customer), refunds, authorize and capture, status always read from Kashier's API | OPL-1 (paid) | `payment`, `account_payment` |
+| [`payment_kashier_cf`](payment_kashier_cf) | Kashier Payments | Kashier payment provider: every Kashier method as its own payment method, hidden when the account doesn't accept it; Kashier's hosted page, the same page inside the checkout, server-side wallet requests, Basata codes and InstaPay QR codes, an Apple Pay button (beta); saved cards (also charged without the customer), refunds, authorize and capture, status always read from Kashier's API | OPL-1 (paid) | `payment`, `account_payment` |
 
 ## Requirements
 
@@ -346,36 +348,94 @@ email layout and name the company.
 
 Guides, with screenshots:
 
-- [Administrator guide](payment_kashier_cf/doc/admin_guide.md): how it works, the three keys, options,
-  notifications, testing in Kashier's test mode, saved cards, capture, refunds, statuses, unknown outcomes,
-  accounting, several companies or databases, security, troubleshooting.
-- [User guide](payment_kashier_cf/doc/user_guide.md): what customers see, and the daily tasks of the team
-  (following, refunding, capturing and voiding payments, saved cards, alerts and activities).
+- [Administrator guide](payment_kashier_cf/doc/admin_guide.md): how it works, the three keys, the payment methods
+  and the methods of the Kashier account, the integration of each method (the Apple Pay button included), options,
+  notifications, testing in Kashier's test mode, upgrading from 20.0.1.0.0, server-side payments, installments, saved
+  cards, capture, refunds per method, statuses, unknown outcomes, accounting, several companies or databases,
+  security, troubleshooting.
+- [User guide](payment_kashier_cf/doc/user_guide.md): what customers see with each integration, Basata codes, and
+  the daily tasks of the team (following, refunding, capturing and voiding payments, saved cards, alerts and
+  activities).
 
-Customers always pay on Kashier's hosted payment page (`payments.kashier.io`), in the same window: there is no
-embedded or pop-up mode. Card numbers never reach Odoo. Provider code `kashier_cf`; three credentials: Merchant ID,
-Payment API Key (sessions, `Kashier-Hash` signatures, and the signatures Kashier puts on redirects and webhooks) and
-Secret Key (status, refunds, captures, voids). Test and live keys work only on Kashier's test and live hosts, chosen
-by the provider's **Live** flag.
+Every Kashier method is a `payment.method` of its own, and each chooses how it reaches Kashier
+(`payment.method.kashier_cf_integration`). Card numbers never reach Odoo. Provider code `kashier_cf`; three
+credentials: Merchant ID, Payment API Key (sessions, the `Kashier-Hash` signatures of saved-card and server-side
+orders, and the signatures Kashier puts on redirects and webhooks) and Secret Key (status, refunds, captures, voids).
+Test and live keys work only on Kashier's test and live hosts, chosen by the provider's **Live** flag.
 
-### Payment methods
+### Payment methods and integrations
 
-| Code | Name | Kashier's page | Odoo features |
-|---|---|---|---|
-| `card`, brands `visa`, `mastercard`, `meeza` | Card | `allowedMethods: card`, 3-D Secure | Saved cards, manual capture (full only), partial refunds |
-| `kashier` | Kashier | Every method of the merchant account, or the provider's **Kashier Methods** (`allowedMethods`, e.g. `wallet, bnpl[valu]`) | Partial refunds |
+| Code | Name | On Kashier's page (`allowedMethods`) | Integrations (default first) | Refunds from Odoo |
+|---|---|---|---|---|
+| `card`, brands `visa`, `mastercard`, `meeza` | Card | `card` | `redirect`, `embedded` | partial; also saved cards and manual capture (full only) |
+| `apple_pay` | Apple Pay | `card` | `redirect`, `apple_pay_button` | partial |
+| `mobile_wallet_eg` | Mobile Wallets | `wallet` | `redirect`, `embedded`, `server` | partial |
+| `instapay` | InstaPay | `instapay` | `redirect`, `embedded`, `server` | none |
+| `kiosk` | Kiosk (Basata) | `basata` | `redirect`, `embedded`, `server` | none |
+| `installments_eg` | Bank Installments | `bank_installments` | `redirect`, `embedded` | partial |
+| `valu`, `souhoola`, `contact`, `aman`, `forsa`, `octo`, `mogo`, `tru` | buy now, pay later | `bnpl[<code>]` | `redirect`, `embedded` | none |
+| `kashier` | Kashier (every method of the account) | the provider's **Methods of the Kashier Choice**, or every method | `redirect`, `embedded` | partial |
 
-Currencies: EGP, USD, GBP, EUR (Meeza: EGP). Once paid, the transaction's payment method becomes the card brand
-Kashier reports, or `kashier` for the other methods. Manual capture needs the `kashier` method off (core rule).
+The integrations (`const.METHODS`, enforced by `payment.method._check_kashier_cf_integration`):
+
+| Value | Label | What happens |
+|---|---|---|
+| `redirect` | Kashier page | The generic redirect form sends the customer to Kashier's session page. |
+| `embedded` | Kashier page inside the checkout | The same session page in an iframe of the payment form (not for Apple Pay: Apple refuses Apple Pay in frames). |
+| `server` | Server side (no Kashier page) | Odoo runs Kashier's Direct API and shows its own page. Never for cards: card details stay on Kashier's page, so the shop stays out of PCI DSS scope. |
+| `apple_pay_button` | Apple Pay button on the payment step (beta) | Kashier's Apple Pay script on Odoo's payment step. Falls back to `redirect` while no domain file is uploaded. |
+
+Payments with a saved card always use `redirect`. Card and `kashier` take EGP, USD, GBP and EUR (Meeza: EGP); the
+other methods are limited to Egypt and EGP. Every method but `kashier` is active at installation
+(`const.DEFAULT_PAYMENT_METHOD_CODES`). Once paid, the transaction's method becomes the one Kashier reports: the card
+brand, or the method found by the order's `method` in `const.METHODS[...]["orders"]`. Kashier reports Apple Pay and
+installments as `card`, so the chosen method is kept (Apple Pay only when paid with the button; on Kashier's page it
+can't be told from a typed card). Manual capture needs every method but `card` off (core rule).
+
+Odoo's cart Express Checkout isn't supported: Kashier's Apple Pay script returns no shipping address and the session
+amount is fixed. In this module, "express" means the embedded page and the Apple Pay button.
+
+### Methods of the merchant account
+
+**Sync Kashier Methods** (`action_kashier_cf_sync_account_methods`) and the daily cron **Kashier: list the methods
+of the Kashier accounts** read `GET /v2/merchants/{merchantId}/paymentMethods` (no credential;
+`acceptedPaymentMethods` and `acceptedBNPLMethods`, or a map of names to booleans) into `kashier_cf_account_methods`,
+with the Merchant ID and the mode it was listed for. `_find_available_payment_methods` drops the Kashier methods the
+account doesn't list ("Not accepted by the Kashier account" in the availability report); nothing is hidden while the
+list is unknown or belongs to another Merchant ID or mode. Writing the Merchant ID or `is_live` clears the list and
+triggers the cron. `kashier_cf_shadowed_methods` warns about active Kashier methods that core's
+`_deduplicate_by_code` gives to a published provider of the company with a lower sequence (for example our Paymob
+module's wallets).
 
 ### Payment flow
 
-- **Session.** `_get_specific_rendering_values` creates a payment session (`POST /v3/payment/sessions`, Secret Key
-  and Payment API Key) with `order` (the cleaned reference, a 6-character code of the database taken from
-  `database.uuid`, and a nonce), `merchantRedirect` (`/payment/kashier_cf/return/<tx>/<access token>`),
-  `serverWebhook` (`/payment/kashier_cf/webhook`), `expireAt`, `maxFailureAttempts`, `display` (`ar` or `en`, from
-  the partner's language), and `manualCapture` / `saveCard` when they apply. The generic redirect form sends the
-  customer to the session URL, accepted only on `payments.kashier.io`.
+- **Session.** `_kashier_cf_create_session` creates a payment session (`POST /v3/payment/sessions`, Secret Key and
+  Payment API Key) with `order` (the cleaned reference, a 6-character code of the database taken from
+  `database.uuid`, and a nonce), `allowedMethods` (table above), `merchantRedirect`
+  (`/payment/kashier_cf/return/<tx>/<access token>`), `serverWebhook` (`/payment/kashier_cf/webhook`), `expireAt`,
+  `maxFailureAttempts`, `display` (`ar` or `en`, from the partner's language), and `manualCapture` / `saveCard` when
+  they apply. The session URL is accepted only on `payments.kashier.io`.
+- **Embedded.** For `online_redirect` with `embedded`, `_get_specific_processing_values` returns
+  `kashier_cf_embed_url`; the payment form patch shows it in an iframe (`allow="payment"`), listens only to
+  `postMessage` from `https://payments.kashier.io` (`paymentSuccess`, `success`, `failure`, `urlRedirection` → the
+  return route; `closeIframe` → back to the methods), and polls `/payment/kashier_cf/poll` every 5 seconds.
+- **Apple Pay button.** The direct flow (`online_direct`, refused for every other integration) returns the session
+  ID; the patch loads `https://payments.kashier.io/kashier-sdk.js` and calls `kashierSDK.load` with the mode, the
+  session and the locale, then goes to the return route on success. The form hides Kashier's Apple Pay when
+  `ApplePaySession.canMakePayments()` is false. The domain file (`kashier_cf_apple_pay_domain_file`) is served at
+  `/.well-known/apple-developer-merchantid-domain-association` (and `.txt`), per host (the provider of the matching
+  website first). Without a Kashier file, the route serves our Paymob module's file, then Odoo's `payment_stripe`
+  file: modules are routed alphabetically, so this route shadows theirs.
+- **Server side.** The rendering values send the customer to `/payment/kashier_cf/pay/<tx>/<access token>` (template
+  `server_payment_page`, which names the company). `/payment/kashier_cf/start` (JSON-RPC, row lock `FOR UPDATE
+  NOWAIT`) sends `POST /v3/orders` on the FEP host, signed with `Kashier-Hash`, with `apiOperation` `INITIATE_R2P`
+  (wallet, or an InstaPay address), `GENERATE_CODE` (Basata) or `GENERATE_QR` (InstaPay; Odoo draws the QR, the
+  payload is readable by administrators only), and sets the transaction pending. Up to `const.SERVER_MAX_ATTEMPTS`
+  (3) attempts, `SERVER_ATTEMPT_INTERVAL_SECONDS` (20) apart; a refused attempt moves its order reference to
+  `kashier_cf_attempt_refs` and the next one gets a new reference. Validity (`kashier_cf_expires_at`): the provider's
+  session expiry until a request is sent; then 10 minutes for a wallet, Kashier's `expireAt` for Basata (60 minutes
+  if absent), 15 minutes for InstaPay. The Basata code is emailed (`mail_template_basata_code`) and added to
+  `_get_status_message`. `/payment/kashier_cf/poll` (JSON-RPC) checks the status, throttled.
 - **Saved card, customer present** (`online_token`): a session with `retrieveSavedCard`; the payment form patch
   sends the top window there, where Kashier asks for the CVC and 3-D Secure.
 - **Saved card, customer away** (`offline`): `POST /v3/orders` on Kashier's FEP host with `interactionSource:
@@ -389,17 +449,22 @@ Kashier reports, or `kashier` for the other methods. Manual capture needs the `k
 
 - Redirects and webhooks are signed by Kashier, but Kashier's session documents expose the key that signs them, so
   their content is never recorded: they only trigger `_kashier_cf_sync_from_provider`. It reads the session
-  (`GET /v3/payment/sessions/{id}/payment`) and the orders (`GET /v3/payment/orders?search=<order>`) with the Secret
-  Key, keeps those of this merchant and this order, and queues a snapshot with `tx._record()`. `_apply_updates`
-  maps it, after checking the amount and the currency.
-- Webhook (`x-kashier-signature`, HMAC-SHA256 of the `signatureKeys` with the Payment API Key): HTTP 403 for a bad
-  signature; 503 when Kashier can't be reached or the order belongs to this database but isn't committed yet, so
-  that Kashier retries; 200 otherwise, also for orders of other databases.
-- The return always checks; webhooks check at most once every 10 seconds per payment. Neither checks while an
-  answer waits for processing or is being applied (`FOR UPDATE NOWAIT`).
+  (`GET /v3/payment/sessions/{id}/payment`) and the orders (`GET /v3/payment/orders?search=<order>`, for the current
+  order reference and those of earlier server-side attempts) with the Secret Key, keeps those of this merchant and
+  this order, and queues a snapshot with `tx._record()`. `_apply_updates` maps it, after checking the amount and the
+  currency.
+- Webhook (`x-kashier-signature`, HMAC-SHA256 of the `signatureKeys` with the Payment API Key, also on server-side
+  payments): HTTP 403 for a bad signature; 503 when Kashier can't be reached or the order belongs to this database
+  but isn't committed yet, so that Kashier retries; 200 otherwise, also for orders of other databases.
+- The return always checks; webhooks and the poll route check at most once every 10 seconds per payment. None checks
+  while an answer waits for processing or is being applied (`FOR UPDATE NOWAIT`).
 - The cron **Kashier: check unfinished payments** (15 minutes) takes drafts with a session (2 days), pending (10
-  days) and authorized (32 days) payments, cancelled ones within their 48-hour late window
-  (`kashier_cf_late_check_until`) and unknown outcomes; 200 per run, with `_commit_progress`.
+  days) and authorized (32 days) payments, server-side payments until 48 hours after `kashier_cf_expires_at`,
+  cancelled ones within their 48-hour late window (`kashier_cf_late_check_until`) and unknown outcomes; 200 per run,
+  with `_commit_progress`. For a pending wallet payment it also sends `RECONCILE_WALLET` (`PUT /v3/orders/{id}`).
+  It ends server-side pages left before any request, and requests that expired unpaid.
+- Bank installments: an authorized installment order keeps the transaction pending (never `authorized`, so never
+  offered for capture) until Kashier completes it; staff are alerted once after 3 days.
 - **Check Kashier Status** on the transaction (`action_kashier_cf_sync`).
 
 ### Refunds, capture, void, errors
@@ -408,22 +473,31 @@ Kashier reports, or `kashier` for the other methods. Manual capture needs the `k
   `CAPTURE` or `VOID`. The refund of a payment captured later targets its capture. Once money has moved, only the
   child transaction is written, so that a serialization failure can't replay the request; the root is reconciled
   by the next check.
+- Refunds from Odoo follow each method's `support_refund` (table above): `account_payment` shows no **Refund**
+  button for buy now, pay later, InstaPay and Basata, which are refunded in Kashier's dashboard.
 - Requests that move money get a 45-second timeout, the others 15 seconds. A read timeout, a lost connection or a
   5xx answer is an unknown outcome (`KashierError.unknown_outcome`): never resent; the transaction waits as pending
   (`kashier_cf_outcome_unknown`), the cron is triggered 2 minutes later, and after `const.UNKNOWN_OUTCOME_HOURS` (2)
-  the transaction goes into error with a message to check Kashier's dashboard.
+  the transaction goes into error with a message to check Kashier's dashboard. This covers server-side requests too.
 - A charge without the customer that succeeds after Odoo marked it failed is not revived (staff get an activity); a
   cancelled online payment found paid later is confirmed.
 - Refunds made in Kashier's dashboard (refund legs no child claims) are noted once on the documents
   (`kashier_cf_noted_legs`); staff alerts (note + To-Do activity) are sent once per payment and kind
   (`kashier_cf_alerted`).
-- `const.ERROR_CODES` explains Kashier's response codes (card schemes, 3-D Secure, gateway, `k_*`) and the HTTP-level
-  errors found by `utils.classify_error`, each as a customer, merchant or unknown-outcome error: customers get the
-  explanation of card and bank errors and a neutral message with the code otherwise; staff see the code, the
-  explanation and Kashier's message in the transaction's **Kashier** tab.
-- The payment logger redacts Kashier's keys, signatures and card tokens (`const.SENSITIVE_KEYS`), and
-  `logging_filters.py` masks the card token, the signature, the masked card and the access token in the HTTP access
-  log line of the return route.
+- `const.ERROR_CODES` explains Kashier's response codes (card schemes, 3-D Secure, gateway, `k_*`, InstaPay
+  `20xxx`) and the HTTP-level errors found by `utils.classify_error`, each as a customer, merchant or unknown-outcome
+  error: customers get the explanation of card, bank and wallet errors and a neutral message with the code
+  otherwise; staff see the code, the explanation and Kashier's message in the transaction's **Kashier** tab.
+- The payment logger redacts Kashier's keys, signatures, card tokens, wallet numbers, InstaPay addresses and QR
+  payloads (`const.SENSITIVE_KEYS`), and `logging_filters.py` masks the card token, the signature, the masked card
+  and the access token in the HTTP access log line of the return route.
+
+### Upgrade from 20.0.1.0.0
+
+The payment methods are `noupdate` data: the update creates the new ones, inactive, on the provider of the data file
+only. `migrations/20.0.1.1.0/post-migrate.py` copies them to every other Kashier provider (inactive), sets
+`kashier_cf_integration` to `redirect` where it is empty, and activates the new methods on unpublished providers
+only: a published provider keeps offering exactly what it offered, and the administrator turns the new methods on.
 
 ### Checked in Kashier's test mode
 
@@ -436,10 +510,21 @@ Kashier test account, on a local server with demo data:
   when the page expires, the payment shows the reason ("The card has expired.");
 - an outcome decided later (expiry 05/37, code CC first);
 - 3-D Secure left unfinished: cancelled when the page validity ends;
-- the Kashier method and the portal in Arabic, with card, wallet, instalments and buy-now-pay-later on Kashier's
+- the Kashier method and the portal in Arabic, with card, wallet, installments and buy-now-pay-later on Kashier's
   page;
 - a saved card paid again (Kashier asks only for the CVC);
-- refunds: a fully refunded order stays `CAPTURED` at Kashier, with its refund lines.
+- refunds: a fully refunded order stays `CAPTURED` at Kashier, with its refund lines;
+- **Sync Kashier Methods** with the test account, and the methods it doesn't accept hidden at checkout;
+- Kashier's card page inside the portal's payment dialog;
+- a server-side wallet request: 01001001001 approved after about 20 seconds, 01010101010 refused (`k_default`); a
+  wallet payment refunded from Odoo;
+- a server-side Basata code: generated, shown with its countdown and emailed (test codes can't be paid);
+- the webhooks of server-side payments, signed by Kashier;
+- buy now, pay later: Kashier refuses 10 EGP ("not allowed") and accepts 1,500 EGP.
+
+Not checked with Kashier yet: Apple Pay, on Kashier's page and with the button (no Apple Pay in test mode); InstaPay
+(not enabled on the test account: error 20906); a completed bank installment payment (Kashier's test page shows "No
+plans available"); a Basata code paid at a kiosk; authorize, capture and void (unit tests only).
 
 ### API client
 
@@ -514,19 +599,24 @@ codefish_payment_provider/
 │   └── tests/
 ├── payment_kashier_cf/
 │   ├── __manifest__.py, __init__.py (post_init_hook / uninstall_hook)
-│   ├── const.py                  hosts, methods, session and order statuses, delays, error codes, journal
+│   ├── const.py                  hosts, methods and their integrations, session and order statuses, delays,
+│   │                             server-side limits, error codes, Apple Pay, journal
 │   ├── exceptions.py             KashierError (code, Kashier's message, unknown outcome)
-│   ├── utils.py                  signatures, amounts, order references, checkout URL check, error classification
+│   ├── utils.py                  signatures, amounts, order references, checkout URL check, error classification,
+│   │                             account methods, mobile numbers, InstaPay addresses and QR codes
 │   ├── kashier_api.py            typed client of Kashier's API, generated by tools/kashier_openapi
 │   ├── logging_filters.py        masks card tokens, signatures and access tokens in the HTTP access log
-│   ├── controllers/main.py       return and webhook routes
+│   ├── controllers/main.py       return and webhook routes, server-side payment page, start and poll routes,
+│   │                             Apple Pay domain file
 │   ├── controllers/portal.py     deletes the card at Kashier when the customer deletes it
-│   ├── models/                   payment.provider, payment.transaction, payment.token,
-│   │                             account.chart.template (journal of companies set up later)
-│   ├── views/                    provider, transaction and token forms, checkout hint
-│   ├── data/                     provider, payment methods, cron, neutralize.sql
-│   ├── static/src/               payment form patch (saved cards), status patch
-│   ├── static/img/               Kashier logo
+│   ├── models/                   payment.provider, payment.method (Kashier Integration), payment.transaction,
+│   │                             payment.token, account.chart.template (journal of companies set up later)
+│   ├── views/                    provider, method, transaction and token forms, checkout hints, server-side page
+│   ├── data/                     provider, payment methods, crons, Basata code email, neutralize.sql
+│   ├── migrations/20.0.1.1.0/    the new payment methods for every Kashier provider
+│   ├── static/src/               payment form patch (embedded page, Apple Pay button, saved cards),
+│   │                             server-side payment page, status patch
+│   ├── static/img/               Kashier and InstaPay logos
 │   ├── static/description/       Apps store page, banner, icons, screenshots
 │   ├── doc/                      administrator and user guides
 │   ├── i18n/                     payment_kashier_cf.pot, ar.po
@@ -577,12 +667,16 @@ text and IBAN helpers, the image sanitizing (formats, truncated files, metadata,
 Sunday-to-Thursday schedule with a public holiday, the receiving accounts, the events, the review wizard, the routes
 (access tokens, CSRF, upload limits) and the reminder and cancellation cron. The Kashier tests mock Kashier's API:
 they check the signatures against Kashier's documented examples, the error classification, the log masking, the
-session payloads (card, Kashier method, Arabic, saved cards, manual capture), the state mapping (paid, declined,
-still on the page, unknown and late outcomes, amount mismatch, staff alerted once), refunds, captures and voids
-(refused, unknown outcome), saved cards (customer present, without the customer, Meeza, deletion), the journal, the
-cron and the routes (access token, signed, unsigned and badly signed notifications, unknown orders, Kashier
-unreachable). Run them also with `website_sale`,
-`sale_management` and `l10n_eg_cf` installed.
+session payloads (card, Kashier method, each method, Arabic, saved cards, manual capture), the integrations (allowed
+per method, the embedded page, the Apple Pay button and its domain file, the direct flow refused otherwise), the
+account's methods (hidden methods, a list of another account or mode, Kashier unreachable) and the methods shown by
+another provider, the server-side payments (wallet requests, wrong numbers and retries, the attempts cap, unknown
+outcomes never resent, expired requests, late payments of an earlier attempt, a page left unused, Basata codes,
+InstaPay QR codes and requests), installments waiting for Kashier, the state mapping (paid, declined, still on the
+page, unknown and late outcomes, amount mismatch, staff alerted once), refunds, captures and voids (refused, unknown
+outcome), saved cards (customer present, without the customer, Meeza, deletion), the journal, the cron, the
+migration from 20.0.1.0.0 and the routes (access token, signed, unsigned and badly signed notifications, unknown
+orders, Kashier unreachable). Run them also with `website_sale`, `sale_management` and `l10n_eg_cf` installed.
 
 ### Translations
 

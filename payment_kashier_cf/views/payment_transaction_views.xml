@@ -31,6 +31,17 @@
                             <field name="kashier_cf_last_sync"/>
                         </group>
                     </group>
+                    <group string="Server Side" invisible="not kashier_cf_server_kind">
+                        <group>
+                            <field name="kashier_cf_server_kind"/>
+                            <field name="kashier_cf_reference_code" invisible="not kashier_cf_reference_code"/>
+                            <field name="kashier_cf_expires_at"/>
+                        </group>
+                        <group>
+                            <field name="kashier_cf_attempts"/>
+                            <field name="kashier_cf_attempt_refs" invisible="not kashier_cf_attempt_refs"/>
+                        </group>
+                    </group>
                     <group invisible="not kashier_cf_error_code and not kashier_cf_error_details">
                         <group colspan="2">
                             <field name="kashier_cf_error_code"/>

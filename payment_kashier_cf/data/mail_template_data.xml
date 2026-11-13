@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- The Basata code of a payment made without Kashier's page, for the customer. Names the company. -->
+    <record id="mail_template_basata_code" model="mail.template">
+        <field name="name">Kashier: Basata payment code</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="subject">{{ object.company_id.name }}: your payment code {{ object.kashier_cf_reference_code }}</field>
+        <field name="email_from">{{ object.company_id.email_formatted or user.email_formatted }}</field>
+        <field name="email_to">{{ object.partner_email }}</field>
+        <field name="lang">{{ object.partner_lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="description">Sent to the customer with the Basata code of a payment.</field>
+        <field name="body_html" type="html">
+<div style="font-family: Arial, sans-serif; font-size: 14px; color: #1F2937;" t-att-dir="'rtl' if (object.partner_lang or '').startswith('ar') else 'ltr'">
+    <p>Hello <t t-out="object.partner_name or ''"/>,</p>
+    <p>
+        To pay <strong t-out="format_amount(object.amount, object.currency_id)"/> to
+        <t t-out="object.company_id.name"/> (<t t-out="object.reference"/>), give this code at a Basata kiosk or
+        point of sale:
+    </p>
+    <p style="font-size: 24px; font-weight: bold; letter-spacing: 3px;" t-out="object.kashier_cf_reference_code"/>
+    <p>The code is valid until <t t-out="format_datetime(object.kashier_cf_expires_at, tz=object.partner_id.tz or 'Africa/Cairo', dt_format='short')"/>.</p>
+    <p><t t-out="object.company_id.name"/></p>
+</div>
+        </field>
+    </record>
+
+</odoo>
